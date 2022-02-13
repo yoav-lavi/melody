@@ -164,8 +164,7 @@ fn main() {
                     .map(|flag| flag_map.get(flag).unwrap())
                     .collect::<Vec<&char>>()
                     .iter()
-                    .join("")
-                    .to_owned();
+                    .join("");
                 String::new()
             }
             Token::NamedCapture(name) => {
@@ -177,7 +176,7 @@ fn main() {
             Token::Whitespace => String::from("\\s"),
             Token::Capture => {
                 group_quantifier = quantifier;
-                quantifier = "".to_owned();
+                quantifier = String::new();
                 in_group = true;
                 String::from("(")
             }
@@ -196,7 +195,6 @@ fn main() {
                     in_group = false;
                     if !group_quantifier.is_empty() {
                         let previous_group_quantifier = group_quantifier;
-                        print!("");
                         group_quantifier = String::new();
                         format!("){{{previous_group_quantifier}}}")
                     } else {
