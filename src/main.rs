@@ -109,15 +109,15 @@ fn main() {
 
     let mut lex = Token::lexer(&code);
 
-    let mut line: u64 = 1;
-
     let mut in_group: bool = false;
 
-    let mut quantifier = String::new();
+    let mut line: u64 = 1;
 
-    let mut group_quantifier = String::new();
+    let mut quantifier = None;
 
-    let mut regex_flags = String::new();
+    let mut group_quantifier = None;
+
+    let mut regex_flags = None;
 
     let mut flag_map: HashMap<&str, char> = HashMap::new();
 
@@ -135,78 +135,79 @@ fn main() {
         let formatted_token = match token {
             Token::Sequence => {
                 let pattern = lex.slice().to_owned();
-                if !quantifier.is_empty() {
-                    format!("({pattern}){{{quantifier}}}")
+                if let Some(quantifier) = quantifier.clone() {
+                    Some(format!("({pattern}){{{quantifier}}}"))
                 } else {
-                    pattern
+                    Some(pattern)
                 }
             }
             Token::LowercaseRange(range)
             | Token::UppercaseRange(range)
             | Token::NumericRange(range) => {
-                if !quantifier.is_empty() {
-                    format!("{range}{{{quantifier}}}")
+                if let Some(quantifier) = quantifier.clone() {
+                    Some(format!("{range}{{{quantifier}}}"))
                 } else {
-                    range
+                    Some(range)
                 }
             }
             Token::QuantifierExpression(quantity) => {
-                quantifier = quantity;
-                String::new()
+                quantifier = Some(quantity);
+                None
             }
             Token::RangeExpression(range) => {
-                quantifier = range;
-                String::new()
+                quantifier = Some(range);
+                None
             }
             Token::Flags(flags) => {
-                regex_flags = flags
-                    .split(",")
-                    .map(|flag| flag_map.get(flag).unwrap())
-                    .collect::<Vec<&char>>()
-                    .iter()
-                    .join("");
-                String::new()
+                regex_flags = Some(
+                    flags
+                        .split(",")
+                        .map(|flag| flag_map.get(flag).unwrap())
+                        .collect::<Vec<&char>>()
+                        .iter()
+                        .join(""),
+                );
+                None
             }
             Token::NamedCapture(name) => {
                 group_quantifier = quantifier;
-                quantifier = String::new();
+                quantifier = None;
                 in_group = true;
-                format!("(?<{name}>")
+                Some(format!("(?<{name}>"))
             }
-            Token::Whitespace => String::from("\\s"),
+            Token::Whitespace => Some(String::from("\\s")),
             Token::Capture => {
                 group_quantifier = quantifier;
-                quantifier = String::new();
+                quantifier = None;
                 in_group = true;
-                String::from("(")
+                Some(String::from("("))
             }
             Token::Match => {
                 group_quantifier = quantifier;
-                quantifier = String::new();
+                quantifier = None;
                 in_group = true;
-                String::from("(?:")
+                Some(String::from("(?:"))
             }
             Token::Semicolon => {
-                quantifier = String::new();
-                String::new()
+                quantifier = None;
+                None
             }
             Token::GroupEnd => {
                 if in_group {
                     in_group = false;
-                    if !group_quantifier.is_empty() {
-                        let previous_group_quantifier = group_quantifier;
-                        group_quantifier = String::new();
-                        format!("){{{previous_group_quantifier}}}")
+                    if let Some(current_group_quantifier) = group_quantifier {
+                        group_quantifier = None;
+                        Some(format!("){{{current_group_quantifier}}}"))
                     } else {
-                        String::from(")")
+                        Some(String::from(")"))
                     }
                 } else {
-                    String::new()
+                    None
                 }
             }
             Token::NewLine => {
                 line += 1;
-                String::new()
+                None
             }
             _ => {
                 println!(
@@ -220,7 +221,13 @@ fn main() {
             }
         };
 
-        output.push_str(&formatted_token);
+        if let Some(formatted_token) = formatted_token {
+            output.push_str(&formatted_token);
+        }
     }
-    println!("{}", format!("/{output}/{regex_flags}").blue())
+
+    println!(
+        "{}",
+        format!("/{output}/{}", regex_flags.unwrap_or(String::new())).blue()
+    )
 }
