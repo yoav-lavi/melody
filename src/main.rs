@@ -115,11 +115,11 @@ fn main() {
 
     let mut line: u64 = 1;
 
-    let mut quantifier = "".to_owned();
+    let mut quantifier = String::new();
 
-    let mut group_quantifier = "".to_owned();
+    let mut group_quantifier = String::new();
 
-    let mut regex_flags = "".to_owned();
+    let mut regex_flags = String::new();
 
     let mut flag_map: HashMap<&str, char> = HashMap::new();
 
@@ -152,11 +152,11 @@ fn main() {
             }
             Token::QuantifierExpression(quantity) => {
                 quantifier = quantity;
-                "".to_owned()
+                String::new()
             }
             Token::RangeExpression(range) => {
                 quantifier = range;
-                "".to_owned()
+                String::new()
             }
             Token::Flags(flags) => {
                 regex_flags = flags
@@ -166,30 +166,30 @@ fn main() {
                     .iter()
                     .join("")
                     .to_owned();
-                "".to_owned()
+                String::new()
             }
             Token::NamedCapture(name) => {
                 group_quantifier = quantifier;
-                quantifier = "".to_owned();
+                quantifier = String::new();
                 in_group = true;
                 format!("(?<{name}>")
             }
-            Token::Whitespace => "\\s".to_owned(),
+            Token::Whitespace => String::from("\\s"),
             Token::Capture => {
                 group_quantifier = quantifier;
                 quantifier = "".to_owned();
                 in_group = true;
-                "(".to_owned()
+                String::from("(")
             }
             Token::Match => {
                 group_quantifier = quantifier;
-                quantifier = "".to_owned();
+                quantifier = String::new();
                 in_group = true;
-                "(?:".to_owned()
+                String::from("(?:")
             }
             Token::Semicolon => {
-                quantifier = "".to_owned();
-                "".to_owned()
+                quantifier = String::new();
+                String::new()
             }
             Token::GroupEnd => {
                 if in_group {
@@ -197,18 +197,18 @@ fn main() {
                     if !group_quantifier.is_empty() {
                         let previous_group_quantifier = group_quantifier;
                         print!("");
-                        group_quantifier = "".to_owned();
+                        group_quantifier = String::new();
                         format!("){{{previous_group_quantifier}}}")
                     } else {
-                        ")".to_owned()
+                        String::from(")")
                     }
                 } else {
-                    "".to_owned()
+                    String::new()
                 }
             }
             Token::NewLine => {
                 line += 1;
-                "".to_owned()
+                String::new()
             }
             _ => {
                 println!(
