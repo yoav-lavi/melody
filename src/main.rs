@@ -109,11 +109,9 @@ fn main() {
 
     let mut lex = Token::lexer(&code);
 
-    let mut output = String::new();
+    let mut line: u64 = 1;
 
     let mut in_group: bool = false;
-
-    let mut line: u64 = 1;
 
     let mut quantifier = String::new();
 
@@ -122,6 +120,8 @@ fn main() {
     let mut regex_flags = String::new();
 
     let mut flag_map: HashMap<&str, char> = HashMap::new();
+
+    let mut output = String::new();
 
     flag_map.insert("has-indices", 'd');
     flag_map.insert("global", 'g');
