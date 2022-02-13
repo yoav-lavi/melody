@@ -8,6 +8,7 @@ RRX (Readable Regular Expressions) is a language designed to compile to and main
 16 of capture melody {
   na;
 }
+
 2 of capture {
   <space>;
   batman;
