@@ -228,6 +228,6 @@ fn main() {
 
     println!(
         "{}",
-        format!("/{output}/{}", regex_flags.unwrap_or(String::new())).blue()
+        format!("/{output}/{}", regex_flags.unwrap_or_default()).blue()
     )
 }
