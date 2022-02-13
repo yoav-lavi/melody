@@ -2,8 +2,7 @@
 
 RRX (Readable Regular Expressions) is a language designed to compile to and maintain a 1-1 relationship with regular expressions, while being more readable and maintainable. 
 
-## Examples
-
+## RRX
 ```
 16 of capture melody {
   na;
@@ -13,9 +12,7 @@ RRX (Readable Regular Expressions) is a language designed to compile to and main
   batman;
 }
 ```
-
-Turns into
-
+## Regular Expression
 ```
 /(?<melody>na){16}(\sbatman){2}/
 ```
