@@ -161,7 +161,7 @@ fn main() {
             Token::Flags(flags) => {
                 regex_flags = flags
                     .split(",")
-                    .map(|flag| flag_map.get(flag).clone().unwrap())
+                    .map(|flag| flag_map.get(flag).unwrap())
                     .collect::<Vec<&char>>()
                     .iter()
                     .join("")
