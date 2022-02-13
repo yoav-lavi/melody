@@ -109,7 +109,7 @@ fn main() {
 
     let mut lex = Token::lexer(&code);
 
-    let mut in_group: bool = false;
+    let mut in_group = false;
 
     let mut line: u64 = 1;
 
