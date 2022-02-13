@@ -144,7 +144,7 @@ fn main() {
             Token::LowercaseRange(range)
             | Token::UppercaseRange(range)
             | Token::NumericRange(range) => {
-                if quantifier != *"" {
+                if !quantifier.is_empty() {
                     format!("{range}{{{quantifier}}}")
                 } else {
                     range
@@ -169,20 +169,20 @@ fn main() {
                 "".to_owned()
             }
             Token::NamedCapture(name) => {
-                group_quantifier = quantifier.clone();
+                group_quantifier = quantifier;
                 quantifier = "".to_owned();
                 in_group = true;
                 format!("(?<{name}>")
             }
             Token::Whitespace => "\\s".to_owned(),
             Token::Capture => {
-                group_quantifier = quantifier.clone();
+                group_quantifier = quantifier;
                 quantifier = "".to_owned();
                 in_group = true;
                 "(".to_owned()
             }
             Token::Match => {
-                group_quantifier = quantifier.clone();
+                group_quantifier = quantifier;
                 quantifier = "".to_owned();
                 in_group = true;
                 "(?:".to_owned()
@@ -195,7 +195,7 @@ fn main() {
                 if in_group {
                     in_group = false;
                     if !group_quantifier.is_empty() {
-                        let previous_group_quantifier = group_quantifier.clone();
+                        let previous_group_quantifier = group_quantifier;
                         print!("");
                         group_quantifier = "".to_owned();
                         format!("){{{previous_group_quantifier}}}")
