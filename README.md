@@ -27,14 +27,14 @@ Turns into
 /(?<melody>na){16}(\sbatman){2}/
 ```
 
-## Current Keywords
+## Keywords (implemented only)
 
 - `of` - used after a number or a range and before a sequence to be matched, e.g. `5 of A;`
 - `to` - used to create a range, e.g. `5 to 10`
 - `capture` - used to open a `capture` or named `capture` block, equivalent to regex `(...)`
 - `match` - used to open a `match` block, equivalent to regex `(?:...)`
 
-## Current Symbols
+## Symbols (implemented only)
 
 - `<space>` - equavalent to regex's `\s`
 
