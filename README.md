@@ -43,7 +43,7 @@ Turns into
 - `<tab>` - equavalent to regex `\t`
 - `<return>` - equavalent to regex `\r`
 - `<feed>` - equavalent to regex `\f`
-- `<null>` - equavalent to regex `\n`
+- `<null>` - equavalent to regex `\0`
 - `<digit>` - equavalent to regex `\d`
 - `<vertical>` - equavalent to regex `\v`
 - `<word>` - equavalent to regex `\w`
