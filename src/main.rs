@@ -2,7 +2,6 @@ use clap::Parser;
 use colored::Colorize;
 use itertools::Itertools;
 use logos::{Lexer, Logos};
-use std::collections::HashMap;
 use std::fs::read_to_string;
 
 #[derive(Parser, Debug)]
@@ -133,17 +132,7 @@ fn main() {
 
     let mut group_quantifier = None;
 
-    let mut flag_map: HashMap<&str, char> = HashMap::new();
-
     let mut output = String::new();
-
-    flag_map.insert("has-indices", 'd');
-    flag_map.insert("global", 'g');
-    flag_map.insert("ignore-case", 'i');
-    flag_map.insert("multiline", 'm');
-    flag_map.insert("dot-all", 's');
-    flag_map.insert("unicode", 'u');
-    flag_map.insert("sticky", 'y');
 
     while let Some(token) = lex.next() {
         let formatted_token = match token {
