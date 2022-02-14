@@ -89,14 +89,32 @@ enum Token {
     #[token("end")]
     LineEnd,
 
+    #[token("<newline>")]
+    NewlineSymbol,
+
+    #[token("<tab>")]
+    TabSymbol,
+
+    #[token("<return>")]
+    ReturnSymbol,
+
+    #[token("<feed>")]
+    FeedSymbol,
+
+    #[token("<null>")]
+    NullSymbol,
+
+    #[token("<digit>")]
+    DigitSymbol,
+
+    #[token("<space>")]
+    SpaceToken,
+
     #[token("}")]
     GroupEnd,
 
     #[token(";")]
     Semicolon,
-
-    #[token("<space>")]
-    Whitespace,
 
     #[token("\n")]
     NewLine,
@@ -184,7 +202,7 @@ fn main() {
                 in_group = true;
                 Some(format!("(?<{name}>"))
             }
-            Token::Whitespace => Some(String::from("\\s")),
+
             Token::Capture => {
                 group_quantifier = quantifier;
                 quantifier = None;
@@ -216,6 +234,13 @@ fn main() {
                     None
                 }
             }
+            Token::SpaceToken => Some(String::from("\\s")),
+            Token::NewlineSymbol => Some(String::from("\\n")),
+            Token::TabSymbol => Some(String::from("\\t")),
+            Token::ReturnSymbol => Some(String::from("\\r")),
+            Token::FeedSymbol => Some(String::from("\\f")),
+            Token::NullSymbol => Some(String::from("\\0")),
+            Token::DigitSymbol => Some(String::from("\\d")),
             Token::NewLine => {
                 line += 1;
                 None

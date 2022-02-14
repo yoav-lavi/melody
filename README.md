@@ -39,6 +39,12 @@ Turns into
 ## Symbols (implemented only)
 
 - `<space>` - equavalent to regex `\s`
+- `<newline>` - equavalent to regex `\n`
+- `<tab>` - equavalent to regex `\t`
+- `<return>` - equavalent to regex `\r`
+- `<feed>` - equavalent to regex `\f`
+- `<null>` - equavalent to regex `\n`
+- `<digit>` - equavalent to regex `\d`
 
 ## Extras (implemented only)
 
@@ -60,18 +66,18 @@ Turns into
 | `// comment`                        |                       | ✅          |              |
 | `start;`                            | `^`                   | ✅          |              |
 | `end;`                              | `$`                   | ✅          |              |
+| `<newline>;`                        | `\n`                  | ✅          |              |
+| `<tab>;`                            | `\t`                  | ✅          |              |
+| `<return>;`                         | `\r`                  | ✅          |              |
+| `<feed>;`                           | `\f`                  | ✅          |              |
+| `<null>;`                           | `\0`                  | ✅          |              |
+| `<digit>;`                          | `\d`                  | ✅          |              |
 | `not A;`                            | `[^A]`                |             |              |
 | `not before ...`                    | `(?!...)`             |             |              |
 | `not after ...`                     | `(?<!...)`            |             |              |
 | `before ...`                        | `(?=...)`             |             |              |
 | `after ...`                         | `(?<=...)`            |             |              |
 | `not <space>;`                      | `\S`                  |             |              |
-| `<newline>;`                        | `\n`                  |             |              |
-| `<tab>;`                            | `\t`                  |             |              |
-| `<return>;`                         | `\r`                  |             |              |
-| `<feed>;`                           | `\f`                  |             |              |
-| `<null>;`                           | `\0`                  |             |              |
-| `<digit>;`                          | `\d`                  |             |              |
 | `not <digit>;`                      | `\D`                  |             |              |
 | `<word>;`                           | `\w`                  |             |              |
 | `not <word>;`                       | `\W`                  |             |              |
