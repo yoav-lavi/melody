@@ -33,6 +33,8 @@ Turns into
 - `to` - used to create a range (either as a quantifier or as a character range), e.g. `5 to 9`, equivalent to regex `{5,9}` if before an `of` or `[5-9]` otherwise
 - `capture` - used to open a `capture` or named `capture` block, equivalent to regex `(...)`
 - `match` - used to open a `match` block, equivalent to regex `(?:...)`
+- `start` - matches the start of the string, equivalent to regex `^`
+- `end` - matches the start of the string, equivalent to regex `$`
 
 ## Symbols (implemented only)
 
@@ -56,13 +58,13 @@ Turns into
 | `a to z;`                           | `[a-z]`               | ✅          |              |
 | `0 to 9;`                           | `[0-9]`               | ✅          |              |
 | `// comment`                        |                       | ✅          |              |
+| `start;`                            | `^`                   | ✅          |              |
+| `end;`                              | `$`                   | ✅          |              |
 | `not A;`                            | `[^A]`                |             |              |
 | `not before ...`                    | `(?!...)`             |             |              |
 | `not after ...`                     | `(?<!...)`            |             |              |
 | `before ...`                        | `(?=...)`             |             |              |
 | `after ...`                         | `(?<=...)`            |             |              |
-| `start;`                            | `^`                   |             |              |
-| `end;`                              | `$`                   |             |              |
 | `not <space>;`                      | `\S`                  |             |              |
 | `<newline>;`                        | `\n`                  |             |              |
 | `<tab>;`                            | `\t`                  |             |              |

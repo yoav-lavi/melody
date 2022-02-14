@@ -62,7 +62,7 @@ enum Token {
     #[regex("\\d+ of ", quantifier)]
     QuantifierExpression(String),
 
-    #[regex("([a-zA-Z0-9]|\\\\)+", priority = 300)]
+    #[regex("([a-zA-Z0-9]|\\\\)+", priority = 0)]
     Sequence,
 
     #[regex("[a-z] to [a-z]", range)]
@@ -82,6 +82,12 @@ enum Token {
 
     #[token("match {")]
     Match,
+
+    #[token("start")]
+    LineStart,
+
+    #[token("end")]
+    LineEnd,
 
     #[token("}")]
     GroupEnd,
@@ -191,6 +197,8 @@ fn main() {
                 in_group = true;
                 Some(String::from("(?:"))
             }
+            Token::LineStart => Some(String::from("^")),
+            Token::LineEnd => Some(String::from("$")),
             Token::Semicolon => {
                 quantifier = None;
                 None
