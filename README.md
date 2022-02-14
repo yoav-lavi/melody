@@ -45,6 +45,8 @@ Turns into
 - `<feed>` - equavalent to regex `\f`
 - `<null>` - equavalent to regex `\n`
 - `<digit>` - equavalent to regex `\d`
+- `<vertical>` - equavalent to regex `\v`
+- `<word>` - equavalent to regex `\w`
 
 ## Extras (implemented only)
 
@@ -72,6 +74,8 @@ Turns into
 | `<feed>;`                           | `\f`                  | ✅          |              |
 | `<null>;`                           | `\0`                  | ✅          |              |
 | `<digit>;`                          | `\d`                  | ✅          |              |
+| `<vertical>;`                       | `\v`                  | ✅          |              |
+| `<word>;`                           | `\w`                  | ✅          |              |
 | `not A;`                            | `[^A]`                |             |              |
 | `not before ...`                    | `(?!...)`             |             |              |
 | `not after ...`                     | `(?<!...)`            |             |              |
@@ -79,9 +83,7 @@ Turns into
 | `after ...`                         | `(?<=...)`            |             |              |
 | `not <space>;`                      | `\S`                  |             |              |
 | `not <digit>;`                      | `\D`                  |             |              |
-| `<word>;`                           | `\w`                  |             |              |
 | `not <word>;`                       | `\W`                  |             |              |
-| `<vertical>;`                       | `\v`                  |             |              |
 | `<backspace>`                       | `[\b]`                |             |              |
 | `some of`                           | `+`                   |             |              |
 | `"...";` (raw)                      | ...                   |             |              |

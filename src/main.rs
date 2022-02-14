@@ -110,6 +110,12 @@ enum Token {
     #[token("<space>")]
     SpaceToken,
 
+    #[token("<word>")]
+    WordToken,
+
+    #[token("<vertical>")]
+    VerticalToken,
+
     #[token("}")]
     GroupEnd,
 
@@ -241,6 +247,8 @@ fn main() {
             Token::FeedSymbol => Some(String::from("\\f")),
             Token::NullSymbol => Some(String::from("\\0")),
             Token::DigitSymbol => Some(String::from("\\d")),
+            Token::WordToken => Some(String::from("\\w")),
+            Token::VerticalToken => Some(String::from("\\v")),
             Token::NewLine => {
                 line += 1;
                 None
