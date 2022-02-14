@@ -95,6 +95,9 @@ enum Token {
     #[token("\n")]
     NewLine,
 
+    #[regex("//.*", logos::skip)]
+    Comment,
+
     #[error]
     #[regex(r"[ \t\f]+", logos::skip)]
     Unidentified,

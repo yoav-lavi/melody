@@ -34,7 +34,7 @@ Turns into
 | `A to Z;`                           | `[A-Z]`               | ✅           |              |
 | `a to z;`                           | `[a-z]`               | ✅           |              |
 | `0 to 9;`                           | `[0-9]`               | ✅           |              |
-| `// comment`                        |                       |             |              |
+| `// comment`                        |                       | ✅           |              |
 | `not A;`                            | `[^A]`                |             |              |
 | `not before ...`                    | `(?!...)`             |             |              |
 | `not after ...`                     | `(?<!...)`            |             |              |
