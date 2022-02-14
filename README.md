@@ -88,7 +88,6 @@ Turns into
 | `some of`                           | `+`                   |             |              |
 | `"...";` (raw)                      | ...                   |             |              |
 | `<quote>;`                          | `\"`                  |             |              |
-| `flags: global, multiline, ...`     | `/.../gm...`          |             |              |
 | nested groups                       | `(...(...))`          |             |              |
 | multiple ranges                     | `[a-zA-Z0-9]`         |             |              |
 | tests                               |                       |             |              |
@@ -96,6 +95,7 @@ Turns into
 | auto escape for non RRX patterns    |                       |             |              |
 | support non alphanumeric characters |                       |             |              |
 | syntax highlighting extension       |                       |             |              |
+| `flags: global, multiline, ...`     | `/.../gm...`          |             | ❓           |
 | `/* comment */`                     |                       |             | ❓           |
 | `over 4 of A;`                      | `A{5,}`               |             | ❓           |
 | `maybe of`                          | `?`                   |             | ❓           |
