@@ -38,6 +38,10 @@ Turns into
 
 - `<space>` - equavalent to regex `\s`
 
+## Extras (implemented only)
+
+- `//` - used to mark comments
+
 ## Feature Status
 
 | RRX                                 | Regex                 | Implemented | Unclear      |
