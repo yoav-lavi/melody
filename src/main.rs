@@ -45,8 +45,6 @@ enum Token {
     #[regex("\\d+ of", quantifier)]
     QuantifierExpression(String),
 
-    // #[token("some of")]
-    // SomeExpression(String),
     #[regex("([a-zA-Z0-9]|\\\\)+", priority = 0)]
     Sequence,
 
