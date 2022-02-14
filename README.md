@@ -27,20 +27,31 @@ Turns into
 /(?<melody>na){16}(\sbatman){2}/
 ```
 
+## Current Keywords
+
+- `of` - used after a number or a range and before a sequence to be matched, e.g. `5 of A;`
+- `to` - used to create a range, e.g. `5 to 10`
+- `capture` - used to open a `capture` or named `capture` block, equivalent to regex `(...)`
+- `match` - used to open a `match` block, equivalent to regex `(?:...)`
+
+## Current Symbols
+
+- `<space>` - equavalent to regex's `\s`
+
 ## Feature Status
 
 | RRX                                 | Regex                 | Implemented | Unclear      |
 | ----------------------------------- | --------------------- | ----------- | ------------ |
-| `5 of A;`                           | `A{5}`                | ✅           |              |
-| `5 to 7 of A;`                      | `A{5,7}`              | ✅           |              |
-| `capture { ... }`                   | `(...)`               | ✅           |              |
-| `capture name { ... }`              | `(?<name>...)`        | ✅           |              |
-| `match { ... }`                     | `(?:...)`             | ✅           |              |
-| `<space>;`                          | `\s`                  | ✅           |              |
-| `A to Z;`                           | `[A-Z]`               | ✅           |              |
-| `a to z;`                           | `[a-z]`               | ✅           |              |
-| `0 to 9;`                           | `[0-9]`               | ✅           |              |
-| `// comment`                        |                       | ✅           |              |
+| `5 of A;`                           | `A{5}`                | ✅          |              |
+| `5 to 7 of A;`                      | `A{5,7}`              | ✅          |              |
+| `capture { ... }`                   | `(...)`               | ✅          |              |
+| `capture name { ... }`              | `(?<name>...)`        | ✅          |              |
+| `match { ... }`                     | `(?:...)`             | ✅          |              |
+| `<space>;`                          | `\s`                  | ✅          |              |
+| `A to Z;`                           | `[A-Z]`               | ✅          |              |
+| `a to z;`                           | `[a-z]`               | ✅          |              |
+| `0 to 9;`                           | `[0-9]`               | ✅          |              |
+| `// comment`                        |                       | ✅          |              |
 | `not A;`                            | `[^A]`                |             |              |
 | `not before ...`                    | `(?!...)`             |             |              |
 | `not after ...`                     | `(?<!...)`            |             |              |
@@ -71,32 +82,32 @@ Turns into
 | auto escape for non RRX patterns    |                       |             |              |
 | support non alphanumeric characters |                       |             |              |
 | syntax highlighting extension       |                       |             |              |
-| `/* comment */`                     |                       |             | ✅            |
-| `over 4 of A;`                      | `A{5,}`               |             | ✅            |
-| `maybe of`                          | `?`                   |             | ✅            |
-| `maybe some of`                     | `*`                   |             | ✅            |
-| `either of ..., ...`                | `\|`                  |             | ✅            |
-| `any of a, b, c`                    | `[abc]`               |             | ✅            |
-| variables / macros                  |                       |             | ✅            |
-| regex optimization                  |                       |             | ✅            |
-| standard library / patterns         |                       |             | ✅            |
-| `character;` (`char`?)              | `.`                   |             | ✅            |
-| (?)                                 | `*?`                  |             | ✅            |
-| (?)                                 | `\#`                  |             | ✅            |
-| (?)                                 | `\k<name>`            |             | ✅            |
-| (?)                                 | `\p{...}`             |             | ✅            |
-| (?)                                 | `\P{...}`             |             | ✅            |
-| (?)                                 | `\uYYYY`              |             | ✅            |
-| (?)                                 | `\xYY`                |             | ✅            |
-| (?)                                 | `\ddd`                |             | ✅            |
-| (?)                                 | `\cY`                 |             | ✅            |
-| (?)                                 | `\b`                  |             | ✅            |
-| (?)                                 | `\B`                  |             | ✅            |
-| (?)                                 | `$1`                  |             | ✅            |
-| (?)                                 | <code>$`</code>       |             | ✅            |
-| (?)                                 | `$&`                  |             | ✅            |
-| (?)                                 | `x20`                 |             | ✅            |
-| (?)                                 | `x{06fa}`             |             | ✅            |
+| `/* comment */`                     |                       |             | ✅           |
+| `over 4 of A;`                      | `A{5,}`               |             | ✅           |
+| `maybe of`                          | `?`                   |             | ✅           |
+| `maybe some of`                     | `*`                   |             | ✅           |
+| `either of ..., ...`                | `\|`                  |             | ✅           |
+| `any of a, b, c`                    | `[abc]`               |             | ✅           |
+| variables / macros                  |                       |             | ✅           |
+| regex optimization                  |                       |             | ✅           |
+| standard library / patterns         |                       |             | ✅           |
+| `character;` (`char`?)              | `.`                   |             | ✅           |
+| (?)                                 | `*?`                  |             | ✅           |
+| (?)                                 | `\#`                  |             | ✅           |
+| (?)                                 | `\k<name>`            |             | ✅           |
+| (?)                                 | `\p{...}`             |             | ✅           |
+| (?)                                 | `\P{...}`             |             | ✅           |
+| (?)                                 | `\uYYYY`              |             | ✅           |
+| (?)                                 | `\xYY`                |             | ✅           |
+| (?)                                 | `\ddd`                |             | ✅           |
+| (?)                                 | `\cY`                 |             | ✅           |
+| (?)                                 | `\b`                  |             | ✅           |
+| (?)                                 | `\B`                  |             | ✅           |
+| (?)                                 | `$1`                  |             | ✅           |
+| (?)                                 | <code>$`</code>       |             | ✅           |
+| (?)                                 | `$&`                  |             | ✅           |
+| (?)                                 | `x20`                 |             | ✅           |
+| (?)                                 | `x{06fa}`             |             | ✅           |
 
 ## Acknowledgments
 
