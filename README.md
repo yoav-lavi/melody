@@ -10,7 +10,7 @@ The current goal is supporting the Javascript implementation of regular expressi
 
 ## Examples
 
-```
+```coffeescript
 16 of capture melody {
   na;
 }
@@ -23,7 +23,7 @@ The current goal is supporting the Javascript implementation of regular expressi
 
 Turns into
 
-```
+```regex
 /(?<melody>na){16}(\sbatman){2}/
 ```
 
