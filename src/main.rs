@@ -13,7 +13,7 @@ struct Args {
 
 fn quantifier(lex: &mut Lexer<Token>) -> Option<String> {
     let slice = lex.slice();
-    let amount: u64 = slice[..slice.len() - 4].parse().ok()?;
+    let amount: u64 = slice[..slice.len() - 3].parse().ok()?;
     Some(amount.to_string())
 }
 
@@ -25,7 +25,7 @@ fn named_capture(lex: &mut Lexer<Token>) -> Option<String> {
 
 fn range_expression(lex: &mut Lexer<Token>) -> Option<String> {
     let slice = lex.slice();
-    let range: &str = &slice[..slice.len() - 4];
+    let range: &str = &slice[..slice.len() - 3];
     let slices = range.split(" to ");
 
     Some(slices.into_iter().join(","))
@@ -37,31 +37,16 @@ fn range(lex: &mut Lexer<Token>) -> Option<String> {
     Some(format!("[{formatted_slice}]"))
 }
 
-fn flags(lex: &mut Lexer<Token>) -> Option<String> {
-    let slice = lex.slice();
-    let flags = slice[7..slice.len()].to_owned();
-    let unique_flags = flags
-        .split(",")
-        .map(|flag| flag.trim().to_owned())
-        .unique()
-        .join(",");
-    Some(unique_flags)
-}
-
 #[derive(Logos, Debug, PartialEq)]
 enum Token {
-    #[regex(
-        "flags: ((has-indices|global|ignore-case|multiline|dot-all|unicode|sticky),( )?)?(has-indices|global|ignore-case|multiline|dot-all|unicode|sticky)",
-        flags
-    )]
-    Flags(String),
-
-    #[regex("\\d+ to \\d+ of ", range_expression)]
+    #[regex("\\d+ to \\d+ of", range_expression)]
     RangeExpression(String),
 
-    #[regex("\\d+ of ", quantifier)]
+    #[regex("\\d+ of", quantifier)]
     QuantifierExpression(String),
 
+    // #[token("some of")]
+    // SomeExpression(String),
     #[regex("([a-zA-Z0-9]|\\\\)+", priority = 0)]
     Sequence,
 
@@ -150,8 +135,6 @@ fn main() {
 
     let mut group_quantifier = None;
 
-    let mut regex_flags = None;
-
     let mut flag_map: HashMap<&str, char> = HashMap::new();
 
     let mut output = String::new();
@@ -189,17 +172,6 @@ fn main() {
             }
             Token::RangeExpression(range) => {
                 quantifier = Some(range);
-                None
-            }
-            Token::Flags(flags) => {
-                regex_flags = Some(
-                    flags
-                        .split(",")
-                        .map(|flag| flag_map.get(flag).unwrap())
-                        .collect::<Vec<&char>>()
-                        .iter()
-                        .join(""),
-                );
                 None
             }
             Token::NamedCapture(name) => {
@@ -270,8 +242,5 @@ fn main() {
         }
     }
 
-    println!(
-        "{}",
-        format!("/{output}/{}", regex_flags.unwrap_or_default()).blue()
-    )
+    println!("{}", format!("/{output}/").blue())
 }
