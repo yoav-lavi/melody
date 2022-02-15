@@ -34,6 +34,19 @@ pub fn report_read_file_error(path: &str) {
     );
 }
 
+pub fn report_write_file_error(path: &str) {
+    eprintln!(
+        "{} {} {}",
+        "Error:".bright_red(),
+        "Unable write file at path".bright_red(),
+        format!("\"{path}\"").bright_blue(),
+    );
+}
+
 pub fn print_output(output: String) {
+    println!("{}", output);
+}
+
+pub fn print_output_pretty(output: String) {
     println!("{}", output.bright_blue());
 }

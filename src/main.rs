@@ -2,13 +2,22 @@ pub mod output;
 
 use clap::Parser;
 use logos::{Lexer, Logos};
-use output::{print_output, report_group_end_warning, report_parse_error, report_read_file_error};
-use std::fs::read_to_string;
+use output::{
+    print_output_pretty, report_group_end_warning, report_parse_error, report_read_file_error,
+    report_write_file_error,
+};
+use std::fs::{self, read_to_string};
+
+use crate::output::print_output;
 
 #[derive(Parser, Debug)]
 #[clap(about, version, author)]
 struct Args {
     source_path: String,
+    #[clap(short, long)]
+    file: Option<String>,
+    #[clap(short, long)]
+    no_color: bool,
 }
 
 fn quantifier(lex: &mut Lexer<Token>) -> Option<String> {
@@ -187,7 +196,24 @@ fn main() {
 
     let output = compiler(source);
 
-    print_output(output);
+    let output_file_path = &args.file;
+    let no_color = args.no_color;
+
+    match output_file_path {
+        Some(output_file_path) => {
+            let result = fs::write(output_file_path, output);
+            if let Err(_) = result {
+                report_write_file_error(output_file_path)
+            };
+        }
+        None => {
+            if no_color {
+                print_output(output)
+            } else {
+                print_output_pretty(output)
+            }
+        }
+    }
 }
 
 fn compiler(source: String) -> String {

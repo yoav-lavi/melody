@@ -85,6 +85,8 @@ Turns into
 | `'\'';`                             | `'`                   | ✅          |              |
 | `"\"";`                             | `"`                   | ✅          |              |
 | support non alphanumeric characters |                       | ✅          |              |
+| output to file                      |                       | ✅          |              |
+| no color output                     |                       | ✅          |              |
 | `not before ...`                    | `(?!...)`             |             |              |
 | `not after ...`                     | `(?<!...)`            |             |              |
 | `before ...`                        | `(?=...)`             |             |              |
@@ -94,6 +96,7 @@ Turns into
 | `not <word>;`                       | `\W`                  |             |              |
 | `<backspace>`                       | `[\b]`                |             |              |
 | `some of`                           | `+`                   |             |              |
+| file watcher                        |                       |             |              |
 | nested groups                       | `(...(...))`          |             |              |
 | multiple ranges                     | `[a-zA-Z0-9]`         |             |              |
 | enforce semicolon usage             |                       |             |              |
