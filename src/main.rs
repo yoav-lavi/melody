@@ -6,7 +6,7 @@ use output::{
     print_output_pretty, report_group_end_warning, report_parse_error, report_read_file_error,
     report_write_file_error,
 };
-use std::fs::{self, read_to_string};
+use std::fs::{read_to_string, write};
 
 use crate::output::print_output;
 
@@ -199,7 +199,7 @@ fn main() {
 
     match output_file_path {
         Some(output_file_path) => {
-            let result = fs::write(output_file_path, output);
+            let result = write(output_file_path, output);
             if let Err(_) = result {
                 report_write_file_error(output_file_path)
             };
