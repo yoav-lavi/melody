@@ -201,14 +201,15 @@ fn main() {
         Some(output_file_path) => {
             let write_result = write(output_file_path, output);
             if write_result.is_err() {
-                report_write_file_error(output_file_path)
+                report_write_file_error(output_file_path);
+                std::process::exit(1);
             };
         }
         None => {
             if no_color {
-                print_output(output)
+                print_output(output);
             } else {
-                print_output_pretty(output)
+                print_output_pretty(output);
             }
         }
     }
