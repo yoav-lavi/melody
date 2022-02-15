@@ -163,7 +163,7 @@ enum QuoteType {
 fn handle_quantifier(source: String, quantifier: Option<String>, group: bool) -> Option<String> {
     if let Some(quantifier) = quantifier {
         let formatted_source = if group {
-            format!("({source}){quantifier}")
+            format!("(?:{source}){quantifier}")
         } else {
             [source, quantifier].join("")
         };
@@ -336,7 +336,7 @@ fn quantifier_test() {
 }
 
 #[test]
-fn group_test() {
+fn capture_test() {
     let output = compiler(
         r#"
         capture {
@@ -346,6 +346,19 @@ fn group_test() {
         "#,
     );
     assert_eq!(output, "/(A{5}[0-9])/");
+}
+
+#[test]
+fn match_test() {
+    let output = compiler(
+        r#"
+        match {
+          5 of "A";
+          0 to 9;
+        }
+        "#,
+    );
+    assert_eq!(output, "/(?:A{5}[0-9])/");
 }
 
 #[test]

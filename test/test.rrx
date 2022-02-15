@@ -1,8 +1,6 @@
-16 of capture melody {
-  "na";
-}
+16 of "na";
 
-2 of capture {
+2 of match {
   <space>;
   "batman";
 }
