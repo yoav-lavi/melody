@@ -163,6 +163,5 @@ OPTIONS:
 RRX uses:
 
 - [Logos](https://github.com/maciejhirsz/logos) [(license)](https://github.com/maciejhirsz/logos/blob/master/LICENSE-MIT)
-- [Itertools](https://github.com/rust-itertools/itertools) [(license)](https://github.com/rust-itertools/itertools/blob/master/LICENSE-MIT)
 - [Clap](https://github.com/clap-rs/clap) [(license)](https://github.com/clap-rs/clap/blob/master/LICENSE-MIT)
 - [Colored](https://github.com/mackwic/colored) [(license)](https://github.com/mackwic/colored/blob/master/LICENSE)
