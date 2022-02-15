@@ -175,7 +175,7 @@ fn handle_quantifier(source: String, quantifier: Option<String>, group: bool) ->
     }
 }
 
-fn format_regex(regex: String, flags: Option<String>) -> String {
+fn format_regex(regex: &str, flags: Option<String>) -> String {
     format!("/{regex}/{}", flags.unwrap_or_default())
 }
 
@@ -192,7 +192,7 @@ fn main() {
         }
     };
 
-    let output = compiler(source);
+    let output = compiler(&source);
 
     let output_file_path = &args.file;
     let no_color = args.no_color;
@@ -215,8 +215,8 @@ fn main() {
     }
 }
 
-fn compiler(source: String) -> String {
-    let mut lex = Token::lexer(&source);
+fn compiler(source: &str) -> String {
+    let mut lex = Token::lexer(source);
 
     let mut in_group = false;
 
@@ -324,7 +324,7 @@ fn compiler(source: String) -> String {
         }
     }
 
-    format_regex(output, None)
+    format_regex(&output, None)
 }
 
 #[test]
@@ -332,8 +332,7 @@ fn quantifier_test() {
     let output = compiler(
         r#"
     5 of "A";
-    "#
-        .to_owned(),
+    "#,
     );
     assert_eq!(output, "/A{5}/");
 }
@@ -346,8 +345,7 @@ fn group_test() {
           5 of "A";
           0 to 9;
         }
-        "#
-        .to_owned(),
+        "#,
     );
     assert_eq!(output, "/(A{5}[0-9])/");
 }
@@ -358,8 +356,7 @@ fn comment_test() {
         r#"
         // a single digit in the range of 0 to 5
         0 to 5;
-        "#
-        .to_owned(),
+        "#,
     );
     assert_eq!(output, "/[0-5]/");
 }
@@ -371,8 +368,7 @@ fn symbol_test() {
         <space>;
         <tab>;
         <digit>;
-        "#
-        .to_owned(),
+        "#,
     );
     assert_eq!(output, r"/\s\t\d/");
 }
@@ -382,8 +378,7 @@ fn char_test() {
     let output = compiler(
         r#"
         3 of char;
-        "#
-        .to_owned(),
+        "#,
     );
     assert_eq!(output, "/.{3}/");
 }
