@@ -199,8 +199,8 @@ fn main() {
 
     match output_file_path {
         Some(output_file_path) => {
-            let result = write(output_file_path, output);
-            if result.is_err() {
+            let write_result = write(output_file_path, output);
+            if write_result.is_err() {
                 report_write_file_error(output_file_path)
             };
         }
