@@ -1,6 +1,8 @@
+pub mod output;
+
 use clap::Parser;
-use colored::Colorize;
 use logos::{Lexer, Logos};
+use output::{print_output, report_group_end_warning, report_parse_error, report_read_file_error};
 use std::fs::read_to_string;
 
 #[derive(Parser, Debug)]
@@ -126,6 +128,9 @@ enum Token {
     #[token("<vertical>")]
     VerticalSymbol,
 
+    #[token("char")]
+    Char,
+
     #[token("}")]
     GroupEnd,
 
@@ -148,41 +153,6 @@ enum QuoteType {
     Double,
 }
 
-fn report_group_end_warning(line: u16) {
-    println!(
-        "{} {} {} {} {}\n",
-        "Warning:".bright_yellow(),
-        "Ignoring".bright_yellow(),
-        "\"}\"".bright_blue(),
-        "on line".bright_yellow(),
-        line.to_string().bright_blue()
-    );
-}
-
-fn report_parse_error(source: &str, line: u16) {
-    println!(
-        "{} {} {} {} {}\n",
-        "Error:".bright_red(),
-        "Unable to parse".bright_red(),
-        format!("\"{source}\"").bright_blue(),
-        "on line".bright_red(),
-        line.to_string().bright_blue()
-    );
-}
-
-fn report_read_file_error(path: &str) {
-    println!(
-        "{} {} {}",
-        "Error:".bright_red(),
-        "Unable read file at path".bright_red(),
-        format!("\"{path}\"").bright_blue(),
-    );
-}
-
-fn print_output(output: String) {
-    println!("{}", output.bright_blue());
-}
-
 fn handle_quantifier(source: String, quantifier: Option<String>, group: bool) -> Option<String> {
     if let Some(quantifier) = quantifier {
         let formatted_source = if group {
@@ -194,6 +164,10 @@ fn handle_quantifier(source: String, quantifier: Option<String>, group: bool) ->
     } else {
         Some(source)
     }
+}
+
+fn format_regex(regex: String, flags: Option<String>) -> String {
+    format!("/{regex}/{}", flags.unwrap_or_default())
 }
 
 fn main() {
@@ -221,7 +195,7 @@ fn compiler(source: String) -> String {
 
     let mut in_group = false;
 
-    let mut line: u16 = 1;
+    let mut line: u16 = 0;
 
     let mut quantifier = None;
 
@@ -288,17 +262,24 @@ fn compiler(source: String) -> String {
             }
 
             // direct replacements
-            Token::LineStart => Some(String::from("^")),
-            Token::LineEnd => Some(String::from("$")),
-            Token::SpaceSymbol => Some(String::from("\\s")),
-            Token::NewlineSymbol => Some(String::from("\\n")),
-            Token::TabSymbol => Some(String::from("\\t")),
-            Token::ReturnSymbol => Some(String::from("\\r")),
-            Token::FeedSymbol => Some(String::from("\\f")),
-            Token::NullSymbol => Some(String::from("\\0")),
-            Token::DigitSymbol => Some(String::from("\\d")),
-            Token::WordSymbol => Some(String::from("\\w")),
-            Token::VerticalSymbol => Some(String::from("\\v")),
+            Token::LineStart => handle_quantifier(String::from("^"), quantifier.clone(), false),
+            Token::LineEnd => handle_quantifier(String::from("$"), quantifier.clone(), false),
+            Token::SpaceSymbol => handle_quantifier(String::from("\\s"), quantifier.clone(), false),
+            Token::NewlineSymbol => {
+                handle_quantifier(String::from("\\n"), quantifier.clone(), false)
+            }
+            Token::TabSymbol => handle_quantifier(String::from("\\t"), quantifier.clone(), false),
+            Token::ReturnSymbol => {
+                handle_quantifier(String::from("\\r"), quantifier.clone(), false)
+            }
+            Token::FeedSymbol => handle_quantifier(String::from("\\f"), quantifier.clone(), false),
+            Token::NullSymbol => handle_quantifier(String::from("\\0"), quantifier.clone(), false),
+            Token::DigitSymbol => handle_quantifier(String::from("\\d"), quantifier.clone(), false),
+            Token::WordSymbol => handle_quantifier(String::from("\\w"), quantifier.clone(), false),
+            Token::VerticalSymbol => {
+                handle_quantifier(String::from("\\v"), quantifier.clone(), false)
+            }
+            Token::Char => handle_quantifier(String::from("."), quantifier.clone(), false),
 
             // warning and error related
             Token::NewLine => {
@@ -306,7 +287,9 @@ fn compiler(source: String) -> String {
                 None
             }
             _ => {
-                report_parse_error(lex.slice(), line);
+                let line_index = usize::from(line);
+                let line_source = lex.source().split('\n').nth(line_index).unwrap();
+                report_parse_error(lex.slice(), line_source, line + 1);
                 std::process::exit(1);
             }
         };
@@ -316,7 +299,7 @@ fn compiler(source: String) -> String {
         }
     }
 
-    format!("/{output}/")
+    format_regex(output, None)
 }
 
 #[test]
@@ -367,4 +350,15 @@ fn symbol_test() {
         .to_owned(),
     );
     assert_eq!(output, r"/\s\t\d/");
+}
+
+#[test]
+fn char_test() {
+    let output = compiler(
+        r#"
+        3 of char;
+        "#
+        .to_owned(),
+    );
+    assert_eq!(output, "/.{3}/");
 }

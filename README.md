@@ -85,7 +85,6 @@ Turns into
 | `'\'';`                             | `'`                   | ✅          |              |
 | `"\"";`                             | `"`                   | ✅          |              |
 | support non alphanumeric characters |                       | ✅          |              |
-| `not A;`                            | `[^A]`                |             |              |
 | `not before ...`                    | `(?!...)`             |             |              |
 | `not after ...`                     | `(?<!...)`            |             |              |
 | `before ...`                        | `(?=...)`             |             |              |
@@ -103,6 +102,7 @@ Turns into
 | general cleanup and modules         |                       |             |              |
 | auto escape for non RRX patterns    |                       |             |              |
 | syntax highlighting extension       |                       |             |              |
+| `not A;`                            | `[^A]`                |             | ❓           |
 | `flags: global, multiline, ...`     | `/.../gm...`          |             | ❓           |
 | `/* comment */`                     |                       |             | ❓           |
 | `over 4 of "A";`                    | `(A){5,}`             |             | ❓           |
