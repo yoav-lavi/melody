@@ -12,12 +12,12 @@ The current goal is supporting the Javascript implementation of regular expressi
 
 ```coffeescript
 16 of capture melody {
-  na;
+  "na";
 }
 
 2 of capture {
   <space>;
-  batman;
+  "batman";
 }
 ```
 
@@ -48,6 +48,10 @@ Turns into
 - `<vertical>` - equavalent to regex `\v`
 - `<word>` - equavalent to regex `\w`
 
+## Concepts (implemented only)
+
+- `"..."` or `'...'` - used to mark a literal part of the match
+
 ## Extras (implemented only)
 
 - `//` - used to mark comments
@@ -56,8 +60,8 @@ Turns into
 
 | RRX                                 | Regex                 | Implemented | Unclear      |
 | ----------------------------------- | --------------------- | ----------- | ------------ |
-| `5 of A;`                           | `A{5}`                | ✅          |              |
-| `5 to 7 of A;`                      | `A{5,7}`              | ✅          |              |
+| `5 of "hello";`                     | `(hello){5}`          | ✅          |              |
+| `5 to 7 of "A";`                    | `A{5,7}`              | ✅          |              |
 | `capture { ... }`                   | `(...)`               | ✅          |              |
 | `capture name { ... }`              | `(?<name>...)`        | ✅          |              |
 | `match { ... }`                     | `(?:...)`             | ✅          |              |
@@ -76,6 +80,10 @@ Turns into
 | `<digit>;`                          | `\d`                  | ✅          |              |
 | `<vertical>;`                       | `\v`                  | ✅          |              |
 | `<word>;`                           | `\w`                  | ✅          |              |
+| `"...";` (raw)                      | ...                   | ✅          |              |
+| `'...';` (raw)                      | ...                   | ✅          |              |
+| `'\'';`                             | `'`                   | ✅          |              |
+| `"\"";`                             | `"`                   | ✅          |              |
 | `not A;`                            | `[^A]`                |             |              |
 | `not before ...`                    | `(?!...)`             |             |              |
 | `not after ...`                     | `(?<!...)`            |             |              |
@@ -86,10 +94,10 @@ Turns into
 | `not <word>;`                       | `\W`                  |             |              |
 | `<backspace>`                       | `[\b]`                |             |              |
 | `some of`                           | `+`                   |             |              |
-| `"...";` (raw)                      | ...                   |             |              |
-| `<quote>;`                          | `\"`                  |             |              |
 | nested groups                       | `(...(...))`          |             |              |
 | multiple ranges                     | `[a-zA-Z0-9]`         |             |              |
+| enforce semicolon usage             |                       |             |              |
+| enforce group close                 |                       |             |              |
 | tests                               |                       |             |              |
 | general cleanup and modules         |                       |             |              |
 | auto escape for non RRX patterns    |                       |             |              |
@@ -97,11 +105,12 @@ Turns into
 | syntax highlighting extension       |                       |             |              |
 | `flags: global, multiline, ...`     | `/.../gm...`          |             | ❓           |
 | `/* comment */`                     |                       |             | ❓           |
-| `over 4 of A;`                      | `A{5,}`               |             | ❓           |
+| `over 4 of "A";`                    | `(A){5,}`               |             | ❓           |
 | `maybe of`                          | `?`                   |             | ❓           |
 | `maybe some of`                     | `*`                   |             | ❓           |
 | `either of ..., ...`                | `\|`                  |             | ❓           |
 | `any of a, b, c`                    | `[abc]`               |             | ❓           |
+| escape curly braces or symbo        |                       |             | ❓           |
 | variables / macros                  |                       |             | ❓           |
 | regex optimization                  |                       |             | ❓           |
 | standard library / patterns         |                       |             | ❓           |
