@@ -75,6 +75,10 @@ OPTIONS:
 
 - `//` - used to mark comments
 
+## File Extension
+
+The Melody file extension is `.mdy`
+
 ## Feature Status
 
 | Melody                              | Regex                 | Implemented | Unclear      |
