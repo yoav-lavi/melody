@@ -8,7 +8,7 @@ The current goal is supporting the JavaScript implementation of regular expressi
 
 ## Examples
 
-```coffeescript
+```rust
 16 of "na";
 
 2 of match {
