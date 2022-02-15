@@ -15,6 +15,8 @@ The current goal is supporting the JavaScript implementation of regular expressi
   <space>;
   "batman";
 }
+
+// 🦇🦸‍♂️
 ```
 
 Turns into
