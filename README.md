@@ -27,7 +27,7 @@ Turns into
 /(?<melody>na){16}(\sbatman){2}/
 ```
 
-## Usage
+## CLI Usage
 
 ```sh
 rrx [OPTIONS] <PATH>
