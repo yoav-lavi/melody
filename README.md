@@ -6,7 +6,7 @@
 
 RRX (Readable Regular Expressions) is a language designed to compile to and maintain a 1-1 relationship with regular expressions, while being more readable and maintainable.
 
-The current goal is supporting the Javascript implementation of regular expressions.
+The current goal is supporting the JavaScript implementation of regular expressions.
 
 ## Examples
 
@@ -66,7 +66,7 @@ OPTIONS:
 - `<tab>` - equavalent to regex `\t`
 - `<return>` - equavalent to regex `\r`
 - `<feed>` - equavalent to regex `\f`
-- `<null>` - equavalent to regex `\n`
+- `<null>` - equavalent to regex `\0`
 - `<digit>` - equavalent to regex `\d`
 - `<vertical>` - equavalent to regex `\v`
 - `<word>` - equavalent to regex `\w`
