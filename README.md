@@ -1,7 +1,7 @@
 # RRX
 
 <p align="center">
-  <img alt="code example" src="https://user-images.githubusercontent.com/14347895/153910592-8a25c713-82f8-4fb4-ba89-073f517f0a3d.png" width="445px" style="">
+  <img alt="code example" src="https://user-images.githubusercontent.com/14347895/154112042-dee0f6e8-5c47-47ba-816d-7b8556799dcb.png" width="336px" style="">
 </p>
 
 RRX (Readable Regular Expressions) is a language designed to compile to and maintain a 1-1 relationship with regular expressions, while being more readable and maintainable.
