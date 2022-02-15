@@ -200,7 +200,7 @@ fn main() {
     match output_file_path {
         Some(output_file_path) => {
             let result = write(output_file_path, output);
-            if let Err(_) = result {
+            if result.is_err() {
                 report_write_file_error(output_file_path)
             };
         }
