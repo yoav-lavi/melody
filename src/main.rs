@@ -184,9 +184,7 @@ fn main() {
 
     let file_path = &args.source_path;
 
-    let raw_source = read_to_string(file_path);
-
-    let source = match raw_source {
+    let source = match read_to_string(file_path) {
         Ok(raw_source) => raw_source,
         Err(_) => {
             report_read_file_error(file_path);
