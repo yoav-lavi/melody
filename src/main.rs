@@ -26,23 +26,23 @@ fn quantifier(lex: &mut Lexer<Token>) -> Option<String> {
     Some(format!("{{{amount}}}"))
 }
 
-fn named_capture(lex: &mut Lexer<Token>) -> Option<String> {
+fn named_capture(lex: &mut Lexer<Token>) -> String {
     let slice = lex.slice();
     let name = slice[8..slice.len() - 2].to_owned();
-    Some(name)
+    name
 }
 
-fn range_expression(lex: &mut Lexer<Token>) -> Option<String> {
+fn range_expression(lex: &mut Lexer<Token>) -> String {
     let slice = lex.slice();
     let range: &str = &slice[..slice.len() - 3];
     let formatted_range = range.replace(" to ", ",");
-    Some(format!("{{{formatted_range}}}"))
+    format!("{{{formatted_range}}}")
 }
 
-fn range(lex: &mut Lexer<Token>) -> Option<String> {
+fn range(lex: &mut Lexer<Token>) -> String {
     let slice = lex.slice();
     let formatted_slice = slice.replace(" to ", "-");
-    Some(format!("[{formatted_slice}]"))
+    format!("[{formatted_slice}]")
 }
 
 fn get_quote_type(quote: &str) -> QuoteType {
@@ -67,9 +67,8 @@ fn remove_and_escape_quotes(source: &str) -> String {
     escape_quotes(pattern, quote_type)
 }
 
-fn raw(lex: &mut Lexer<Token>) -> Option<String> {
-    let formatted_raw = remove_and_escape_quotes(lex.slice());
-    Some(formatted_raw)
+fn raw(lex: &mut Lexer<Token>) -> String {
+    remove_and_escape_quotes(lex.slice())
 }
 
 #[derive(Logos, Debug, PartialEq)]
