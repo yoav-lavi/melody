@@ -1,6 +1,7 @@
 <p align="center">
-  <img alt="code example" src="https://user-images.githubusercontent.com/14347895/154120020-6d994e6c-cc2a-42c7-be80-eafae958cb84.png" width="251px" style="">
+  <img alt="code example" src="https://user-images.githubusercontent.com/14347895/154123573-310091c8-310b-48fc-8b18-2bd13666e32e.png" width="251px" style="">
 </p>
+
 
 Melody is a language designed to compile to and maintain a 1-1 relationship with regular expressions, while being more readable and maintainable.
 
