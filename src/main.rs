@@ -185,7 +185,7 @@ fn main() {
     let file_path = &args.source_path;
 
     let source = match read_to_string(file_path) {
-        Ok(raw_source) => raw_source,
+        Ok(source) => source,
         Err(_) => {
             report_read_file_error(file_path);
             std::process::exit(1);
