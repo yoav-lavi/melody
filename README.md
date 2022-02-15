@@ -29,7 +29,13 @@ Turns into
 
 ## Install
 
-Currently installation can be done by cloning this repo and running `cargo install --path .`
+### From Source
+
+```sh
+git clone https://github.com/yoav-lavi/rrx.git
+cd rrx
+cargo install --path .
+```
 
 ## CLI Usage
 
