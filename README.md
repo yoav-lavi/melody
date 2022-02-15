@@ -79,7 +79,7 @@ OPTIONS:
 
 | Melody                              | Regex                 | Implemented | Unclear      |
 | ----------------------------------- | --------------------- | ----------- | ------------ |
-| `5 of "hello";`                     | `(hello){5}`          | ✅          |              |
+| `5 of "hello";`                     | `(?:hello){5}`        | ✅          |              |
 | `5 to 7 of "A";`                    | `A{5,7}`              | ✅          |              |
 | `capture { ... }`                   | `(...)`               | ✅          |              |
 | `capture name { ... }`              | `(?<name>...)`        | ✅          |              |
@@ -128,7 +128,7 @@ OPTIONS:
 | `not A;`                            | `[^A]`                |             | ❓           |
 | `flags: global, multiline, ...`     | `/.../gm...`          |             | ❓           |
 | `/* comment */`                     |                       |             | ❓           |
-| `over 4 of "A";`                    | `(A){5,}`             |             | ❓           |
+| `over 4 of "A";`                    | `A{5,}`               |             | ❓           |
 | `maybe of`                          | `?`                   |             | ❓           |
 | `maybe some of`                     | `*`                   |             | ❓           |
 | `either of ..., ...`                | `\|`                  |             | ❓           |
