@@ -26,8 +26,19 @@ Turns into
 ```regex
 /(?<melody>na){16}(\sbatman){2}/
 ```
+## Usage
 
-## Keywords (implemented only)
+```sh
+rrx [OPTIONS] <PATH>
+
+OPTIONS:
+    -f, --file <FILE>    write to an output file
+    -n, --no-color       print output with no color
+    -V, --version        print version information
+    -h, --help           print help information
+```
+
+## Keywords
 
 - `of` - used after a number or a range and before a sequence to be matched, e.g. `5 of A;`, equivalent to regex `{5}`
 - `to` - used to create a range (either as a quantifier or as a character range), e.g. `5 to 9`, equivalent to regex `{5,9}` if before an `of` or `[5-9]` otherwise
@@ -35,8 +46,9 @@ Turns into
 - `match` - used to open a `match` block, equivalent to regex `(?:...)`
 - `start` - matches the start of the string, equivalent to regex `^`
 - `end` - matches the start of the string, equivalent to regex `$`
+- `char` - matches a single character, equivalent to regex `.`
 
-## Symbols (implemented only)
+## Symbols
 
 - `<space>` - equavalent to regex `\s`
 - `<newline>` - equavalent to regex `\n`
@@ -48,11 +60,11 @@ Turns into
 - `<vertical>` - equavalent to regex `\v`
 - `<word>` - equavalent to regex `\w`
 
-## Concepts (implemented only)
+## Concepts
 
 - `"..."` or `'...'` - used to mark a literal part of the match
 
-## Extras (implemented only)
+## Extras
 
 - `//` - used to mark comments
 
@@ -87,6 +99,7 @@ Turns into
 | support non alphanumeric characters |                       | ✅          |              |
 | output to file                      |                       | ✅          |              |
 | no color output                     |                       | ✅          |              |
+| `char`                              | `.`                   | ✅          |              |
 | `not before ...`                    | `(?!...)`             |             |              |
 | `not after ...`                     | `(?<!...)`            |             |              |
 | `before ...`                        | `(?=...)`             |             |              |
@@ -117,7 +130,6 @@ Turns into
 | variables / macros                  |                       |             | ❓           |
 | regex optimization                  |                       |             | ❓           |
 | standard library / patterns         |                       |             | ❓           |
-| `character;` (`char`?)              | `.`                   |             | ❓           |
 | (?)                                 | `*?`                  |             | ❓           |
 | (?)                                 | `\#`                  |             | ❓           |
 | (?)                                 | `\k<name>`            |             | ❓           |
