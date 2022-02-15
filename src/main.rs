@@ -28,8 +28,7 @@ fn quantifier(lex: &mut Lexer<Token>) -> Option<String> {
 
 fn named_capture(lex: &mut Lexer<Token>) -> String {
     let slice = lex.slice();
-    let name = slice[8..slice.len() - 2].to_owned();
-    name
+    slice[8..slice.len() - 2].to_owned()
 }
 
 fn range_expression(lex: &mut Lexer<Token>) -> String {
