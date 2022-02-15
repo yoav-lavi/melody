@@ -1,21 +1,19 @@
-# RRX
+# Melody
 
 <p align="center">
   <img alt="code example" src="https://user-images.githubusercontent.com/14347895/154112042-dee0f6e8-5c47-47ba-816d-7b8556799dcb.png" width="336px" style="">
 </p>
 
-RRX (Readable Regular Expressions) is a language designed to compile to and maintain a 1-1 relationship with regular expressions, while being more readable and maintainable.
+Melody is a language designed to compile to and maintain a 1-1 relationship with regular expressions, while being more readable and maintainable.
 
 The current goal is supporting the JavaScript implementation of regular expressions.
 
 ## Examples
 
 ```coffeescript
-16 of capture melody {
-  "na";
-}
+16 of "na";
 
-2 of capture {
+2 of match {
   <space>;
   "batman";
 }
@@ -24,7 +22,7 @@ The current goal is supporting the JavaScript implementation of regular expressi
 Turns into
 
 ```regex
-/(?<melody>na){16}(\sbatman){2}/
+/(?:na){16}(?:\sbatman){2}/
 ```
 
 ## Install
@@ -32,15 +30,15 @@ Turns into
 ### From Source
 
 ```sh
-git clone https://github.com/yoav-lavi/rrx.git
-cd rrx
+git clone https://github.com/yoav-lavi/melody.git
+cd melody
 cargo install --path .
 ```
 
 ## CLI Usage
 
 ```sh
-rrx [OPTIONS] <PATH>
+melody [OPTIONS] <PATH>
 
 OPTIONS:
   -f, --file <FILE>    write to an output file
@@ -81,7 +79,7 @@ OPTIONS:
 
 ## Feature Status
 
-| RRX                                 | Regex                 | Implemented | Unclear      |
+| Melody                              | Regex                 | Implemented | Unclear      |
 | ----------------------------------- | --------------------- | ----------- | ------------ |
 | `5 of "hello";`                     | `(hello){5}`          | ✅          |              |
 | `5 to 7 of "A";`                    | `A{5,7}`              | ✅          |              |
@@ -127,7 +125,7 @@ OPTIONS:
 | enforce group close                 |                       |             |              |
 | tests                               |                       |             |              |
 | general cleanup and modules         |                       |             |              |
-| auto escape for non RRX patterns    |                       |             |              |
+| auto escape for non Melody patterns |                       |             |              |
 | syntax highlighting extension       |                       |             |              |
 | `not A;`                            | `[^A]`                |             | ❓           |
 | `flags: global, multiline, ...`     | `/.../gm...`          |             | ❓           |
@@ -160,7 +158,7 @@ OPTIONS:
 
 ## Acknowledgments
 
-RRX uses:
+Melody uses:
 
 - [Logos](https://github.com/maciejhirsz/logos) [(license)](https://github.com/maciejhirsz/logos/blob/master/LICENSE-MIT)
 - [Clap](https://github.com/clap-rs/clap) [(license)](https://github.com/clap-rs/clap/blob/master/LICENSE-MIT)
