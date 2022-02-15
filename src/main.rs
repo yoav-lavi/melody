@@ -13,7 +13,7 @@ use crate::output::print_output;
 #[derive(Parser, Debug)]
 #[clap(about, version, author)]
 struct Args {
-    source_path: String,
+    path: String,
     #[clap(short, long)]
     file: Option<String>,
     #[clap(short, long)]
@@ -182,7 +182,7 @@ fn format_regex(regex: String, flags: Option<String>) -> String {
 fn main() {
     let args = Args::parse();
 
-    let file_path = &args.source_path;
+    let file_path = &args.path;
 
     let source = match read_to_string(file_path) {
         Ok(source) => source,
