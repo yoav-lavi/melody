@@ -26,6 +26,7 @@ Turns into
 ```regex
 /(?<melody>na){16}(\sbatman){2}/
 ```
+
 ## Install
 
 Currently installation can be done by cloning this repo and running `cargo install --path .`
