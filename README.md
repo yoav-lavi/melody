@@ -10,6 +10,9 @@ The current goal is supporting the JavaScript implementation of regular expressi
 
 ## Examples
 
+Note: these are for the currently supported syntax and may change
+
+### Batman Theme
 ```rust
 16 of "na";
 
@@ -26,6 +29,39 @@ Turns into
 ```regex
 /(?:na){16}(?:\sbatman){2}/
 ```
+
+### Twitter Hashtag
+
+```rust
+"#";
+some of <word>;
+
+// #melody
+```
+
+Turns into
+
+```regex
+/#\w+/
+```
+
+### Entry Level Course Lessons
+
+```rust
+some of <word>;
+<space>;
+"1";
+2 of <digit>;
+
+// classname 1xx
+```
+
+Turns into
+
+```regex
+/\w+\s1\d{2}/
+```
+
 
 ## Install
 
