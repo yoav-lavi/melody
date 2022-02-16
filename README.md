@@ -123,7 +123,7 @@ The Melody file extension is `.mdy`
 ## Feature Status
 
 ✅ - Implemented
-⬜ - Partially Implemented
+🐣 - Partially Implemented
 ❌ - Not implemented
 ❓ - Unclear whether this will be imlemented
 ❔ - Unclear what the syntax will be
@@ -159,8 +159,8 @@ The Melody file extension is `.mdy`
 | no color output                     |                       | ✅          |
 | `char`                              | `.`                   | ✅          |
 | `some of`                           | `+`                   | ✅          |
-| enforce group close                 |                       | ⬜          |
-| tests                               |                       | ⬜          |
+| enforce group close                 |                       | 🐣          |
+| tests                               |                       | 🐣          |
 | `not <space>;`                      | `\S`                  | ❌          |
 | `not <digit>;`                      | `\D`                  | ❌          |
 | `not <word>;`                       | `\W`                  | ❌          |
@@ -173,7 +173,7 @@ The Melody file extension is `.mdy`
 | syntax highlighting extension       |                       | ❌          |
 | rust library / macro                |                       | ❌          |
 | TS/JS build step                    |                       | ❌          |
-| more robust parsing mechanism       |                       | ❌          |
+| more robust parsing mechanism (ast) |                       | ❌          |
 | `not "A";`                          | `[^A]`                | ❔          |
 | `flags: global, multiline, ...`     | `/.../gm...`          | ❔          |
 | `/* comment */`                     |                       | ❔          |
