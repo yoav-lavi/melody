@@ -10,6 +10,9 @@ The current goal is supporting the JavaScript implementation of regular expressi
 
 ## Examples
 
+Note: these are for the currently supported syntax and may change
+
+### Batman Theme
 ```rust
 16 of "na";
 
@@ -26,6 +29,39 @@ Turns into
 ```regex
 /(?:na){16}(?:\sbatman){2}/
 ```
+
+### Twitter Hashtag
+
+```rust
+"#";
+some of <word>;
+
+// #melody
+```
+
+Turns into
+
+```regex
+/#\w+/
+```
+
+### Entry Level Course Lessons
+
+```rust
+some of <word>;
+<space>;
+"1";
+2 of <digit>;
+
+// classname 1xx
+```
+
+Turns into
+
+```regex
+/\w+\s1\d{2}/
+```
+
 
 ## Install
 
@@ -51,13 +87,14 @@ OPTIONS:
 
 ## Keywords
 
-- `of` - used after a number or a range and before a sequence to be matched, e.g. `5 of A;`, equivalent to regex `{5}`
+- `of` - used after a number or a range and before a sequence to be matched, e.g. `5 of "A";`, equivalent to regex `{5}`
 - `to` - used to create a range (either as a quantifier or as a character range), e.g. `5 to 9`, equivalent to regex `{5,9}` if before an `of` or `[5-9]` otherwise
 - `capture` - used to open a `capture` or named `capture` block, equivalent to regex `(...)`
 - `match` - used to open a `match` block, equivalent to regex `(?:...)`
 - `start` - matches the start of the string, equivalent to regex `^`
 - `end` - matches the end of the string, equivalent to regex `$`
 - `char` - matches a single character, equivalent to regex `.`
+- `some` - used with `of` to express 1 or more of a pattern, equivalent to regex `+`
 
 ## Symbols
 
@@ -85,82 +122,90 @@ The Melody file extension is `.mdy`
 
 ## Feature Status
 
-| Melody                              | Regex                 | Implemented | Unclear      |
-| ----------------------------------- | --------------------- | ----------- | ------------ |
-| `5 of "hello";`                     | `(?:hello){5}`        | ✅          |              |
-| `5 to 7 of "A";`                    | `A{5,7}`              | ✅          |              |
-| `capture { ... }`                   | `(...)`               | ✅          |              |
-| `capture name { ... }`              | `(?<name>...)`        | ✅          |              |
-| `match { ... }`                     | `(?:...)`             | ✅          |              |
-| `<space>;`                          | `\s`                  | ✅          |              |
-| `A to Z;`                           | `[A-Z]`               | ✅          |              |
-| `a to z;`                           | `[a-z]`               | ✅          |              |
-| `0 to 9;`                           | `[0-9]`               | ✅          |              |
-| `// comment`                        |                       | ✅          |              |
-| `start;`                            | `^`                   | ✅          |              |
-| `end;`                              | `$`                   | ✅          |              |
-| `<newline>;`                        | `\n`                  | ✅          |              |
-| `<tab>;`                            | `\t`                  | ✅          |              |
-| `<return>;`                         | `\r`                  | ✅          |              |
-| `<feed>;`                           | `\f`                  | ✅          |              |
-| `<null>;`                           | `\0`                  | ✅          |              |
-| `<digit>;`                          | `\d`                  | ✅          |              |
-| `<vertical>;`                       | `\v`                  | ✅          |              |
-| `<word>;`                           | `\w`                  | ✅          |              |
-| `"...";` (raw)                      | ...                   | ✅          |              |
-| `'...';` (raw)                      | ...                   | ✅          |              |
-| `'\'';`                             | `'`                   | ✅          |              |
-| `"\"";`                             | `"`                   | ✅          |              |
-| support non alphanumeric characters |                       | ✅          |              |
-| output to file                      |                       | ✅          |              |
-| no color output                     |                       | ✅          |              |
-| `char`                              | `.`                   | ✅          |              |
-| `not before ...`                    | `(?!...)`             |             |              |
-| `not after ...`                     | `(?<!...)`            |             |              |
-| `before ...`                        | `(?=...)`             |             |              |
-| `after ...`                         | `(?<=...)`            |             |              |
-| `not <space>;`                      | `\S`                  |             |              |
-| `not <digit>;`                      | `\D`                  |             |              |
-| `not <word>;`                       | `\W`                  |             |              |
-| `<backspace>`                       | `[\b]`                |             |              |
-| `some of`                           | `+`                   |             |              |
-| file watcher                        |                       |             |              |
-| nested groups                       | `(...(...))`          |             |              |
-| multiple ranges                     | `[a-zA-Z0-9]`         |             |              |
-| enforce semicolon usage             |                       |             |              |
-| enforce group close                 |                       |             |              |
-| tests                               |                       |             |              |
-| general cleanup and modules         |                       |             |              |
-| auto escape for non Melody patterns |                       |             |              |
-| syntax highlighting extension       |                       |             |              |
-| `not A;`                            | `[^A]`                |             | ❓           |
-| `flags: global, multiline, ...`     | `/.../gm...`          |             | ❓           |
-| `/* comment */`                     |                       |             | ❓           |
-| `over 4 of "A";`                    | `A{5,}`               |             | ❓           |
-| `maybe of`                          | `?`                   |             | ❓           |
-| `maybe some of`                     | `*`                   |             | ❓           |
-| `either of ..., ...`                | `\|`                  |             | ❓           |
-| `any of a, b, c`                    | `[abc]`               |             | ❓           |
-| escape curly braces or symbo        |                       |             | ❓           |
-| variables / macros                  |                       |             | ❓           |
-| regex optimization                  |                       |             | ❓           |
-| standard library / patterns         |                       |             | ❓           |
-| (?)                                 | `*?`                  |             | ❓           |
-| (?)                                 | `\#`                  |             | ❓           |
-| (?)                                 | `\k<name>`            |             | ❓           |
-| (?)                                 | `\p{...}`             |             | ❓           |
-| (?)                                 | `\P{...}`             |             | ❓           |
-| (?)                                 | `\uYYYY`              |             | ❓           |
-| (?)                                 | `\xYY`                |             | ❓           |
-| (?)                                 | `\ddd`                |             | ❓           |
-| (?)                                 | `\cY`                 |             | ❓           |
-| (?)                                 | `\b`                  |             | ❓           |
-| (?)                                 | `\B`                  |             | ❓           |
-| (?)                                 | `$1`                  |             | ❓           |
-| (?)                                 | <code>$`</code>       |             | ❓           |
-| (?)                                 | `$&`                  |             | ❓           |
-| (?)                                 | `x20`                 |             | ❓           |
-| (?)                                 | `x{06fa}`             |             | ❓           |
+✅ - Implemented
+🐣 - Partially Implemented
+❌ - Not implemented
+❓ - Unclear whether this will be imlemented
+❔ - Unclear what the syntax will be
+
+| Melody                              | Regex                 | Status      |
+| ----------------------------------- | --------------------- | ----------- |
+| `5 of "hello";`                     | `(?:hello){5}`        | ✅          |
+| `5 to 7 of "A";`                    | `A{5,7}`              | ✅          |
+| `capture { ... }`                   | `(...)`               | ✅          |
+| `capture name { ... }`              | `(?<name>...)`        | ✅          |
+| `match { ... }`                     | `(?:...)`             | ✅          |
+| `<space>;`                          | `\s`                  | ✅          |
+| `A to Z;`                           | `[A-Z]`               | ✅          |
+| `a to z;`                           | `[a-z]`               | ✅          |
+| `0 to 9;`                           | `[0-9]`               | ✅          |
+| `// comment`                        |                       | ✅          |
+| `start;`                            | `^`                   | ✅          |
+| `end;`                              | `$`                   | ✅          |
+| `<newline>;`                        | `\n`                  | ✅          |
+| `<tab>;`                            | `\t`                  | ✅          |
+| `<return>;`                         | `\r`                  | ✅          |
+| `<feed>;`                           | `\f`                  | ✅          |
+| `<null>;`                           | `\0`                  | ✅          |
+| `<digit>;`                          | `\d`                  | ✅          |
+| `<vertical>;`                       | `\v`                  | ✅          |
+| `<word>;`                           | `\w`                  | ✅          |
+| `"...";` (raw)                      | ...                   | ✅          |
+| `'...';` (raw)                      | ...                   | ✅          |
+| `'\'';`                             | `'`                   | ✅          |
+| `"\"";`                             | `"`                   | ✅          |
+| support non alphanumeric characters |                       | ✅          |
+| output to file                      |                       | ✅          |
+| no color output                     |                       | ✅          |
+| `char`                              | `.`                   | ✅          |
+| `some of`                           | `+`                   | ✅          |
+| enforce group close                 |                       | 🐣          |
+| tests                               |                       | 🐣          |
+| `not <space>;`                      | `\S`                  | ❌          |
+| `not <digit>;`                      | `\D`                  | ❌          |
+| `not <word>;`                       | `\W`                  | ❌          |
+| `<backspace>`                       | `[\b]`                | ❌          |
+| file watcher                        |                       | ❌          |
+| nested groups                       | `(...(...))`          | ❌          |
+| multiple ranges                     | `[a-zA-Z0-9]`         | ❌          |
+| general cleanup and modules         |                       | ❌          |
+| auto escape for non Melody patterns |                       | ❌          |
+| syntax highlighting extension       |                       | ❌          |
+| rust library / macro                |                       | ❌          |
+| TS/JS build step                    |                       | ❌          |
+| more robust parsing mechanism (ast) |                       | ❌          |
+| `not "A";`                          | `[^A]`                | ❔          |
+| `flags: global, multiline, ...`     | `/.../gm...`          | ❔          |
+| `/* comment */`                     |                       | ❔          |
+| `over 4 of "A";`                    | `A{5,}`               | ❔          |
+| `maybe of`                          | `?`                   | ❔          |
+| `maybe some of`                     | `*`                   | ❔          |
+| `either of ..., ...`                | `\|`                  | ❔          |
+| `any of "a", "b", "c"`              | `[abc]`               | ❔          |
+| `... not before ...`                | `...(?!...)`          | ❔          |
+| `... not after ...`                 | `...(?<!...)`         | ❔          |
+| `... before ...`                    | `...(?=...)`          | ❔          |
+| `... after ...`                     | `...(?<=...)`         | ❔          |
+| (?)                                 | `*?`                  | ❔          |
+| (?)                                 | `\#`                  | ❔          |
+| (?)                                 | `\k<name>`            | ❔          |
+| (?)                                 | `\p{...}`             | ❔          |
+| (?)                                 | `\P{...}`             | ❔          |
+| (?)                                 | `\uYYYY`              | ❔          |
+| (?)                                 | `\xYY`                | ❔          |
+| (?)                                 | `\ddd`                | ❔          |
+| (?)                                 | `\cY`                 | ❔          |
+| (?)                                 | `\b`                  | ❔          |
+| (?)                                 | `\B`                  | ❔          |
+| (?)                                 | `$1`                  | ❔          |
+| (?)                                 | <code>$`</code>       | ❔          |
+| (?)                                 | `$&`                  | ❔          |
+| (?)                                 | `x20`                 | ❔          |
+| (?)                                 | `x{06fa}`             | ❔          |
+| variables / macros                  |                       | ❓          |
+| regex optimization                  |                       | ❓          |
+| standard library / patterns         |                       | ❓          |
+| reverse compiler                    |                       | ❓          |
 
 ## Acknowledgments
 

@@ -78,6 +78,9 @@ enum Token {
     #[regex(r#"\d+ of"#, quantifier)]
     QuantifierExpression(String),
 
+    #[regex("some of")]
+    SomeExpression,
+
     #[regex(r#""(\\"|[^"\n])*""#, raw)]
     RawDouble(String),
 
@@ -283,6 +286,10 @@ fn compiler(source: &str) -> String {
                 quantifier = None;
                 None
             }
+            Token::SomeExpression => {
+                quantifier = Some(String::from("+"));
+                None
+            }
 
             // direct replacements
             Token::LineStart => handle_quantifier(String::from("^"), quantifier.clone(), false),
@@ -392,4 +399,20 @@ fn char_test() {
         "#,
     );
     assert_eq!(output, "/.{3}/");
+}
+
+#[test]
+fn some_test() {
+    let single_output = compiler(
+        r#"
+        some of char;
+        "#,
+    );
+    assert_eq!(single_output, "/.+/");
+    let multiple_output = compiler(
+        r#"
+        some of "ABC";
+        "#,
+    );
+    assert_eq!(multiple_output, "/(?:ABC)+/");
 }
