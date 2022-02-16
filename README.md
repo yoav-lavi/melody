@@ -45,7 +45,7 @@ Turns into
 /#\w+/
 ```
 
-### Entry Level Course Lessons
+### Introductory Courses
 
 ```rust
 some of <word>;
