@@ -168,12 +168,12 @@ The Melody file extension is `.mdy`
 | file watcher                        |                       | ❌          |
 | nested groups                       | `(...(...))`          | ❌          |
 | multiple ranges                     | `[a-zA-Z0-9]`         | ❌          |
-| enforce semicolon usage             |                       | ❌          |
 | general cleanup and modules         |                       | ❌          |
 | auto escape for non Melody patterns |                       | ❌          |
 | syntax highlighting extension       |                       | ❌          |
 | rust library / macro                |                       | ❌          |
 | TS/JS build step                    |                       | ❌          |
+| more robust parsing mechanism       |                       | ❌          |
 | `not "A";`                          | `[^A]`                | ❔          |
 | `flags: global, multiline, ...`     | `/.../gm...`          | ❔          |
 | `/* comment */`                     |                       | ❔          |
