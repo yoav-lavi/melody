@@ -94,6 +94,7 @@ OPTIONS:
 - `start` - matches the start of the string, equivalent to regex `^`
 - `end` - matches the end of the string, equivalent to regex `$`
 - `char` - matches a single character, equivalent to regex `.`
+- `some` - used with `of` to express 1 or more of a pattern, equivalent to regex `+`
 
 ## Symbols
 
