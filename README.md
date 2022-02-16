@@ -56,7 +56,7 @@ OPTIONS:
 - `capture` - used to open a `capture` or named `capture` block, equivalent to regex `(...)`
 - `match` - used to open a `match` block, equivalent to regex `(?:...)`
 - `start` - matches the start of the string, equivalent to regex `^`
-- `end` - matches the start of the string, equivalent to regex `$`
+- `end` - matches the end of the string, equivalent to regex `$`
 - `char` - matches a single character, equivalent to regex `.`
 
 ## Symbols
