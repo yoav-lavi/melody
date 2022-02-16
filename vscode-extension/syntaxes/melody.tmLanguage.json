@@ -1,0 +1,72 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Melody",
+  "patterns": [
+    {
+      "include": "#keywords"
+    },
+    {
+      "include": "#comments"
+    },
+    {
+      "include": "#symbols"
+    },
+    {
+      "include": "#numbers"
+    },
+    {
+      "include": "#strings"
+    }
+  ],
+  "repository": {
+    "keywords": {
+      "patterns": [
+        {
+          "name": "keyword.control.melody",
+          "match": "\\b(of|capture|to|of|some|start|end|match)\\b"
+        }
+      ]
+    },
+    "symbols": {
+      "patterns": [
+        {
+          "name": "constant.language.melody",
+          "begin": "<",
+          "end": ">"
+        },
+        {
+          "name": "constant.language.melody",
+          "match": "\\bchar\\b"
+        }
+      ]
+    },
+    "numbers": {
+      "patterns": [
+        {
+          "name": "constant.numeric.melody",
+          "match": "\\d"
+        }
+      ]
+    },
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.line.double-slash.melody",
+          "match": "//.*"
+        }
+      ]
+    },
+    "strings": {
+      "name": "string.quoted.double.melody",
+      "begin": "\"",
+      "end": "\"",
+      "patterns": [
+        {
+          "name": "constant.character.escape.melody",
+          "match": "\\\\."
+        }
+      ]
+    }
+  },
+  "scopeName": "source.mdy"
+}

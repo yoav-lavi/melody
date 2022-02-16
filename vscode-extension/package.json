@@ -1,0 +1,25 @@
+{
+    "name": "melody",
+    "displayName": "Melody",
+    "description": "Melody syntax highlighting",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.64.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "melody",
+            "aliases": ["Melody", "melody"],
+            "extensions": [".mdy"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "melody",
+            "scopeName": "source.mdy",
+            "path": "./syntaxes/melody.tmLanguage.json"
+        }]
+    }
+}
