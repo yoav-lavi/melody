@@ -124,11 +124,11 @@ The Melody file extension is `.mdy`
 
 ✅ - Implemented
 
-🐣 - Partially Implemented
+🐣 - Partially implemented
 
 ❌ - Not implemented
 
-❓ - Unclear whether this will be imlemented
+❓ - Unclear whether this will be implemented
 
 ❔ - Unclear what the syntax will be
 
