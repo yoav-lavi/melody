@@ -38,6 +38,14 @@ fn range_expression(lex: &mut Lexer<Token>) -> String {
     format!("{{{formatted_range}}}")
 }
 
+fn open_range_expression(lex: &mut Lexer<Token>) -> Option<String> {
+    let slice = lex.slice();
+    let range: i32 = slice[5..slice.len() - 3].parse().ok()?;
+    let incremented_range = range + 1;
+
+    Some(format!("{{{incremented_range},}}"))
+}
+
 fn range(lex: &mut Lexer<Token>) -> String {
     let slice = lex.slice();
     let formatted_slice = slice.replace(" to ", "-");
@@ -77,6 +85,9 @@ enum Token {
 
     #[regex(r#"\d+ of"#, quantifier)]
     QuantifierExpression(String),
+
+    #[regex(r#"over \d+ of"#, open_range_expression)]
+    OpenRangeExpression(String),
 
     #[regex("some of")]
     SomeExpression,
@@ -278,7 +289,7 @@ fn compiler(source: &str) -> String {
                 quantifier = Some(quantity);
                 None
             }
-            Token::RangeExpression(range) => {
+            Token::OpenRangeExpression(range) | Token::RangeExpression(range) => {
                 quantifier = Some(range);
                 None
             }
@@ -396,6 +407,16 @@ fn lowercase_range_test() {
         "#,
     );
     assert_eq!(output, "/[a-z]/");
+}
+
+#[test]
+fn open_range_expression_test() {
+    let output = compiler(
+        r#"
+        over 4 of "a";
+        "#,
+    );
+    assert_eq!(output, "/a{5,}/");
 }
 
 #[test]

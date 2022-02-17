@@ -171,6 +171,7 @@ Get the extension [here](https://marketplace.visualstudio.com/items?itemName=yoa
 | `char`                              | `.`                   | ✅          |
 | `some of`                           | `+`                   | ✅          |
 | syntax highlighting extension       |                       | ✅          |
+| `over 5 of "A";`                    | `A{6,}`               | ✅          |
 | enforce group close                 |                       | 🐣          |
 | tests                               |                       | 🐣          |
 | `not <space>;`                      | `\S`                  | ❌          |
@@ -188,7 +189,6 @@ Get the extension [here](https://marketplace.visualstudio.com/items?itemName=yoa
 | `not "A";`                          | `[^A]`                | ❔          |
 | `flags: global, multiline, ...`     | `/.../gm...`          | ❔          |
 | `/* comment */`                     |                       | ❔          |
-| `over 4 of "A";`                    | `A{5,}`               | ❔          |
 | `maybe of`                          | `?`                   | ❔          |
 | `maybe some of`                     | `*`                   | ❔          |
 | `either of ..., ...`                | `\|`                  | ❔          |

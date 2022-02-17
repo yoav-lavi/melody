@@ -23,7 +23,7 @@
       "patterns": [
         {
           "name": "keyword.other.melody",
-          "match": "\\b(of|capture|to|of|some|match)\\b"
+          "match": "\\b(of|capture|to|of|some|match|over)\\b"
         }
       ]
     },
