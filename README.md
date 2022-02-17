@@ -63,24 +63,6 @@ Turns into
 /\w+\s1\d{2}/
 ```
 
-### Goku's Power Level
-
-```rust
-"9";
-2 of <digit>;
-1 to 9;
-
-// It's Over 9000!
-
-// (Matches 9001 to 9999)
-```
-
-Turns into
-
-```regex
-/9\d{2}[1-9]/
-```
-
 ## Install
 
 ### From Source
