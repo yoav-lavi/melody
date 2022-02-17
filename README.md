@@ -122,7 +122,9 @@ The Melody file extension is `.mdy`
 
 ## Syntax Highlighting
 
-- Get the Melody VSCode extension [here](https://marketplace.visualstudio.com/items?itemName=yoavlavi.melody)
+### VSCode
+
+Get the extension [here](https://marketplace.visualstudio.com/items?itemName=yoavlavi.melody)
 
 ## Feature Status
 
