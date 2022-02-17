@@ -356,6 +356,89 @@ fn capture_test() {
 }
 
 #[test]
+fn named_capture_test() {
+    let output = compiler(
+        r#"
+        capture name {
+          5 of "A";
+          0 to 9;
+        }
+        "#,
+    );
+    assert_eq!(output, "/(?<name>A{5}[0-9])/");
+}
+
+#[test]
+fn number_quantifier_range_test() {
+    let output = compiler(
+        r#"
+        1 to 5 of "A"
+        "#,
+    );
+    assert_eq!(output, "/A{1,5}/");
+}
+
+#[test]
+fn uppercase_range_test() {
+    let output = compiler(
+        r#"
+        A to Z;
+        "#,
+    );
+    assert_eq!(output, "/[A-Z]/");
+}
+
+#[test]
+fn lowercase_range_test() {
+    let output = compiler(
+        r#"
+        a to z;
+        "#,
+    );
+    assert_eq!(output, "/[a-z]/");
+}
+
+#[test]
+fn start_end_test() {
+    let output = compiler(
+        r#"
+        start;
+        "a"
+        end;
+        "#,
+    );
+    assert_eq!(output, "/^a$/");
+}
+
+#[test]
+fn symbol_test() {
+    let output = compiler(
+        r#"
+        <space>;
+        <newline>;
+        <tab>;
+        <return>;
+        <feed>;
+        <null>;
+        <digit>;
+        <word>;
+        <vertical>;
+        "#,
+    );
+    assert_eq!(output, r"/\s\n\t\r\f\0\d\w\v/");
+}
+
+#[test]
+fn single_quote_test() {
+    let output = compiler(
+        r#"
+        'hello';
+        "#,
+    );
+    assert_eq!(output, "/hello/");
+}
+
+#[test]
 fn match_test() {
     let output = compiler(
         r#"
@@ -377,18 +460,6 @@ fn comment_test() {
         "#,
     );
     assert_eq!(output, "/[0-5]/");
-}
-
-#[test]
-fn symbol_test() {
-    let output = compiler(
-        r#"
-        <space>;
-        <tab>;
-        <digit>;
-        "#,
-    );
-    assert_eq!(output, r"/\s\t\d/");
 }
 
 #[test]
