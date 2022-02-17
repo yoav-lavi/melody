@@ -63,6 +63,22 @@ Turns into
 /\w+\s1\d{2}/
 ```
 
+### Indented Code (2 spaces)
+
+```rust
+some of match {
+   2 of <space>;
+}
+some of <word>;
+";";
+```
+
+Turns into
+
+```regex
+/(?:\s{2})+\w+;/
+```
+
 ## Install
 
 ### From Source
