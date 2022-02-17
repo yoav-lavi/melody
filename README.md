@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="520" alt="code exmaple" src="https://user-images.githubusercontent.com/14347895/154124756-ddbd3c84-f8b2-45bd-b624-2c510482c4e2.png">
+  <img width="520" alt="code example" src="https://user-images.githubusercontent.com/14347895/154124756-ddbd3c84-f8b2-45bd-b624-2c510482c4e2.png">
 </p>
 
 Melody is a language designed to compile to and maintain a 1-1 relationship with regular expressions, while being more readable and maintainable.
@@ -98,15 +98,15 @@ OPTIONS:
 
 ## Symbols
 
-- `<space>` - equavalent to regex `\s`
-- `<newline>` - equavalent to regex `\n`
-- `<tab>` - equavalent to regex `\t`
-- `<return>` - equavalent to regex `\r`
-- `<feed>` - equavalent to regex `\f`
-- `<null>` - equavalent to regex `\0`
-- `<digit>` - equavalent to regex `\d`
-- `<vertical>` - equavalent to regex `\v`
-- `<word>` - equavalent to regex `\w`
+- `<space>` - equivalent to regex `\s`
+- `<newline>` - equivalent to regex `\n`
+- `<tab>` - equivalent to regex `\t`
+- `<return>` - equivalent to regex `\r`
+- `<feed>` - equivalent to regex `\f`
+- `<null>` - equivalent to regex `\0`
+- `<digit>` - equivalent to regex `\d`
+- `<vertical>` - equivalent to regex `\v`
+- `<word>` - equivalent to regex `\w`
 
 ## Concepts
 
