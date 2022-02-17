@@ -67,7 +67,7 @@ Turns into
 
 ```rust
 some of match {
-   2 of <space>;
+  2 of <space>;
 }
 
 some of char;
