@@ -69,6 +69,7 @@ Turns into
 some of match {
    2 of <space>;
 }
+
 some of char;
 ";";
 
