@@ -83,6 +83,10 @@ OPTIONS:
 
 The Melody file extension is `.mdy`
 
+## Syntax Highlighting
+
+- Get the Melody VSCode extension [here](https://marketplace.visualstudio.com/items?itemName=yoavlavi.melody)
+
 ## Feature Status
 
 | Melody                              | Regex                 | Implemented | Unclear      |
@@ -115,6 +119,7 @@ The Melody file extension is `.mdy`
 | output to file                      |                       | ✅          |              |
 | no color output                     |                       | ✅          |              |
 | `char`                              | `.`                   | ✅          |              |
+| syntax highlighting extension       |                       | ✅          |              |
 | `not before ...`                    | `(?!...)`             |             |              |
 | `not after ...`                     | `(?<!...)`            |             |              |
 | `before ...`                        | `(?=...)`             |             |              |
@@ -132,7 +137,6 @@ The Melody file extension is `.mdy`
 | tests                               |                       |             |              |
 | general cleanup and modules         |                       |             |              |
 | auto escape for non Melody patterns |                       |             |              |
-| syntax highlighting extension       |                       |             |              |
 | `not A;`                            | `[^A]`                |             | ❓           |
 | `flags: global, multiline, ...`     | `/.../gm...`          |             | ❓           |
 | `/* comment */`                     |                       |             | ❓           |

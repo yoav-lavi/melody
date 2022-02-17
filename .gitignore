@@ -1,1 +1,3 @@
 /target
+**.vsix
+.DS_Store

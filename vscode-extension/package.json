@@ -1,25 +1,40 @@
 {
-    "name": "melody",
-    "displayName": "Melody",
-    "description": "Melody syntax highlighting",
-    "version": "0.0.1",
-    "engines": {
-        "vscode": "^1.64.0"
-    },
-    "categories": [
-        "Programming Languages"
+  "name": "melody",
+  "displayName": "Melody",
+  "description": "Melody syntax highlighting",
+  "version": "0.0.1",
+  "publisher": "yoavlavi",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yoav-lavi/melody.git",
+    "directory": "vscode-extension"
+  },
+  "engines": {
+    "vscode": "^1.64.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "melody",
+        "aliases": [
+          "Melody",
+          "melody"
+        ],
+        "extensions": [
+          ".mdy"
+        ],
+        "configuration": "./language-configuration.json"
+      }
     ],
-    "contributes": {
-        "languages": [{
-            "id": "melody",
-            "aliases": ["Melody", "melody"],
-            "extensions": [".mdy"],
-            "configuration": "./language-configuration.json"
-        }],
-        "grammars": [{
-            "language": "melody",
-            "scopeName": "source.mdy",
-            "path": "./syntaxes/melody.tmLanguage.json"
-        }]
-    }
+    "grammars": [
+      {
+        "language": "melody",
+        "scopeName": "source.mdy",
+        "path": "./syntaxes/melody.tmLanguage.json"
+      }
+    ]
+  }
 }

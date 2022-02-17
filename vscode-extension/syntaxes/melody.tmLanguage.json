@@ -22,21 +22,24 @@
     "keywords": {
       "patterns": [
         {
-          "name": "keyword.control.melody",
-          "match": "\\b(of|capture|to|of|some|start|end|match)\\b"
+          "name": "keyword.other.melody",
+          "match": "\\b(of|capture|to|of|some|match)\\b"
         }
       ]
     },
     "symbols": {
       "patterns": [
         {
-          "name": "constant.language.melody",
-          "begin": "<",
-          "end": ">"
+          "name": "constant.character.melody",
+          "match": "(<space>|<newline>|<tab>|<return>|<feed>|<null>|<digit>|<word>|<vertical>)"
         },
         {
-          "name": "constant.language.melody",
-          "match": "\\bchar\\b"
+          "name": "constant.character.melody",
+          "match": "\\b(A|Z|a|z)\\b"
+        },
+        {
+          "name": "constant.character.melody",
+          "match": "\\b(start|end|char)\\b"
         }
       ]
     },
@@ -57,13 +60,28 @@
       ]
     },
     "strings": {
-      "name": "string.quoted.double.melody",
-      "begin": "\"",
-      "end": "\"",
       "patterns": [
         {
-          "name": "constant.character.escape.melody",
-          "match": "\\\\."
+          "name": "string.quoted.double.melody",
+          "begin": "\"",
+          "end": "\"",
+          "patterns": [
+            {
+              "name": "constant.character.escape.melody",
+              "match": "\\\\."
+            }
+          ]
+        },
+        {
+          "name": "string.quoted.single.melody",
+          "begin": "'",
+          "end": "'",
+          "patterns": [
+            {
+              "name": "constant.character.escape.melody",
+              "match": "\\\\."
+            }
+          ]
         }
       ]
     }
