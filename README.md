@@ -13,6 +13,7 @@ The current goal is supporting the JavaScript implementation of regular expressi
 Note: these are for the currently supported syntax and may change
 
 ### Batman Theme
+
 ```rust
 16 of "na";
 
