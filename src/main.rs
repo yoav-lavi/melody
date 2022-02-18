@@ -139,6 +139,9 @@ enum Token {
 
     #[token("<digit>")]
     DigitSymbol,
+    
+    #[token("not <digit>")]
+    NotDigitSymbol,
 
     #[token("<space>")]
     SpaceSymbol,
@@ -316,6 +319,7 @@ fn compiler(source: &str) -> String {
             Token::FeedSymbol => handle_quantifier(String::from("\\f"), quantifier.clone(), false),
             Token::NullSymbol => handle_quantifier(String::from("\\0"), quantifier.clone(), false),
             Token::DigitSymbol => handle_quantifier(String::from("\\d"), quantifier.clone(), false),
+            Token::NotDigitSymbol => handle_quantifier(String::from("\\D"), quantifier.clone(), false),
             Token::WordSymbol => handle_quantifier(String::from("\\w"), quantifier.clone(), false),
             Token::VerticalSymbol => {
                 handle_quantifier(String::from("\\v"), quantifier.clone(), false)
