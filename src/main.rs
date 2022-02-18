@@ -146,6 +146,9 @@ enum Token {
     #[token("<space>")]
     SpaceSymbol,
 
+    #[token("not <space>")]
+    NotSpaceSymbol,
+
     #[token("<word>")]
     WordSymbol,
 
@@ -309,6 +312,7 @@ fn compiler(source: &str) -> String {
             Token::LineStart => handle_quantifier(String::from("^"), quantifier.clone(), false),
             Token::LineEnd => handle_quantifier(String::from("$"), quantifier.clone(), false),
             Token::SpaceSymbol => handle_quantifier(String::from("\\s"), quantifier.clone(), false),
+            Token::NotSpaceSymbol => handle_quantifier(String::from("\\S"), quantifier.clone(), false),
             Token::NewlineSymbol => {
                 handle_quantifier(String::from("\\n"), quantifier.clone(), false)
             }
