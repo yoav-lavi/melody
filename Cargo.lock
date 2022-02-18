@@ -149,9 +149,16 @@ dependencies = [
 name = "melody"
 version = "0.1.0"
 dependencies = [
+ "logos",
+]
+
+[[package]]
+name = "melody_cli"
+version = "0.1.0"
+dependencies = [
  "clap",
  "colored",
- "logos",
+ "melody",
 ]
 
 [[package]]

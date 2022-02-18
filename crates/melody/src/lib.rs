@@ -1,22 +1,4 @@
-pub mod output;
-
-use clap::Parser;
 use logos::{Lexer, Logos};
-use output::{
-    print_output, print_output_pretty, report_group_end_warning, report_parse_error,
-    report_read_file_error, report_write_file_error,
-};
-use std::fs::{read_to_string, write};
-
-#[derive(Parser, Debug)]
-#[clap(about, version, author)]
-struct Args {
-    path: String,
-    #[clap(short, long)]
-    file: Option<String>,
-    #[clap(short, long)]
-    no_color: bool,
-}
 
 fn quantifier(lex: &mut Lexer<Token>) -> Option<String> {
     let slice = lex.slice();
@@ -172,6 +154,13 @@ enum QuoteType {
     Double,
 }
 
+#[derive(Debug, Clone)]
+pub struct ParseError {
+    pub token: String,
+    pub line: String,
+    pub line_index: usize,
+}
+
 fn handle_quantifier(source: String, quantifier: Option<String>, group: bool) -> Option<String> {
     if let Some(quantifier) = quantifier {
         let formatted_source = if group {
@@ -189,43 +178,7 @@ fn format_regex(regex: &str, flags: Option<String>) -> String {
     format!("/{regex}/{}", flags.unwrap_or_default())
 }
 
-fn main() {
-    let args = Args::parse();
-
-    let file_path = &args.path;
-
-    let source = match read_to_string(file_path) {
-        Ok(source) => source,
-        Err(_) => {
-            report_read_file_error(file_path);
-            std::process::exit(1);
-        }
-    };
-
-    let output = compiler(&source);
-
-    let output_file_path = &args.file;
-    let no_color = args.no_color;
-
-    match output_file_path {
-        Some(output_file_path) => {
-            let write_result = write(output_file_path, output);
-            if write_result.is_err() {
-                report_write_file_error(output_file_path);
-                std::process::exit(1);
-            };
-        }
-        None => {
-            if no_color {
-                print_output(output);
-            } else {
-                print_output_pretty(output);
-            }
-        }
-    }
-}
-
-fn compiler(source: &str) -> String {
+pub fn compiler(source: &str) -> Result<String, ParseError> {
     let mut lex = Token::lexer(source);
 
     let mut in_group = false;
@@ -277,7 +230,6 @@ fn compiler(source: &str) -> String {
                     group_quantifier = None;
                     handle_quantifier(String::from(")"), current_group_quantifier, false)
                 } else {
-                    report_group_end_warning(line);
                     None
                 }
             }
@@ -328,8 +280,11 @@ fn compiler(source: &str) -> String {
             _ => {
                 let line_index = usize::from(line);
                 let line_source = lex.source().split('\n').nth(line_index).unwrap();
-                report_parse_error(lex.slice(), line_source, line + 1);
-                std::process::exit(1);
+                return Err(ParseError {
+                    token: lex.slice().to_owned(),
+                    line: line_source.to_owned(),
+                    line_index,
+                });
             }
         };
 
@@ -338,16 +293,17 @@ fn compiler(source: &str) -> String {
         }
     }
 
-    format_regex(&output, None)
+    Ok(format_regex(&output, None))
 }
 
 #[test]
 fn quantifier_test() {
     let output = compiler(
         r#"
-    5 of "A";
-    "#,
-    );
+  5 of "A";
+  "#,
+    )
+    .unwrap();
     assert_eq!(output, "/A{5}/");
 }
 
@@ -355,12 +311,13 @@ fn quantifier_test() {
 fn capture_test() {
     let output = compiler(
         r#"
-        capture {
-          5 of "A";
-          0 to 9;
-        }
-        "#,
-    );
+      capture {
+        5 of "A";
+        0 to 9;
+      }
+      "#,
+    )
+    .unwrap();
     assert_eq!(output, "/(A{5}[0-9])/");
 }
 
@@ -368,12 +325,13 @@ fn capture_test() {
 fn named_capture_test() {
     let output = compiler(
         r#"
-        capture name {
-          5 of "A";
-          0 to 9;
-        }
-        "#,
-    );
+      capture name {
+        5 of "A";
+        0 to 9;
+      }
+      "#,
+    )
+    .unwrap();
     assert_eq!(output, "/(?<name>A{5}[0-9])/");
 }
 
@@ -381,9 +339,10 @@ fn named_capture_test() {
 fn number_quantifier_range_test() {
     let output = compiler(
         r#"
-        1 to 5 of "A"
-        "#,
-    );
+      1 to 5 of "A"
+      "#,
+    )
+    .unwrap();
     assert_eq!(output, "/A{1,5}/");
 }
 
@@ -391,9 +350,10 @@ fn number_quantifier_range_test() {
 fn uppercase_range_test() {
     let output = compiler(
         r#"
-        A to Z;
-        "#,
-    );
+      A to Z;
+      "#,
+    )
+    .unwrap();
     assert_eq!(output, "/[A-Z]/");
 }
 
@@ -401,9 +361,10 @@ fn uppercase_range_test() {
 fn lowercase_range_test() {
     let output = compiler(
         r#"
-        a to z;
-        "#,
-    );
+      a to z;
+      "#,
+    )
+    .unwrap();
     assert_eq!(output, "/[a-z]/");
 }
 
@@ -411,9 +372,10 @@ fn lowercase_range_test() {
 fn open_range_expression_test() {
     let output = compiler(
         r#"
-        over 4 of "a";
-        "#,
-    );
+      over 4 of "a";
+      "#,
+    )
+    .unwrap();
     assert_eq!(output, "/a{5,}/");
 }
 
@@ -421,11 +383,12 @@ fn open_range_expression_test() {
 fn start_end_test() {
     let output = compiler(
         r#"
-        start;
-        "a"
-        end;
-        "#,
-    );
+      start;
+      "a"
+      end;
+      "#,
+    )
+    .unwrap();
     assert_eq!(output, "/^a$/");
 }
 
@@ -433,17 +396,18 @@ fn start_end_test() {
 fn symbol_test() {
     let output = compiler(
         r#"
-        <space>;
-        <newline>;
-        <tab>;
-        <return>;
-        <feed>;
-        <null>;
-        <digit>;
-        <word>;
-        <vertical>;
-        "#,
-    );
+      <space>;
+      <newline>;
+      <tab>;
+      <return>;
+      <feed>;
+      <null>;
+      <digit>;
+      <word>;
+      <vertical>;
+      "#,
+    )
+    .unwrap();
     assert_eq!(output, r"/\s\n\t\r\f\0\d\w\v/");
 }
 
@@ -451,9 +415,10 @@ fn symbol_test() {
 fn single_quote_test() {
     let output = compiler(
         r#"
-        'hello';
-        "#,
-    );
+      'hello';
+      "#,
+    )
+    .unwrap();
     assert_eq!(output, "/hello/");
 }
 
@@ -461,12 +426,13 @@ fn single_quote_test() {
 fn match_test() {
     let output = compiler(
         r#"
-        match {
-          5 of "A";
-          0 to 9;
-        }
-        "#,
-    );
+      match {
+        5 of "A";
+        0 to 9;
+      }
+      "#,
+    )
+    .unwrap();
     assert_eq!(output, "/(?:A{5}[0-9])/");
 }
 
@@ -474,10 +440,11 @@ fn match_test() {
 fn comment_test() {
     let output = compiler(
         r#"
-        // a single digit in the range of 0 to 5
-        0 to 5;
-        "#,
-    );
+      // a single digit in the range of 0 to 5
+      0 to 5;
+      "#,
+    )
+    .unwrap();
     assert_eq!(output, "/[0-5]/");
 }
 
@@ -485,9 +452,10 @@ fn comment_test() {
 fn char_test() {
     let output = compiler(
         r#"
-        3 of char;
-        "#,
-    );
+      3 of char;
+      "#,
+    )
+    .unwrap();
     assert_eq!(output, "/.{3}/");
 }
 
@@ -495,14 +463,16 @@ fn char_test() {
 fn some_test() {
     let single_output = compiler(
         r#"
-        some of char;
-        "#,
-    );
+      some of char;
+      "#,
+    )
+    .unwrap();
     assert_eq!(single_output, "/.+/");
     let multiple_output = compiler(
         r#"
-        some of "ABC";
-        "#,
-    );
+      some of "ABC";
+      "#,
+    )
+    .unwrap();
     assert_eq!(multiple_output, "/(?:ABC)+/");
 }

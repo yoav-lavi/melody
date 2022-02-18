@@ -89,7 +89,7 @@ Turns into
 ```sh
 git clone https://github.com/yoav-lavi/melody.git
 cd melody
-cargo install --path .
+cargo install --path crates/melody_cli
 ```
 
 ## CLI Usage

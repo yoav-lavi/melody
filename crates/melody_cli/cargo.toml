@@ -1,0 +1,14 @@
+[package]
+name = "melody_cli"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.58.0"
+
+[dependencies]
+clap = { version = "3.0.7", features = ["derive"] }
+colored = "2.0.0"
+melody = { version = "0.1.0", path = "../melody" }
+
+[[bin]]
+name = "melody"
+path = "./src/main.rs"
