@@ -33,19 +33,15 @@ fn main() {
 
     let raw_output = compiler(&source);
 
-    if raw_output.is_err() {
-        let error = raw_output.unwrap_err();
+    if let Err(error) = raw_output {
+        let ParseError {
+            token,
+            line,
+            line_index,
+        } = error;
 
-        match error {
-            ParseError {
-                token,
-                line,
-                line_index,
-            } => {
-                let line_number = line_index + 1;
-                report_parse_error(token, line, line_number);
-            }
-        }
+        let line_number = line_index + 1;
+        report_parse_error(token, line, line_number);
 
         std::process::exit(1);
     }

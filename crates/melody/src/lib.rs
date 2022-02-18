@@ -283,7 +283,7 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
                 return Err(ParseError {
                     token: lex.slice().to_owned(),
                     line: line_source.to_owned(),
-                    line_index: line_index,
+                    line_index,
                 });
             }
         };
