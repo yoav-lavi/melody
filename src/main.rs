@@ -3,12 +3,10 @@ pub mod output;
 use clap::Parser;
 use logos::{Lexer, Logos};
 use output::{
-    print_output_pretty, report_group_end_warning, report_parse_error, report_read_file_error,
-    report_write_file_error,
+    print_output, print_output_pretty, report_group_end_warning, report_parse_error,
+    report_read_file_error, report_write_file_error,
 };
 use std::fs::{read_to_string, write};
-
-use crate::output::print_output;
 
 #[derive(Parser, Debug)]
 #[clap(about, version, author)]
