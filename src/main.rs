@@ -444,6 +444,7 @@ fn symbol_test() {
     let output = compiler(
         r#"
         <space>;
+        not <space>;
         <newline>;
         <tab>;
         <return>;
@@ -455,7 +456,7 @@ fn symbol_test() {
         <vertical>;
         "#,
     );
-    assert_eq!(output, r"/\s\n\t\r\f\0\d\D\w\v/");
+    assert_eq!(output, r"/\s\S\n\t\r\f\0\d\D\w\v/");
 }
 
 #[test]
