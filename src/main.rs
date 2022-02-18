@@ -446,11 +446,12 @@ fn symbol_test() {
         <feed>;
         <null>;
         <digit>;
+        not <digit>;
         <word>;
         <vertical>;
         "#,
     );
-    assert_eq!(output, r"/\s\n\t\r\f\0\d\w\v/");
+    assert_eq!(output, r"/\s\n\t\r\f\0\d\D\w\v/");
 }
 
 #[test]
