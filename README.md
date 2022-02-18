@@ -193,9 +193,9 @@ Get the extension [here](https://marketplace.visualstudio.com/items?itemName=yoa
 | `over 5 of "A";`                    | `A{6,}`               | ✅          |
 | `not <digit>;`                      | `\D`                  | ✅          |
 | `not <space>;`                      | `\S`                  | ✅          |
+| `not <word>;`                       | `\W`                  | ✅          |
 | enforce group close                 |                       | 🐣          |
 | tests                               |                       | 🐣          |
-| `not <word>;`                       | `\W`                  | ❌          |
 | `<backspace>`                       | `[\b]`                | ❌          |
 | file watcher                        |                       | ❌          |
 | nested groups                       | `(...(...))`          | ❌          |
