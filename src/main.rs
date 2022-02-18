@@ -152,6 +152,9 @@ enum Token {
     #[token("<word>")]
     WordSymbol,
 
+    #[token("not <word>")]
+    NotWordSymbol,
+
     #[token("<vertical>")]
     VerticalSymbol,
 
@@ -325,6 +328,7 @@ fn compiler(source: &str) -> String {
             Token::DigitSymbol => handle_quantifier(String::from("\\d"), quantifier.clone(), false),
             Token::NotDigitSymbol => handle_quantifier(String::from("\\D"), quantifier.clone(), false),
             Token::WordSymbol => handle_quantifier(String::from("\\w"), quantifier.clone(), false),
+            Token::NotWordSymbol => handle_quantifier(String::from("\\W"), quantifier.clone(), false),
             Token::VerticalSymbol => {
                 handle_quantifier(String::from("\\v"), quantifier.clone(), false)
             }
