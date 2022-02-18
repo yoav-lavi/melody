@@ -457,10 +457,11 @@ fn symbol_test() {
         <digit>;
         not <digit>;
         <word>;
+        not <word>;
         <vertical>;
         "#,
     );
-    assert_eq!(output, r"/\s\S\n\t\r\f\0\d\D\w\v/");
+    assert_eq!(output, r"/\s\S\n\t\r\f\0\d\D\w\W\v/");
 }
 
 #[test]
