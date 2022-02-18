@@ -192,9 +192,9 @@ Get the extension [here](https://marketplace.visualstudio.com/items?itemName=yoa
 | syntax highlighting extension       |                       | ✅          |
 | `over 5 of "A";`                    | `A{6,}`               | ✅          |
 | `not <digit>;`                      | `\D`                  | ✅          |
+| `not <space>;`                      | `\S`                  | ✅          |
 | enforce group close                 |                       | 🐣          |
 | tests                               |                       | 🐣          |
-| `not <space>;`                      | `\S`                  | ❌          |
 | `not <word>;`                       | `\W`                  | ❌          |
 | `<backspace>`                       | `[\b]`                | ❌          |
 | file watcher                        |                       | ❌          |
