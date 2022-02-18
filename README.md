@@ -140,7 +140,12 @@ OPTIONS:
 
 The Melody file extension is `.mdy`
 
-## Syntax Highlighting
+## Crates
+
+- `melody` - The Melody compiler
+- `melody_cli` - A CLI wrapping the Melody compiler
+
+## Extensions
 
 ### VSCode
 
