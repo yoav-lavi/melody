@@ -1,0 +1,12 @@
+[package]
+name = "melody_wasm"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.58.0"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+melody = { version = "0.1.0", path = "../melody" }
+wasm-bindgen = "0.2.79"
