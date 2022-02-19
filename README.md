@@ -154,9 +154,7 @@ The Melody file extension is `.mdy`
 
 ## Extensions
 
-### VSCode
-
-Get the extension [here](https://marketplace.visualstudio.com/items?itemName=yoavlavi.melody)
+- [VSCode](https://marketplace.visualstudio.com/items?itemName=yoavlavi.melody)
 
 ## Feature Status
 
