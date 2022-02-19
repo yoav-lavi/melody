@@ -144,6 +144,7 @@ The Melody file extension is `.mdy`
 
 - `melody` - The Melody compiler
 - `melody_cli` - A CLI wrapping the Melody compiler
+- `melody_wasm` - WASM binding for the Melody compiler
 
 ## Extensions
 
@@ -196,6 +197,7 @@ Get the extension [here](https://marketplace.visualstudio.com/items?itemName=yoa
 | `some of`                           | `+`                   | ✅          |
 | syntax highlighting extension       |                       | ✅          |
 | `over 5 of "A";`                    | `A{6,}`               | ✅          |
+| WASM binding                        |                       | ✅          |
 | enforce group close                 |                       | 🐣          |
 | tests                               |                       | 🐣          |
 | `not <space>;`                      | `\S`                  | ❌          |
