@@ -198,6 +198,7 @@ Get the extension [here](https://marketplace.visualstudio.com/items?itemName=yoa
 | syntax highlighting extension       |                       | ✅          |
 | `over 5 of "A";`                    | `A{6,}`               | ✅          |
 | WASM binding                        |                       | ✅          |
+| Rust crate                          |                       | ✅          |
 | enforce group close                 |                       | 🐣          |
 | tests                               |                       | 🐣          |
 | `not <space>;`                      | `\S`                  | ❌          |
@@ -209,7 +210,6 @@ Get the extension [here](https://marketplace.visualstudio.com/items?itemName=yoa
 | multiple ranges                     | `[a-zA-Z0-9]`         | ❌          |
 | general cleanup and modules         |                       | ❌          |
 | auto escape for non Melody patterns |                       | ❌          |
-| rust library / macro                |                       | ❌          |
 | TS / JS build step                  |                       | ❌          |
 | more robust parsing mechanism (ast) |                       | ❌          |
 | `not "A";`                          | `[^A]`                | ❔          |
