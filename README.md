@@ -142,7 +142,7 @@ The Melody file extension is `.mdy`
 
 ## Crates
 
-- `melody` - The Melody compiler
+- `melody` - The Melody compiler ([crates.io](https://crates.io/crates/melody_compiler))
 - `melody_cli` - A CLI wrapping the Melody compiler
 - `melody_wasm` - WASM binding for the Melody compiler
 
