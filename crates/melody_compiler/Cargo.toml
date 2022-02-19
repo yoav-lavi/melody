@@ -1,5 +1,5 @@
 [package]
-name = "melody"
+name = "melody_compiler"
 description = "The Melody language compiler"
 homepage = "https://github.com/yoav-lavi/melody"
 repository = "https://github.com/yoav-lavi/melody"

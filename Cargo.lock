@@ -167,26 +167,26 @@ dependencies = [
 ]
 
 [[package]]
-name = "melody"
+name = "melody_cli"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "colored",
+ "melody_compiler",
+]
+
+[[package]]
+name = "melody_compiler"
 version = "0.1.0"
 dependencies = [
  "logos",
 ]
 
 [[package]]
-name = "melody_cli"
-version = "0.1.0"
-dependencies = [
- "clap",
- "colored",
- "melody",
-]
-
-[[package]]
 name = "melody_wasm"
 version = "0.1.0"
 dependencies = [
- "melody",
+ "melody_compiler",
  "wasm-bindgen",
 ]
 

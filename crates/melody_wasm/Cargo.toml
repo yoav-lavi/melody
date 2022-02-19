@@ -8,5 +8,5 @@ rust-version = "1.58.0"
 crate-type = ["cdylib"]
 
 [dependencies]
-melody = { version = "0.1.0", path = "../melody" }
+melody_compiler = { version = "0.1.0", path = "../melody_compiler" }
 wasm-bindgen = "0.2.79"

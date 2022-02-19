@@ -1,2 +1,2 @@
 [workspace]
-members = ["crates/melody_cli", "crates/melody", "crates/melody_wasm"]
+members = ["crates/melody_cli", "crates/melody_compiler", "crates/melody_wasm"]

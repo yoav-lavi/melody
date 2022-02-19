@@ -1,7 +1,7 @@
 pub mod output;
 
 use clap::Parser;
-use melody::{compiler, ParseError};
+use melody_compiler::{compiler, ParseError};
 use output::{
     print_output, print_output_pretty, report_parse_error, report_read_file_error,
     report_write_file_error,
