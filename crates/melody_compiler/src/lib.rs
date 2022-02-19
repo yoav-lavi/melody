@@ -1,63 +1,5 @@
 use logos::{Lexer, Logos};
 
-fn quantifier(lex: &mut Lexer<Token>) -> Option<String> {
-    let slice = lex.slice();
-    let amount: u16 = slice[..slice.len() - 3].parse().ok()?;
-    Some(format!("{{{amount}}}"))
-}
-
-fn named_capture(lex: &mut Lexer<Token>) -> String {
-    let slice = lex.slice();
-    slice[8..slice.len() - 2].to_owned()
-}
-
-fn range_expression(lex: &mut Lexer<Token>) -> String {
-    let slice = lex.slice();
-    let range: &str = &slice[..slice.len() - 3];
-    let formatted_range = range.replace(" to ", ",");
-    format!("{{{formatted_range}}}")
-}
-
-fn open_range_expression(lex: &mut Lexer<Token>) -> Option<String> {
-    let slice = lex.slice();
-    let range: i32 = slice[5..slice.len() - 3].parse().ok()?;
-    let incremented_range = range + 1;
-
-    Some(format!("{{{incremented_range},}}"))
-}
-
-fn range(lex: &mut Lexer<Token>) -> String {
-    let slice = lex.slice();
-    let formatted_slice = slice.replace(" to ", "-");
-    format!("[{formatted_slice}]")
-}
-
-fn get_quote_type(quote: &str) -> QuoteType {
-    if quote == "\"" {
-        QuoteType::Double
-    } else {
-        QuoteType::Single
-    }
-}
-
-fn escape_quotes(source: String, quote_type: QuoteType) -> String {
-    match quote_type {
-        QuoteType::Double => source.replace(r#"\""#, r#"""#),
-        QuoteType::Single => source.replace(r#"\'"#, r#"'"#),
-    }
-}
-
-fn remove_and_escape_quotes(source: &str) -> String {
-    let pattern = source[1..source.len() - 1].to_owned();
-    let quote = source[0..1].to_owned();
-    let quote_type = get_quote_type(&quote);
-    escape_quotes(pattern, quote_type)
-}
-
-fn raw(lex: &mut Lexer<Token>) -> String {
-    remove_and_escape_quotes(lex.slice())
-}
-
 #[derive(Logos, Debug, PartialEq)]
 enum Token {
     #[regex(r#"\d+ to \d+ of"#, range_expression)]
@@ -156,9 +98,70 @@ enum QuoteType {
 
 #[derive(Debug, Clone)]
 pub struct ParseError {
+    /// the unrecognized token responsible for the [ParseError]
     pub token: String,
+    /// the line in which an unrecognized token was encountered
     pub line: String,
+    /// 0 based index of the line in which an unrecognized token was encountered
     pub line_index: usize,
+}
+
+fn quantifier(lex: &mut Lexer<Token>) -> Option<String> {
+    let slice = lex.slice();
+    let amount: u16 = slice[..slice.len() - 3].parse().ok()?;
+    Some(format!("{{{amount}}}"))
+}
+
+fn named_capture(lex: &mut Lexer<Token>) -> String {
+    let slice = lex.slice();
+    slice[8..slice.len() - 2].to_owned()
+}
+
+fn range_expression(lex: &mut Lexer<Token>) -> String {
+    let slice = lex.slice();
+    let range: &str = &slice[..slice.len() - 3];
+    let formatted_range = range.replace(" to ", ",");
+    format!("{{{formatted_range}}}")
+}
+
+fn open_range_expression(lex: &mut Lexer<Token>) -> Option<String> {
+    let slice = lex.slice();
+    let range: i32 = slice[5..slice.len() - 3].parse().ok()?;
+    let incremented_range = range + 1;
+
+    Some(format!("{{{incremented_range},}}"))
+}
+
+fn range(lex: &mut Lexer<Token>) -> String {
+    let slice = lex.slice();
+    let formatted_slice = slice.replace(" to ", "-");
+    format!("[{formatted_slice}]")
+}
+
+fn get_quote_type(quote: &str) -> QuoteType {
+    if quote == "\"" {
+        QuoteType::Double
+    } else {
+        QuoteType::Single
+    }
+}
+
+fn escape_quotes(source: String, quote_type: QuoteType) -> String {
+    match quote_type {
+        QuoteType::Double => source.replace(r#"\""#, r#"""#),
+        QuoteType::Single => source.replace(r#"\'"#, r#"'"#),
+    }
+}
+
+fn remove_and_escape_quotes(source: &str) -> String {
+    let pattern = source[1..source.len() - 1].to_owned();
+    let quote = source[0..1].to_owned();
+    let quote_type = get_quote_type(&quote);
+    escape_quotes(pattern, quote_type)
+}
+
+fn raw(lex: &mut Lexer<Token>) -> String {
+    remove_and_escape_quotes(lex.slice())
 }
 
 fn handle_quantifier(source: String, quantifier: Option<String>, group: bool) -> Option<String> {
@@ -178,6 +181,22 @@ fn format_regex(regex: &str, flags: Option<String>) -> String {
     format!("/{regex}/{}", flags.unwrap_or_default())
 }
 
+/**
+Compiles Melody source code to a regular expression
+
+see also: [ParseError]
+
+# Example
+
+```rust
+use melody_compiler::compiler;
+
+let source = r#"1 to 5 of "A";"#;
+let output = compiler(&source);
+
+assert_eq!(output.unwrap(), "/A{1,5}/");
+```
+*/
 pub fn compiler(source: &str) -> Result<String, ParseError> {
     let mut lex = Token::lexer(source);
 
@@ -339,7 +358,7 @@ fn named_capture_test() {
 fn number_quantifier_range_test() {
     let output = compiler(
         r#"
-      1 to 5 of "A"
+      1 to 5 of "A";
       "#,
     )
     .unwrap();
