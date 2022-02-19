@@ -210,7 +210,7 @@ Get the extension [here](https://marketplace.visualstudio.com/items?itemName=yoa
 | general cleanup and modules         |                       | ❌          |
 | auto escape for non Melody patterns |                       | ❌          |
 | rust library / macro                |                       | ❌          |
-| TS/JS build step                    |                       | ❌          |
+| TS / JS build step                  |                       | ❌          |
 | more robust parsing mechanism (ast) |                       | ❌          |
 | `not "A";`                          | `[^A]`                | ❔          |
 | `flags: global, multiline, ...`     | `/.../gm...`          | ❔          |
