@@ -84,6 +84,12 @@ Turns into
 
 ## Install
 
+### Cargo
+
+```sh
+cargo install melody_cli
+```
+
 ### From Source
 
 ```sh
