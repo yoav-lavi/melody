@@ -15,14 +15,28 @@ window.MonacoEnvironment = {
 
 const DEFAULT_EDITOR_SETTINGS: monaco.editor.IStandaloneEditorConstructionOptions =
   {
-    theme: "vs-dark",
+    theme: "nord",
     automaticLayout: true,
     minimap: { enabled: false },
     wordWrap: "on",
     wrappingIndent: "indent",
     fontFamily: "'Fira Code', monospace",
     fontLigatures: true,
+    scrollbar: {
+      alwaysConsumeMouseWheel: false,
+    },
   };
+
+// colors taken from the Nord palette (https://www.nordtheme.com)
+const nordTheme: monaco.editor.IStandaloneThemeData = {
+  base: "vs-dark",
+  inherit: false,
+  rules: [],
+  colors: {
+    "editor.background": "#2E3440",
+    "editor.foreground": "#ECEFF4",
+  },
+};
 
 const initEditors = async () => {
   const editorTarget = document.getElementById("editor-container");
@@ -38,6 +52,9 @@ const initEditors = async () => {
   <space>;
   "batman";
 }`;
+
+  monaco.editor.defineTheme("nord", nordTheme);
+  monaco.editor.setTheme("nord");
 
   const editor = monaco.editor.create(editorTarget, {
     value: initialValue,
