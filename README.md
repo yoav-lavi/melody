@@ -84,7 +84,7 @@ Turns into
 
 ## Playground
 
-You can try Melody in your browser using the [playground](https://melody-playground-yoav-lavi.vercel.app/)
+You can try Melody in your browser using the [playground](https://melody-playground.vercel.app/)
 
 ## Install
 
