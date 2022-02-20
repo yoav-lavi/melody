@@ -5,14 +5,12 @@ import init, { compiler } from "./wasm/melody_wasm";
 
 declare global {
   interface Window {
-    MonacoEnvironment: {};
+    MonacoEnvironment: { getWorker: () => Worker };
   }
 }
 
 window.MonacoEnvironment = {
-  getWorker() {
-    return new editorWorker();
-  },
+  getWorker: () => new editorWorker(),
 };
 
 const DEFAULT_EDITOR_SETTINGS: monaco.editor.IStandaloneEditorConstructionOptions =
