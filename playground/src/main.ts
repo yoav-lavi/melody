@@ -35,10 +35,10 @@ const nordTheme: monaco.editor.IStandaloneThemeData = {
   base: "vs-dark",
   inherit: false,
   rules: [
-    { token: "keyword", foreground: "81A1C1" },
-    { token: "digit", foreground: "EBCB8B" },
-    { token: "string", foreground: "A3BE8C" },
-    { token: "character", foreground: "EBCB8B" },
+    { token: "keyword", foreground: "#81A1C1" },
+    { token: "digit", foreground: "#EBCB8B" },
+    { token: "string", foreground: "#A3BE8C" },
+    { token: "character", foreground: "#EBCB8B" },
   ],
   colors: {
     foreground: "#D8DEE9",
