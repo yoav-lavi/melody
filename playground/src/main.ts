@@ -15,14 +15,23 @@ window.MonacoEnvironment = {
   },
 };
 
-let output: monaco.editor.IStandaloneCodeEditor | undefined;
+const initEditors = () => {
+  const editorTarget = document.getElementById("editor-container");
+  const outputTarget = document.getElementById("output-container");
 
-const outputTarget = document.getElementById("output-container");
+  if (!editorTarget || !outputTarget) {
+    return;
+  }
 
-if (outputTarget) {
-  output = monaco.editor.create(outputTarget, {
-    readOnly: true,
-    value: ``,
+  const initialValue = `16 of "na";
+
+  2 of match {
+    <space>;
+    "batman";
+  }`;
+
+  const editor = monaco.editor.create(editorTarget, {
+    value: initialValue,
     theme: "vs-dark",
     automaticLayout: true,
     minimap: { enabled: false },
@@ -31,20 +40,10 @@ if (outputTarget) {
     fontFamily: "'Fira Code', monospace",
     fontLigatures: true,
   });
-}
 
-const initialValue = `16 of "na";
-
-2 of match {
-  <space>;
-  "batman";
-}`;
-
-const editorTarget = document.getElementById("editor-container");
-
-if (editorTarget) {
-  const editor = monaco.editor.create(editorTarget, {
-    value: initialValue,
+  const output = monaco.editor.create(outputTarget, {
+    readOnly: true,
+    value: ``,
     theme: "vs-dark",
     automaticLayout: true,
     minimap: { enabled: false },
@@ -67,4 +66,6 @@ if (editorTarget) {
       }
     });
   });
-}
+};
+
+initEditors();
