@@ -15,6 +15,17 @@ window.MonacoEnvironment = {
   },
 };
 
+const DEFAULT_EDITOR_SETTINGS: monaco.editor.IStandaloneEditorConstructionOptions =
+  {
+    theme: "vs-dark",
+    automaticLayout: true,
+    minimap: { enabled: false },
+    wordWrap: "on",
+    wrappingIndent: "indent",
+    fontFamily: "'Fira Code', monospace",
+    fontLigatures: true,
+  };
+
 const initEditors = () => {
   const editorTarget = document.getElementById("editor-container");
   const outputTarget = document.getElementById("output-container");
@@ -32,25 +43,13 @@ const initEditors = () => {
 
   const editor = monaco.editor.create(editorTarget, {
     value: initialValue,
-    theme: "vs-dark",
-    automaticLayout: true,
-    minimap: { enabled: false },
-    wordWrap: "on",
-    wrappingIndent: "indent",
-    fontFamily: "'Fira Code', monospace",
-    fontLigatures: true,
+    ...DEFAULT_EDITOR_SETTINGS,
   });
 
   const output = monaco.editor.create(outputTarget, {
-    readOnly: true,
     value: ``,
-    theme: "vs-dark",
-    automaticLayout: true,
-    minimap: { enabled: false },
-    wordWrap: "on",
-    wrappingIndent: "indent",
-    fontFamily: "'Fira Code', monospace",
-    fontLigatures: true,
+    readOnly: true,
+    ...DEFAULT_EDITOR_SETTINGS,
   });
 
   init().then(() => {
