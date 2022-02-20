@@ -24,7 +24,7 @@ const DEFAULT_EDITOR_SETTINGS: monaco.editor.IStandaloneEditorConstructionOption
     fontLigatures: true,
   };
 
-const initEditors = () => {
+const initEditors = async () => {
   const editorTarget = document.getElementById("editor-container");
   const outputTarget = document.getElementById("output-container");
 
@@ -50,19 +50,20 @@ const initEditors = () => {
     ...DEFAULT_EDITOR_SETTINGS,
   });
 
-  init().then(() => {
-    const regex = compiler(editor.getValue());
-    output?.setValue(regex);
+  await init();
 
-    editor.getModel()?.onDidChangeContent(() => {
-      try {
-        const regex = compiler(editor.getValue());
-        output?.setValue(regex);
-      } catch (error) {
-        output?.setValue("Parsing error");
-      }
-    });
-  });
+  const syncEditors = () => {
+    try {
+      const regex = compiler(editor.getValue());
+      output.setValue(regex);
+    } catch (error) {
+      output.setValue("Parsing error");
+    }
+  };
+
+  syncEditors();
+
+  editor.getModel()?.onDidChangeContent(syncEditors);
 };
 
 initEditors();
