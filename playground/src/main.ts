@@ -56,7 +56,7 @@ const initEditors = async () => {
     try {
       const regex = compiler(editor.getValue());
       output.setValue(regex);
-    } catch (error) {
+    } catch {
       output.setValue("Parsing error");
     }
   };
