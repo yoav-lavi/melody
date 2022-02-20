@@ -34,7 +34,12 @@ const DEFAULT_EDITOR_SETTINGS: monaco.editor.IStandaloneEditorConstructionOption
 const nordTheme: monaco.editor.IStandaloneThemeData = {
   base: "vs-dark",
   inherit: false,
-  rules: [],
+  rules: [
+    { token: "keyword", foreground: "81A1C1" },
+    { token: "digit", foreground: "EBCB8B" },
+    { token: "string", foreground: "A3BE8C" },
+    { token: "character", foreground: "EBCB8B" },
+  ],
   colors: {
     "editor.background": "#2E3440",
     "editor.foreground": "#ECEFF4",
@@ -56,11 +61,32 @@ const initEditors = async () => {
   "batman";
 }`;
 
+  monaco.languages.register({
+    id: "melody",
+  });
+  monaco.languages.setMonarchTokensProvider("melody", {
+    tokenizer: {
+      root: [
+        [/(of|capture|to|of|some|match|over)/, "keyword"],
+        [/[0-9]/, "digit"],
+        [/"(\\"|[^"\n])*"/, "string"],
+        [/'(\\'|[^'\n])*'/, "string"],
+        [
+          /(<space>|<newline>|<tab>|<return>|<feed>|<null>|<digit>|<word>|<vertical>)/,
+          "character",
+        ],
+        [/(start|end|char)/, "character"],
+        [/(A|Z|a|z)/, "character"],
+      ],
+    },
+  });
+
   monaco.editor.defineTheme("nord", nordTheme);
   monaco.editor.setTheme("nord");
 
   const editor = monaco.editor.create(editorTarget, {
     value: initialValue,
+    language: "melody",
     ...DEFAULT_EDITOR_SETTINGS,
   });
 
