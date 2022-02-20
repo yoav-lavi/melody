@@ -1,3 +1,5 @@
+/* colors taken form the Nord palette (https://www.nordtheme.com)  */
+
 * { 
   margin: 0;
   padding: 0;
@@ -8,7 +10,7 @@ html,body {
   margin:0; 
   padding:0; 
   height:100%; 
-  background-color: #282C34;
+  background-color: #2E3440;
 }
 
 .parent-container {
@@ -20,12 +22,21 @@ html,body {
   margin: 10px;
 }
 
-.header {
-  color: #FFF; 
+.header-container {
   font-family: 'Fira Code', monospace;
   margin-left: 15px;
   margin-top: 10px;
+
+}
+
+.header {
   font-size: 20px;
+  color: #ECEFF4
+}
+
+.version {
+  font-size: 10px;
+  color: #81A1C1;
 }
 
 .editor {
