@@ -34,10 +34,10 @@ const initEditors = async () => {
 
   const initialValue = `16 of "na";
 
-  2 of match {
-    <space>;
-    "batman";
-  }`;
+2 of match {
+  <space>;
+  "batman";
+}`;
 
   const editor = monaco.editor.create(editorTarget, {
     value: initialValue,
