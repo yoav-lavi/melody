@@ -25,6 +25,8 @@ const DEFAULT_EDITOR_SETTINGS: monaco.editor.IStandaloneEditorConstructionOption
     renderLineHighlight: "none",
     scrollbar: {
       alwaysConsumeMouseWheel: false,
+      vertical: "hidden",
+      horizontal: "hidden",
     },
   };
 
