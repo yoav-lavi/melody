@@ -82,6 +82,10 @@ Turns into
 /(?:\s{2})+.+;/
 ```
 
+## Try Melody
+
+You can try Melody in your browser using the [playground](https://melody-playground-yoav-lavi.vercel.app/)
+
 ## Install
 
 ### Cargo
