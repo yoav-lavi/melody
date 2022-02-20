@@ -22,6 +22,7 @@ const DEFAULT_EDITOR_SETTINGS: monaco.editor.IStandaloneEditorConstructionOption
     wrappingIndent: "indent",
     fontFamily: "'Fira Code', monospace",
     fontLigatures: true,
+    renderLineHighlight: "none",
     scrollbar: {
       alwaysConsumeMouseWheel: false,
     },
