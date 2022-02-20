@@ -42,7 +42,7 @@ const nordTheme: monaco.editor.IStandaloneThemeData = {
   ],
   colors: {
     "editor.background": "#2E3440",
-    "editor.foreground": "#ECEFF4",
+    "editor.foreground": "#D8DEE9",
   },
 };
 
