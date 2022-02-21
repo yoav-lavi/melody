@@ -1,5 +1,16 @@
 use logos::{Lexer, Logos};
 
+extern crate pest;
+
+#[macro_use]
+extern crate pest_derive;
+
+mod ast;
+
+mod parser;
+
+mod visitor;
+
 #[derive(Logos, Debug, PartialEq)]
 enum Token {
     #[regex(r#"\d+ to \d+ of"#, range_expression)]

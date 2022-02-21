@@ -1,0 +1,87 @@
+WHITESPACE = _{ " " | "\t" | "\n" | "\r" }
+COMMENT = _{ "/*" ~ (!"*/" ~ ANY)* ~ "*/" }
+
+char = _{
+    !("\"" | "\\") ~ ANY
+    | "\\" ~ ("\"" | "\\" | "/" | "b" | "f" | "n" | "r" | "t")
+    | "\\" ~ ("u" ~ ASCII_HEX_DIGIT{4})
+}
+
+content = @{ char* }
+string = ${ 
+    "\"" ~ content ~ "\"" 
+    | "'" ~ content ~ "'"  
+}
+
+keyword = {
+    "<newline>"
+    | "<tab>"
+    | "<return>"
+    | "<feed>" 
+    | "<null>"
+    | "<digit>" 
+    | "<word>" 
+    | "<vertical>" 
+    | "<space>"
+    | "char"
+    | "start"
+    | "end"
+
+}
+
+ascii_range = { ASCII ~ "to" ~ ASCII }
+
+digit_range = { ASCII_DIGIT ~ "to" ~ ASCII_DIGIT }
+
+atom = _{ ( string | keyword | ascii_range | digit_range ) ~ ";"}
+
+int_lit = @{ ASCII_DIGIT+ }
+
+exact_range = { int_lit }
+
+int_range = { int_lit ~ "to" ~ int_lit }
+
+over_range = {
+    "over" ~ int_lit
+}
+
+upto_range = {
+    "upto" ~ int_lit
+}
+
+open_range = _{ over_range | upto_range }
+
+range_keywords = {
+    "some" 
+    | "any"
+}
+
+quantifier_range = _{
+    int_range | exact_range | open_range | range_keywords
+}
+
+quantifier_expr = {
+ ( quantifier_range ) ~ "of" ~ expr
+}
+
+blocked_expr = { "{" ~ (expr )+ ~ "}" }
+
+name = { ASCII_ALPHA+ }
+
+capture_expr = {
+    "capture" ~ ( name )? ~ blocked_expr
+}
+
+match_expr = { 
+    "match" ~ ( name )? ~ blocked_expr
+}
+
+expr = { atom | quantifier_expr | capture_expr | match_expr }
+
+program = _{
+    SOI ~
+    (expr )+ ~
+    EOI
+}
+
+
