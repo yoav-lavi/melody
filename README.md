@@ -86,6 +86,10 @@ Turns into
 
 You can try Melody in your browser using the [playground](https://melody-playground.vercel.app/)
 
+## Documentation
+
+Read the documentation [here](yoav-lavi.github.io/melody/)
+
 ## Install
 
 ### Cargo
