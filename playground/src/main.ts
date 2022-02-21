@@ -1,7 +1,7 @@
-import * as monaco from "monaco-editor";
-import editorWorker from "monaco-editor/esm/vs/editor/editor.worker?worker";
+import { editor, languages } from 'monaco-editor';
+import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker';
 // build from ../crates/melody_wasm included manually due to issues with wasm-bindgen (similar to https://github.com/rustwasm/wasm-bindgen/issues/113)
-import init, { compiler } from "./wasm/melody_wasm";
+import init, { compiler } from './wasm/melody_wasm';
 
 declare global {
   interface Window {
@@ -13,93 +13,99 @@ window.MonacoEnvironment = {
   getWorker: () => new editorWorker(),
 };
 
-const DEFAULT_EDITOR_SETTINGS: monaco.editor.IStandaloneEditorConstructionOptions =
-  {
-    theme: "nord",
-    automaticLayout: true,
-    minimap: { enabled: false },
-    wordWrap: "on",
-    wrappingIndent: "indent",
-    fontFamily: "'Fira Code', monospace",
-    fontLigatures: true,
-    renderLineHighlight: "none",
-    scrollbar: {
-      alwaysConsumeMouseWheel: false,
-      vertical: "hidden",
-      horizontal: "hidden",
-    },
-  };
+const MELODY_LANGUAGE_ID = 'melody';
 
-// colors taken from the Nord palette (https://www.nordtheme.com)
-const nordTheme: monaco.editor.IStandaloneThemeData = {
-  base: "vs-dark",
-  inherit: false,
-  rules: [
-    { token: "keyword", foreground: "#81A1C1" },
-    { token: "digit", foreground: "#EBCB8B" },
-    { token: "string", foreground: "#A3BE8C" },
-    { token: "character", foreground: "#EBCB8B" },
-  ],
-  colors: {
-    foreground: "#D8DEE9",
-    "editor.background": "#2E3440",
-    "editor.foreground": "#D8DEE9",
-    "editorLineNumber.foreground": "#4C566A",
-    "editorLineNumber.activeForeground": "#D8DEE9",
-    "editorBracketMatch.background": "#2E344000",
-    "editorBracketMatch.border": "#88C0D0",
-    "editorCursor.foreground": "#D8DEE9",
-    "editorWhitespace.foreground": "#4C566AB3",
+const NORD_THEME_ID = 'nord';
+
+const DEFAULT_EDITOR_SETTINGS: editor.IStandaloneEditorConstructionOptions = {
+  theme: NORD_THEME_ID,
+  automaticLayout: true,
+  minimap: { enabled: false },
+  wordWrap: 'on',
+  wrappingIndent: 'indent',
+  fontFamily: "'Fira Code', monospace",
+  fontLigatures: true,
+  renderLineHighlight: 'none',
+  scrollbar: {
+    alwaysConsumeMouseWheel: false,
+    vertical: 'hidden',
+    horizontal: 'hidden',
   },
 };
 
-const initEditors = async () => {
-  const editorTarget = document.getElementById("editor-container");
-  const outputTarget = document.getElementById("output-container");
+languages.register({ id: MELODY_LANGUAGE_ID });
 
-  if (!editorTarget || !outputTarget) {
-    return;
-  }
+languages.setMonarchTokensProvider(MELODY_LANGUAGE_ID, {
+  tokenizer: {
+    root: [
+      [/(of|capture|to|of|some|match|over)/, 'keyword'],
+      [/\d/, 'digit'],
+      [/"(\\"|[^"\n])*"/, 'string'],
+      [/'(\\'|[^'\n])*'/, 'string'],
+      [
+        /(<space>|<newline>|<tab>|<return>|<feed>|<null>|<digit>|<word>|<vertical>)/,
+        'character',
+      ],
+      [/(start|end|char)/, 'character'],
+      [/(A|Z|a|z)/, 'character'],
+      [/\/\/.*/, 'comment'],
+    ],
+  },
+});
 
-  const initialValue = `16 of "na";
+// colors taken from the Nord palette (https://www.nordtheme.com and https://github.com/arcticicestudio/nord-visual-studio-code/)
+const nordTheme: editor.IStandaloneThemeData = {
+  base: 'vs-dark',
+  inherit: false,
+  rules: [
+    { token: 'keyword', foreground: '#81A1C1' },
+    { token: 'digit', foreground: '#EBCB8B' },
+    { token: 'string', foreground: '#A3BE8C' },
+    { token: 'character', foreground: '#EBCB8B' },
+    { token: 'comment', foreground: '#616E88' },
+  ],
+  colors: {
+    foreground: '#D8DEE9',
+    'editor.background': '#2E3440',
+    'editor.foreground': '#D8DEE9',
+    'editorLineNumber.foreground': '#4C566A',
+    'editorLineNumber.activeForeground': '#D8DEE9',
+    'editorBracketMatch.background': '#2E344000',
+    'editorBracketMatch.border': '#88C0D0',
+    'editorCursor.foreground': '#D8DEE9',
+    'editorWhitespace.foreground': '#4C566AB3',
+  },
+};
+
+editor.defineTheme(NORD_THEME_ID, nordTheme);
+editor.setTheme(NORD_THEME_ID);
+
+const editorInitialValue = `// matches the batman theme tune
+
+16 of "na";
 
 2 of match {
   <space>;
   "batman";
-}`;
+}
+`;
 
-  monaco.languages.register({
-    id: "melody",
-  });
+const initEditors = async () => {
+  const melodyEditorTarget = document.getElementById('editor-container');
+  const regexEditorTarget = document.getElementById('output-container');
 
-  monaco.languages.setMonarchTokensProvider("melody", {
-    tokenizer: {
-      root: [
-        [/(of|capture|to|of|some|match|over)/, "keyword"],
-        [/[0-9]/, "digit"],
-        [/"(\\"|[^"\n])*"/, "string"],
-        [/'(\\'|[^'\n])*'/, "string"],
-        [
-          /(<space>|<newline>|<tab>|<return>|<feed>|<null>|<digit>|<word>|<vertical>)/,
-          "character",
-        ],
-        [/(start|end|char)/, "character"],
-        [/(A|Z|a|z)/, "character"],
-      ],
-    },
-  });
+  if (!melodyEditorTarget || !regexEditorTarget) {
+    return;
+  }
 
-  monaco.editor.defineTheme("nord", nordTheme);
-  monaco.editor.setTheme("nord");
-
-  const editor = monaco.editor.create(editorTarget, {
-    value: initialValue,
-    language: "melody",
+  const melodyEditor = editor.create(melodyEditorTarget, {
+    value: editorInitialValue,
+    language: MELODY_LANGUAGE_ID,
     ...DEFAULT_EDITOR_SETTINGS,
   });
 
-  const output = monaco.editor.create(outputTarget, {
-    value: ``,
+  const regexEditor = editor.create(regexEditorTarget, {
+    value: '',
     readOnly: true,
     ...DEFAULT_EDITOR_SETTINGS,
   });
@@ -108,16 +114,16 @@ const initEditors = async () => {
 
   const syncEditors = () => {
     try {
-      const regex = compiler(editor.getValue());
-      output.setValue(regex);
+      const regex = compiler(melodyEditor.getValue());
+      regexEditor.setValue(regex);
     } catch {
-      output.setValue("Parsing error");
+      regexEditor.setValue('Parsing error');
     }
   };
 
   syncEditors();
 
-  editor.getModel()?.onDidChangeContent(syncEditors);
+  melodyEditor.getModel()?.onDidChangeContent(syncEditors);
 };
 
 initEditors();

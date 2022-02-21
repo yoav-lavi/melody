@@ -1,4 +1,4 @@
-/* colors taken from the Nord palette (https://www.nordtheme.com)  */
+/* colors taken from the Nord palette (https://www.nordtheme.com and https://github.com/arcticicestudio/nord-visual-studio-code/) */
 
 * { 
   margin: 0;
@@ -11,6 +11,7 @@ html,body {
   padding:0; 
   height:100%; 
   background-color: #242933;
+  font-family: 'Fira Code', monospace;
 }
 
 .parent-container {
@@ -23,15 +24,22 @@ html,body {
 }
 
 .header-container {
-  font-family: 'Fira Code', monospace;
   margin-left: 15px;
   margin-top: 10px;
-
 }
 
 .header {
   font-size: 20px;
   color: #ECEFF4
+}
+
+.noscript {
+  font-size: 15px;
+  color: #ECEFF4;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
 }
 
 .version {
