@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkmelody_docs=self.webpackChunkmelody_docs||[]).push([[237],{9754:function(e,n,t){t.r(n),t.d(n,{default:function(){return u}});var o=t(7294),c=t(6775);function u(){return o.createElement(c.l_,{to:"/melody/docs/intro"})}}}]);
