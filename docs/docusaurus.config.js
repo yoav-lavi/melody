@@ -37,7 +37,7 @@ const config = {
         items: [
           {
             href: "/docs/install",
-            label: "Docs",
+            label: "Melody Documentation",
             position: "left",
           },
           {
