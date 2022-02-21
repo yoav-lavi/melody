@@ -88,7 +88,7 @@ You can try Melody in your browser using the [playground](https://melody-playgro
 
 ## Documentation
 
-Read the documentation [here](yoav-lavi.github.io/melody/)
+Read the documentation [here](https://yoav-lavi.github.io/melody/)
 
 ## Install
 
