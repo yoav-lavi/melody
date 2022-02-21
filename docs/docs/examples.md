@@ -8,7 +8,7 @@ Note: these are for the currently supported syntax and may change
 
 ## Batman Theme
 
-```ts
+```
 16 of "na";
 
 2 of match {
@@ -21,13 +21,13 @@ Note: these are for the currently supported syntax and may change
 
 Turns into
 
-```ts
+```
 /(?:na){16}(?:\sbatman){2}/
 ```
 
 ## Twitter Hashtag
 
-```ts
+```
 "#";
 some of <word>;
 
@@ -36,13 +36,13 @@ some of <word>;
 
 Turns into
 
-```ts
+```
 /#\w+/
 ```
 
 ## Introductory Courses
 
-```ts
+```
 some of <word>;
 <space>;
 "1";
@@ -53,13 +53,13 @@ some of <word>;
 
 Turns into
 
-```ts
+```
 /\w+\s1\d{2}/
 ```
 
 ## Indented Code (2 spaces)
 
-```ts
+```
 some of match {
   2 of <space>;
 }
@@ -72,6 +72,6 @@ some of char;
 
 Turns into
 
-```ts
+```
 /(?:\s{2})+.+;/
 ```
