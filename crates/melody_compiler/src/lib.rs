@@ -209,10 +209,6 @@ fn create_parse_error(lex: &mut Lexer<Token>, line: u16) -> ParseError {
     }
 }
 
-fn in_block(in_group: bool, in_either: bool) -> bool {
-    in_group || in_either
-}
-
 /**
 Compiles Melody source code to a regular expression
 
@@ -261,7 +257,7 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
 
             // groups
             Token::Capture => {
-                if in_block(in_group, in_either) {
+                if in_group || in_either {
                     return Err(create_parse_error(&mut lex, line));
                 }
                 group_quantifier = quantifier;
@@ -270,7 +266,7 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
                 Some(String::from("("))
             }
             Token::NamedCapture(name) => {
-                if in_block(in_group, in_either) {
+                if in_group || in_either {
                     return Err(create_parse_error(&mut lex, line));
                 }
                 group_quantifier = quantifier;
@@ -279,7 +275,7 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
                 Some(format!("(?<{name}>"))
             }
             Token::Match => {
-                if in_block(in_group, in_either) {
+                if in_group || in_either {
                     return Err(create_parse_error(&mut lex, line));
                 }
                 group_quantifier = quantifier;
@@ -288,7 +284,7 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
                 Some(String::from("(?:"))
             }
             Token::Either => {
-                if in_block(in_group, in_either) {
+                if in_group || in_either {
                     return Err(create_parse_error(&mut lex, line));
                 }
                 group_quantifier = quantifier;
