@@ -184,6 +184,7 @@ The Melody file extension is `.mdy`
 | `capture name { ... }`              | `(?<name>...)`        | ✅          |
 | `match { ... }`                     | `(?:...)`             | ✅          |
 | `<whitespace>;`                     | `\s`                  | ✅          |
+| `<space>;`                          | ` `                   | ✅          |
 | `A to Z;`                           | `[A-Z]`               | ✅          |
 | `a to z;`                           | `[a-z]`               | ✅          |
 | `0 to 9;`                           | `[0-9]`               | ✅          |

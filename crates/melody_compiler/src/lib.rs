@@ -65,6 +65,9 @@ enum Token {
     #[token("<whitespace>")]
     WhitespaceSymbol,
 
+    #[token("<space>")]
+    SpaceSymbol,
+
     #[token("<word>")]
     WordSymbol,
 
@@ -278,6 +281,7 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
             Token::LineStart => handle_quantifier(String::from("^"), quantifier.clone(), false),
             Token::LineEnd => handle_quantifier(String::from("$"), quantifier.clone(), false),
             Token::WhitespaceSymbol => handle_quantifier(String::from("\\s"), quantifier.clone(), false),
+            Token::SpaceSymbol => handle_quantifier(String::from(" "), quantifier.clone(), false),
             Token::NewlineSymbol => {
                 handle_quantifier(String::from("\\n"), quantifier.clone(), false)
             }
@@ -429,10 +433,11 @@ fn symbol_test() {
       <word>;
       <vertical>;
       <alphabet>;
+      <space>;
       "#,
     )
     .unwrap();
-    assert_eq!(output, r"/\s\n\t\r\f\0\d\w\v[a-zA-Z]/");
+    assert_eq!(output, r"/\s\n\t\r\f\0\d\w\v[a-zA-Z] /");
 }
 
 #[test]

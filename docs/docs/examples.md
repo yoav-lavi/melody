@@ -61,7 +61,7 @@ Turns into
 
 ```
 some of match {
-  2 of <whitespace>;
+  2 of <space>;
 }
 
 some of char;
@@ -73,5 +73,5 @@ some of char;
 Turns into
 
 ```
-/(?:\s{2})+.+;/
+/(?: {2})+.+;/
 ```
