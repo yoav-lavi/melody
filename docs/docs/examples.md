@@ -43,7 +43,7 @@ Turns into
 ## Introductory Courses
 
 ```
-some of <word>;
+some of <alphabet>;
 <whitespace>;
 "1";
 2 of <digit>;
@@ -54,7 +54,7 @@ some of <word>;
 Turns into
 
 ```
-/\w+\s1\d{2}/
+/[a-zA-Z]+\s1\d{2}/
 ```
 
 ## Indented Code (2 spaces)

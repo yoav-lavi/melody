@@ -71,6 +71,9 @@ enum Token {
     #[token("<vertical>")]
     VerticalSymbol,
 
+    #[token("<alphabet>")]
+    AlphabetSymbol,
+
     #[token("char")]
     Char,
 
@@ -286,6 +289,7 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
             Token::NullSymbol => handle_quantifier(String::from("\\0"), quantifier.clone(), false),
             Token::DigitSymbol => handle_quantifier(String::from("\\d"), quantifier.clone(), false),
             Token::WordSymbol => handle_quantifier(String::from("\\w"), quantifier.clone(), false),
+            Token::AlphabetSymbol => handle_quantifier(String::from("[a-zA-Z]"), quantifier.clone(), false),
             Token::VerticalSymbol => {
                 handle_quantifier(String::from("\\v"), quantifier.clone(), false)
             }
@@ -424,10 +428,11 @@ fn symbol_test() {
       <digit>;
       <word>;
       <vertical>;
+      <alphabet>;
       "#,
     )
     .unwrap();
-    assert_eq!(output, r"/\s\n\t\r\f\0\d\w\v/");
+    assert_eq!(output, r"/\s\n\t\r\f\0\d\w\v[a-zA-Z]/");
 }
 
 #[test]

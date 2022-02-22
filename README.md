@@ -198,6 +198,7 @@ The Melody file extension is `.mdy`
 | `<digit>;`                          | `\d`                  | ✅          |
 | `<vertical>;`                       | `\v`                  | ✅          |
 | `<word>;`                           | `\w`                  | ✅          |
+| `<alphabet>;`                       | `[a-zA-Z]`            | ✅          |
 | `"...";` (raw)                      | ...                   | ✅          |
 | `'...';` (raw)                      | ...                   | ✅          |
 | `'\'';`                             | `'`                   | ✅          |

@@ -27,6 +27,7 @@ sidebar_position: 6
 - `<digit>` - equivalent to regex `\d`
 - `<vertical>` - equivalent to regex `\v`
 - `<word>` - equivalent to regex `\w`
+- `<alphabet>` - equivalent to regex `[a-zA-Z]`
 
 ## Literals
 
