@@ -244,6 +244,7 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
 
     while let Some(token) = lex.next() {
         let in_block = in_group || in_either;
+
         let formatted_token = match token {
             // raw
             Token::RawDouble(pattern) | Token::RawSingle(pattern) => {
