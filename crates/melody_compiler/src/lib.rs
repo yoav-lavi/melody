@@ -303,7 +303,13 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
                     in_either = false;
                     let inner_tokens = stack.join("|");
                     stack.clear();
-                    Some(format!("({})", inner_tokens))
+                    let current_group_quantifier = group_quantifier;
+                    group_quantifier = None;
+                    handle_quantifier(
+                        format!("({})", inner_tokens),
+                        current_group_quantifier,
+                        false,
+                    )
                 } else {
                     None
                 }
