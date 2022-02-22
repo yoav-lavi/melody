@@ -236,7 +236,6 @@ The Melody file extension is `.mdy`
 | `not "A";`                          | `[^A]`                | ❔          |
 | `flags: global, multiline, ...`     | `/.../gm...`          | ❔          |
 | `/* comment */`                     |                       | ❔          |
-| `maybe some of`                     | `*`                   | ❔          |
 | `any of "a", "b", "c"`              | `[abc]`               | ❔          |
 | `... not before ...`                | `...(?!...)`          | ❔          |
 | `... not after ...`                 | `...(?<!...)`         | ❔          |
