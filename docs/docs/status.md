@@ -52,8 +52,11 @@ sidebar_position: 7
 | `not <word>;`                       | `\W`                  | ✅          |
 | WASM binding                        |                       | ✅          |
 | Rust crate                          |                       | ✅          |
-| enforce group close                 |                       | 🐣          |
-| tests                               |                       | 🐣          |
+| `option of`                         | `?`                   | ✅          |
+| `any of`                            | `*`                   | ✅          |
+| `either { ...; ...; }`              | `(...\|...)`          | ✅          |
+| tests                               |                       | ✅          |
+| enforce group close                 |                       | ❌          |
 | `<backspace>`                       | `[\b]`                | ❌          |
 | file watcher                        |                       | ❌          |
 | nested groups                       | `(...(...))`          | ❌          |
@@ -65,9 +68,6 @@ sidebar_position: 7
 | `not "A";`                          | `[^A]`                | ❔          |
 | `flags: global, multiline, ...`     | `/.../gm...`          | ❔          |
 | `/* comment */`                     |                       | ❔          |
-| `maybe of`                          | `?`                   | ❔          |
-| `maybe some of`                     | `*`                   | ❔          |
-| `either of ..., ...`                | `\|`                  | ❔          |
 | `any of "a", "b", "c"`              | `[abc]`               | ❔          |
 | `... not before ...`                | `...(?!...)`          | ❔          |
 | `... not after ...`                 | `...(?<!...)`         | ❔          |

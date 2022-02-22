@@ -131,6 +131,7 @@ OPTIONS:
 - `over` - used with `of` to express more than an amount of a pattern, equivalent to regex `{6,}` (assuming `over 5 of ...`)
 - `option` - used with `of` to express 0 or 1 of a pattern, equivalent to regex `?`
 - `either` - used to open an `either` block, equivalent to regex `(...|...)`
+- `any` - used with `of` to express 0 or more of a pattern, equivalent to regex `*`
 
 ## Symbols
 
@@ -220,8 +221,9 @@ The Melody file extension is `.mdy`
 | WASM binding                        |                       | ✅          |
 | Rust crate                          |                       | ✅          |
 | `option of`                         | `?`                   | ✅          |
-| tests                               |                       | ✅          |
+| `any of`                            | `*`                   | ✅          |
 | `either { ...; ...; }`              | `(...\|...)`          | ✅          |
+| tests                               |                       | ✅          |
 | enforce group close                 |                       | ❌          |
 | `<backspace>`                       | `[\b]`                | ❌          |
 | file watcher                        |                       | ❌          |
