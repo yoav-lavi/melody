@@ -41,6 +41,9 @@ enum Token {
     #[token("match {")]
     Match,
 
+    #[token("either {")]
+    Either,
+
     #[token("start")]
     LineStart,
 
@@ -214,6 +217,8 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
 
     let mut in_group = false;
 
+    let mut in_either = false;
+
     let mut line: u16 = 0;
 
     let mut quantifier = None;
@@ -221,6 +226,8 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
     let mut group_quantifier = None;
 
     let mut output = String::new();
+
+    let mut stack: Vec<String> = Vec::new();
 
     while let Some(token) = lex.next() {
         let formatted_token = match token {
@@ -254,12 +261,23 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
                 in_group = true;
                 Some(String::from("(?:"))
             }
+            Token::Either => {
+                group_quantifier = quantifier;
+                quantifier = None;
+                in_either = true;
+                None
+            }
             Token::GroupEnd => {
                 if in_group {
                     in_group = false;
                     let current_group_quantifier = group_quantifier;
                     group_quantifier = None;
                     handle_quantifier(String::from(")"), current_group_quantifier, false)
+                } else if in_either {
+                    in_either = false;
+                    let inner_tokens = stack.join("|");
+                    stack.clear();
+                    Some(format!("({})", inner_tokens))
                 } else {
                     None
                 }
@@ -291,7 +309,9 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
             Token::LineStart => handle_quantifier(String::from("^"), quantifier.clone(), false),
             Token::LineEnd => handle_quantifier(String::from("$"), quantifier.clone(), false),
             Token::SpaceSymbol => handle_quantifier(String::from("\\s"), quantifier.clone(), false),
-            Token::NotSpaceSymbol => handle_quantifier(String::from("\\S"), quantifier.clone(), false),
+            Token::NotSpaceSymbol => {
+                handle_quantifier(String::from("\\S"), quantifier.clone(), false)
+            }
             Token::NewlineSymbol => {
                 handle_quantifier(String::from("\\n"), quantifier.clone(), false)
             }
@@ -302,9 +322,13 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
             Token::FeedSymbol => handle_quantifier(String::from("\\f"), quantifier.clone(), false),
             Token::NullSymbol => handle_quantifier(String::from("\\0"), quantifier.clone(), false),
             Token::DigitSymbol => handle_quantifier(String::from("\\d"), quantifier.clone(), false),
-            Token::NotDigitSymbol => handle_quantifier(String::from("\\D"), quantifier.clone(), false),
+            Token::NotDigitSymbol => {
+                handle_quantifier(String::from("\\D"), quantifier.clone(), false)
+            }
             Token::WordSymbol => handle_quantifier(String::from("\\w"), quantifier.clone(), false),
-            Token::NotWordSymbol => handle_quantifier(String::from("\\W"), quantifier.clone(), false),
+            Token::NotWordSymbol => {
+                handle_quantifier(String::from("\\W"), quantifier.clone(), false)
+            }
             Token::VerticalSymbol => {
                 handle_quantifier(String::from("\\v"), quantifier.clone(), false)
             }
@@ -327,6 +351,10 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
         };
 
         if let Some(formatted_token) = formatted_token {
+            if in_either {
+                stack.push(formatted_token);
+                continue;
+            }
             output.push_str(&formatted_token);
         }
     }
@@ -534,4 +562,23 @@ fn option_test() {
     )
     .unwrap();
     assert_eq!(multiple_output, "/(?:ABC)?/");
+}
+
+#[test]
+fn either_test() {
+    let output = compiler(
+        r#"
+      either {
+        "first";
+        "second";
+        a to z;
+      }
+      either {
+        "first";
+        "second";
+      }
+      "#,
+    )
+    .unwrap();
+    assert_eq!(output, "/(first|second|[a-z])(first|second)/");
 }
