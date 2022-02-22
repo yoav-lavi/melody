@@ -23,7 +23,7 @@
       "patterns": [
         {
           "name": "keyword.other.melody",
-          "match": "\\b(of|capture|to|of|some|match|over|not)\\b"
+          "match": "\\b(of|capture|to|of|some|match|over|option|not)\\b"
         }
       ]
     },
@@ -35,7 +35,7 @@
         },
         {
           "name": "constant.character.melody",
-          "match": "\\b(A|Z|a|z)\\b"
+          "match": "\\b[A-Za-z]\\b"
         },
         {
           "name": "constant.character.melody",

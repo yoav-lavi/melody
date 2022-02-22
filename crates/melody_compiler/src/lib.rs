@@ -14,6 +14,9 @@ enum Token {
     #[regex("some of")]
     SomeExpression,
 
+    #[regex("option of")]
+    OptionExpression,
+
     #[regex(r#""(\\"|[^"\n])*""#, raw)]
     RawDouble(String),
 
@@ -279,6 +282,10 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
                 quantifier = Some(String::from("+"));
                 None
             }
+            Token::OptionExpression => {
+                quantifier = Some(String::from("?"));
+                None
+            }
 
             // direct replacements
             Token::LineStart => handle_quantifier(String::from("^"), quantifier.clone(), false),
@@ -509,4 +516,22 @@ fn some_test() {
     )
     .unwrap();
     assert_eq!(multiple_output, "/(?:ABC)+/");
+}
+
+#[test]
+fn option_test() {
+    let single_output = compiler(
+        r#"
+      option of char;
+      "#,
+    )
+    .unwrap();
+    assert_eq!(single_output, "/.?/");
+    let multiple_output = compiler(
+        r#"
+      option of "ABC";
+      "#,
+    )
+    .unwrap();
+    assert_eq!(multiple_output, "/(?:ABC)?/");
 }
