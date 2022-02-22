@@ -238,9 +238,9 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
 
     let mut group_quantifier = None;
 
-    let mut output = String::new();
+    let mut store: Vec<String> = Vec::new();
 
-    let mut stack: Vec<String> = Vec::new();
+    let mut output = String::new();
 
     while let Some(token) = lex.next() {
         let in_block = in_group || in_either;
@@ -302,8 +302,8 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
                     handle_quantifier(String::from(")"), current_group_quantifier, false)
                 } else if in_either {
                     in_either = false;
-                    let inner_expressions = stack.join("|");
-                    stack.clear();
+                    let inner_expressions = store.join("|");
+                    store.clear();
                     let current_group_quantifier = group_quantifier;
                     group_quantifier = None;
                     handle_quantifier(
@@ -381,7 +381,7 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
 
         if let Some(formatted_token) = formatted_token {
             if in_either {
-                stack.push(formatted_token);
+                store.push(formatted_token);
             } else {
                 output.push_str(&formatted_token);
             }
