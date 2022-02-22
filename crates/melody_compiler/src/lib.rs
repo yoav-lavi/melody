@@ -196,6 +196,20 @@ fn format_regex(regex: &str, flags: Option<String>) -> String {
     format!("/{regex}/{}", flags.unwrap_or_default())
 }
 
+fn create_parse_error(lex: &mut Lexer<Token>, line: u16) -> ParseError {
+    let line_index = usize::from(line);
+    let line_source = lex.source().split('\n').nth(line_index).unwrap();
+    ParseError {
+        token: lex.slice().to_owned(),
+        line: line_source.to_owned(),
+        line_index,
+    }
+}
+
+fn in_block(in_group: bool, in_either: bool) -> bool {
+    in_group || in_either
+}
+
 /**
 Compiles Melody source code to a regular expression
 
@@ -244,24 +258,36 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
 
             // groups
             Token::Capture => {
+                if in_block(in_group, in_either) {
+                    return Err(create_parse_error(&mut lex, line));
+                }
                 group_quantifier = quantifier;
                 quantifier = None;
                 in_group = true;
                 Some(String::from("("))
             }
             Token::NamedCapture(name) => {
+                if in_block(in_group, in_either) {
+                    return Err(create_parse_error(&mut lex, line));
+                }
                 group_quantifier = quantifier;
                 quantifier = None;
                 in_group = true;
                 Some(format!("(?<{name}>"))
             }
             Token::Match => {
+                if in_block(in_group, in_either) {
+                    return Err(create_parse_error(&mut lex, line));
+                }
                 group_quantifier = quantifier;
                 quantifier = None;
                 in_group = true;
                 Some(String::from("(?:"))
             }
             Token::Either => {
+                if in_block(in_group, in_either) {
+                    return Err(create_parse_error(&mut lex, line));
+                }
                 group_quantifier = quantifier;
                 quantifier = None;
                 in_either = true;
@@ -339,15 +365,7 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
                 line += 1;
                 None
             }
-            _ => {
-                let line_index = usize::from(line);
-                let line_source = lex.source().split('\n').nth(line_index).unwrap();
-                return Err(ParseError {
-                    token: lex.slice().to_owned(),
-                    line: line_source.to_owned(),
-                    line_index,
-                });
-            }
+            _ => return Err(create_parse_error(&mut lex, line)),
         };
 
         if let Some(formatted_token) = formatted_token {
