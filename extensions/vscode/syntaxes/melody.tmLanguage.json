@@ -31,7 +31,7 @@
       "patterns": [
         {
           "name": "constant.character.melody",
-          "match": "(<space>|<newline>|<tab>|<return>|<feed>|<null>|<digit>|<word>|<vertical>)"
+          "match": "(<whitespace>|<newline>|<tab>|<return>|<feed>|<null>|<digit>|<word>|<vertical>)"
         },
         {
           "name": "constant.character.melody",

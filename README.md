@@ -18,7 +18,7 @@ Note: these are for the currently supported syntax and may change
 16 of "na";
 
 2 of match {
-  <space>;
+  <whitespace>;
   "batman";
 }
 
@@ -50,7 +50,7 @@ Turns into
 
 ```rust
 some of <word>;
-<space>;
+<whitespace>;
 "1";
 2 of <digit>;
 
@@ -67,7 +67,7 @@ Turns into
 
 ```rust
 some of match {
-  2 of <space>;
+  2 of <whitespace>;
 }
 
 some of char;
@@ -132,7 +132,7 @@ OPTIONS:
 
 ## Symbols
 
-- `<space>` - equivalent to regex `\s`
+- `<whitespace>` - equivalent to regex `\s`
 - `<newline>` - equivalent to regex `\n`
 - `<tab>` - equivalent to regex `\t`
 - `<return>` - equivalent to regex `\r`
@@ -183,7 +183,7 @@ The Melody file extension is `.mdy`
 | `capture { ... }`                   | `(...)`               | ✅          |
 | `capture name { ... }`              | `(?<name>...)`        | ✅          |
 | `match { ... }`                     | `(?:...)`             | ✅          |
-| `<space>;`                          | `\s`                  | ✅          |
+| `<whitespace>;`                          | `\s`                  | ✅          |
 | `A to Z;`                           | `[A-Z]`               | ✅          |
 | `a to z;`                           | `[a-z]`               | ✅          |
 | `0 to 9;`                           | `[0-9]`               | ✅          |
@@ -213,7 +213,7 @@ The Melody file extension is `.mdy`
 | Rust crate                          |                       | ✅          |
 | enforce group close                 |                       | 🐣          |
 | tests                               |                       | 🐣          |
-| `not <space>;`                      | `\S`                  | ❌          |
+| `not <whitespace>;`                      | `\S`                  | ❌          |
 | `not <digit>;`                      | `\D`                  | ❌          |
 | `not <word>;`                       | `\W`                  | ❌          |
 | `<backspace>`                       | `[\b]`                | ❌          |

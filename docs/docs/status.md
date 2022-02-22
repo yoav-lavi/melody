@@ -21,7 +21,7 @@ sidebar_position: 7
 | `capture { ... }`                   | `(...)`               | ✅          |
 | `capture name { ... }`              | `(?<name>...)`        | ✅          |
 | `match { ... }`                     | `(?:...)`             | ✅          |
-| `<space>;`                          | `\s`                  | ✅          |
+| `<whitespace>;`                          | `\s`                  | ✅          |
 | `A to Z;`                           | `[A-Z]`               | ✅          |
 | `a to z;`                           | `[a-z]`               | ✅          |
 | `0 to 9;`                           | `[0-9]`               | ✅          |
@@ -51,7 +51,7 @@ sidebar_position: 7
 | Rust crate                          |                       | ✅          |
 | enforce group close                 |                       | 🐣          |
 | tests                               |                       | 🐣          |
-| `not <space>;`                      | `\S`                  | ❌          |
+| `not <whitespace>;`                      | `\S`                  | ❌          |
 | `not <digit>;`                      | `\D`                  | ❌          |
 | `not <word>;`                       | `\W`                  | ❌          |
 | `<backspace>`                       | `[\b]`                | ❌          |

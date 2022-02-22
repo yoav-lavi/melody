@@ -18,7 +18,7 @@ sidebar_position: 6
 
 ## Symbols
 
-- `<space>` - equivalent to regex `\s`
+- `<whitespace>` - equivalent to regex `\s`
 - `<newline>` - equivalent to regex `\n`
 - `<tab>` - equivalent to regex `\t`
 - `<return>` - equivalent to regex `\r`
