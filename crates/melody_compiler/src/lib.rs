@@ -65,11 +65,20 @@ enum Token {
     #[token("<digit>")]
     DigitSymbol,
 
+    #[token("not <digit>")]
+    NotDigitSymbol,
+
     #[token("<space>")]
     SpaceSymbol,
 
+    #[token("not <space>")]
+    NotSpaceSymbol,
+
     #[token("<word>")]
     WordSymbol,
+
+    #[token("not <word>")]
+    NotWordSymbol,
 
     #[token("<vertical>")]
     VerticalSymbol,
@@ -282,6 +291,7 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
             Token::LineStart => handle_quantifier(String::from("^"), quantifier.clone(), false),
             Token::LineEnd => handle_quantifier(String::from("$"), quantifier.clone(), false),
             Token::SpaceSymbol => handle_quantifier(String::from("\\s"), quantifier.clone(), false),
+            Token::NotSpaceSymbol => handle_quantifier(String::from("\\S"), quantifier.clone(), false),
             Token::NewlineSymbol => {
                 handle_quantifier(String::from("\\n"), quantifier.clone(), false)
             }
@@ -292,7 +302,9 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
             Token::FeedSymbol => handle_quantifier(String::from("\\f"), quantifier.clone(), false),
             Token::NullSymbol => handle_quantifier(String::from("\\0"), quantifier.clone(), false),
             Token::DigitSymbol => handle_quantifier(String::from("\\d"), quantifier.clone(), false),
+            Token::NotDigitSymbol => handle_quantifier(String::from("\\D"), quantifier.clone(), false),
             Token::WordSymbol => handle_quantifier(String::from("\\w"), quantifier.clone(), false),
+            Token::NotWordSymbol => handle_quantifier(String::from("\\W"), quantifier.clone(), false),
             Token::VerticalSymbol => {
                 handle_quantifier(String::from("\\v"), quantifier.clone(), false)
             }
@@ -423,18 +435,21 @@ fn symbol_test() {
     let output = compiler(
         r#"
       <space>;
+      not <space>;
       <newline>;
       <tab>;
       <return>;
       <feed>;
       <null>;
       <digit>;
+      not <digit>;
       <word>;
+      not <word>;
       <vertical>;
       "#,
     )
     .unwrap();
-    assert_eq!(output, r"/\s\n\t\r\f\0\d\w\v/");
+    assert_eq!(output, r"/\s\S\n\t\r\f\0\d\D\w\W\v/");
 }
 
 #[test]

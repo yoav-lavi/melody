@@ -20,14 +20,17 @@ sidebar_position: 6
 ## Symbols
 
 - `<space>` - equivalent to regex `\s`
+- `not <space>` - equivalent to regex `\S`
 - `<newline>` - equivalent to regex `\n`
 - `<tab>` - equivalent to regex `\t`
 - `<return>` - equivalent to regex `\r`
 - `<feed>` - equivalent to regex `\f`
 - `<null>` - equivalent to regex `\0`
 - `<digit>` - equivalent to regex `\d`
+- `not <digit>` - equivalent to regex `\D`
 - `<vertical>` - equivalent to regex `\v`
 - `<word>` - equivalent to regex `\w`
+- `not <word>` - equivalent to regex `\W`
 
 ## Literals
 

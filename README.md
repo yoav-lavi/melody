@@ -134,14 +134,17 @@ OPTIONS:
 ## Symbols
 
 - `<space>` - equivalent to regex `\s`
+- `not <space>` - equivalent to regex `\S`
 - `<newline>` - equivalent to regex `\n`
 - `<tab>` - equivalent to regex `\t`
 - `<return>` - equivalent to regex `\r`
 - `<feed>` - equivalent to regex `\f`
 - `<null>` - equivalent to regex `\0`
 - `<digit>` - equivalent to regex `\d`
+- `not <digit>` - equivalent to regex `\D`
 - `<vertical>` - equivalent to regex `\v`
 - `<word>` - equivalent to regex `\w`
+- `not <word>` - equivalent to regex `\W`
 
 ## Concepts
 
@@ -210,14 +213,14 @@ The Melody file extension is `.mdy`
 | `some of`                           | `+`                   | ✅          |
 | syntax highlighting extension       |                       | ✅          |
 | `over 5 of "A";`                    | `A{6,}`               | ✅          |
+| `not <digit>;`                      | `\D`                  | ✅          |
+| `not <space>;`                      | `\S`                  | ✅          |
+| `not <word>;`                       | `\W`                  | ✅          |
 | WASM binding                        |                       | ✅          |
 | Rust crate                          |                       | ✅          |
 | `option of`                         | `?`                   | ✅          |
 | enforce group close                 |                       | 🐣          |
 | tests                               |                       | 🐣          |
-| `not <space>;`                      | `\S`                  | ❌          |
-| `not <digit>;`                      | `\D`                  | ❌          |
-| `not <word>;`                       | `\W`                  | ❌          |
 | `<backspace>`                       | `[\b]`                | ❌          |
 | file watcher                        |                       | ❌          |
 | nested groups                       | `(...(...))`          | ❌          |

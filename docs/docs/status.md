@@ -47,13 +47,13 @@ sidebar_position: 7
 | `some of`                           | `+`                   | ✅          |
 | syntax highlighting extension       |                       | ✅          |
 | `over 5 of "A";`                    | `A{6,}`               | ✅          |
+| `not <space>;`                      | `\S`                  | ✅          |
+| `not <digit>;`                      | `\D`                  | ✅          |
+| `not <word>;`                       | `\W`                  | ✅          |
 | WASM binding                        |                       | ✅          |
 | Rust crate                          |                       | ✅          |
 | enforce group close                 |                       | 🐣          |
 | tests                               |                       | 🐣          |
-| `not <space>;`                      | `\S`                  | ❌          |
-| `not <digit>;`                      | `\D`                  | ❌          |
-| `not <word>;`                       | `\W`                  | ❌          |
 | `<backspace>`                       | `[\b]`                | ❌          |
 | file watcher                        |                       | ❌          |
 | nested groups                       | `(...(...))`          | ❌          |
