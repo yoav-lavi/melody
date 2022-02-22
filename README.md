@@ -183,7 +183,7 @@ The Melody file extension is `.mdy`
 | `capture { ... }`                   | `(...)`               | ✅          |
 | `capture name { ... }`              | `(?<name>...)`        | ✅          |
 | `match { ... }`                     | `(?:...)`             | ✅          |
-| `<whitespace>;`                          | `\s`                  | ✅          |
+| `<whitespace>;`                     | `\s`                  | ✅          |
 | `A to Z;`                           | `[A-Z]`               | ✅          |
 | `a to z;`                           | `[a-z]`               | ✅          |
 | `0 to 9;`                           | `[0-9]`               | ✅          |
@@ -213,7 +213,7 @@ The Melody file extension is `.mdy`
 | Rust crate                          |                       | ✅          |
 | enforce group close                 |                       | 🐣          |
 | tests                               |                       | 🐣          |
-| `not <whitespace>;`                      | `\S`                  | ❌          |
+| `not <whitespace>;`                 | `\S`                  | ❌          |
 | `not <digit>;`                      | `\D`                  | ❌          |
 | `not <word>;`                       | `\W`                  | ❌          |
 | `<backspace>`                       | `[\b]`                | ❌          |
