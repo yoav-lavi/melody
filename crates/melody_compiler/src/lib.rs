@@ -47,6 +47,9 @@ enum Token {
     #[token("either {")]
     Either,
 
+    #[token("}")]
+    BlockEnd,
+
     #[token("start")]
     LineStart,
 
@@ -91,9 +94,6 @@ enum Token {
 
     #[token("char")]
     Char,
-
-    #[token("}")]
-    GroupEnd,
 
     #[token(";")]
     Semicolon,
@@ -292,7 +292,7 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
                 in_either = true;
                 None
             }
-            Token::GroupEnd => {
+            Token::BlockEnd => {
                 if in_group {
                     in_group = false;
                     let current_group_quantifier = group_quantifier;
