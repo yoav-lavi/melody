@@ -168,7 +168,7 @@ dependencies = [
 
 [[package]]
 name = "melody_cli"
-version = "0.4.0"
+version = "0.4.1"
 dependencies = [
  "clap",
  "colored",
@@ -177,14 +177,14 @@ dependencies = [
 
 [[package]]
 name = "melody_compiler"
-version = "0.4.0"
+version = "0.4.1"
 dependencies = [
  "logos",
 ]
 
 [[package]]
 name = "melody_wasm"
-version = "0.4.0"
+version = "0.4.1"
 dependencies = [
  "melody_compiler",
  "wasm-bindgen",
