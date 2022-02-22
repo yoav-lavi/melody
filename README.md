@@ -221,7 +221,7 @@ The Melody file extension is `.mdy`
 | Rust crate                          |                       | ✅          |
 | `option of`                         | `?`                   | ✅          |
 | tests                               |                       | ✅          |
-| `either { ...; ...; }`              | `(...|...)`           | ✅          |
+| `either { ...; ...; }`              | `(...\|...)`          | ✅          |
 | enforce group close                 |                       | ❌          |
 | `<backspace>`                       | `[\b]`                | ❌          |
 | file watcher                        |                       | ❌          |
@@ -235,7 +235,6 @@ The Melody file extension is `.mdy`
 | `flags: global, multiline, ...`     | `/.../gm...`          | ❔          |
 | `/* comment */`                     |                       | ❔          |
 | `maybe some of`                     | `*`                   | ❔          |
-
 | `any of "a", "b", "c"`              | `[abc]`               | ❔          |
 | `... not before ...`                | `...(?!...)`          | ❔          |
 | `... not after ...`                 | `...(?<!...)`         | ❔          |
