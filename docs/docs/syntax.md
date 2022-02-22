@@ -15,6 +15,7 @@ sidebar_position: 6
 - `char` - matches a single character, equivalent to regex `.`
 - `some` - used with `of` to express 1 or more of a pattern, equivalent to regex `+`
 - `over` - used with `of` to express more than an amount of a pattern, equivalent to regex `{6,}` (assuming `over 5 of ...`)
+- `option` - used with `of` to express 0 or 1 of a pattern, equivalent to regex `?`
 
 ## Symbols
 
