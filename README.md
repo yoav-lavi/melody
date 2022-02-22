@@ -233,14 +233,14 @@ The Melody file extension is `.mdy`
 | auto escape for non Melody patterns |                       | ❌          |
 | TS / JS build step                  |                       | ❌          |
 | more robust parsing mechanism (ast) |                       | ❌          |
+| `ahead { ... }`                     | `(?=...)`             | ❌          |
+| `behind { ... }`                    | `(?<=...)`            | ❌          |
+| `not ahead { ... }`                 | `(?!...)`             | ❌          |
+| `not behind { ... }`                | `(?<!...)`            | ❌          |
 | `not "A";`                          | `[^A]`                | ❔          |
 | `flags: global, multiline, ...`     | `/.../gm...`          | ❔          |
 | `/* comment */`                     |                       | ❔          |
 | `any of "a", "b", "c"`              | `[abc]`               | ❔          |
-| `... not before ...`                | `...(?!...)`          | ❔          |
-| `... not after ...`                 | `...(?<!...)`         | ❔          |
-| `... before ...`                    | `...(?=...)`          | ❔          |
-| `... after ...`                     | `...(?<=...)`         | ❔          |
 | (?)                                 | `*?`                  | ❔          |
 | (?)                                 | `\#`                  | ❔          |
 | (?)                                 | `\k<name>`            | ❔          |
