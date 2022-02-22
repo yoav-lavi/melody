@@ -371,9 +371,9 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
         if let Some(formatted_token) = formatted_token {
             if in_either {
                 stack.push(formatted_token);
-                continue;
+            } else {
+                output.push_str(&formatted_token);
             }
-            output.push_str(&formatted_token);
         }
     }
 
