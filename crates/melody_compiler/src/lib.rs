@@ -243,6 +243,7 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
     let mut stack: Vec<String> = Vec::new();
 
     while let Some(token) = lex.next() {
+        let in_block = in_group || in_either;
         let formatted_token = match token {
             // raw
             Token::RawDouble(pattern) | Token::RawSingle(pattern) => {
@@ -257,7 +258,7 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
 
             // groups
             Token::Capture => {
-                if in_group || in_either {
+                if in_block {
                     return Err(create_parse_error(&mut lex, line));
                 }
                 group_quantifier = quantifier;
@@ -266,7 +267,7 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
                 Some(String::from("("))
             }
             Token::NamedCapture(name) => {
-                if in_group || in_either {
+                if in_block {
                     return Err(create_parse_error(&mut lex, line));
                 }
                 group_quantifier = quantifier;
@@ -275,7 +276,7 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
                 Some(format!("(?<{name}>"))
             }
             Token::Match => {
-                if in_group || in_either {
+                if in_block {
                     return Err(create_parse_error(&mut lex, line));
                 }
                 group_quantifier = quantifier;
@@ -284,7 +285,7 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
                 Some(String::from("(?:"))
             }
             Token::Either => {
-                if in_group || in_either {
+                if in_block {
                     return Err(create_parse_error(&mut lex, line));
                 }
                 group_quantifier = quantifier;
