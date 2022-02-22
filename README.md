@@ -219,8 +219,8 @@ The Melody file extension is `.mdy`
 | WASM binding                        |                       | ✅          |
 | Rust crate                          |                       | ✅          |
 | `option of`                         | `?`                   | ✅          |
-| enforce group close                 |                       | 🐣          |
-| tests                               |                       | 🐣          |
+| tests                               |                       | ✅         |
+| enforce group close                 |                       | ❌          |
 | `<backspace>`                       | `[\b]`                | ❌          |
 | file watcher                        |                       | ❌          |
 | nested groups                       | `(...(...))`          | ❌          |
