@@ -63,7 +63,7 @@ enum Token {
     DigitSymbol,
 
     #[token("<whitespace>")]
-    WhiteSpaceSymbol,
+    WhitespaceSymbol,
 
     #[token("<word>")]
     WordSymbol,
@@ -274,7 +274,7 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
             // direct replacements
             Token::LineStart => handle_quantifier(String::from("^"), quantifier.clone(), false),
             Token::LineEnd => handle_quantifier(String::from("$"), quantifier.clone(), false),
-            Token::WhiteSpaceSymbol => handle_quantifier(String::from("\\s"), quantifier.clone(), false),
+            Token::WhitespaceSymbol => handle_quantifier(String::from("\\s"), quantifier.clone(), false),
             Token::NewlineSymbol => {
                 handle_quantifier(String::from("\\n"), quantifier.clone(), false)
             }
