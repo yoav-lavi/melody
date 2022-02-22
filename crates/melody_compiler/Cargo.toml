@@ -1,0 +1,14 @@
+[package]
+name = "melody_compiler"
+description = "The Melody language compiler"
+homepage = "https://github.com/yoav-lavi/melody"
+repository = "https://github.com/yoav-lavi/melody"
+readme = "README.md"
+version = "0.1.1"
+edition = "2021"
+rust-version = "1.58.0"
+license = "MIT"
+keywords = ["melody", "melodylang"]
+
+[dependencies]
+logos = "0.12.0"

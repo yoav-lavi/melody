@@ -1,9 +1,2 @@
-[package]
-name = "melody"
-version = "0.1.0"
-edition = "2021"
-
-[dependencies]
-logos = "0.12.0"
-clap = { version = "3.0.7", features = ["derive"] }
-colored = "2.0.0"
+[workspace]
+members = ["crates/melody_cli", "crates/melody_compiler", "crates/melody_wasm"]

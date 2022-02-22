@@ -1,0 +1,41 @@
+:root {
+  --ifm-color-primary: #8FBCBB;
+  --ifm-color-primary-dark: #88C0D0;
+  --ifm-color-primary-darker: #81A1C1;
+  --ifm-color-primary-darkest: #5E81AC;
+  --ifm-color-primary-light: #D8DEE9;
+  --ifm-color-primary-lighter: #E5E9F0;
+  --ifm-color-primary-lightest: #ECEFF4;
+  --ifm-table-stripe-background: #2E3440;
+  --ifm-table-head-background: #2E3440;
+  --ifm-navbar-background-color: #2E3440;
+  --ifm-menu-color-background-active: #2E3440;
+  --ifm-menu-color-background-hover: #2E3440;
+  --ifm-toc-link-color: #ECEFF4;
+  --ifm-code-font-size: 95%;
+}
+
+.docusaurus-highlight-code-line {
+  background-color: #2E3440;
+  display: block;
+  margin: 0 calc(-1 * var(--ifm-pre-padding));
+  padding: 0 var(--ifm-pre-padding);
+}
+
+html {
+  background-color: #242933;
+  color: #ECEFF4;
+}
+
+
+.docusaurus-highlight-code-line {
+  background-color: #2E3440;
+}
+
+code {
+  background-color: #2E3440;
+}
+
+pre code {
+  background-color: #2E3440;
+}

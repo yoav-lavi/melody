@@ -1,0 +1,65 @@
+/* colors taken from the Nord palette (https://www.nordtheme.com and https://github.com/arcticicestudio/nord-visual-studio-code/) */
+
+* { 
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,body { 
+  margin:0; 
+  padding:0; 
+  height:100%; 
+  background-color: #242933;
+  font-family: 'Fira Code', monospace;
+}
+
+.parent-container {
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  margin: 10px;
+}
+
+.header-container {
+  margin-left: 15px;
+  margin-top: 10px;
+}
+
+.header {
+  font-size: 20px;
+  color: #ECEFF4
+}
+
+.noscript {
+  font-size: 15px;
+  color: #ECEFF4;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+}
+
+.version {
+  font-size: 10px;
+  color: #81A1C1;
+}
+
+.editor {
+  height: 100%;
+  width: 50%;
+  margin: 5px;
+}
+
+@media only screen and (max-width: 600px){
+  .parent-container {
+    flex-direction: column;
+  }
+
+  .editor {
+    height: 50%; 
+    width: 100%;
+  }
+}
