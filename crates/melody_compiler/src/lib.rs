@@ -301,12 +301,12 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
                     handle_quantifier(String::from(")"), current_group_quantifier, false)
                 } else if in_either {
                     in_either = false;
-                    let inner_tokens = stack.join("|");
+                    let inner_expressions = stack.join("|");
                     stack.clear();
                     let current_group_quantifier = group_quantifier;
                     group_quantifier = None;
                     handle_quantifier(
-                        format!("({})", inner_tokens),
+                        format!("({})", inner_expressions),
                         current_group_quantifier,
                         false,
                     )
