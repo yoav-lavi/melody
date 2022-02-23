@@ -86,7 +86,7 @@ const editorInitialValue = `// matches the batman theme tune
 16 of "na";
 
 2 of match {
-  :space;
+  <space>;
   "batman";
 }
 `;
