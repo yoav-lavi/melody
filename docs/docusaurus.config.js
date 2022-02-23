@@ -1,5 +1,4 @@
 // @ts-check
-// Note: type annotations allow type checking and IDEs autocompletion
 
 const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 
@@ -8,12 +7,12 @@ const config = {
   title: "Melody",
   tagline:
     "A language that compiles to regular expressions and aims to be more easily readable and maintainable",
-  url: "https://your-docusaurus-test-site.com",
+  url: "https://yoav-lavi.github.io/melody/",
   baseUrl: "/melody/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
-  organizationName: "yoav-lavi", // Usually your GitHub org/user name.
-  projectName: "melody", // Usually your repo name.
+  organizationName: "yoav-lavi",
+  projectName: "melody",
   trailingSlash: true,
   presets: [
     [
@@ -48,6 +47,11 @@ const config = {
         ],
       },
       footer: {
+        links: [
+          {
+            html: `<code style="color: #ECEFF4; background-color: #2E3440;">v0.6.0</code>`,
+          },
+        ],
         style: "dark",
         copyright: `Copyright © ${new Date().getFullYear()} Yoav Lavi`,
       },
