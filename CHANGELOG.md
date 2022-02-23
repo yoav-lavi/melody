@@ -4,7 +4,7 @@
 
 ### Features
 
-- Adds support for raw sequences (:code\`...\`</code>)
+- Adds support for raw sequences (<code>\`...\`</code>)
 - Allows any word character in `capture` names
 - Adds auto escaping for literals
 - Adds the Melody version number to the documentation
