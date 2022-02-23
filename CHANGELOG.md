@@ -12,6 +12,7 @@
 ### Syntax Changes
 
 - Changes `start`, `end`, and `char` to symbols (`<start>`, `<end>`, `<char>`)
+- `either` creates a non capturing group
 
 ### Refactoring
 
