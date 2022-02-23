@@ -70,7 +70,7 @@ some of match {
   2 of <space>;
 }
 
-some of char;
+some of <char>;
 ";";
 
 //  let value = 5;
@@ -80,6 +80,38 @@ Turns into
 
 ```regex
 /(?:\s{2})+.+;/
+```
+
+### Semantic Versions
+
+```rust
+<start>;
+
+option of "v";
+
+capture major {
+  some of <digit>;
+}
+
+".";
+
+capture minor {
+  some of <digit>;
+}
+
+".";
+
+capture patch {
+  some of <digit>;
+}
+
+<end>;
+```
+
+Turns into
+
+```regex
+/^v?(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$/
 ```
 
 ## Playground
@@ -124,9 +156,6 @@ OPTIONS:
 - `to` - used to create a range (either as a quantifier or as a character range), e.g. `5 to 9`, equivalent to regex `{5,9}` if before an `of` or `[5-9]` otherwise
 - `capture` - used to open a `capture` or named `capture` block, equivalent to regex `(...)`
 - `match` - used to open a `match` block, equivalent to regex `(?:...)`
-- `start` - matches the start of the string, equivalent to regex `^`
-- `end` - matches the end of the string, equivalent to regex `$`
-- `char` - matches a single character, equivalent to regex `.`
 - `some` - used with `of` to express 1 or more of a pattern, equivalent to regex `+`
 - `over` - used with `of` to express more than an amount of a pattern, equivalent to regex `{6,}` (assuming `over 5 of ...`)
 - `option` - used with `of` to express 0 or 1 of a pattern, equivalent to regex `?`
@@ -135,6 +164,9 @@ OPTIONS:
 
 ## Symbols
 
+- `<start>` - matches the start of the string, equivalent to regex `^`
+- `<end>` - matches the end of the string, equivalent to regex `$`
+- `<char>` - matches a single character, equivalent to regex `.`
 - `<space>` - equivalent to regex `\s`
 - `not <space>` - equivalent to regex `\S`
 - `<newline>` - equivalent to regex `\n`
@@ -148,9 +180,13 @@ OPTIONS:
 - `<word>` - equivalent to regex `\w`
 - `not <word>` - equivalent to regex `\W`
 
-## Concepts
+## Literals
 
-- `"..."` or `'...'` - used to mark a literal part of the match
+- `"..."` or `'...'` - used to mark a literal part of the match. Melody will automatically escape characters as needed. Quotes (of the same kind surrounding the literal) should be escaped
+
+## Raw
+
+- <code>\`...\`;</code> - added directly to the output without any escaping
 
 ## Extras
 
@@ -204,14 +240,16 @@ The Melody file extension is `.mdy`
 | `<digit>;`                          | `\d`                  | ✅          |
 | `<vertical>;`                       | `\v`                  | ✅          |
 | `<word>;`                           | `\w`                  | ✅          |
-| `"...";` (raw)                      | ...                   | ✅          |
-| `'...';` (raw)                      | ...                   | ✅          |
+| `"...";` (literal)                  | `...`                 | ✅          |
+| `'...';` (literal)                  | `...`                 | ✅          |
+| `<code>\`...\`</code> (raw)         | `...`                 | ✅          |
 | `'\'';`                             | `'`                   | ✅          |
 | `"\"";`                             | `"`                   | ✅          |
+| `<code>\`\\`\`</code>               | <code>\`</code>       | ✅          |
 | support non alphanumeric characters |                       | ✅          |
 | output to file                      |                       | ✅          |
 | no color output                     |                       | ✅          |
-| `char`                              | `.`                   | ✅          |
+| `<char>`                            | `.`                   | ✅          |
 | `some of`                           | `+`                   | ✅          |
 | syntax highlighting extension       |                       | ✅          |
 | `over 5 of "A";`                    | `A{6,}`               | ✅          |
@@ -224,13 +262,13 @@ The Melody file extension is `.mdy`
 | `any of`                            | `*`                   | ✅          |
 | `either { ...; ...; }`              | `(...\|...)`          | ✅          |
 | tests                               |                       | ✅          |
+| auto escape for literals            |                       | ✅          |
 | enforce group close                 |                       | ❌          |
 | `<backspace>`                       | `[\b]`                | ❌          |
 | file watcher                        |                       | ❌          |
 | nested groups                       | `(...(...))`          | ❌          |
 | multiple ranges                     | `[a-zA-Z0-9]`         | ❌          |
 | general cleanup and modules         |                       | ❌          |
-| auto escape for non Melody patterns |                       | ❌          |
 | TS / JS build step                  |                       | ❌          |
 | more robust parsing mechanism (ast) |                       | ❌          |
 | `ahead { ... }`                     | `(?=...)`             | ❌          |

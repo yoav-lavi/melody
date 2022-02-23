@@ -42,11 +42,12 @@ languages.setMonarchTokensProvider(MELODY_LANGUAGE_ID, {
       [/\d/, 'digit'],
       [/"(\\"|[^"\n])*"/, 'string'],
       [/'(\\'|[^'\n])*'/, 'string'],
+      [/"(\\"|[^"\n])*"/, 'string'],
+      [/`(\\`|[^`\n])*`/, 'string'],
       [
-        /(<space>|<newline>|<tab>|<return>|<feed>|<null>|<digit>|<word>|<vertical>)/,
+        /(<space>|<newline>|<tab>|<return>|<feed>|<null>|<digit>|<word>|<vertical>|<start>|<end>|<char>)/,
         'character',
       ],
-      [/(start|end|char)/, 'character'],
       [/[A-Za-z]/, 'character'],
       [/\/\/.*/, 'comment'],
     ],
@@ -85,7 +86,7 @@ const editorInitialValue = `// matches the batman theme tune
 16 of "na";
 
 2 of match {
-  <space>;
+  :space;
   "batman";
 }
 `;

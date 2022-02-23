@@ -75,3 +75,35 @@ Turns into
 ```
 /(?:\s{2})+.+;/
 ```
+
+## Semantic Versions
+
+```
+<start>;
+
+option of "v";
+
+capture major {
+  some of <digit>;
+}
+
+".";
+
+capture minor {
+  some of <digit>;
+}
+
+".";
+
+capture patch {
+  some of <digit>;
+}
+
+<end>;
+```
+
+Turns into
+
+```
+/^v?(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$/
+```

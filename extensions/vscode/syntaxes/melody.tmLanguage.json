@@ -31,15 +31,11 @@
       "patterns": [
         {
           "name": "constant.character.melody",
-          "match": "(<space>|<newline>|<tab>|<return>|<feed>|<null>|<digit>|<word>|<vertical>)"
+          "match": "(<space>|<newline>|<tab>|<return>|<feed>|<null>|<digit>|<word>|<vertical>|<start>|<end>|<char>)"
         },
         {
           "name": "constant.character.melody",
           "match": "\\b[A-Za-z]\\b"
-        },
-        {
-          "name": "constant.character.melody",
-          "match": "\\b(start|end|char)\\b"
         }
       ]
     },
@@ -76,6 +72,17 @@
           "name": "string.quoted.single.melody",
           "begin": "'",
           "end": "'",
+          "patterns": [
+            {
+              "name": "constant.character.escape.melody",
+              "match": "\\\\."
+            }
+          ]
+        },
+        {
+          "name": "string.quoted.single.melody",
+          "begin": "`",
+          "end": "`",
           "patterns": [
             {
               "name": "constant.character.escape.melody",

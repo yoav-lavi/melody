@@ -26,8 +26,8 @@ sidebar_position: 7
 | `a to z;`                           | `[a-z]`               | ✅          |
 | `0 to 9;`                           | `[0-9]`               | ✅          |
 | `// comment`                        |                       | ✅          |
-| `start;`                            | `^`                   | ✅          |
-| `end;`                              | `$`                   | ✅          |
+| `<start>;`                          | `^`                   | ✅          |
+| `<end>;`                            | `$`                   | ✅          |
 | `<newline>;`                        | `\n`                  | ✅          |
 | `<tab>;`                            | `\t`                  | ✅          |
 | `<return>;`                         | `\r`                  | ✅          |
@@ -36,14 +36,16 @@ sidebar_position: 7
 | `<digit>;`                          | `\d`                  | ✅          |
 | `<vertical>;`                       | `\v`                  | ✅          |
 | `<word>;`                           | `\w`                  | ✅          |
-| `"...";` (raw)                      | ...                   | ✅          |
-| `'...';` (raw)                      | ...                   | ✅          |
+| `"...";` (literal)                  | `...`                 | ✅          |
+| `'...';` (literal)                  | `...`                 | ✅          |
+| <code>\`...\`;</code> (raw)         | `...`                 | ✅          |
 | `'\'';`                             | `'`                   | ✅          |
 | `"\"";`                             | `"`                   | ✅          |
+| <code>\`\\\`\`;</code> (raw)        | <code>\`</code>       | ✅          |
 | support non alphanumeric characters |                       | ✅          |
 | output to file                      |                       | ✅          |
 | no color output                     |                       | ✅          |
-| `char`                              | `.`                   | ✅          |
+| `<char>`                            | `.`                   | ✅          |
 | `some of`                           | `+`                   | ✅          |
 | syntax highlighting extension       |                       | ✅          |
 | `over 5 of "A";`                    | `A{6,}`               | ✅          |
@@ -56,13 +58,13 @@ sidebar_position: 7
 | `any of`                            | `*`                   | ✅          |
 | `either { ...; ...; }`              | `(...\|...)`          | ✅          |
 | tests                               |                       | ✅          |
+| auto escape for literals            |                       | ✅          |
 | enforce group close                 |                       | ❌          |
 | `<backspace>`                       | `[\b]`                | ❌          |
 | file watcher                        |                       | ❌          |
 | nested groups                       | `(...(...))`          | ❌          |
 | multiple ranges                     | `[a-zA-Z0-9]`         | ❌          |
 | general cleanup and modules         |                       | ❌          |
-| auto escape for non Melody patterns |                       | ❌          |
 | TS / JS build step                  |                       | ❌          |
 | more robust parsing mechanism (ast) |                       | ❌          |
 | `ahead { ... }`                     | `(?=...)`             | ❌          |
@@ -85,7 +87,7 @@ sidebar_position: 7
 | (?)                                 | `\b`                  | ❔          |
 | (?)                                 | `\B`                  | ❔          |
 | (?)                                 | `$1`                  | ❔          |
-| (?)                                 | <code>$`</code>       | ❔          |
+| (?)                                 | <code>$\`</code>      | ❔          |
 | (?)                                 | `$&`                  | ❔          |
 | (?)                                 | `x20`                 | ❔          |
 | (?)                                 | `x{06fa}`             | ❔          |
