@@ -49,7 +49,7 @@ const config = {
       footer: {
         links: [
           {
-            html: `<code style="color: #ECEFF4; background-color: #2E3440;">v0.6.0</code>`,
+            html: `<code style="color: #ECEFF4; background-color: #2E3440;">v0.7.0</code>`,
           },
         ],
         style: "dark",

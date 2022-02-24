@@ -1,5 +1,12 @@
 # Changelog
 
+## [v0.7.0] - 2022-02-24
+
+### Features
+
+- Adds a REPL for `melody_cli`
+- Adds better error messages for the playground
+
 ## [v0.6.0] - 2022-02-23
 
 ### Features
