@@ -54,13 +54,13 @@ pub fn print_repl_welcome() {
         "{}\n\n{}\n\n{}\n{}\n{}\n",
         "Melody REPL v0.7.0".bright_green(),
         "Commands:".bright_green(),
-        format!("- {} - {}", ".u".bright_blue(), "undo".bright_green()),
-        format!(
+        format_args!("- {} - {}", ".u".bright_blue(), "undo".bright_green()),
+        format_args!(
             "- {} - {}",
             ".e".bright_blue(),
             "exits the REPL".bright_green()
         ),
-        format!("- {} - {}", ".r".bright_blue(), "redo".bright_green()),
+        format_args!("- {} - {}", ".r".bright_blue(), "redo".bright_green()),
     );
 }
 
