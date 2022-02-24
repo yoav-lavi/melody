@@ -131,7 +131,6 @@ fn run_repl() {
                 }
             }
             _ => {
-                redo_store.clear();
                 store.push(input);
             }
         }
@@ -151,6 +150,8 @@ fn run_repl() {
             store.pop();
             continue;
         }
+
+        redo_store.clear();
 
         let output = raw_output.unwrap();
         print_output_pretty(format!("{output}\n"))
