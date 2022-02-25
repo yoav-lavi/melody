@@ -1,4 +1,5 @@
 use logos::{Lexer, Logos};
+use std::collections::HashSet;
 
 #[derive(Logos, Debug, PartialEq)]
 enum Token {
@@ -14,11 +15,20 @@ enum Token {
     #[regex("some of")]
     SomeExpression,
 
-    #[regex(r#""(\\"|[^"\n])*""#, raw)]
-    RawDouble(String),
+    #[regex("option of")]
+    OptionExpression,
 
-    #[regex(r#"'(\\'|[^'\n])*'"#, raw)]
-    RawSingle(String),
+    #[regex("any of")]
+    AnyExpression,
+
+    #[regex(r#""(\\"|[^"\n])*""#, literal)]
+    LiteralDouble(String),
+
+    #[regex(r#"'(\\'|[^'\n])*'"#, literal)]
+    LiteralSingle(String),
+
+    #[regex(r#"`(\\`|[^`\n])*`"#, raw)]
+    Raw(String),
 
     #[regex("[a-z] to [a-z]", range)]
     LowercaseRange(String),
@@ -29,7 +39,7 @@ enum Token {
     #[regex("[0-9] to [0-9]", range)]
     NumericRange(String),
 
-    #[regex(r#"capture [a-z]+ \{"#, named_capture)]
+    #[regex(r#"capture \w+ \{"#, named_capture)]
     NamedCapture(String),
 
     #[token("capture {")]
@@ -38,11 +48,17 @@ enum Token {
     #[token("match {")]
     Match,
 
-    #[token("start")]
-    LineStart,
+    #[token("either {")]
+    Either,
 
-    #[token("end")]
-    LineEnd,
+    #[token("}")]
+    BlockEnd,
+
+    #[token("<start>")]
+    StartSymbol,
+
+    #[token("<end>")]
+    EndSymbol,
 
     #[token("<newline>")]
     NewlineSymbol,
@@ -62,26 +78,35 @@ enum Token {
     #[token("<digit>")]
     DigitSymbol,
 
+    #[token("not <digit>")]
+    NotDigitSymbol,
+  
     #[token("<whitespace>")]
     WhitespaceSymbol,
+  
+    #[token("not <whitespace>")]
+    NotWhitespaceSymbol,
 
     #[token("<space>")]
     SpaceSymbol,
 
+    #[token("not <space>")]
+    NotSpaceSymbol,
+
     #[token("<word>")]
     WordSymbol,
+
+    #[token("not <word>")]
+    NotWordSymbol,
 
     #[token("<vertical>")]
     VerticalSymbol,
 
     #[token("<alphabet>")]
     AlphabetSymbol,
-
-    #[token("char")]
-    Char,
-
-    #[token("}")]
-    GroupEnd,
+  
+    #[token("<char>")]
+    CharSymbol,
 
     #[token(";")]
     Semicolon,
@@ -100,6 +125,7 @@ enum Token {
 enum QuoteType {
     Single,
     Double,
+    Raw,
 }
 
 #[derive(Debug, Clone)]
@@ -152,22 +178,49 @@ fn get_quote_type(quote: &str) -> QuoteType {
     }
 }
 
-fn escape_quotes(source: String, quote_type: QuoteType) -> String {
+fn unescape_quotes(source: String, quote_type: QuoteType) -> String {
     match quote_type {
         QuoteType::Double => source.replace(r#"\""#, r#"""#),
         QuoteType::Single => source.replace(r#"\'"#, r#"'"#),
+        QuoteType::Raw => source.replace(r#"\`"#, r#"`"#),
     }
 }
 
-fn remove_and_escape_quotes(source: &str) -> String {
+fn escape_chars(source: String) -> String {
+    let reserved_chars = HashSet::from([
+        '[', ']', '(', ')', '{', '}', '*', '+', '?', '|', '^', '$', '.', '-', '\\',
+    ]);
+    let mut escaped_source = String::new();
+    for char in source.chars() {
+        if reserved_chars.contains(&char) {
+            let escaped_char = format!("\\{char}");
+            escaped_source.push_str(&escaped_char);
+        } else {
+            escaped_source.push_str(&String::from(char))
+        }
+    }
+    escaped_source
+}
+
+fn escape(source: String, quote_type: QuoteType) -> String {
+    escape_chars(unescape_quotes(source, quote_type))
+}
+
+fn remove_and_escape(source: &str) -> String {
     let pattern = source[1..source.len() - 1].to_owned();
     let quote = source[0..1].to_owned();
     let quote_type = get_quote_type(&quote);
-    escape_quotes(pattern, quote_type)
+    escape(pattern, quote_type)
+}
+
+fn literal(lex: &mut Lexer<Token>) -> String {
+    remove_and_escape(lex.slice())
 }
 
 fn raw(lex: &mut Lexer<Token>) -> String {
-    remove_and_escape_quotes(lex.slice())
+    let source = lex.slice();
+    let pattern = source[1..source.len() - 1].to_owned();
+    unescape_quotes(pattern, QuoteType::Raw)
 }
 
 fn handle_quantifier(source: String, quantifier: Option<String>, group: bool) -> Option<String> {
@@ -185,6 +238,16 @@ fn handle_quantifier(source: String, quantifier: Option<String>, group: bool) ->
 
 fn format_regex(regex: &str, flags: Option<String>) -> String {
     format!("/{regex}/{}", flags.unwrap_or_default())
+}
+
+fn create_parse_error(lex: &mut Lexer<Token>, line: u16) -> ParseError {
+    let line_index = usize::from(line);
+    let line_source = lex.source().split('\n').nth(line_index).unwrap();
+    ParseError {
+        token: lex.slice().to_owned(),
+        line: line_source.to_owned(),
+        line_index,
+    }
 }
 
 /**
@@ -208,18 +271,24 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
 
     let mut in_group = false;
 
+    let mut in_either = false;
+
     let mut line: u16 = 0;
 
     let mut quantifier = None;
 
     let mut group_quantifier = None;
 
+    let mut store: Vec<String> = Vec::new();
+
     let mut output = String::new();
 
     while let Some(token) = lex.next() {
+        let in_block = in_group || in_either;
+
         let formatted_token = match token {
             // raw
-            Token::RawDouble(pattern) | Token::RawSingle(pattern) => {
+            Token::LiteralDouble(pattern) | Token::LiteralSingle(pattern) | Token::Raw(pattern) => {
                 let group = pattern.chars().count() != 1;
                 handle_quantifier(pattern, quantifier.clone(), group)
             }
@@ -231,29 +300,58 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
 
             // groups
             Token::Capture => {
+                if in_block {
+                    return Err(create_parse_error(&mut lex, line));
+                }
                 group_quantifier = quantifier;
                 quantifier = None;
                 in_group = true;
                 Some(String::from("("))
             }
             Token::NamedCapture(name) => {
+                if in_block {
+                    return Err(create_parse_error(&mut lex, line));
+                }
                 group_quantifier = quantifier;
                 quantifier = None;
                 in_group = true;
                 Some(format!("(?<{name}>"))
             }
             Token::Match => {
+                if in_block {
+                    return Err(create_parse_error(&mut lex, line));
+                }
                 group_quantifier = quantifier;
                 quantifier = None;
                 in_group = true;
                 Some(String::from("(?:"))
             }
-            Token::GroupEnd => {
+            Token::Either => {
+                if in_block {
+                    return Err(create_parse_error(&mut lex, line));
+                }
+                group_quantifier = quantifier;
+                quantifier = None;
+                in_either = true;
+                None
+            }
+            Token::BlockEnd => {
                 if in_group {
                     in_group = false;
                     let current_group_quantifier = group_quantifier;
                     group_quantifier = None;
                     handle_quantifier(String::from(")"), current_group_quantifier, false)
+                } else if in_either {
+                    in_either = false;
+                    let inner_expressions = store.join("|");
+                    store.clear();
+                    let current_group_quantifier = group_quantifier;
+                    group_quantifier = None;
+                    handle_quantifier(
+                        format!("(?:{})", inner_expressions),
+                        current_group_quantifier,
+                        false,
+                    )
                 } else {
                     None
                 }
@@ -276,11 +374,23 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
                 quantifier = Some(String::from("+"));
                 None
             }
+            Token::OptionExpression => {
+                quantifier = Some(String::from("?"));
+                None
+            }
+            Token::AnyExpression => {
+                quantifier = Some(String::from("*"));
+                None
+            }
 
             // direct replacements
-            Token::LineStart => handle_quantifier(String::from("^"), quantifier.clone(), false),
-            Token::LineEnd => handle_quantifier(String::from("$"), quantifier.clone(), false),
+            Token::StartSymbol => handle_quantifier(String::from("^"), quantifier.clone(), false),
+            Token::EndSymbol => handle_quantifier(String::from("$"), quantifier.clone(), false),
             Token::WhitespaceSymbol => handle_quantifier(String::from("\\s"), quantifier.clone(), false),
+            Token::NotWhitespaceSymbol => {
+                handle_quantifier(String::from("\\S"), quantifier.clone(), false)
+            }
+            
             Token::SpaceSymbol => handle_quantifier(String::from(" "), quantifier.clone(), false),
             Token::NewlineSymbol => {
                 handle_quantifier(String::from("\\n"), quantifier.clone(), false)
@@ -292,31 +402,33 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
             Token::FeedSymbol => handle_quantifier(String::from("\\f"), quantifier.clone(), false),
             Token::NullSymbol => handle_quantifier(String::from("\\0"), quantifier.clone(), false),
             Token::DigitSymbol => handle_quantifier(String::from("\\d"), quantifier.clone(), false),
+            Token::NotDigitSymbol => {
+                handle_quantifier(String::from("\\D"), quantifier.clone(), false)
+            }
             Token::WordSymbol => handle_quantifier(String::from("\\w"), quantifier.clone(), false),
+            Token::NotWordSymbol => {
+                handle_quantifier(String::from("\\W"), quantifier.clone(), false)
+            }
             Token::AlphabetSymbol => handle_quantifier(String::from("[a-zA-Z]"), quantifier.clone(), false),
             Token::VerticalSymbol => {
                 handle_quantifier(String::from("\\v"), quantifier.clone(), false)
             }
-            Token::Char => handle_quantifier(String::from("."), quantifier.clone(), false),
+            Token::CharSymbol => handle_quantifier(String::from("."), quantifier.clone(), false),
 
             // warning and error related
             Token::NewLine => {
                 line += 1;
                 None
             }
-            _ => {
-                let line_index = usize::from(line);
-                let line_source = lex.source().split('\n').nth(line_index).unwrap();
-                return Err(ParseError {
-                    token: lex.slice().to_owned(),
-                    line: line_source.to_owned(),
-                    line_index,
-                });
-            }
+            _ => return Err(create_parse_error(&mut lex, line)),
         };
 
         if let Some(formatted_token) = formatted_token {
-            output.push_str(&formatted_token);
+            if in_either {
+                store.push(formatted_token);
+            } else {
+                output.push_str(&formatted_token);
+            }
         }
     }
 
@@ -410,9 +522,9 @@ fn open_range_expression_test() {
 fn start_end_test() {
     let output = compiler(
         r#"
-      start;
+      <start>;
       "a"
-      end;
+      <end>;
       "#,
     )
     .unwrap();
@@ -423,21 +535,27 @@ fn start_end_test() {
 fn symbol_test() {
     let output = compiler(
         r#"
+      <start>;
+      <char>;
       <whitespace>;
+      not <whitespace>;
       <newline>;
       <tab>;
       <return>;
       <feed>;
       <null>;
       <digit>;
+      not <digit>;
       <word>;
+      not <word>;
       <vertical>;
       <alphabet>;
       <space>;
+      <end>;
       "#,
     )
     .unwrap();
-    assert_eq!(output, r"/\s\n\t\r\f\0\d\w\v[a-zA-Z] /");
+    assert_eq!(output, r"/^.\s\S\n\t\r\f\0\d\D\w\W\v[a-zA-Z] $/");
 }
 
 #[test]
@@ -481,7 +599,7 @@ fn comment_test() {
 fn char_test() {
     let output = compiler(
         r#"
-      3 of char;
+      3 of <char>;
       "#,
     )
     .unwrap();
@@ -492,7 +610,7 @@ fn char_test() {
 fn some_test() {
     let single_output = compiler(
         r#"
-      some of char;
+      some of <char>;
       "#,
     )
     .unwrap();
@@ -504,4 +622,70 @@ fn some_test() {
     )
     .unwrap();
     assert_eq!(multiple_output, "/(?:ABC)+/");
+}
+
+#[test]
+fn option_test() {
+    let single_output = compiler(
+        r#"
+      option of <char>;
+      "#,
+    )
+    .unwrap();
+    assert_eq!(single_output, "/.?/");
+    let multiple_output = compiler(
+        r#"
+      option of "ABC";
+      "#,
+    )
+    .unwrap();
+    assert_eq!(multiple_output, "/(?:ABC)?/");
+}
+
+#[test]
+fn either_test() {
+    let output = compiler(
+        r#"
+      either {
+        "first";
+        "second";
+        a to z;
+      }
+      either {
+        "first";
+        "second";
+      }
+      "#,
+    )
+    .unwrap();
+    assert_eq!(output, "/(?:first|second|[a-z])(?:first|second)/");
+}
+
+#[test]
+fn any_test() {
+    let single_output = compiler(
+        r#"
+      any of <char>;
+      "#,
+    )
+    .unwrap();
+    assert_eq!(single_output, "/.*/");
+    let multiple_output = compiler(
+        r#"
+        any of "ABC";
+      "#,
+    )
+    .unwrap();
+    assert_eq!(multiple_output, "/(?:ABC)*/");
+}
+
+#[test]
+fn raw_test() {
+    let output = compiler(
+        r#"
+      5 of `.*`
+      "#,
+    )
+    .unwrap();
+    assert_eq!(output, "/(?:.*){5}/");
 }

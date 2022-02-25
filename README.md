@@ -70,7 +70,7 @@ some of match {
   2 of <whitespace>;
 }
 
-some of char;
+some of <char>;
 ";";
 
 //  let value = 5;
@@ -80,6 +80,38 @@ Turns into
 
 ```regex
 /(?:\s{2})+.+;/
+```
+
+### Semantic Versions
+
+```rust
+<start>;
+
+option of "v";
+
+capture major {
+  some of <digit>;
+}
+
+".";
+
+capture minor {
+  some of <digit>;
+}
+
+".";
+
+capture patch {
+  some of <digit>;
+}
+
+<end>;
+```
+
+Turns into
+
+```regex
+/^v?(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$/
 ```
 
 ## Playground
@@ -109,10 +141,11 @@ cargo install --path crates/melody_cli
 ## CLI Usage
 
 ```sh
-melody [OPTIONS] <PATH>
+melody [OPTIONS] [PATH]
 
 OPTIONS:
   -f, --file <FILE>    write to an output file
+  -r, --repl           starts the melody REPL
   -n, --no-color       print output with no color
   -V, --version        print version information
   -h, --help           print help information
@@ -124,27 +157,37 @@ OPTIONS:
 - `to` - used to create a range (either as a quantifier or as a character range), e.g. `5 to 9`, equivalent to regex `{5,9}` if before an `of` or `[5-9]` otherwise
 - `capture` - used to open a `capture` or named `capture` block, equivalent to regex `(...)`
 - `match` - used to open a `match` block, equivalent to regex `(?:...)`
-- `start` - matches the start of the string, equivalent to regex `^`
-- `end` - matches the end of the string, equivalent to regex `$`
-- `char` - matches a single character, equivalent to regex `.`
 - `some` - used with `of` to express 1 or more of a pattern, equivalent to regex `+`
 - `over` - used with `of` to express more than an amount of a pattern, equivalent to regex `{6,}` (assuming `over 5 of ...`)
+- `option` - used with `of` to express 0 or 1 of a pattern, equivalent to regex `?`
+- `either` - used to open an `either` block, equivalent to regex `(...|...)`
+- `any` - used with `of` to express 0 or more of a pattern, equivalent to regex `*`
 
 ## Symbols
 
+- `<start>` - matches the start of the string, equivalent to regex `^`
+- `<end>` - matches the end of the string, equivalent to regex `$`
+- `<char>` - matches a single character, equivalent to regex `.`
 - `<whitespace>` - equivalent to regex `\s`
+- `not <whitespace>` - equivalent to regex `\S`
 - `<newline>` - equivalent to regex `\n`
 - `<tab>` - equivalent to regex `\t`
 - `<return>` - equivalent to regex `\r`
 - `<feed>` - equivalent to regex `\f`
 - `<null>` - equivalent to regex `\0`
 - `<digit>` - equivalent to regex `\d`
+- `not <digit>` - equivalent to regex `\D`
 - `<vertical>` - equivalent to regex `\v`
 - `<word>` - equivalent to regex `\w`
+- `not <word>` - equivalent to regex `\W`
 
-## Concepts
+## Literals
 
-- `"..."` or `'...'` - used to mark a literal part of the match
+- `"..."` or `'...'` - used to mark a literal part of the match. Melody will automatically escape characters as needed. Quotes (of the same kind surrounding the literal) should be escaped
+
+## Raw
+
+- <code>\`...\`;</code> - added directly to the output without any escaping
 
 ## Extras
 
@@ -157,7 +200,7 @@ The Melody file extension is `.mdy`
 ## Crates
 
 - `melody_compiler` - The Melody compiler [📦](https://crates.io/crates/melody_compiler) [📖](https://docs.rs/melody_compiler/)
-- `melody_cli` - A CLI wrapping the Melody compiler [📦](https://crates.io/crates/melody_cli) [📖](https://docs.rs/crate/melody_cli/0.1.1)
+- `melody_cli` - A CLI wrapping the Melody compiler [📦](https://crates.io/crates/melody_cli) [📖](https://docs.rs/crate/melody_cli)
 - `melody_wasm` - WASM binding for the Melody compiler
 
 ## Extensions
@@ -200,43 +243,45 @@ The Melody file extension is `.mdy`
 | `<vertical>;`                       | `\v`                  | ✅          |
 | `<word>;`                           | `\w`                  | ✅          |
 | `<alphabet>;`                       | `[a-zA-Z]`            | ✅          |
-| `"...";` (raw)                      | ...                   | ✅          |
-| `'...';` (raw)                      | ...                   | ✅          |
+| `"...";` (literal)                  | `...`                 | ✅          |
+| `'...';` (literal)                  | `...`                 | ✅          |
+| `<code>\`...\`</code> (raw)         | `...`                 | ✅          |
 | `'\'';`                             | `'`                   | ✅          |
 | `"\"";`                             | `"`                   | ✅          |
+| `<code>\`\\`\`</code>               | <code>\`</code>       | ✅          |
 | support non alphanumeric characters |                       | ✅          |
 | output to file                      |                       | ✅          |
 | no color output                     |                       | ✅          |
-| `char`                              | `.`                   | ✅          |
+| `<char>`                            | `.`                   | ✅          |
 | `some of`                           | `+`                   | ✅          |
 | syntax highlighting extension       |                       | ✅          |
 | `over 5 of "A";`                    | `A{6,}`               | ✅          |
+| `not <digit>;`                      | `\D`                  | ✅          |
+| `not <whitespace>;`                 | `\S`                  | ✅          |
+| `not <word>;`                       | `\W`                  | ✅          |
 | WASM binding                        |                       | ✅          |
 | Rust crate                          |                       | ✅          |
-| enforce group close                 |                       | 🐣          |
-| tests                               |                       | 🐣          |
-| `not <whitespace>;`                 | `\S`                  | ❌          |
-| `not <digit>;`                      | `\D`                  | ❌          |
-| `not <word>;`                       | `\W`                  | ❌          |
+| `option of`                         | `?`                   | ✅          |
+| `any of`                            | `*`                   | ✅          |
+| `either { ...; ...; }`              | `(...\|...)`          | ✅          |
+| tests                               |                       | ✅          |
+| auto escape for literals            |                       | ✅          |
+| enforce group close                 |                       | ❌          |
 | `<backspace>`                       | `[\b]`                | ❌          |
 | file watcher                        |                       | ❌          |
 | nested groups                       | `(...(...))`          | ❌          |
 | multiple ranges                     | `[a-zA-Z0-9]`         | ❌          |
 | general cleanup and modules         |                       | ❌          |
-| auto escape for non Melody patterns |                       | ❌          |
 | TS / JS build step                  |                       | ❌          |
 | more robust parsing mechanism (ast) |                       | ❌          |
+| `ahead { ... }`                     | `(?=...)`             | ❌          |
+| `behind { ... }`                    | `(?<=...)`            | ❌          |
+| `not ahead { ... }`                 | `(?!...)`             | ❌          |
+| `not behind { ... }`                | `(?<!...)`            | ❌          |
 | `not "A";`                          | `[^A]`                | ❔          |
 | `flags: global, multiline, ...`     | `/.../gm...`          | ❔          |
 | `/* comment */`                     |                       | ❔          |
-| `maybe of`                          | `?`                   | ❔          |
-| `maybe some of`                     | `*`                   | ❔          |
-| `either of ..., ...`                | `\|`                  | ❔          |
 | `any of "a", "b", "c"`              | `[abc]`               | ❔          |
-| `... not before ...`                | `...(?!...)`          | ❔          |
-| `... not after ...`                 | `...(?<!...)`         | ❔          |
-| `... before ...`                    | `...(?=...)`          | ❔          |
-| `... after ...`                     | `...(?<=...)`         | ❔          |
 | (?)                                 | `*?`                  | ❔          |
 | (?)                                 | `\#`                  | ❔          |
 | (?)                                 | `\k<name>`            | ❔          |

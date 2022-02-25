@@ -3,7 +3,7 @@
 ## Usage
 
 ```sh
-melody [OPTIONS] <PATH>
+melody [OPTIONS] [PATH]
 
 OPTIONS:
   -f, --file <FILE>    write to an output file

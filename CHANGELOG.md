@@ -1,0 +1,30 @@
+# Changelog
+
+## [v0.7.0] - 2022-02-24
+
+### Features
+
+- Adds a REPL for `melody_cli`
+- Adds better error messages for the playground
+
+## [v0.6.0] - 2022-02-23
+
+### Features
+
+- Adds support for raw sequences (<code>\`...\`</code>)
+- Allows any word character in `capture` names
+- Adds auto escaping for literals
+- Adds the Melody version number to the documentation
+
+### Syntax Changes
+
+- Changes `start`, `end`, and `char` to symbols (`<start>`, `<end>`, `<char>`)
+- `either` creates a non capturing group
+
+### Refactoring
+
+- `cargo clippy` fixes in `melody_wasm`
+
+### Fixes
+
+- Uses the correct `url` in the documentation site config

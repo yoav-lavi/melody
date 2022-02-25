@@ -38,16 +38,17 @@ languages.register({ id: MELODY_LANGUAGE_ID });
 languages.setMonarchTokensProvider(MELODY_LANGUAGE_ID, {
   tokenizer: {
     root: [
-      [/(of|capture|to|of|some|match|over)/, 'keyword'],
+      [/(of|capture|to|of|some|match|over|option|not|either|any)/, 'keyword'],
       [/\d/, 'digit'],
       [/"(\\"|[^"\n])*"/, 'string'],
       [/'(\\'|[^'\n])*'/, 'string'],
+      [/"(\\"|[^"\n])*"/, 'string'],
+      [/`(\\`|[^`\n])*`/, 'string'],
       [
-        /(<whitespace>|<newline>|<tab>|<return>|<feed>|<null>|<digit>|<word>|<vertical>)/,
+        /(<whitespace>|<space>|<newline>|<tab>|<return>|<feed>|<null>|<digit>|<word>|<vertical>|<start>|<end>|<char>|<alphabet>)/,
         'character',
       ],
-      [/(start|end|char)/, 'character'],
-      [/(A|Z|a|z)/, 'character'],
+      [/[A-Za-z]/, 'character'],
       [/\/\/.*/, 'comment'],
     ],
   },
@@ -116,8 +117,8 @@ const initEditors = async () => {
     try {
       const regex = compiler(melodyEditor.getValue());
       regexEditor.setValue(regex);
-    } catch {
-      regexEditor.setValue('Parsing error');
+    } catch (error) {
+      regexEditor.setValue(error as string);
     }
   };
 
