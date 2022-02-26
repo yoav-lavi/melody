@@ -204,7 +204,7 @@ See the changelog [here](https://github.com/yoav-lavi/melody/blob/main/CHANGELOG
 
 ## Raw
 
-- <code>\`...\`;</code> - added directly to the output without any escaping
+- <code>\`...\`</code> - added directly to the output without any escaping
 
 ## Extras
 
