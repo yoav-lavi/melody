@@ -138,6 +138,11 @@ cd melody
 cargo install --path crates/melody_cli
 ```
 
+### Community
+
+- [Arch Linux](https://aur.archlinux.org/packages/melody) (maintained by [@ilai-deutel](https://github.com/ilai-deutel))
+- NixOS (soon, see [PR](https://github.com/NixOS/nixpkgs/pull/160985)) (maintained by [@jyooru](https://github.com/jyooru))
+
 ## CLI Usage
 
 ```sh
