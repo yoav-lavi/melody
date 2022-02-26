@@ -18,7 +18,7 @@ Note: these are for the currently supported syntax and may change
 16 of "na";
 
 2 of match {
-  <whitespace>;
+  <space>;
   "batman";
 }
 
@@ -50,7 +50,7 @@ Turns into
 
 ```rust
 some of <word>;
-<whitespace>;
+<space>;
 "1";
 2 of <digit>;
 
@@ -67,7 +67,7 @@ Turns into
 
 ```rust
 some of match {
-  2 of <whitespace>;
+  2 of <space>;
 }
 
 some of <char>;
