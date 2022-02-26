@@ -12,7 +12,7 @@ Note: these are for the currently supported syntax and may change
 16 of "na";
 
 2 of match {
-  <whitespace>;
+  <space>;
   "batman";
 }
 
@@ -44,7 +44,7 @@ Turns into
 
 ```
 some of <alphabet>;
-<whitespace>;
+<space>;
 "1";
 2 of <digit>;
 
