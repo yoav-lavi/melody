@@ -5,7 +5,7 @@ pub fn read_input() -> String {
     let mut input = String::new();
     std::io::stdin().read_line(&mut input).unwrap();
 
-    String::from(input.trim())
+    String::from(input.trim_end())
 }
 
 pub enum ExitCode {
