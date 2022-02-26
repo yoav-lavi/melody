@@ -1,5 +1,11 @@
 # Changelog
 
+## [v0.10.1] - 2022-02-26
+
+### Fixes
+
+- Trims only the end off of REPL input
+
 ## [v0.10.0] - 2022-02-26
 
 ### Breaking
