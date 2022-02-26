@@ -167,6 +167,10 @@ OPTIONS:
 - `option` - used with `of` to express 0 or 1 of a pattern, equivalent to regex `?`
 - `either` - used to open an `either` block, equivalent to regex `(...|...)`
 - `any` - used with `of` to express 0 or more of a pattern, equivalent to regex `*`
+- `ahead` - used to open an `ahead` block, equivalent to regex `(?=...)`
+- `not ahead` - used to open a `not ahead` block, equivalent to regex `(?!...)`
+- `behind` - used to open an `behind` block, equivalent to regex `(?<=...)`
+- `not behind` - used to open a `not behind` block, equivalent to regex `(?<!...)`
 
 ## Symbols
 
@@ -271,6 +275,10 @@ The Melody file extension is `.mdy`
 | `either { ...; ...; }`              | `(...\|...)`          | ✅          |
 | tests                               |                       | ✅          |
 | auto escape for literals            |                       | ✅          |
+| `ahead { ... }`                     | `(?=...)`             | ✅          |
+| `behind { ... }`                    | `(?<=...)`            | ✅          |
+| `not ahead { ... }`                 | `(?!...)`             | ✅          |
+| `not behind { ... }`                | `(?<!...)`            | ✅          |
 | enforce group close                 |                       | ❌          |
 | `<backspace>`                       | `[\b]`                | ❌          |
 | file watcher                        |                       | ❌          |
@@ -279,10 +287,6 @@ The Melody file extension is `.mdy`
 | general cleanup and modules         |                       | ❌          |
 | TS / JS build step                  |                       | ❌          |
 | more robust parsing mechanism (ast) |                       | ❌          |
-| `ahead { ... }`                     | `(?=...)`             | ❌          |
-| `behind { ... }`                    | `(?<=...)`            | ❌          |
-| `not ahead { ... }`                 | `(?!...)`             | ❌          |
-| `not behind { ... }`                | `(?<!...)`            | ❌          |
 | `not "A";`                          | `[^A]`                | ❔          |
 | `flags: global, multiline, ...`     | `/.../gm...`          | ❔          |
 | `/* comment */`                     |                       | ❔          |

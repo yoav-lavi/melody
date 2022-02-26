@@ -51,6 +51,18 @@ enum Token {
     #[token("either {")]
     Either,
 
+    #[token("ahead {")]
+    Ahead,
+
+    #[token("behind {")]
+    Behind,
+
+    #[token("not ahead {")]
+    NotAhead,
+
+    #[token("not behind {")]
+    NotBehind,
+
     #[token("}")]
     BlockEnd,
 
@@ -80,10 +92,10 @@ enum Token {
 
     #[token("not <digit>")]
     NotDigitSymbol,
-  
+
     #[token("<whitespace>")]
     WhitespaceSymbol,
-  
+
     #[token("not <whitespace>")]
     NotWhitespaceSymbol,
 
@@ -104,7 +116,7 @@ enum Token {
 
     #[token("<alphabet>")]
     AlphabetSymbol,
-  
+
     #[token("<char>")]
     CharSymbol,
 
@@ -326,6 +338,42 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
                 in_group = true;
                 Some(String::from("(?:"))
             }
+            Token::Ahead => {
+                if in_block {
+                    return Err(create_parse_error(&mut lex, line));
+                }
+                group_quantifier = quantifier;
+                quantifier = None;
+                in_group = true;
+                Some(String::from("(?="))
+            }
+            Token::NotAhead => {
+                if in_block {
+                    return Err(create_parse_error(&mut lex, line));
+                }
+                group_quantifier = quantifier;
+                quantifier = None;
+                in_group = true;
+                Some(String::from("(?!"))
+            }
+            Token::Behind => {
+                if in_block {
+                    return Err(create_parse_error(&mut lex, line));
+                }
+                group_quantifier = quantifier;
+                quantifier = None;
+                in_group = true;
+                Some(String::from("(?<="))
+            }
+            Token::NotBehind => {
+                if in_block {
+                    return Err(create_parse_error(&mut lex, line));
+                }
+                group_quantifier = quantifier;
+                quantifier = None;
+                in_group = true;
+                Some(String::from("(?<!"))
+            }
             Token::Either => {
                 if in_block {
                     return Err(create_parse_error(&mut lex, line));
@@ -386,11 +434,13 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
             // direct replacements
             Token::StartSymbol => handle_quantifier(String::from("^"), quantifier.clone(), false),
             Token::EndSymbol => handle_quantifier(String::from("$"), quantifier.clone(), false),
-            Token::WhitespaceSymbol => handle_quantifier(String::from("\\s"), quantifier.clone(), false),
+            Token::WhitespaceSymbol => {
+                handle_quantifier(String::from("\\s"), quantifier.clone(), false)
+            }
             Token::NotWhitespaceSymbol => {
                 handle_quantifier(String::from("\\S"), quantifier.clone(), false)
             }
-            
+
             Token::SpaceSymbol => handle_quantifier(String::from(" "), quantifier.clone(), false),
             Token::NewlineSymbol => {
                 handle_quantifier(String::from("\\n"), quantifier.clone(), false)
@@ -409,7 +459,9 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
             Token::NotWordSymbol => {
                 handle_quantifier(String::from("\\W"), quantifier.clone(), false)
             }
-            Token::AlphabetSymbol => handle_quantifier(String::from("[a-zA-Z]"), quantifier.clone(), false),
+            Token::AlphabetSymbol => {
+                handle_quantifier(String::from("[a-zA-Z]"), quantifier.clone(), false)
+            }
             Token::VerticalSymbol => {
                 handle_quantifier(String::from("\\v"), quantifier.clone(), false)
             }
@@ -688,4 +740,26 @@ fn raw_test() {
     )
     .unwrap();
     assert_eq!(output, "/(?:.*){5}/");
+}
+
+#[test]
+fn assertion_test() {
+    let output = compiler(
+        r#"
+      5 of ahead {
+        "a";
+      }
+      5 of behind {
+        "a";
+      }
+      5 of not ahead {
+        "a";
+      }
+      5 of not behind {
+        "a";
+      }
+      "#,
+    )
+    .unwrap();
+    assert_eq!(output, "/(?=a){5}(?<=a){5}(?!a){5}(?<!a){5}/");
 }
