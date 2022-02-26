@@ -192,6 +192,7 @@ See the changelog [here](https://github.com/yoav-lavi/melody/blob/main/CHANGELOG
 - `<vertical>` - equivalent to regex `\v`
 - `<word>` - equivalent to regex `\w`
 - `not <word>` - equivalent to regex `\W`
+- `<alphabet>` - equivalent to regex `[a-zA-Z]`
 
 ## Literals
 
