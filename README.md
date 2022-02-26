@@ -28,7 +28,7 @@ Note: these are for the currently supported syntax and may change
 Turns into
 
 ```regex
-/(?:na){16}(?:\sbatman){2}/
+/(?:na){16}(?: batman){2}/
 ```
 
 ### Twitter Hashtag
@@ -60,7 +60,7 @@ some of <word>;
 Turns into
 
 ```regex
-/\w+\s1\d{2}/
+/\w+ 1\d{2}/
 ```
 
 ### Indented Code (2 spaces)
@@ -79,7 +79,7 @@ some of <char>;
 Turns into
 
 ```regex
-/(?:\s{2})+.+;/
+/(?: {2})+.+;/
 ```
 
 ### Semantic Versions
@@ -137,6 +137,9 @@ git clone https://github.com/yoav-lavi/melody.git
 cd melody
 cargo install --path crates/melody_cli
 ```
+### Binary
+
+- macOS binaries (aarch64 and x86_64) can be downloaded from the [release page](https://github.com/yoav-lavi/melody/releases)
 
 ### Community
 
@@ -155,6 +158,10 @@ OPTIONS:
   -V, --version        print version information
   -h, --help           print help information
 ```
+
+## Changelog
+
+See the changelog [here](https://github.com/yoav-lavi/melody/blob/main/CHANGELOG.md) or in the [release page](https://github.com/yoav-lavi/melody/releases)
 
 ## Keywords
 
@@ -189,6 +196,7 @@ OPTIONS:
 - `<vertical>` - equivalent to regex `\v`
 - `<word>` - equivalent to regex `\w`
 - `not <word>` - equivalent to regex `\W`
+- `<alphabet>` - equivalent to regex `[a-zA-Z]`
 
 ## Literals
 
