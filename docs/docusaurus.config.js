@@ -35,7 +35,7 @@ const config = {
       navbar: {
         items: [
           {
-            href: "/docs/welcome",
+            href: "/docs/intro",
             label: "Melody Documentation",
             position: "left",
           },
