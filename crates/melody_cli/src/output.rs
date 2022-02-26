@@ -9,7 +9,7 @@ pub fn report_read_file_error(path: String) {
     );
 }
 
-pub fn report_write_file_error(path: &str) {
+pub fn report_write_file_error(path: String) {
     eprintln!(
         "{} {} {}",
         "Error:".bright_red(),
@@ -26,11 +26,28 @@ pub fn print_output_pretty(output: String) {
     println!("{}", output.bright_blue());
 }
 
+pub fn print_source_line(line_number: usize, line: String) {
+    print!(
+        "{} {}",
+        line_number.to_string().dimmed(),
+        line.bright_blue()
+    );
+}
+
 pub fn report_repl_parse_error(source: String) {
     eprintln!(
-        "{} {} {}",
+        "{} {} {}\n",
         "Error:".bright_red(),
         "Unable to parse".bright_red(),
+        format!("\"{source}\"").bright_blue(),
+    );
+}
+
+pub fn report_unrecognized_command(source: String) {
+    eprintln!(
+        "{} {} {}\n",
+        "Error:".bright_red(),
+        "Unrecognized command".bright_red(),
         format!("\"{source}\"").bright_blue(),
     );
 }
@@ -51,21 +68,43 @@ pub fn report_parse_error(source: String, line_source: String, line: usize) {
 
 pub fn print_repl_welcome() {
     println!(
-        "{}\n\n{}\n\n{}\n{}\n{}\n",
-        "Melody REPL v0.7.0".bright_green(),
+        "{}\n\n{}\n\n{}\n{}\n{}\n{}\n{}\n",
+        "Melody REPL v0.8.0".bright_green(),
         "Commands:".bright_green(),
-        format_args!("- {} - {}", ".u".bright_blue(), "undo".bright_green()),
         format_args!(
             "- {} - {}",
-            ".e".bright_blue(),
-            "exits the REPL".bright_green()
+            ".u, .undo".bright_blue(),
+            "undo the latest line".bright_green()
         ),
-        format_args!("- {} - {}", ".r".bright_blue(), "redo".bright_green()),
+        format_args!(
+            "- {} - {}",
+            ".r, .redo".bright_blue(),
+            "redo the latest undo".bright_green()
+        ),
+        format_args!(
+            "- {} - {}",
+            ".c, .clear".bright_blue(),
+            "clear all REPL history and previous input".bright_green()
+        ),
+        format_args!(
+            "- {} - {}",
+            ".s, .source".bright_blue(),
+            "print all previously entered lines".bright_green()
+        ),
+        format_args!(
+            "- {} - {}",
+            ".e, .exit".bright_blue(),
+            "exit the REPL".bright_green()
+        ),
     );
 }
 
 pub fn report_nothing_to_undo() {
     eprintln!("{}", "nothing to undo\n".bright_red());
+}
+
+pub fn report_no_lines_to_print() {
+    eprintln!("{}", "no lines to print\n".bright_red());
 }
 
 pub fn prompt() {
@@ -81,7 +120,7 @@ pub fn report_undo(newline: bool) {
 }
 
 pub fn report_exit() {
-    println!("{}", "exiting".bright_green());
+    println!("{}", "exit".bright_green());
 }
 
 pub fn report_nothing_to_redo() {
@@ -90,6 +129,14 @@ pub fn report_nothing_to_redo() {
 
 pub fn report_redo() {
     println!("{}", "redo".bright_green());
+}
+
+pub fn report_clear() {
+    println!("{}\n", "clear".bright_green());
+}
+
+pub fn report_source() {
+    println!("{}", "source".bright_green());
 }
 
 pub fn report_missing_path() {
