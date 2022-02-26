@@ -43,7 +43,7 @@ sidebar_position: 7
 | <code>\`...\`;</code> (raw)         | `...`                 | ✅          |
 | `'\'';`                             | `'`                   | ✅          |
 | `"\"";`                             | `"`                   | ✅          |
-| <code>`\``;</code>                  | <code>\`</code>       | ✅          |
+| <code>`\\\``;</code>                | <code>\`</code>       | ✅          |
 | support non alphanumeric characters |                       | ✅          |
 | output to file                      |                       | ✅          |
 | no color output                     |                       | ✅          |
