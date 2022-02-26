@@ -4,7 +4,7 @@ pub mod output;
 pub mod utils;
 
 use clap::Parser;
-use consts::{COMMAND_MARKER, EMPTY_INPUT};
+use consts::COMMAND_MARKER;
 use melody_compiler::{compiler, ParseError};
 use output::{
     print_output, print_output_pretty, print_repl_welcome, print_source_line, prompt, report_clear,
@@ -169,7 +169,7 @@ fn run_repl() -> Result<(), CliError> {
             continue 'repl;
         }
 
-        if input == EMPTY_INPUT {
+        if input.is_empty() {
             let source = &valid_lines.join("");
             let raw_output = compiler(source);
             let output = raw_output.unwrap();
