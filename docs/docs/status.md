@@ -58,7 +58,7 @@ sidebar_position: 7
 | Rust crate                          |                       | ✅          |
 | `option of`                         | `?`                   | ✅          |
 | `any of`                            | `*`                   | ✅          |
-| `either { ...; ...; }`              | `(...\|...)`          | ✅          |
+| `either { ...; ...; }`              | `(?:...\|...)`        | ✅          |
 | tests                               |                       | ✅          |
 | auto escape for literals            |                       | ✅          |
 | `ahead { ... }`                     | `(?=...)`             | ✅          |
