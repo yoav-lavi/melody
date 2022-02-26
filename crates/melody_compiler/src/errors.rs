@@ -9,8 +9,7 @@ pub struct ParseError {
 }
 
 impl ParseError {
-    pub fn new(slice: &str, source: &str, line: u16) -> Self {
-        let line_index = usize::from(line);
+    pub fn new(slice: &str, source: &str, line_index: usize) -> Self {
         let line_source = source.split('\n').nth(line_index).unwrap();
         Self {
             token: String::from(slice),

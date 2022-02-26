@@ -233,7 +233,7 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
 }
 
 fn create_parse_error(lexer: Lexer<Token>, line: u16) -> ParseError {
-    ParseError::new(lexer.slice(), lexer.source(), line)
+    ParseError::new(lexer.slice(), lexer.source(), usize::from(line))
 }
 
 fn handle_quantifier(source: String, quantifier: Option<String>, group: bool) -> Option<String> {
