@@ -46,7 +46,7 @@ sidebar_position: 6
 
 ## Raw
 
-- <code>\`...\`;</code> - added directly to the output without any escaping
+- <code>\`...\`</code> - added directly to the output without any escaping
 
 ## Comments
 
