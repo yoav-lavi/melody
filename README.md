@@ -295,6 +295,7 @@ The Melody file extension is `.mdy`
 | general cleanup and modules         |                       | ❌          |
 | TS / JS build step                  |                       | ❌          |
 | more robust parsing mechanism (ast) |                       | ❌          |
+| `<boundary>`                        | `\b`                  | ❌          |
 | `not "A";`                          | `[^A]`                | ❔          |
 | `flags: global, multiline, ...`     | `/.../gm...`          | ❔          |
 | `/* comment */`                     |                       | ❔          |

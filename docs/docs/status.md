@@ -73,6 +73,7 @@ sidebar_position: 7
 | general cleanup and modules         |                       | ❌          |
 | TS / JS build step                  |                       | ❌          |
 | more robust parsing mechanism (ast) |                       | ❌          |
+| `<boundary>`                        | `\b`                  | ❌          |
 | `not "A";`                          | `[^A]`                | ❔          |
 | `flags: global, multiline, ...`     | `/.../gm...`          | ❔          |
 | `/* comment */`                     |                       | ❔          |
