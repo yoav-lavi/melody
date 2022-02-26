@@ -7,7 +7,7 @@ const config = {
   title: "Melody",
   tagline:
     "A language that compiles to regular expressions and aims to be more easily readable and maintainable",
-  url: "https://yoav-lavi.github.io/melody/",
+  url: "https://yoav-lavi.github.io/",
   baseUrl: "/melody/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
