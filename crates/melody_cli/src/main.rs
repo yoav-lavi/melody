@@ -36,7 +36,7 @@ enum CliError {
 }
 
 fn main() {
-    match run() {
+    match cli() {
         Ok(_) => exit(ExitCode::Ok),
         Err(error) => {
             match error {
@@ -56,7 +56,7 @@ fn main() {
     };
 }
 
-fn run() -> Result<(), CliError> {
+fn cli() -> Result<(), CliError> {
     let args = Args::parse();
 
     let repl = args.repl;
