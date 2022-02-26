@@ -159,6 +159,10 @@ OPTIONS:
   -h, --help           print help information
 ```
 
+## Changelog
+
+See the changelog [here](https://github.com/yoav-lavi/melody/blob/main/CHANGELOG.md) or in the [release page](https://github.com/yoav-lavi/melody/releases)
+
 ## Keywords
 
 - `of` - used after a number or a range and before a sequence to be matched, e.g. `5 of "A";`, equivalent to regex `{5}`
