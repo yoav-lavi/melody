@@ -1,11 +1,11 @@
-use std::io::Write;
+use std::io::{self, Write};
 
-pub fn read_input() -> String {
+pub fn read_input() -> io::Result<String> {
     let _ = std::io::stdout().flush();
     let mut input = String::new();
-    std::io::stdin().read_line(&mut input).unwrap();
+    std::io::stdin().read_line(&mut input)?;
 
-    String::from(input.trim_end())
+    Ok(String::from(input.trim_end()))
 }
 
 pub enum ExitCode {

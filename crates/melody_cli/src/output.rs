@@ -66,6 +66,14 @@ pub fn report_parse_error(source: String, line_source: String, line: usize) {
     );
 }
 
+pub fn report_read_input_error() {
+    eprintln!(
+        "{} {}",
+        "Error:".bright_red(),
+        "Unable to read input".bright_red(),
+    );
+}
+
 pub fn print_repl_welcome() {
     println!(
         "{}\n\n{}\n\n{}\n{}\n{}\n{}\n{}\n",
