@@ -174,8 +174,8 @@ See the changelog [here](https://github.com/yoav-lavi/melody/blob/main/CHANGELOG
 - `option` - used with `of` to express 0 or 1 of a pattern, equivalent to regex `?`
 - `either` - used to open an `either` block, equivalent to regex `(?:...|...)`
 - `any` - used with `of` to express 0 or more of a pattern, equivalent to regex `*`
-- `ahead` - used to open an `ahead` block, equivalent to regex `(?=...)`. Use after an expression
-- `not ahead` - used to open a `not ahead` block, equivalent to regex `(?!...)`. Use after an expression
+- `ahead` - used to open an `ahead` block, equivalent to regex `(?=...)`. use after an expression
+- `not ahead` - used to open a `not ahead` block, equivalent to regex `(?!...)`. use after an expression
 - `behind` - used to open an `behind` block, equivalent to regex `(?<=...)`. use before an expression
 - `not behind` - used to open a `not behind` block, equivalent to regex `(?<!...)`. use before an expression
 
