@@ -137,6 +137,9 @@ git clone https://github.com/yoav-lavi/melody.git
 cd melody
 cargo install --path crates/melody_cli
 ```
+### Binaries
+
+- macOS binaries (aarch64 and x86_64) can be downloaded from the [release page](https://github.com/yoav-lavi/melody/releases)
 
 ### Community
 
