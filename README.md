@@ -18,7 +18,7 @@ Note: these are for the currently supported syntax and may change
 16 of "na";
 
 2 of match {
-  <space>;
+  <whitespace>;
   "batman";
 }
 
@@ -50,7 +50,7 @@ Turns into
 
 ```rust
 some of <word>;
-<space>;
+<whitespace>;
 "1";
 2 of <digit>;
 
@@ -67,7 +67,7 @@ Turns into
 
 ```rust
 some of match {
-  2 of <space>;
+  2 of <whitespace>;
 }
 
 some of <char>;
@@ -173,8 +173,8 @@ OPTIONS:
 - `<start>` - matches the start of the string, equivalent to regex `^`
 - `<end>` - matches the end of the string, equivalent to regex `$`
 - `<char>` - matches a single character, equivalent to regex `.`
-- `<space>` - equivalent to regex `\s`
-- `not <space>` - equivalent to regex `\S`
+- `<whitespace>` - equivalent to regex `\s`
+- `not <whitespace>` - equivalent to regex `\S`
 - `<newline>` - equivalent to regex `\n`
 - `<tab>` - equivalent to regex `\t`
 - `<return>` - equivalent to regex `\r`
@@ -231,7 +231,8 @@ The Melody file extension is `.mdy`
 | `capture { ... }`                   | `(...)`               | ✅          |
 | `capture name { ... }`              | `(?<name>...)`        | ✅          |
 | `match { ... }`                     | `(?:...)`             | ✅          |
-| `<space>;`                          | `\s`                  | ✅          |
+| `<whitespace>;`                     | `\s`                  | ✅          |
+| `<space>;`                          | ` `                   | ✅          |
 | `A to Z;`                           | `[A-Z]`               | ✅          |
 | `a to z;`                           | `[a-z]`               | ✅          |
 | `0 to 9;`                           | `[0-9]`               | ✅          |
@@ -246,6 +247,7 @@ The Melody file extension is `.mdy`
 | `<digit>;`                          | `\d`                  | ✅          |
 | `<vertical>;`                       | `\v`                  | ✅          |
 | `<word>;`                           | `\w`                  | ✅          |
+| `<alphabet>;`                       | `[a-zA-Z]`            | ✅          |
 | `"...";` (literal)                  | `...`                 | ✅          |
 | `'...';` (literal)                  | `...`                 | ✅          |
 | `<code>\`...\`</code> (raw)         | `...`                 | ✅          |
@@ -260,7 +262,7 @@ The Melody file extension is `.mdy`
 | syntax highlighting extension       |                       | ✅          |
 | `over 5 of "A";`                    | `A{6,}`               | ✅          |
 | `not <digit>;`                      | `\D`                  | ✅          |
-| `not <space>;`                      | `\S`                  | ✅          |
+| `not <whitespace>;`                 | `\S`                  | ✅          |
 | `not <word>;`                       | `\W`                  | ✅          |
 | WASM binding                        |                       | ✅          |
 | Rust crate                          |                       | ✅          |

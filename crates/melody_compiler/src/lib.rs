@@ -80,6 +80,12 @@ enum Token {
 
     #[token("not <digit>")]
     NotDigitSymbol,
+  
+    #[token("<whitespace>")]
+    WhitespaceSymbol,
+  
+    #[token("not <whitespace>")]
+    NotWhitespaceSymbol,
 
     #[token("<space>")]
     SpaceSymbol,
@@ -96,6 +102,9 @@ enum Token {
     #[token("<vertical>")]
     VerticalSymbol,
 
+    #[token("<alphabet>")]
+    AlphabetSymbol,
+  
     #[token("<char>")]
     CharSymbol,
 
@@ -377,10 +386,12 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
             // direct replacements
             Token::StartSymbol => handle_quantifier(String::from("^"), quantifier.clone(), false),
             Token::EndSymbol => handle_quantifier(String::from("$"), quantifier.clone(), false),
-            Token::SpaceSymbol => handle_quantifier(String::from("\\s"), quantifier.clone(), false),
-            Token::NotSpaceSymbol => {
+            Token::WhitespaceSymbol => handle_quantifier(String::from("\\s"), quantifier.clone(), false),
+            Token::NotWhitespaceSymbol => {
                 handle_quantifier(String::from("\\S"), quantifier.clone(), false)
             }
+            
+            Token::SpaceSymbol => handle_quantifier(String::from(" "), quantifier.clone(), false),
             Token::NewlineSymbol => {
                 handle_quantifier(String::from("\\n"), quantifier.clone(), false)
             }
@@ -398,6 +409,7 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
             Token::NotWordSymbol => {
                 handle_quantifier(String::from("\\W"), quantifier.clone(), false)
             }
+            Token::AlphabetSymbol => handle_quantifier(String::from("[a-zA-Z]"), quantifier.clone(), false),
             Token::VerticalSymbol => {
                 handle_quantifier(String::from("\\v"), quantifier.clone(), false)
             }
@@ -525,8 +537,8 @@ fn symbol_test() {
         r#"
       <start>;
       <char>;
-      <space>;
-      not <space>;
+      <whitespace>;
+      not <whitespace>;
       <newline>;
       <tab>;
       <return>;
@@ -537,11 +549,13 @@ fn symbol_test() {
       <word>;
       not <word>;
       <vertical>;
+      <alphabet>;
+      <space>;
       <end>;
       "#,
     )
     .unwrap();
-    assert_eq!(output, r"/^.\s\S\n\t\r\f\0\d\D\w\W\v$/");
+    assert_eq!(output, r"/^.\s\S\n\t\r\f\0\d\D\w\W\v[a-zA-Z] $/");
 }
 
 #[test]

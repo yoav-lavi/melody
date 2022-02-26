@@ -21,8 +21,9 @@ sidebar_position: 6
 - `<start>` - matches the start of the string, equivalent to regex `^`
 - `<end>` - matches the end of the string, equivalent to regex `$`
 - `<char>` - matches a single character, equivalent to regex `.`
-- `<space>` - equivalent to regex `\s`
-- `not <space>` - equivalent to regex `\S`
+- `<whitespace>` - equivalent to regex `\s`
+- `not <whitespace>` - equivalent to regex `\S`
+- `<space>` - equivalent to regex ` `
 - `<newline>` - equivalent to regex `\n`
 - `<tab>` - equivalent to regex `\t`
 - `<return>` - equivalent to regex `\r`
@@ -33,6 +34,7 @@ sidebar_position: 6
 - `<vertical>` - equivalent to regex `\v`
 - `<word>` - equivalent to regex `\w`
 - `not <word>` - equivalent to regex `\W`
+- `<alphabet>` - equivalent to regex `[a-zA-Z]`
 
 ## Literals
 

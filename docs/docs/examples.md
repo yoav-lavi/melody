@@ -12,7 +12,7 @@ Note: these are for the currently supported syntax and may change
 16 of "na";
 
 2 of match {
-  <space>;
+  <whitespace>;
   "batman";
 }
 
@@ -43,8 +43,8 @@ Turns into
 ## Introductory Courses
 
 ```
-some of <word>;
-<space>;
+some of <alphabet>;
+<whitespace>;
 "1";
 2 of <digit>;
 
@@ -54,7 +54,7 @@ some of <word>;
 Turns into
 
 ```
-/\w+\s1\d{2}/
+/[a-zA-Z]+\s1\d{2}/
 ```
 
 ## Indented Code (2 spaces)
@@ -73,7 +73,7 @@ some of char;
 Turns into
 
 ```
-/(?:\s{2})+.+;/
+/(?: {2})+.+;/
 ```
 
 ## Semantic Versions

@@ -21,7 +21,8 @@ sidebar_position: 7
 | `capture { ... }`                   | `(...)`               | ✅          |
 | `capture name { ... }`              | `(?<name>...)`        | ✅          |
 | `match { ... }`                     | `(?:...)`             | ✅          |
-| `<space>;`                          | `\s`                  | ✅          |
+| `<whitespace>;`                     | `\s`                  | ✅          |
+| `<space>;`                          | ` `                   | ✅          |
 | `A to Z;`                           | `[A-Z]`               | ✅          |
 | `a to z;`                           | `[a-z]`               | ✅          |
 | `0 to 9;`                           | `[0-9]`               | ✅          |
@@ -36,6 +37,7 @@ sidebar_position: 7
 | `<digit>;`                          | `\d`                  | ✅          |
 | `<vertical>;`                       | `\v`                  | ✅          |
 | `<word>;`                           | `\w`                  | ✅          |
+| `<alphabet>;`                       | `[a-zA-Z]`            | ✅          |
 | `"...";` (literal)                  | `...`                 | ✅          |
 | `'...';` (literal)                  | `...`                 | ✅          |
 | <code>\`...\`;</code> (raw)         | `...`                 | ✅          |
@@ -49,7 +51,7 @@ sidebar_position: 7
 | `some of`                           | `+`                   | ✅          |
 | syntax highlighting extension       |                       | ✅          |
 | `over 5 of "A";`                    | `A{6,}`               | ✅          |
-| `not <space>;`                      | `\S`                  | ✅          |
+| `not <whitespace>;`                 | `\S`                  | ✅          |
 | `not <digit>;`                      | `\D`                  | ✅          |
 | `not <word>;`                       | `\W`                  | ✅          |
 | WASM binding                        |                       | ✅          |
