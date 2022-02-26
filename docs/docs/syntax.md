@@ -15,10 +15,10 @@ sidebar_position: 6
 - `over` - used with `of` to express more than an amount of a pattern, equivalent to regex `{6,}` (assuming `over 5 of ...`)
 - `option` - used with `of` to express 0 or 1 of a pattern, equivalent to regex `?`
 - `any` - used with `of` to express 0 or more of a pattern, equivalent to regex `*`
-- `ahead` - used to open an `ahead` block, equivalent to regex `(?=...)`
-- `not ahead` - used to open a `not ahead` block, equivalent to regex `(?!...)`
-- `behind` - used to open an `behind` block, equivalent to regex `(?<=...)`
-- `not behind` - used to open a `not behind` block, equivalent to regex `(?<!...)`
+- `ahead` - used to open an `ahead` block, equivalent to regex `(?=...)`. Use after an expression
+- `not ahead` - used to open a `not ahead` block, equivalent to regex `(?!...)`. Use after an expression
+- `behind` - used to open an `behind` block, equivalent to regex `(?<=...)`. use before an expression
+- `not behind` - used to open a `not behind` block, equivalent to regex `(?<!...)`. use before an expression
 
 ## Symbols
 
