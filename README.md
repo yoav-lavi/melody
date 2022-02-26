@@ -265,7 +265,7 @@ The Melody file extension is `.mdy`
 | <code>\`...\`;</code> (raw)         | `...`                 | ✅          |
 | `'\'';`                             | `'`                   | ✅          |
 | `"\"";`                             | `"`                   | ✅          |
-| <code>`\``;</code>                  | <code>\`</code>       | ✅          |
+| <code>`\\\``;</code>                | <code>\`</code>       | ✅          |
 | support non alphanumeric characters |                       | ✅          |
 | output to file                      |                       | ✅          |
 | no color output                     |                       | ✅          |
