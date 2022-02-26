@@ -19,13 +19,19 @@ use utils::{exit, read_input, ExitCode};
 #[derive(Parser, Debug)]
 #[clap(about, version, author)]
 struct Args {
-    path: Option<String>,
-    #[clap(short, long)]
-    file: Option<String>,
-    #[clap(short, long)]
-    no_color: bool,
-    #[clap(short, long)]
-    repl: bool,
+    #[clap(value_name = "INPUT_FILE_PATH", help = "Read from a file")]
+    input_file_path: Option<String>,
+    #[clap(
+        short = 'o',
+        long = "output",
+        value_name = "OUTPUT_FILE_PATH",
+        help = "Write to a file"
+    )]
+    output_file_path: Option<String>,
+    #[clap(short = 'n', long = "no-color", help = "Print output with no color")]
+    no_color_output: bool,
+    #[clap(short = 'r', long = "repl", help = "Start the Melody REPL")]
+    start_repl: bool,
 }
 
 enum CliError {
@@ -42,14 +48,14 @@ fn main() {
             match error {
                 CliError::MissingPath => report_missing_path(),
                 CliError::ReadFileError(path) => report_read_file_error(path),
+                CliError::WriteFileError(output_file_path) => {
+                    report_write_file_error(output_file_path)
+                }
                 CliError::ParseError(parse_error) => report_parse_error(
                     parse_error.token,
                     parse_error.line,
                     parse_error.line_index + 1,
                 ),
-                CliError::WriteFileError(output_file_path) => {
-                    report_write_file_error(output_file_path)
-                }
             }
             exit(ExitCode::Error)
         }
@@ -59,32 +65,34 @@ fn main() {
 fn cli() -> Result<(), CliError> {
     let args = Args::parse();
 
-    let repl = args.repl;
+    let Args {
+        start_repl,
+        input_file_path,
+        output_file_path,
+        no_color_output,
+    } = args;
 
-    if repl {
-        return run_repl();
+    if start_repl {
+        return repl();
     }
 
-    let file_path = args.path.ok_or(CliError::MissingPath)?;
+    let input_file_path = input_file_path.ok_or(CliError::MissingPath)?;
 
-    let source =
-        read_to_string(file_path.clone()).map_err(|_| CliError::ReadFileError(file_path))?;
+    let source = read_to_string(input_file_path.clone())
+        .map_err(|_| CliError::ReadFileError(input_file_path))?;
 
-    let output = compiler(&source).map_err(CliError::ParseError)?;
-
-    let output_file_path = args.file;
-    let no_color = args.no_color;
+    let compiler_output = compiler(&source).map_err(CliError::ParseError)?;
 
     match output_file_path {
         Some(output_file_path) => {
-            write(&output_file_path, output)
+            write(&output_file_path, compiler_output)
                 .map_err(|_| CliError::WriteFileError(output_file_path))?;
         }
         None => {
-            if no_color {
-                print_output(output);
+            if no_color_output {
+                print_output(compiler_output);
             } else {
-                print_output_pretty(output);
+                print_output_pretty(compiler_output);
             }
         }
     }
@@ -92,7 +100,7 @@ fn cli() -> Result<(), CliError> {
     Ok(())
 }
 
-fn run_repl() -> Result<(), CliError> {
+fn repl() -> Result<(), CliError> {
     print_repl_welcome();
 
     let mut valid_lines: Vec<String> = Vec::new();

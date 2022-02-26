@@ -1,5 +1,15 @@
 # Changelog
 
+## [v0.10.0] - 2022-02-26
+
+### Breaking
+
+- Changes the `-f, --file` CLI argument to `-o, --output`
+
+### Features
+
+- Adds descriptions to CLI commands
+
 ## [v0.9.0] - 2022-02-26
 
 ### Features
