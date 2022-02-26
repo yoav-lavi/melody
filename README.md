@@ -262,10 +262,10 @@ The Melody file extension is `.mdy`
 | `<alphabet>;`                       | `[a-zA-Z]`            | ✅          |
 | `"...";` (literal)                  | `...`                 | ✅          |
 | `'...';` (literal)                  | `...`                 | ✅          |
-| `<code>\`...\`</code> (raw)         | `...`                 | ✅          |
+| <code>\`...\`;</code> (raw)         | `...`                 | ✅          |
 | `'\'';`                             | `'`                   | ✅          |
 | `"\"";`                             | `"`                   | ✅          |
-| `<code>\`\\`\`</code>               | <code>\`</code>       | ✅          |
+| <code>`\``;</code>                  | <code>\`</code>       | ✅          |
 | support non alphanumeric characters |                       | ✅          |
 | output to file                      |                       | ✅          |
 | no color output                     |                       | ✅          |
