@@ -1,6 +1,3 @@
-use crate::tokens::Token;
-use logos::Lexer;
-
 #[derive(Debug, Clone)]
 pub struct ParseError {
     /// the unrecognized token responsible for the [ParseError]
@@ -11,12 +8,14 @@ pub struct ParseError {
     pub line_index: usize,
 }
 
-pub fn create_parse_error(lex: &mut Lexer<Token>, line: u16) -> ParseError {
-    let line_index = usize::from(line);
-    let line_source = lex.source().split('\n').nth(line_index).unwrap();
-    ParseError {
-        token: lex.slice().to_owned(),
-        line: line_source.to_owned(),
-        line_index,
+impl ParseError {
+    pub fn new(slice: &str, source: &str, line: u16) -> Self {
+        let line_index = usize::from(line);
+        let line_source = source.split('\n').nth(line_index).unwrap();
+        Self {
+            token: String::from(slice),
+            line: String::from(line_source),
+            line_index,
+        }
     }
 }

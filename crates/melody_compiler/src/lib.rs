@@ -1,9 +1,11 @@
 mod errors;
-mod tokens;
+mod lexer;
+mod utils;
 
-pub use errors::{create_parse_error, ParseError};
-use logos::Logos;
-use tokens::Token;
+pub use errors::ParseError;
+use lexer::{lex, tokens::Token};
+use logos::Lexer;
+use utils::format_regex;
 
 /**
 Compiles Melody source code to a regular expression
@@ -22,7 +24,7 @@ assert_eq!(output.unwrap(), "/A{1,5}/");
 ```
 */
 pub fn compiler(source: &str) -> Result<String, ParseError> {
-    let mut lex = Token::lexer(source);
+    let mut lexer = lex(source);
 
     let mut in_group = false;
 
@@ -38,7 +40,7 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
 
     let mut output = String::new();
 
-    while let Some(token) = lex.next() {
+    while let Some(token) = lexer.next() {
         let in_block = in_group || in_either;
 
         let formatted_token = match token {
@@ -56,7 +58,7 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
             // groups
             Token::Capture => {
                 if in_block {
-                    return Err(create_parse_error(&mut lex, line));
+                    return Err(create_parse_error(lexer, line));
                 }
                 group_quantifier = quantifier;
                 quantifier = None;
@@ -65,7 +67,7 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
             }
             Token::NamedCapture(name) => {
                 if in_block {
-                    return Err(create_parse_error(&mut lex, line));
+                    return Err(create_parse_error(lexer, line));
                 }
                 group_quantifier = quantifier;
                 quantifier = None;
@@ -74,7 +76,7 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
             }
             Token::Match => {
                 if in_block {
-                    return Err(create_parse_error(&mut lex, line));
+                    return Err(create_parse_error(lexer, line));
                 }
                 group_quantifier = quantifier;
                 quantifier = None;
@@ -83,7 +85,7 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
             }
             Token::Ahead => {
                 if in_block {
-                    return Err(create_parse_error(&mut lex, line));
+                    return Err(create_parse_error(lexer, line));
                 }
                 group_quantifier = quantifier;
                 quantifier = None;
@@ -92,7 +94,7 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
             }
             Token::NotAhead => {
                 if in_block {
-                    return Err(create_parse_error(&mut lex, line));
+                    return Err(create_parse_error(lexer, line));
                 }
                 group_quantifier = quantifier;
                 quantifier = None;
@@ -101,7 +103,7 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
             }
             Token::Behind => {
                 if in_block {
-                    return Err(create_parse_error(&mut lex, line));
+                    return Err(create_parse_error(lexer, line));
                 }
                 group_quantifier = quantifier;
                 quantifier = None;
@@ -110,7 +112,7 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
             }
             Token::NotBehind => {
                 if in_block {
-                    return Err(create_parse_error(&mut lex, line));
+                    return Err(create_parse_error(lexer, line));
                 }
                 group_quantifier = quantifier;
                 quantifier = None;
@@ -119,7 +121,7 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
             }
             Token::Either => {
                 if in_block {
-                    return Err(create_parse_error(&mut lex, line));
+                    return Err(create_parse_error(lexer, line));
                 }
                 group_quantifier = quantifier;
                 quantifier = None;
@@ -215,7 +217,7 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
                 line += 1;
                 None
             }
-            _ => return Err(create_parse_error(&mut lex, line)),
+            _ => return Err(create_parse_error(lexer, line)),
         };
 
         if let Some(formatted_token) = formatted_token {
@@ -230,6 +232,10 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
     Ok(format_regex(&output, None))
 }
 
+fn create_parse_error(lexer: Lexer<Token>, line: u16) -> ParseError {
+    ParseError::new(lexer.slice(), lexer.source(), line)
+}
+
 fn handle_quantifier(source: String, quantifier: Option<String>, group: bool) -> Option<String> {
     if let Some(quantifier) = quantifier {
         let formatted_source = if group {
@@ -241,8 +247,4 @@ fn handle_quantifier(source: String, quantifier: Option<String>, group: bool) ->
     } else {
         Some(source)
     }
-}
-
-fn format_regex(regex: &str, flags: Option<String>) -> String {
-    format!("/{regex}/{}", flags.unwrap_or_default())
 }
