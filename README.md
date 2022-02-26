@@ -28,7 +28,7 @@ Note: these are for the currently supported syntax and may change
 Turns into
 
 ```regex
-/(?:na){16}(?:\sbatman){2}/
+/(?:na){16}(?: batman){2}/
 ```
 
 ### Twitter Hashtag
@@ -60,7 +60,7 @@ some of <word>;
 Turns into
 
 ```regex
-/\w+\s1\d{2}/
+/\w+ 1\d{2}/
 ```
 
 ### Indented Code (2 spaces)
@@ -79,7 +79,7 @@ some of <char>;
 Turns into
 
 ```regex
-/(?:\s{2})+.+;/
+/(?: {2})+.+;/
 ```
 
 ### Semantic Versions
