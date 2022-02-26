@@ -14,6 +14,7 @@
 - Adds `<space>` and `<alphabet>` (thanks @amirali #34)
 - Adds long versions for REPL commands
 - Adds `.s, .source` to print the current source in the REPL
+- Adds `.c, .clear` to clear REPL history
 - Adds better error reporting to the playground
 
 ### Fixes
