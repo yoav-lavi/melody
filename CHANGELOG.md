@@ -1,5 +1,11 @@
 # Changelog
 
+## [v0.9.0] - 2022-02-26
+
+### Features
+
+- Adds `ahead`, `not ahead`, `behind` and `not behind` assertions
+
 ## [v0.8.0] - 2022-02-26
 
 ### Features

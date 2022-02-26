@@ -69,7 +69,7 @@ pub fn report_parse_error(source: String, line_source: String, line: usize) {
 pub fn print_repl_welcome() {
     println!(
         "{}\n\n{}\n\n{}\n{}\n{}\n{}\n{}\n",
-        "Melody REPL v0.8.0".bright_green(),
+        "Melody REPL v0.9.0".bright_green(),
         "Commands:".bright_green(),
         format_args!(
             "- {} - {}",
