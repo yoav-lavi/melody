@@ -1,6 +1,6 @@
 {
   "name": "melody-docs",
-  "version": "0.4.0",
+  "version": "0.8.0",
   "scripts": {
     "docusaurus": "docusaurus",
     "start": "docusaurus start",

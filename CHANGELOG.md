@@ -1,5 +1,21 @@
 # Changelog
 
+## [v0.8.0] - 2022-02-24
+
+### Features
+
+- Changes `<space>` to `<whitespace>` (thanks @amirali #34)
+- Adds `<space>` and `<alphabet>` (thanks @amirali #34)
+- Adds `.s, .source` to print the current source in the REPL
+
+### Fixes
+
+- Fixes some undo / redo issues in the REPL
+
+### Refactoring
+
+- Better error handling in the CLI
+
 ## [v0.7.0] - 2022-02-24
 
 ### Features
