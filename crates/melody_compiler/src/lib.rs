@@ -175,6 +175,11 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
                 quantifier = Some(String::from("*"));
                 None
             }
+            Token::NewLine => {
+                quantifier = None;
+                line += 1;
+                None
+            }
 
             // direct replacements
             Token::StartSymbol => handle_quantifier(String::from("^"), quantifier.clone(), false),
@@ -212,11 +217,7 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
             }
             Token::CharSymbol => handle_quantifier(String::from("."), quantifier.clone(), false),
 
-            // warning and error related
-            Token::NewLine => {
-                line += 1;
-                None
-            }
+            // unrecognized token
             _ => return Err(create_parse_error(lexer, line)),
         };
 

@@ -256,3 +256,14 @@ fn assertion_test() {
     );
     assert_eq!(output.unwrap(), "/(?=a){5}(?<=a){5}(?!a){5}(?<!a){5}/");
 }
+
+#[test]
+fn newline_quantifier_test() {
+    let output = compiler(
+        r#"
+        5 of "a"
+        "b"
+      "#,
+    );
+    assert_eq!(output.unwrap(), "/a{5}b/");
+}

@@ -1,5 +1,12 @@
 # Changelog
 
+## [v0.10.3] - 2022-02-26
+
+### Fixes
+
+- Removes quantifiers after newlines
+
+
 ## [v0.10.2] - 2022-02-26
 
 ### Fixes
