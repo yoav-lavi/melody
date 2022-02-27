@@ -39,17 +39,18 @@ pub fn allow_atom(token: &Token) -> Result<(), String> {
 pub fn allowed_token(previous: &Option<TokenType>, current: &Token) -> Result<(), String> {
     if let Some(previous) = previous {
         match previous {
-            TokenType::Symbol => allow_next(current),
-            TokenType::Literal => allow_next(current),
-            TokenType::Raw => allow_next(current),
+            TokenType::Symbol
+            | TokenType::Literal
+            | TokenType::Raw
+            | TokenType::Range
+            | TokenType::SpecialSymbol => allow_next(current),
+
             TokenType::Expression => allow_atom(current),
-            TokenType::Range => allow_next(current),
-            TokenType::Group => allow_newline(current),
-            TokenType::Assertion => allow_newline(current),
-            TokenType::SpecialSymbol => allow_next(current),
-            TokenType::Semicolon => Ok(()),
-            TokenType::Newline => Ok(()),
-            TokenType::Other => allow_newline(current),
+
+            TokenType::Group | TokenType::Assertion | TokenType::Other => allow_newline(current),
+
+            // allow any type of token
+            TokenType::Semicolon | TokenType::Newline => Ok(()),
         }
     } else {
         return Ok(());
