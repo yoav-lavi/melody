@@ -125,7 +125,7 @@ fn repl() -> Result<(), CliError> {
                         redo_lines.push(latest);
 
                         if !valid_lines.is_empty() {
-                            let source = &valid_lines.join("");
+                            let source = &valid_lines.join("\n");
                             let raw_output = compiler(source);
                             let output = raw_output.unwrap();
 
@@ -142,7 +142,7 @@ fn repl() -> Result<(), CliError> {
                         let latest = redo_lines.pop().unwrap();
                         valid_lines.push(latest);
 
-                        let source = &valid_lines.join("");
+                        let source = &valid_lines.join("\n");
                         let raw_output = compiler(source);
                         let output = raw_output.unwrap();
 
@@ -180,7 +180,7 @@ fn repl() -> Result<(), CliError> {
         }
 
         if input.is_empty() {
-            let source = &valid_lines.join("");
+            let source = &valid_lines.join("\n");
             let raw_output = compiler(source);
             let output = raw_output.unwrap();
 
@@ -191,7 +191,7 @@ fn repl() -> Result<(), CliError> {
 
         valid_lines.push(input);
 
-        let source = &valid_lines.join("");
+        let source = &valid_lines.join("\n");
         let raw_output = compiler(source);
 
         if let Err(error) = raw_output {
