@@ -256,3 +256,13 @@ fn assertion_test() {
     );
     assert_eq!(output.unwrap(), "/(?=a){5}(?<=a){5}(?!a){5}(?<!a){5}/");
 }
+
+#[test]
+fn chain_test() {
+    let output = compiler(
+      r#"
+      any of option of 6 of "test";
+      "#,
+    );
+    assert!(output.is_err())
+}
