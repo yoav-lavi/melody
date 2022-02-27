@@ -1,5 +1,12 @@
 # Changelog
 
+## [v0.10.2] - 2022-02-26
+
+### Fixes
+
+- Fixes the handling of some newline issues in the REPL
+- Adds an error message for a read error in the REPL
+
 ## [v0.10.1] - 2022-02-26
 
 ### Fixes
