@@ -28,7 +28,7 @@ pub fn print_output_pretty(output: String) {
 
 pub fn print_source_line(line_number: usize, line: String) {
     print!(
-        "{} {}",
+        "{} {}\n",
         line_number.to_string().dimmed(),
         line.bright_blue()
     );
@@ -63,6 +63,14 @@ pub fn report_parse_error(source: String, line_source: String, line: usize) {
         ":\n\n".bright_red(),
         format!("{line}: ").dimmed(),
         line_source
+    );
+}
+
+pub fn report_read_input_error() {
+    eprintln!(
+        "{} {}",
+        "Error:".bright_red(),
+        "Unable to read input".bright_red(),
     );
 }
 

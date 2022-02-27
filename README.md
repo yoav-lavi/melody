@@ -149,14 +149,17 @@ cargo install --path crates/melody_cli
 ## CLI Usage
 
 ```sh
-melody [OPTIONS] [PATH]
+melody [OPTIONS] [INPUT_FILE_PATH]
+
+ARGS:
+    <INPUT_FILE_PATH>    Read from a file
 
 OPTIONS:
-  -f, --file <FILE>    write to an output file
-  -r, --repl           starts the melody REPL
-  -n, --no-color       print output with no color
-  -V, --version        print version information
-  -h, --help           print help information
+    -h, --help                         Print help information
+    -n, --no-color                     Print output with no color
+    -o, --output <OUTPUT_FILE_PATH>    Write to a file
+    -r, --repl                         Start the Melody REPL
+    -V, --version                      Print version information
 ```
 
 ## Changelog

@@ -8,6 +8,6 @@ macro_rules! pattern_either {
 
 macro_rules! format_command {
     ($short: expr, $long: expr) => {
-        pattern_either!(concat!(".", $short, "\n"), concat!(".", $long, "\n"))
+        pattern_either!(concat!(".", $short), concat!(".", $long))
     };
 }

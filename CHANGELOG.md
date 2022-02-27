@@ -1,5 +1,28 @@
 # Changelog
 
+## [v0.10.2] - 2022-02-26
+
+### Fixes
+
+- Fixes the handling of some newline issues in the REPL
+- Adds an error message for a read error in the REPL
+
+## [v0.10.1] - 2022-02-26
+
+### Fixes
+
+- Trims only the end off of REPL input
+
+## [v0.10.0] - 2022-02-26
+
+### Breaking
+
+- Changes the `-f, --file` CLI argument to `-o, --output`
+
+### Features
+
+- Adds descriptions to CLI commands
+
 ## [v0.9.0] - 2022-02-26
 
 ### Features
