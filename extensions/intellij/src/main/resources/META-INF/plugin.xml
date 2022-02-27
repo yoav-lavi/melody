@@ -1,0 +1,33 @@
+<idea-plugin>
+    <id>dev.tigr.melody-intellij-plugin</id>
+    <name>Melody</name>
+    <vendor email="tigermouthbear@tigr.dev" url="https://tigr.dev/">Tigermouthbear</vendor>
+
+    <description><![CDATA[
+        Provides syntax highlighting for the <a href="https://github.com/yoav-lavi/melody">melody regex language</a>
+    ]]></description>
+
+    <!-- please see https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html
+         on how to target different products -->
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <fileType name="Melody"
+                  implementationClass="dev.tigr.melody.plugin.MelodyLanguageFileType"
+                  fieldName="INSTANCE"
+                  language="Melody"
+                  extensions="mdy"/>
+
+        <lang.parserDefinition language="Melody"
+                               implementationClass="dev.tigr.melody.plugin.MelodyParserDefinition"/>
+
+        <lang.syntaxHighlighterFactory language="Melody"
+                                       implementationClass="dev.tigr.melody.plugin.MelodySyntaxHighlighterFactory"/>
+
+        <colorSettingsPage implementation="dev.tigr.melody.plugin.MelodyColorSettingsPage"/>
+    </extensions>
+
+    <actions>
+        <!-- Add your actions here -->
+    </actions>
+</idea-plugin>

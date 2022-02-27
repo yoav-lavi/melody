@@ -1,0 +1,85 @@
+{
+  parserClass="dev.tigr.melody.plugin.parser.MelodyParser"
+
+  extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+  psiClassPrefix="Melody"
+  psiImplClassSuffix="Impl"
+  psiPackage="dev.tigr.melody.plugin.psi"
+  psiImplPackage="dev.tigr.melody.plugin.psi.impl"
+
+  elementTypeHolderClass="dev.tigr.melody.plugin.psi.MelodyTypes"
+  elementTypeClass="dev.tigr.melody.plugin.psi.MelodyElementType"
+  tokenTypeClass="dev.tigr.melody.plugin.psi.MelodyTokenType"
+
+  tokens=[
+    // keywords
+    of="of"
+    to="to"
+    capture="capture"
+    some="some"
+    match="match"
+    over="over"
+    option="option"
+    not="not"
+    either="either"
+    any="any"
+    ahead="ahead"
+    behind="behind"
+
+    // symbols
+    start="<start>"
+    end="<end>"
+    char="<char>"
+    whitespaceliteral="<whitespace>"
+    space="<space>"
+    newline="<newline>"
+    tab="<tab>"
+    return="<return>"
+    feed="<feed>"
+    null="<null>"
+    digit="<digit>"
+    vertical="<vertical>"
+    word="<word>"
+    alphabet="<alphabet>"
+
+    // numbers
+    number="regexp:\p{N}*"
+
+    // comments
+    comment="regexp://.*|"
+
+    // strings
+    string = "regexp:\"[^\"]*\"|'[^']*'|`[^`]*`"
+
+    // whitespace and other language characters
+    whitespace="regexp:\s+"
+    openbrace="{"
+    closebrace="}"
+    semicolon=";"
+  ]
+}
+
+root ::= [rules*]
+private rules ::= expression | of_rule
+expression ::= comment | string_rule | not_rule | symbols_rule | match_rule | capture_rule | either_rule | ahead_rule | behind_rule
+
+string_rule ::= string semicolon
+
+private symbols_ ::= start | end | char | whitespaceliteral | space | newline | tab | return | feed | null | digit | vertical | word | alphabet
+symbols_rule ::= symbols_ semicolon
+
+of_rule ::= of_first of [expression*]
+private of_first ::= to_rule | number | some | over_rule | option | any
+
+to_rule ::= number to number
+over_rule ::= over number
+
+private block_rule ::= openbrace rules closebrace | openbrace closebrace
+capture_rule ::= capture block_rule
+match_rule ::= match block_rule
+either_rule ::= either block_rule
+ahead_rule ::= ahead block_rule
+behind_rule ::= behind block_rule
+
+not_rule ::= not (ahead_rule | behind_rule | whitespaceliteral semicolon | digit semicolon | word semicolon)

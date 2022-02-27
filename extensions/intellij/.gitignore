@@ -1,0 +1,28 @@
+ # eclipse
+bin
+*.launch
+.settings
+.metadata
+.classpath
+.project
+
+# idea
+out
+*.ipr
+*.iws
+*.iml
+.idea
+
+# gradle
+build
+.gradle
+
+# other
+eclipse
+run
+local.properties
+logs
+
+# jflex
+jflex-*
+idea-flex.skeleton
