@@ -2,11 +2,11 @@ use crate::lexer::tokens::Token;
 use crate::lexer::tokens::TokenType;
 
 macro_rules! match_or_err {
-    ($condition: expr, $err: literal) => {
+    ($condition: expr, $error: literal) => {
         if $condition {
             Ok(())
         } else {
-            Err(String::from($err))
+            Err(String::from($error))
         }
     };
 }
