@@ -24,6 +24,7 @@ pub fn allow_atom(token: &Token) -> Result<(), String> {
         TokenType::Symbol,
         TokenType::Range,
         TokenType::Raw,
+        TokenType::Assertion,
     ]
     .contains(&token.to_type())
     {
