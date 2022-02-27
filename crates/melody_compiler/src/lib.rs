@@ -30,8 +30,6 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
 
     let mut in_either = false;
 
-    let mut in_modifier = 0;
-
     let mut line: u16 = 0;
 
     let mut quantifier = None;
@@ -154,18 +152,16 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
 
             // modifiers
             Token::QuantifierExpression(quantity) => {
-                if in_modifier > 0 {
+                if quantifier.is_some() {
                     return Err(create_parse_error(lexer, line));
                 }
-                in_modifier = 2;
                 quantifier = Some(quantity);
                 None
             }
             Token::OpenRangeExpression(range) | Token::RangeExpression(range) => {
-                if in_modifier > 0 {
+                if quantifier.is_some() {
                     return Err(create_parse_error(lexer, line));
                 }
-                in_modifier = 2;
                 quantifier = Some(range);
                 None
             }
@@ -174,26 +170,23 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
                 None
             }
             Token::SomeExpression => {
-                if in_modifier > 0 {
+                if quantifier.is_some() {
                     return Err(create_parse_error(lexer, line));
                 }
-                in_modifier = 2;
                 quantifier = Some(String::from("+"));
                 None
             }
             Token::OptionExpression => {
-                if in_modifier > 0 {
+                if quantifier.is_some() {
                     return Err(create_parse_error(lexer, line));
                 }
-                in_modifier = 2;
                 quantifier = Some(String::from("?"));
                 None
             }
             Token::AnyExpression => {
-                if in_modifier > 0 {
+                if quantifier.is_some() {
                     return Err(create_parse_error(lexer, line));
                 }
-                in_modifier = 2;
                 quantifier = Some(String::from("*"));
                 None
             }
@@ -248,10 +241,6 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
             } else {
                 output.push_str(&formatted_token);
             }
-        }
-
-        if in_modifier > 0 {
-            in_modifier -= 1
         }
     }
 
