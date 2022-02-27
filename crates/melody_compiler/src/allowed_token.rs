@@ -14,12 +14,12 @@ macro_rules! match_or_err {
 pub fn allow_next(token: &Token) -> Result<(), String> {
     match_or_err!(
         [TokenType::Newline, TokenType::Semicolon].contains(&token.to_type()),
-        "expected a semicolon or newline"
+        "Expected a semicolon or newline"
     )
 }
 
 pub fn allow_newline(token: &Token) -> Result<(), String> {
-    match_or_err!(token.to_type() == TokenType::Newline, "expected a newline")
+    match_or_err!(token.to_type() == TokenType::Newline, "Expected a newline")
 }
 
 pub fn allow_atom(token: &Token) -> Result<(), String> {
@@ -33,7 +33,7 @@ pub fn allow_atom(token: &Token) -> Result<(), String> {
             TokenType::Assertion,
         ]
         .contains(&token.to_type()),
-        "expected a literal, raw, group, symbol, or range"
+        "Expected a literal, raw, group, symbol, or range"
     )
 }
 
@@ -54,6 +54,6 @@ pub fn allowed_token(previous: &Option<TokenType>, current: &Token) -> Result<()
             TokenType::Semicolon | TokenType::Newline => Ok(()),
         }
     } else {
-        return Ok(());
+        Ok(())
     }
 }

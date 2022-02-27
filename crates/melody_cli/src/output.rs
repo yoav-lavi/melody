@@ -27,24 +27,24 @@ pub fn print_output_pretty(output: String) {
 }
 
 pub fn print_source_line(line_number: usize, line: String) {
-    print!(
-        "{} {}\n",
+    println!(
+        "{} {}",
         line_number.to_string().dimmed(),
         line.bright_blue()
     );
 }
 
-pub fn report_repl_parse_error(source: String) {
-    eprintln!(
-        "{} {} {}\n",
-        "Error:".bright_red(),
-        "Unable to parse".bright_red(),
-        format!("\"{source}\"").bright_blue(),
-    );
-}
-
-pub fn report_repl_parse_error_detail(detail: String) {
-    eprintln!("{} {}\n", "Error:".bright_red(), detail.bright_red());
+pub fn report_repl_parse_error(source: String, detail: Option<String>) {
+    if let Some(detail) = detail {
+        eprintln!("{} {}\n", "Error:".bright_red(), detail.bright_red());
+    } else {
+        eprintln!(
+            "{} {} {}\n",
+            "Error:".bright_red(),
+            "Unable to parse".bright_red(),
+            format!("\"{source}\"").bright_blue(),
+        );
+    }
 }
 
 pub fn report_unrecognized_command(source: String) {
@@ -56,18 +56,36 @@ pub fn report_unrecognized_command(source: String) {
     );
 }
 
-pub fn report_parse_error(source: String, line_source: String, line: usize) {
-    eprintln!(
-        "{} {} {} {} {}{}{}{}",
-        "Error:".bright_red(),
-        "Unable to parse".bright_red(),
-        format!("\"{source}\"").bright_blue(),
-        "on line".bright_red(),
-        line.to_string().bright_blue(),
-        ":\n\n".bright_red(),
-        format!("{line}: ").dimmed(),
-        line_source
-    );
+pub fn report_parse_error(
+    source: String,
+    line_source: String,
+    line: usize,
+    detail: Option<String>,
+) {
+    if let Some(detail) = detail {
+        eprintln!(
+            "{} {} {} {}{}{}{}",
+            "Error:".bright_red(),
+            detail.bright_red(),
+            "on line".bright_red(),
+            line.to_string().bright_blue(),
+            ":\n\n".bright_red(),
+            format!("{line}: ").dimmed(),
+            line_source
+        );
+    } else {
+        eprintln!(
+            "{} {} {} {} {}{}{}{}",
+            "Error:".bright_red(),
+            "Unable to parse".bright_red(),
+            format!("\"{source}\"").bright_blue(),
+            "on line".bright_red(),
+            line.to_string().bright_blue(),
+            ":\n\n".bright_red(),
+            format!("{line}: ").dimmed(),
+            line_source
+        );
+    }
 }
 
 pub fn report_read_input_error() {
