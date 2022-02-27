@@ -3,7 +3,7 @@ use super::token_formatters::{
 };
 use logos::Logos;
 
-#[derive(Logos, Debug, PartialEq)]
+#[derive(Logos, Debug)]
 pub enum Token {
     #[regex(r#"\d+ to \d+ of"#, range_expression)]
     RangeExpression(String),
@@ -104,9 +104,6 @@ pub enum Token {
     #[token("<space>")]
     SpaceSymbol,
 
-    #[token("not <space>")]
-    NotSpaceSymbol,
-
     #[token("<word>")]
     WordSymbol,
 
@@ -126,7 +123,7 @@ pub enum Token {
     Semicolon,
 
     #[regex(r"\n")]
-    NewLine,
+    Newline,
 
     #[regex("//.*", logos::skip)]
     Comment,
@@ -134,4 +131,68 @@ pub enum Token {
     #[error]
     #[regex(r"[ \t\f]+", logos::skip)]
     Unidentified,
+}
+
+#[derive(PartialEq, Eq)]
+pub enum TokenType {
+    Symbol,
+    Literal,
+    Raw,
+    Expression,
+    Range,
+    Group,
+    Assertion,
+    SpecialSymbol,
+    Semicolon,
+    Newline,
+    Other,
+}
+
+impl Token {
+    pub fn to_type(&self) -> TokenType {
+        match *self {
+            Token::RangeExpression(_) => TokenType::Expression,
+            Token::QuantifierExpression(_) => TokenType::Expression,
+            Token::OpenRangeExpression(_) => TokenType::Expression,
+            Token::SomeExpression => TokenType::Expression,
+            Token::OptionExpression => TokenType::Expression,
+            Token::AnyExpression => TokenType::Expression,
+            Token::LiteralDouble(_) => TokenType::Literal,
+            Token::LiteralSingle(_) => TokenType::Literal,
+            Token::Raw(_) => TokenType::Raw,
+            Token::LowercaseRange(_) => TokenType::Range,
+            Token::UppercaseRange(_) => TokenType::Range,
+            Token::NumericRange(_) => TokenType::Range,
+            Token::NamedCapture(_) => TokenType::Range,
+            Token::Capture => TokenType::Group,
+            Token::Match => TokenType::Group,
+            Token::Either => TokenType::Group,
+            Token::Ahead => TokenType::Assertion,
+            Token::Behind => TokenType::Assertion,
+            Token::NotAhead => TokenType::Assertion,
+            Token::NotBehind => TokenType::Assertion,
+            Token::BlockEnd => TokenType::Other,
+            Token::StartSymbol => TokenType::SpecialSymbol,
+            Token::EndSymbol => TokenType::SpecialSymbol,
+            Token::NewlineSymbol => TokenType::Symbol,
+            Token::TabSymbol => TokenType::Symbol,
+            Token::ReturnSymbol => TokenType::Symbol,
+            Token::FeedSymbol => TokenType::Symbol,
+            Token::NullSymbol => TokenType::Symbol,
+            Token::DigitSymbol => TokenType::Symbol,
+            Token::NotDigitSymbol => TokenType::Symbol,
+            Token::WhitespaceSymbol => TokenType::Symbol,
+            Token::NotWhitespaceSymbol => TokenType::Symbol,
+            Token::SpaceSymbol => TokenType::Symbol,
+            Token::WordSymbol => TokenType::Symbol,
+            Token::NotWordSymbol => TokenType::Symbol,
+            Token::VerticalSymbol => TokenType::Symbol,
+            Token::AlphabetSymbol => TokenType::Symbol,
+            Token::CharSymbol => TokenType::Symbol,
+            Token::Semicolon => TokenType::Semicolon,
+            Token::Newline => TokenType::Newline,
+            Token::Comment => TokenType::Other,
+            Token::Unidentified => TokenType::Other,
+        }
+    }
 }

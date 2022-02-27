@@ -1,9 +1,14 @@
+mod allowed_token;
 mod errors;
 mod lexer;
 mod utils;
 
+use allowed_token::allowed_token;
 pub use errors::ParseError;
-use lexer::{lex, tokens::Token};
+use lexer::{
+    lex,
+    tokens::{Token, TokenType},
+};
 use logos::Lexer;
 use utils::format_regex;
 
@@ -40,7 +45,15 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
 
     let mut output = String::new();
 
+    let mut previous_token_type: Option<TokenType> = None;
+
     while let Some(token) = lexer.next() {
+        if let Err(error) = allowed_token(&previous_token_type, &token) {
+            return Err(create_parse_error_with_detail(lexer, line, error));
+        }
+
+        let token_type = token.to_type();
+
         let in_block = in_group || in_either;
 
         let formatted_token = match token {
@@ -175,7 +188,7 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
                 quantifier = Some(String::from("*"));
                 None
             }
-            Token::NewLine => {
+            Token::Newline => {
                 quantifier = None;
                 line += 1;
                 None
@@ -228,6 +241,8 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
                 output.push_str(&formatted_token);
             }
         }
+
+        previous_token_type = Some(token_type);
     }
 
     Ok(format_regex(&output, None))
@@ -235,6 +250,10 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
 
 fn create_parse_error(lexer: Lexer<Token>, line: u16) -> ParseError {
     ParseError::new(lexer.slice(), lexer.source(), usize::from(line))
+}
+
+fn create_parse_error_with_detail(lexer: Lexer<Token>, line: u16, detail: String) -> ParseError {
+    ParseError::new_with_detail(lexer.slice(), lexer.source(), usize::from(line), detail)
 }
 
 fn handle_quantifier(source: String, quantifier: Option<String>, group: bool) -> Option<String> {

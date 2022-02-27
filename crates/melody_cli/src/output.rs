@@ -43,6 +43,10 @@ pub fn report_repl_parse_error(source: String) {
     );
 }
 
+pub fn report_repl_parse_error_detail(detail: String) {
+    eprintln!("{} {}\n", "Error:".bright_red(), detail.bright_red());
+}
+
 pub fn report_unrecognized_command(source: String) {
     eprintln!(
         "{} {} {}\n",

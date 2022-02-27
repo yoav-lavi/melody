@@ -10,8 +10,8 @@ use output::{
     print_output, print_output_pretty, print_repl_welcome, print_source_line, prompt, report_clear,
     report_exit, report_missing_path, report_no_lines_to_print, report_nothing_to_redo,
     report_nothing_to_undo, report_parse_error, report_read_file_error, report_read_input_error,
-    report_redo, report_repl_parse_error, report_source, report_undo, report_unrecognized_command,
-    report_write_file_error,
+    report_redo, report_repl_parse_error, report_repl_parse_error_detail, report_source,
+    report_undo, report_unrecognized_command, report_write_file_error,
 };
 use std::fs::{read_to_string, write};
 use utils::{exit, read_input, ExitCode};
@@ -199,9 +199,14 @@ fn repl() -> Result<(), CliError> {
                 token,
                 line: _,
                 line_index: _,
+                detail,
             } = error;
 
-            report_repl_parse_error(token);
+            if let Some(detail) = detail {
+                report_repl_parse_error_detail(detail)
+            } else {
+                report_repl_parse_error(token);
+            }
 
             valid_lines.pop();
 
