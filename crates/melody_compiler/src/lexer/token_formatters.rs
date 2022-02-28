@@ -1,5 +1,4 @@
-use super::tokens::Token;
-use logos::Lexer;
+use crate::types::Lexer;
 use std::collections::HashSet;
 
 enum QuoteType {
@@ -8,25 +7,25 @@ enum QuoteType {
     Raw,
 }
 
-pub fn quantifier(lex: &mut Lexer<Token>) -> Option<String> {
+pub fn quantifier(lex: &mut Lexer) -> Option<String> {
     let slice = lex.slice();
     let amount: u16 = slice[..slice.len() - 3].parse().ok()?;
     Some(format!("{{{amount}}}"))
 }
 
-pub fn named_capture(lex: &mut Lexer<Token>) -> String {
+pub fn named_capture(lex: &mut Lexer) -> String {
     let slice = lex.slice();
     slice[8..slice.len() - 2].to_owned()
 }
 
-pub fn range_expression(lex: &mut Lexer<Token>) -> String {
+pub fn range_expression(lex: &mut Lexer) -> String {
     let slice = lex.slice();
     let range: &str = &slice[..slice.len() - 3];
     let formatted_range = range.replace(" to ", ",");
     format!("{{{formatted_range}}}")
 }
 
-pub fn open_range_expression(lex: &mut Lexer<Token>) -> Option<String> {
+pub fn open_range_expression(lex: &mut Lexer) -> Option<String> {
     let slice = lex.slice();
     let range: i32 = slice[5..slice.len() - 3].parse().ok()?;
     let incremented_range = range + 1;
@@ -34,17 +33,17 @@ pub fn open_range_expression(lex: &mut Lexer<Token>) -> Option<String> {
     Some(format!("{{{incremented_range},}}"))
 }
 
-pub fn range(lex: &mut Lexer<Token>) -> String {
+pub fn range(lex: &mut Lexer) -> String {
     let slice = lex.slice();
     let formatted_slice = slice.replace(" to ", "-");
     format!("[{formatted_slice}]")
 }
 
-pub fn literal(lex: &mut Lexer<Token>) -> String {
+pub fn literal(lex: &mut Lexer) -> String {
     remove_and_escape(lex.slice())
 }
 
-pub fn raw(lex: &mut Lexer<Token>) -> String {
+pub fn raw(lex: &mut Lexer) -> String {
     let source = lex.slice();
     let pattern = source[1..source.len() - 1].to_owned();
     unescape_quotes(pattern, QuoteType::Raw)

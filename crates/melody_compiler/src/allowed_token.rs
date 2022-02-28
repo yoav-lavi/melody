@@ -11,29 +11,38 @@ macro_rules! match_or_err {
     };
 }
 
-pub fn allow_next(token: &Token) -> Result<(), String> {
+static SEPARATOR: [TokenType; 3] = [TokenType::Newline, TokenType::Semicolon, TokenType::Ignored];
+
+static QUANTIFIABLE: [TokenType; 7] = [
+    TokenType::Literal,
+    TokenType::Group,
+    TokenType::Symbol,
+    TokenType::Range,
+    TokenType::Raw,
+    TokenType::Assertion,
+    TokenType::Ignored,
+];
+
+static BLOCK_END_AND_SEMICOLON: [TokenType; 2] = [TokenType::BlockEnd, TokenType::Semicolon];
+
+pub fn separator(token: &Token) -> Result<(), String> {
     match_or_err!(
-        [TokenType::Newline, TokenType::Semicolon].contains(&token.to_type()),
-        "Expected a semicolon or newline"
+        SEPARATOR.contains(&token.to_type()),
+        "Expected a semicolon, block end, or newline"
     )
 }
 
-pub fn allow_newline(token: &Token) -> Result<(), String> {
-    match_or_err!(token.to_type() == TokenType::Newline, "Expected a newline")
+pub fn quantifiable(token: &Token) -> Result<(), String> {
+    match_or_err!(
+        QUANTIFIABLE.contains(&token.to_type()),
+        "Expected a quantifiable (literal, raw, group, assertion, symbol, or range)"
+    )
 }
 
-pub fn allow_atom(token: &Token) -> Result<(), String> {
+fn not_block_end_and_semicolon(token: &Token) -> Result<(), String> {
     match_or_err!(
-        [
-            TokenType::Literal,
-            TokenType::Group,
-            TokenType::Symbol,
-            TokenType::Range,
-            TokenType::Raw,
-            TokenType::Assertion,
-        ]
-        .contains(&token.to_type()),
-        "Expected a literal, raw, group, symbol, or range"
+        !BLOCK_END_AND_SEMICOLON.contains(&token.to_type()),
+        "Expected a literal, raw, group, assertion, symbol, range, or newline"
     )
 }
 
@@ -44,14 +53,15 @@ pub fn allowed_token(previous: &Option<TokenType>, current: &Token) -> Result<()
             | TokenType::Literal
             | TokenType::Raw
             | TokenType::Range
-            | TokenType::SpecialSymbol => allow_next(current),
+            | TokenType::SpecialSymbol => separator(current),
 
-            TokenType::Expression => allow_atom(current),
+            TokenType::Expression => quantifiable(current),
 
-            TokenType::Group | TokenType::Assertion | TokenType::Other => allow_newline(current),
+            TokenType::BlockEnd | TokenType::Semicolon => not_block_end_and_semicolon(current),
 
-            // allow any type of token
-            TokenType::Semicolon | TokenType::Newline => Ok(()),
+            TokenType::Assertion | TokenType::Group | TokenType::Newline | TokenType::Ignored => {
+                Ok(())
+            }
         }
     } else {
         Ok(())

@@ -13,6 +13,9 @@ keywords = ["melody", "melodylang"]
 [dependencies]
 clap = { version = "3.0.7", features = ["derive"] }
 colored = "2.0.0"
+syntect = { version = "4.2", default-features = false, features = [
+  "default-fancy",
+] }
 melody_compiler = { version = "0.9.0", path = "../melody_compiler" }
 
 [[bin]]

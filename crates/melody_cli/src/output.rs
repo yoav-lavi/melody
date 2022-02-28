@@ -22,10 +22,6 @@ pub fn print_output(output: String) {
     println!("{}", output);
 }
 
-pub fn print_output_pretty(output: String) {
-    println!("{}", output.bright_blue());
-}
-
 pub fn print_source_line(line_number: usize, line: String) {
     println!(
         "{} {}",

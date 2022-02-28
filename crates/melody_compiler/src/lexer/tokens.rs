@@ -133,7 +133,7 @@ pub enum Token {
     Unidentified,
 }
 
-#[derive(PartialEq, Eq)]
+#[derive(PartialEq, Eq, Clone, Debug)]
 pub enum TokenType {
     Symbol,
     Literal,
@@ -145,7 +145,8 @@ pub enum TokenType {
     SpecialSymbol,
     Semicolon,
     Newline,
-    Other,
+    BlockEnd,
+    Ignored,
 }
 
 impl Token {
@@ -171,7 +172,7 @@ impl Token {
             Token::Behind => TokenType::Assertion,
             Token::NotAhead => TokenType::Assertion,
             Token::NotBehind => TokenType::Assertion,
-            Token::BlockEnd => TokenType::Other,
+            Token::BlockEnd => TokenType::BlockEnd,
             Token::StartSymbol => TokenType::SpecialSymbol,
             Token::EndSymbol => TokenType::SpecialSymbol,
             Token::NewlineSymbol => TokenType::Symbol,
@@ -191,8 +192,8 @@ impl Token {
             Token::CharSymbol => TokenType::Symbol,
             Token::Semicolon => TokenType::Semicolon,
             Token::Newline => TokenType::Newline,
-            Token::Comment => TokenType::Other,
-            Token::Unidentified => TokenType::Other,
+            Token::Comment => TokenType::Ignored,
+            Token::Unidentified => TokenType::Ignored,
         }
     }
 }

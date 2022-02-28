@@ -1,6 +1,7 @@
 mod allowed_token;
 mod errors;
 mod lexer;
+mod types;
 mod utils;
 
 use allowed_token::allowed_token;
@@ -9,7 +10,7 @@ use lexer::{
     lex,
     tokens::{Token, TokenType},
 };
-use logos::Lexer;
+use types::Lexer;
 use utils::format_regex;
 
 /**
@@ -248,11 +249,11 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
     Ok(format_regex(&output, None))
 }
 
-fn create_parse_error(lexer: Lexer<Token>, line: u16) -> ParseError {
+fn create_parse_error(lexer: Lexer, line: u16) -> ParseError {
     ParseError::new(lexer.slice(), lexer.source(), usize::from(line))
 }
 
-fn create_parse_error_with_detail(lexer: Lexer<Token>, line: u16, detail: String) -> ParseError {
+fn create_parse_error_with_detail(lexer: Lexer, line: u16, detail: String) -> ParseError {
     ParseError::new_with_detail(lexer.slice(), lexer.source(), usize::from(line), detail)
 }
 
