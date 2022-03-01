@@ -104,23 +104,22 @@ fn walk(pair: Pair<Rule>) -> Result<Node, ParseError> {
                 // unexpected nodes
                 Node::SpecialSymbol(_) => {
                     return Err(ParseError {
-                        message: "unexpected special symbol in expression".to_owned(),
+                        message: "unexpected special symbol in quantifier".to_owned(),
                     })
                 }
                 Node::Quantifier(_) => {
                     return Err(ParseError {
-                        message: "unexpected quantifier in expression".to_owned(),
+                        message: "unexpected quantifier in quantifier".to_owned(),
                     })
                 }
                 Node::Assertion(_) => {
                     return Err(ParseError {
-                        message: "unexpected assertion in expression".to_owned(),
+                        message: "unexpected assertion in quantifier".to_owned(),
                     })
                 }
-
                 Node::EndOfInput => {
                     return Err(ParseError {
-                        message: "unexpected end of input".to_owned(),
+                        message: "unexpected end of input in quantifier".to_owned(),
                     })
                 }
             };

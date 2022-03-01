@@ -4,7 +4,7 @@ pub fn report_read_file_error(path: String) {
     eprintln!(
         "{} {} {}",
         "Error:".bright_red(),
-        "Unable read file at path".bright_red(),
+        "unable read file at path".bright_red(),
         format!("\"{path}\"").bright_blue(),
     );
 }
@@ -13,7 +13,7 @@ pub fn report_write_file_error(path: String) {
     eprintln!(
         "{} {} {}",
         "Error:".bright_red(),
-        "Unable write file at path".bright_red(),
+        "unable write file at path".bright_red(),
         format!("\"{path}\"").bright_blue(),
     );
 }
@@ -42,7 +42,7 @@ pub fn report_unrecognized_command(source: String) {
     eprintln!(
         "{} {} {}\n",
         "Error:".bright_red(),
-        "Unrecognized command".bright_red(),
+        "unrecognized command".bright_red(),
         format!("\"{source}\"").bright_blue(),
     );
 }
@@ -55,7 +55,7 @@ pub fn report_read_input_error() {
     eprintln!(
         "{} {}",
         "Error:".bright_red(),
-        "Unable to read input".bright_red(),
+        "unable to read input".bright_red(),
     );
 }
 

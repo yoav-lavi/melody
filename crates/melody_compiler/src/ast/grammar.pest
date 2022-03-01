@@ -85,7 +85,7 @@ either_group = { "either" }
 
 group_declaration = { capture_group ~ (identifier)? | match_group | either_group }
 
-group = { group_declaration ~ " "? ~ block }
+group = { group_declaration ~ block }
 
 assertion_type = { ("ahead" | "behind") }
 
