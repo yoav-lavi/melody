@@ -208,7 +208,7 @@ fn expression_to_source(expression: &Expression) -> String {
 
 fn wrap_quantified(value: String) -> String {
     let is_grouped = value.starts_with('(') && value.ends_with(')');
-    if value.chars().count() > 1 && !is_grouped {
+    if !is_grouped && value.chars().count() > 1 {
         format!("(?:{value})")
     } else {
         value
