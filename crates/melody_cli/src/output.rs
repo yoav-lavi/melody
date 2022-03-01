@@ -34,13 +34,8 @@ pub fn print_source_line(line_number: usize, line: String) {
     );
 }
 
-pub fn report_repl_parse_error(source: String) {
-    eprintln!(
-        "{} {} {}\n",
-        "Error:".bright_red(),
-        "Unable to parse".bright_red(),
-        format!("\"{source}\"").bright_blue(),
-    );
+pub fn report_repl_parse_error(message: String) {
+    eprintln!("{} {}\n", "Error:".bright_red(), message.bright_red(),);
 }
 
 pub fn report_unrecognized_command(source: String) {
@@ -52,18 +47,8 @@ pub fn report_unrecognized_command(source: String) {
     );
 }
 
-pub fn report_parse_error(source: String, line_source: String, line: usize) {
-    eprintln!(
-        "{} {} {} {} {}{}{}{}",
-        "Error:".bright_red(),
-        "Unable to parse".bright_red(),
-        format!("\"{source}\"").bright_blue(),
-        "on line".bright_red(),
-        line.to_string().bright_blue(),
-        ":\n\n".bright_red(),
-        format!("{line}: ").dimmed(),
-        line_source
-    );
+pub fn report_parse_error(message: String) {
+    eprintln!("{} {}", "Error:".bright_red(), message.bright_red());
 }
 
 pub fn report_read_input_error() {

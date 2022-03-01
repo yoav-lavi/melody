@@ -5,7 +5,7 @@ pub mod utils;
 
 use clap::Parser;
 use consts::COMMAND_MARKER;
-use melody_compiler::{compiler, ParseError};
+use melody_compiler::{compiler, errors::ParseError};
 use output::{
     print_output, print_output_pretty, print_repl_welcome, print_source_line, prompt, report_clear,
     report_exit, report_missing_path, report_no_lines_to_print, report_nothing_to_redo,
@@ -52,11 +52,7 @@ fn main() {
                 CliError::WriteFileError(output_file_path) => {
                     report_write_file_error(output_file_path)
                 }
-                CliError::ParseError(parse_error) => report_parse_error(
-                    parse_error.token,
-                    parse_error.line,
-                    parse_error.line_index + 1,
-                ),
+                CliError::ParseError(parse_error) => report_parse_error(parse_error.message),
                 CliError::ReadInputError => report_read_input_error(),
             }
             exit(ExitCode::Error)
@@ -195,13 +191,9 @@ fn repl() -> Result<(), CliError> {
         let raw_output = compiler(source);
 
         if let Err(error) = raw_output {
-            let ParseError {
-                token,
-                line: _,
-                line_index: _,
-            } = error;
+            let ParseError { message } = error;
 
-            report_repl_parse_error(token);
+            report_repl_parse_error(message);
 
             valid_lines.pop();
 

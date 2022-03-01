@@ -1,5 +1,4 @@
 #![cfg(test)]
-
 use melody_compiler::compiler;
 
 #[test]
@@ -83,7 +82,7 @@ fn start_end_test() {
     let output = compiler(
         r#"
       <start>;
-      "a"
+      "a";
       <end>;
       "#,
     );
@@ -117,36 +116,20 @@ fn symbol_test() {
 }
 
 #[test]
-fn single_quote_test() {
-    let output = compiler(
-        r#"
-      'hello';
-      "#,
-    );
-    assert_eq!(output.unwrap(), "/hello/");
-}
-
-#[test]
 fn match_test() {
     let output = compiler(
         r#"
-      match {
-        5 of "A";
-        0 to 9;
-      }
-      "#,
+match {
+  5 of "A";
+  0 to 9;
+}"#,
     );
     assert_eq!(output.unwrap(), "/(?:A{5}[0-9])/");
 }
 
 #[test]
 fn comment_test() {
-    let output = compiler(
-        r#"
-      // a single digit in the range of 0 to 5
-      0 to 5;
-      "#,
-    );
+    let output = compiler("/*  a single digit in the range of 0 to 5 */ 0 to 5;");
     assert_eq!(output.unwrap(), "/[0-5]/");
 }
 
@@ -230,7 +213,7 @@ fn any_test() {
 fn raw_test() {
     let output = compiler(
         r#"
-      5 of `.*`
+      5 of `.*`;
       "#,
     );
     assert_eq!(output.unwrap(), "/(?:.*){5}/");
@@ -240,30 +223,19 @@ fn raw_test() {
 fn assertion_test() {
     let output = compiler(
         r#"
-      5 of ahead {
+      ahead {
         "a";
       }
-      5 of behind {
+      behind {
         "a";
       }
-      5 of not ahead {
+      not ahead {
         "a";
       }
-      5 of not behind {
+      not behind {
         "a";
       }
       "#,
     );
-    assert_eq!(output.unwrap(), "/(?=a){5}(?<=a){5}(?!a){5}(?<!a){5}/");
-}
-
-#[test]
-fn newline_quantifier_test() {
-    let output = compiler(
-        r#"
-        5 of "a"
-        "b"
-      "#,
-    );
-    assert_eq!(output.unwrap(), "/a{5}b/");
+    assert_eq!(output.unwrap(), "/(?=a)(?<=a)(?!a)(?<!a)/");
 }
