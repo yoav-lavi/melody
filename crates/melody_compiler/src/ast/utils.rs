@@ -1,6 +1,7 @@
 use super::enums::Symbol;
 use super::ident_parser::Rule;
 use pest::iterators::Pair;
+use std::collections::HashSet;
 
 pub fn first_inner(pair: Pair<Rule>) -> Pair<Rule> {
     pair.into_inner().next().unwrap()
@@ -30,9 +31,34 @@ pub fn alphabetic_first_char(value: &str) -> bool {
     to_char(value).is_alphabetic()
 }
 
-pub fn unquote_escape_literal(pair: Pair<Rule>) -> String {
+pub fn unquote_escape_raw(pair: Pair<Rule>) -> String {
     let pair_str = pair.as_str();
-    pair_str[1..pair_str.len() - 1].to_owned()
+    pair_str[1..pair_str.len() - 1]
+        .replace("\\`", "`")
+        .to_owned()
+}
+
+pub fn unquote_escape_literal(pair: Pair<Rule>) -> String {
+    let pair_str = escape_chars(pair.as_str());
+    pair_str[1..pair_str.len() - 1]
+        .replace("\\\"", "\"")
+        .to_owned()
+}
+
+fn escape_chars(source: &str) -> String {
+    let reserved_chars = HashSet::from([
+        '[', ']', '(', ')', '{', '}', '*', '+', '?', '|', '^', '$', '.', '-', '\\',
+    ]);
+    let mut escaped_source = String::new();
+    for char in source.chars() {
+        if reserved_chars.contains(&char) {
+            let escaped_char = format!("\\{char}");
+            escaped_source.push_str(&escaped_char);
+        } else {
+            escaped_source.push_str(&String::from(char))
+        }
+    }
+    escaped_source
 }
 
 pub fn symbol_variants(

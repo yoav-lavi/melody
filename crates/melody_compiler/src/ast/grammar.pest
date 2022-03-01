@@ -21,7 +21,8 @@ literal = ${ ("\"" ~ literal_content ~ "\"")  }
 raw_content = @{ raw_char* }
 
 raw_char = _{
-    !"`" ~ ANY
+    !("`" | "\\") ~ ANY
+    | "\\" ~ ("`")
 }
 
 raw = ${ "`" ~ raw_content ~ "`"  }

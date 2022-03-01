@@ -3,7 +3,7 @@ use super::enums::*;
 use super::ident_parser::{IdentParser, Rule};
 use super::utils::{
     alphabetic_first_char, first_inner, first_last_inner_str, last_inner, nth_inner,
-    symbol_variants, to_char, unquote_escape_literal,
+    symbol_variants, to_char, unquote_escape_literal, unquote_escape_raw,
 };
 use crate::errors::ParseError;
 use pest::{iterators::Pair, Parser};
@@ -26,7 +26,7 @@ pub fn to_ast(source: &str) -> Result<Vec<Node>, ParseError> {
 
 fn walk(pair: Pair<Rule>) -> Result<Node, ParseError> {
     Ok(match pair.as_rule() {
-        Rule::raw => Node::Atom(unquote_escape_literal(pair)),
+        Rule::raw => Node::Atom(unquote_escape_raw(pair)),
         Rule::literal => Node::Atom(unquote_escape_literal(pair)),
 
         Rule::symbol => {
