@@ -106,4 +106,5 @@ pub enum Node {
     Range(Range),
     Symbol(Symbol),
     SpecialSymbol(SpecialSymbol),
+    EndOfInput,
 }

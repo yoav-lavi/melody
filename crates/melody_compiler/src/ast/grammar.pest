@@ -93,4 +93,4 @@ assertion_declaration = { not? ~ assertion_type }
 
 assertion = { assertion_declaration ~ block }
 
-root = {  (statement | "\n")+ }
+root = {  SOI ~ (statement | "\n")* ~ EOI }

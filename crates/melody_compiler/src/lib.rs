@@ -7,7 +7,7 @@ use errors::ParseError;
 use source::source::to_source;
 
 pub fn compiler(source: &str) -> Result<String, ParseError> {
-    let ast = to_ast(format!("\n{source}\n").as_str())?;
+    let ast = to_ast(source)?;
 
     let output = to_source(&ast);
 

@@ -139,6 +139,7 @@ fn node_to_source(node: &Node) -> String {
             SpecialSymbol::Start => output.push_str("^"),
             SpecialSymbol::End => output.push_str("$"),
         },
+        Node::EndOfInput => {}
     }
     output
 }

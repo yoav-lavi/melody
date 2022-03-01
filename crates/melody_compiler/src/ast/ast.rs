@@ -9,7 +9,9 @@ use crate::errors::ParseError;
 use pest::{iterators::Pair, Parser};
 
 pub fn to_ast(source: &str) -> Result<Vec<Node>, ParseError> {
-    let pairs = IdentParser::parse(Rule::root, source).unwrap_or_else(|error| panic!("{}", error));
+    let pairs = IdentParser::parse(Rule::root, source).map_err(|error| ParseError {
+        message: error.to_string().to_owned(),
+    })?;
 
     let mut ast = Vec::new();
 
@@ -115,6 +117,12 @@ fn walk(pair: Pair<Rule>) -> Result<Node, ParseError> {
                         message: "unexpected assertion in expression".to_owned(),
                     })
                 }
+
+                Node::EndOfInput => {
+                    return Err(ParseError {
+                        message: "unexpected end of input".to_owned(),
+                    })
+                }
             };
 
             match kind.as_rule() {
@@ -206,6 +214,7 @@ fn walk(pair: Pair<Rule>) -> Result<Node, ParseError> {
                 negative,
             })
         }
+        Rule::EOI => Node::EndOfInput,
 
         _ => unreachable!(),
     })
