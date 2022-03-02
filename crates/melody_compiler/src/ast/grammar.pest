@@ -41,11 +41,11 @@ symbol = {
   (not)? ~  "<" ~ identifier ~ ">"
 }
 
-semicolon = _{";"}
+semicolon = _{ ";" }
 
 class_content = { ('a'..'z'|'A'..'Z'| '0'..'9' | "_" | "\\" | "@" | "*" | "$" | "#" | "&" | "^" | "!" | "%")+}
 
-negative_char_class = {not ~ class_content}
+negative_char_class = { not ~ class_content }
 
 atom = _{ (literal | range | symbol | raw | negative_char_class) ~ semicolon  }
 
@@ -57,13 +57,13 @@ statement = _{
   (expression | quantifier) 
 }
 
-numeric_range_start = {amount}
+numeric_range_start = { amount }
 
-numeric_range_end = {amount}
+numeric_range_end = { amount }
 
-ascii_range_start = {ASCII}
+ascii_range_start = { ASCII }
 
-ascii_range_end = {ASCII}
+ascii_range_end = { ASCII }
 
 range = {
   not? ~ numeric_range_start ~ "to" ~ numeric_range_end | ascii_range_start ~ "to" ~ ascii_range_end
@@ -71,9 +71,9 @@ range = {
 
 single_digit =  _{ '0'..'9' }
 
-quantifier_start = {amount}
+quantifier_start = { amount }
 
-quantifier_end = {amount}
+quantifier_end = { amount }
 
 some = { "some" }
 
@@ -83,7 +83,7 @@ option = { "option" }
 
 over = { "over" ~ amount }
 
-quantifier_range = {(quantifier_start ~ "to" ~ quantifier_end)}
+quantifier_range = { (quantifier_start ~ "to" ~ quantifier_end) }
 
 quantifier_quantity = { (quantifier_range | amount | some | any | over | option) ~ "of" }
 
