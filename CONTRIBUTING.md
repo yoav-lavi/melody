@@ -2,7 +2,7 @@
 
 We'd love to have your contributions for Melody!
 
-Melody is currently a personal project and as such makes no promises regarding timing and acceptance of contributions,
+Melody is currently a personal project and as such makes no guarantees regarding timing and acceptance of contributions,
 but if you want to contribute you absolutely should!
 
 ## Pull Requests
