@@ -37,7 +37,6 @@ raw = ${ "`" ~ raw_content ~ "`"  }
 
 not = { "not" }
 
-
 symbol = {
   (not)? ~  "<" ~ identifier ~ ">"
 }
@@ -59,8 +58,11 @@ statement = _{
 }
 
 numeric_range_start = {amount}
+
 numeric_range_end = {amount}
+
 ascii_range_start = {ASCII}
+
 ascii_range_end = {ASCII}
 
 range = {
@@ -70,20 +72,24 @@ range = {
 single_digit =  _{ '0'..'9' }
 
 quantifier_start = {amount}
+
 quantifier_end = {amount}
 
 some = { "some" }
+
 any = { "any" }
+
 option = { "option" }
+
 over = { "over" ~ amount }
+
 quantifier_range = {(quantifier_start ~ "to" ~ quantifier_end)}
+
 quantifier_quantity = { (quantifier_range | amount | some | any | over | option) ~ "of" }
 
 quantifier = {
   quantifier_quantity ~ expression
 }
-
-
 
 block = { "{" ~ (statement)+ ~ "}"}
 
