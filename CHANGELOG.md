@@ -1,5 +1,25 @@
 # Changelog
 
+## [v0.11.0] - 2022-03-02
+
+### Breaking
+
+- `ParseError` now contains only one `message` field, may be changed in the future
+- Line comments (`//`) may only be used in a separate line
+- The REPL currently accepts blocks on a single line but not multiple lines
+- Semicolons are no longer optional
+
+### Features
+
+- Uses a Pest grammar and an AST to parse Melody
+- Adds support for nested groups
+- Adds initial support for negative character classes
+- Adds support for `<backspace>`, `<boundary>`
+- Adds support for inline comments
+- Enforces group closing
+- Supports NO_COLOR in CLI
+- `-n` removes color from REPL as well
+
 ## [v0.10.3] - 2022-02-26
 
 ### Fixes
