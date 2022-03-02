@@ -31,7 +31,7 @@
       "patterns": [
         {
           "name": "constant.character.melody",
-          "match": "(<whitespace>|<space>|<newline>|<tab>|<return>|<feed>|<null>|<digit>|<word>|<vertical>|<start>|<end>|<char>|<alphabet>)"
+          "match": "(<whitespace>|<space>|<newline>|<tab>|<return>|<feed>|<null>|<digit>|<word>|<vertical>|<start>|<end>|<char>|<alphabet>|<boundary>|<backspace>)"
         },
         {
           "name": "constant.character.melody",
@@ -49,6 +49,10 @@
     },
     "comments": {
       "patterns": [
+        {
+          "name": "comment.block.melody",
+          "match": "\\/\\*.*\\*\\/"
+        },
         {
           "name": "comment.line.double-slash.melody",
           "match": "//.*"

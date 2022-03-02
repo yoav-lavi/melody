@@ -26,7 +26,6 @@ sidebar_position: 7
 | `A to Z;`                           | `[A-Z]`               | ✅          |
 | `a to z;`                           | `[a-z]`               | ✅          |
 | `0 to 9;`                           | `[0-9]`               | ✅          |
-| `// comment`                        |                       | ✅          |
 | `<start>;`                          | `^`                   | ✅          |
 | `<end>;`                            | `$`                   | ✅          |
 | `<newline>;`                        | `\n`                  | ✅          |
@@ -51,8 +50,8 @@ sidebar_position: 7
 | `some of`                           | `+`                   | ✅          |
 | syntax highlighting extension       |                       | ✅          |
 | `over 5 of "A";`                    | `A{6,}`               | ✅          |
-| `not <whitespace>;`                 | `\S`                  | ✅          |
 | `not <digit>;`                      | `\D`                  | ✅          |
+| `not <whitespace>;`                 | `\S`                  | ✅          |
 | `not <word>;`                       | `\W`                  | ✅          |
 | WASM binding                        |                       | ✅          |
 | Rust crate                          |                       | ✅          |
@@ -65,18 +64,20 @@ sidebar_position: 7
 | `behind { ... }`                    | `(?<=...)`            | ✅          |
 | `not ahead { ... }`                 | `(?!...)`             | ✅          |
 | `not behind { ... }`                | `(?<!...)`            | ✅          |
-| enforce group close                 |                       | ❌          |
-| `<backspace>`                       | `[\b]`                | ❌          |
+| enforce group close                 |                       | ✅          |
+| nested groups                       | `(...(...))`          | ✅          |
+| general cleanup and modules         |                       | ✅          |
+| more robust parsing mechanism (ast) |                       | ✅          |
+| `<backspace>`                       | `[\b]`                | ✅          |
+| `<boundary>`                        | `\b`                  | ✅          |
+| `/* comment */`                     |                       | ✅          |
+| `// comment`                        |                       | 🐣          |
 | file watcher                        |                       | ❌          |
-| nested groups                       | `(...(...))`          | ❌          |
 | multiple ranges                     | `[a-zA-Z0-9]`         | ❌          |
-| general cleanup and modules         |                       | ❌          |
 | TS / JS build step                  |                       | ❌          |
-| more robust parsing mechanism (ast) |                       | ❌          |
-| `<boundary>`                        | `\b`                  | ❌          |
+| multiline groups in REPL            |                       | ❌          |
 | `not "A";`                          | `[^A]`                | ❔          |
 | `flags: global, multiline, ...`     | `/.../gm...`          | ❔          |
-| `/* comment */`                     |                       | ❔          |
 | `any of "a", "b", "c"`              | `[abc]`               | ❔          |
 | (?)                                 | `*?`                  | ❔          |
 | (?)                                 | `\#`                  | ❔          |

@@ -73,7 +73,7 @@ some of match {
 some of <char>;
 ";";
 
-//  let value = 5;
+// let value = 5;
 ```
 
 Turns into
@@ -106,6 +106,8 @@ capture patch {
 }
 
 <end>;
+
+// v1.0.0
 ```
 
 Turns into
@@ -144,6 +146,24 @@ cargo install --path crates/melody_cli
 ### Community
 
 - [Arch Linux](https://aur.archlinux.org/packages/melody) (maintained by [@ilai-deutel](https://github.com/ilai-deutel))
+  <details><summary>Installation instructions</summary>
+  
+  1. Installation with an AUR helper, for instance using `paru`:
+  
+     ```bash
+     paru -Syu melody
+     ```
+  
+  2. Install manually with `makepkg`:
+  
+     ```bash
+     git clone https://aur.archlinux.org/melody.git
+     cd melody
+     makepkg -si
+     ```
+  
+  </details>
+
 - NixOS (soon, see [PR](https://github.com/NixOS/nixpkgs/pull/160985)) (maintained by [@jyooru](https://github.com/jyooru))
 
 ## CLI Usage
@@ -200,6 +220,8 @@ See the changelog [here](https://github.com/yoav-lavi/melody/blob/main/CHANGELOG
 - `<word>` - equivalent to regex `\w`
 - `not <word>` - equivalent to regex `\W`
 - `<alphabet>` - equivalent to regex `[a-zA-Z]`
+- `<boundary>` - equivalent to regex `\b`
+- `<backspace>` - equivalent to regex `[\b]`
 
 ## Literals
 
@@ -211,7 +233,7 @@ See the changelog [here](https://github.com/yoav-lavi/melody/blob/main/CHANGELOG
 
 ## Extras
 
-- `//` - used to mark comments
+- `/* ... */`, `// ...` - used to mark comments (note: `// ...` comments must be on separate line)
 
 ## File Extension
 
@@ -226,6 +248,18 @@ The Melody file extension is `.mdy`
 ## Extensions
 
 - [VSCode](https://marketplace.visualstudio.com/items?itemName=yoavlavi.melody)
+
+
+# Performance
+
+Measured on a 8 core 2021 MacBook Pro 14-inch, Apple M1 Pro using [hyperfine](https://github.com/sharkdp/hyperfine), compiling a 2.3M LOC file via the Melody CLI (the file was made using a repetition of the examples in this repository):
+
+```
+Time (mean ± σ):      1.002 s ±  0.010 s    [User: 0.905 s, System: 0.093 s]
+Range (min … max):    0.984 s …  1.016 s    20 runs
+```
+
+For real world usage (on similar hardware), expect less than 1 ms (0.8 ms on a 100 LOC file, but hyperfine might be inaccurate under 5 ms)
 
 ## Feature Status
 
@@ -251,9 +285,8 @@ The Melody file extension is `.mdy`
 | `A to Z;`                           | `[A-Z]`               | ✅          |
 | `a to z;`                           | `[a-z]`               | ✅          |
 | `0 to 9;`                           | `[0-9]`               | ✅          |
-| `// comment`                        |                       | ✅          |
-| `start;`                            | `^`                   | ✅          |
-| `end;`                              | `$`                   | ✅          |
+| `<start>;`                          | `^`                   | ✅          |
+| `<end>;`                            | `$`                   | ✅          |
 | `<newline>;`                        | `\n`                  | ✅          |
 | `<tab>;`                            | `\t`                  | ✅          |
 | `<return>;`                         | `\r`                  | ✅          |
@@ -290,18 +323,20 @@ The Melody file extension is `.mdy`
 | `behind { ... }`                    | `(?<=...)`            | ✅          |
 | `not ahead { ... }`                 | `(?!...)`             | ✅          |
 | `not behind { ... }`                | `(?<!...)`            | ✅          |
-| enforce group close                 |                       | ❌          |
-| `<backspace>`                       | `[\b]`                | ❌          |
+| `/* comment */`                     |                       | ✅          |
+| enforce group close                 |                       | ✅          |
+| nested groups                       | `(...(...))`          | ✅          |
+| general cleanup and modules         |                       | ✅          |
+| more robust parsing mechanism (ast) |                       | ✅          |
+| `<backspace>`                       | `[\b]`                | ✅          |
+| `<boundary>`                        | `\b`                  | ✅          |
+| `// comment`                        |                       | ✅          |
+| `not "A";`                          | `[^A]`                | 🐣          |
 | file watcher                        |                       | ❌          |
-| nested groups                       | `(...(...))`          | ❌          |
 | multiple ranges                     | `[a-zA-Z0-9]`         | ❌          |
-| general cleanup and modules         |                       | ❌          |
 | TS / JS build step                  |                       | ❌          |
-| more robust parsing mechanism (ast) |                       | ❌          |
-| `<boundary>`                        | `\b`                  | ❌          |
-| `not "A";`                          | `[^A]`                | ❔          |
+| multiline groups in REPL            |                       | ❌          |
 | `flags: global, multiline, ...`     | `/.../gm...`          | ❔          |
-| `/* comment */`                     |                       | ❔          |
 | `any of "a", "b", "c"`              | `[abc]`               | ❔          |
 | (?)                                 | `*?`                  | ❔          |
 | (?)                                 | `\#`                  | ❔          |
@@ -315,7 +350,7 @@ The Melody file extension is `.mdy`
 | (?)                                 | `\b`                  | ❔          |
 | (?)                                 | `\B`                  | ❔          |
 | (?)                                 | `$1`                  | ❔          |
-| (?)                                 | <code>$`</code>       | ❔          |
+| (?)                                 | <code>$\`</code>      | ❔          |
 | (?)                                 | `$&`                  | ❔          |
 | (?)                                 | `x20`                 | ❔          |
 | (?)                                 | `x{06fa}`             | ❔          |

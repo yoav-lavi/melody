@@ -39,6 +39,8 @@ sidebar_position: 6
 - `<word>` - equivalent to regex `\w`
 - `not <word>` - equivalent to regex `\W`
 - `<alphabet>` - equivalent to regex `[a-zA-Z]`
+- `<boundary>` - equivalent to regex `\b`
+- `<backspace>` - equivalent to regex `[\b]`
 
 ## Literals
 
@@ -50,4 +52,4 @@ sidebar_position: 6
 
 ## Comments
 
-- `//` - used to mark comments
+- `/* ... */`, `// ...` - used to mark comments (note: `// ...` comments must be on separate line)
