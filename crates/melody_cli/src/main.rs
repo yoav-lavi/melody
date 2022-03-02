@@ -4,13 +4,14 @@ pub mod output;
 pub mod utils;
 
 use clap::Parser;
+use colored::control::{ShouldColorize, SHOULD_COLORIZE};
 use consts::COMMAND_MARKER;
-use melody_compiler::{compiler, ParseError};
+use melody_compiler::{compiler, errors::ParseError};
 use output::{
-    print_output, print_output_pretty, print_repl_welcome, print_source_line, prompt, report_clear,
-    report_exit, report_missing_path, report_no_lines_to_print, report_nothing_to_redo,
-    report_nothing_to_undo, report_parse_error, report_read_file_error, report_read_input_error,
-    report_redo, report_repl_parse_error, report_source, report_undo, report_unrecognized_command,
+    print_output, print_repl_welcome, print_source_line, prompt, report_clear, report_exit,
+    report_missing_path, report_no_lines_to_print, report_nothing_to_redo, report_nothing_to_undo,
+    report_parse_error, report_read_file_error, report_read_input_error, report_redo,
+    report_repl_parse_error, report_source, report_undo, report_unrecognized_command,
     report_write_file_error,
 };
 use std::fs::{read_to_string, write};
@@ -43,6 +44,8 @@ enum CliError {
 }
 
 fn main() {
+    ShouldColorize::from_env();
+
     match cli() {
         Ok(_) => exit(ExitCode::Ok),
         Err(error) => {
@@ -52,11 +55,7 @@ fn main() {
                 CliError::WriteFileError(output_file_path) => {
                     report_write_file_error(output_file_path)
                 }
-                CliError::ParseError(parse_error) => report_parse_error(
-                    parse_error.token,
-                    parse_error.line,
-                    parse_error.line_index + 1,
-                ),
+                CliError::ParseError(parse_error) => report_parse_error(parse_error.message),
                 CliError::ReadInputError => report_read_input_error(),
             }
             exit(ExitCode::Error)
@@ -73,6 +72,10 @@ fn cli() -> Result<(), CliError> {
         output_file_path,
         no_color_output,
     } = args;
+
+    if no_color_output {
+        SHOULD_COLORIZE.set_override(false);
+    }
 
     if start_repl {
         return repl();
@@ -91,11 +94,7 @@ fn cli() -> Result<(), CliError> {
                 .map_err(|_| CliError::WriteFileError(output_file_path))?;
         }
         None => {
-            if no_color_output {
-                print_output(compiler_output);
-            } else {
-                print_output_pretty(compiler_output);
-            }
+            print_output(compiler_output);
         }
     }
 
@@ -129,7 +128,7 @@ fn repl() -> Result<(), CliError> {
                             let raw_output = compiler(source);
                             let output = raw_output.unwrap();
 
-                            print_output_pretty(format!("{output}\n"));
+                            print_output(format!("{output}\n"));
                         }
                     }
                 }
@@ -146,7 +145,7 @@ fn repl() -> Result<(), CliError> {
                         let raw_output = compiler(source);
                         let output = raw_output.unwrap();
 
-                        print_output_pretty(format!("{output}\n"));
+                        print_output(format!("{output}\n"));
                     }
                 }
                 format_command!("s", "source") => {
@@ -184,7 +183,7 @@ fn repl() -> Result<(), CliError> {
             let raw_output = compiler(source);
             let output = raw_output.unwrap();
 
-            print_output_pretty(format!("{output}\n"));
+            print_output(format!("{output}\n"));
 
             continue 'repl;
         }
@@ -195,13 +194,9 @@ fn repl() -> Result<(), CliError> {
         let raw_output = compiler(source);
 
         if let Err(error) = raw_output {
-            let ParseError {
-                token,
-                line: _,
-                line_index: _,
-            } = error;
+            let ParseError { message } = error;
 
-            report_repl_parse_error(token);
+            report_repl_parse_error(message);
 
             valid_lines.pop();
 
@@ -212,6 +207,6 @@ fn repl() -> Result<(), CliError> {
 
         let output = raw_output.unwrap();
 
-        print_output_pretty(format!("{output}\n"))
+        print_output(format!("{output}\n"))
     }
 }

@@ -67,7 +67,7 @@ some of match {
 some of char;
 ";";
 
-//  let value = 5;
+// let value = 5;
 ```
 
 Turns into
@@ -100,6 +100,8 @@ capture patch {
 }
 
 <end>;
+
+// v1.0.0
 ```
 
 Turns into

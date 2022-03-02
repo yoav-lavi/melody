@@ -1,0 +1,108 @@
+COMMENT = _{ "/*" ~ (!"*/" ~ ANY)* ~ "*/" }
+
+WHITESPACE = _{ (" " | "\t" | "\n") }
+
+digit = { '0'..'9' }
+
+amount = @{ digit+ }
+
+number = { digit+ } 
+
+literal_content = @{ literal_char* }
+
+literal_char = _{
+    !("\"" | "\\") ~ ANY
+    | "\\" ~ ("\"" | "\\" | "/" | "b" | "f" | "n" | "r" | "t")
+    | "\\" ~ ("u" ~ ASCII_HEX_DIGIT{4})
+}
+
+single_literal_content = @{ single_literal_char* }
+
+single_literal_char = _{
+    !("'" | "\\") ~ ANY
+    | "\\" ~ ("'" | "\\" | "/" | "b" | "f" | "n" | "r" | "t")
+    | "\\" ~ ("u" ~ ASCII_HEX_DIGIT{4})
+}
+
+literal = ${ (("\"" ~ literal_content ~ "\"") | ("'" ~ single_literal_content ~ "'"))   }
+
+raw_content = @{ raw_char* }
+
+raw_char = _{
+    !("`" | "\\") ~ ANY
+    | "\\" ~ ("`")
+}
+
+raw = ${ "`" ~ raw_content ~ "`"  }
+
+not = { "not" }
+
+
+symbol = {
+  (not)? ~  "<" ~ identifier ~ ">"
+}
+
+semicolon = _{";"}
+
+class_content = { ('a'..'z'|'A'..'Z'| '0'..'9' | "_" | "\\" | "@" | "*" | "$" | "#" | "&" | "^" | "!" | "%")+}
+
+negative_char_class = {not ~ class_content}
+
+atom = _{ (literal | range | symbol | raw | negative_char_class) ~ semicolon  }
+
+expression = _{
+  (atom | group | assertion)
+}
+
+statement = _{
+  (expression | quantifier) 
+}
+
+numeric_range_start = {amount}
+numeric_range_end = {amount}
+ascii_range_start = {ASCII}
+ascii_range_end = {ASCII}
+
+range = {
+  not? ~ numeric_range_start ~ "to" ~ numeric_range_end | ascii_range_start ~ "to" ~ ascii_range_end
+}
+
+single_digit =  _{ '0'..'9' }
+
+quantifier_start = {amount}
+quantifier_end = {amount}
+
+some = { "some" }
+any = { "any" }
+option = { "option" }
+over = { "over" ~ amount }
+quantifier_range = {(quantifier_start ~ "to" ~ quantifier_end)}
+quantifier_quantity = { (quantifier_range | amount | some | any | over | option) ~ "of" }
+
+quantifier = {
+  quantifier_quantity ~ expression
+}
+
+
+
+block = { "{" ~ (statement)+ ~ "}"}
+
+identifier = { ('a'..'z' | 'A'..'Z' | "_")+ }
+
+capture_group = { "capture" }
+
+match_group = { "match" }
+
+either_group = { "either" }
+
+group_declaration = { capture_group ~ (identifier)? | match_group | either_group }
+
+group = { group_declaration ~ block }
+
+assertion_type = {  ("ahead" | "behind") }
+
+assertion_declaration = { not? ~ assertion_type }
+
+assertion = { assertion_declaration ~ block }
+
+root = {  SOI ~ (statement | "\n")* ~ EOI }

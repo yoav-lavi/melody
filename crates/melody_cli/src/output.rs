@@ -4,7 +4,7 @@ pub fn report_read_file_error(path: String) {
     eprintln!(
         "{} {} {}",
         "Error:".bright_red(),
-        "Unable read file at path".bright_red(),
+        "unable read file at path".bright_red(),
         format!("\"{path}\"").bright_blue(),
     );
 }
@@ -13,64 +13,45 @@ pub fn report_write_file_error(path: String) {
     eprintln!(
         "{} {} {}",
         "Error:".bright_red(),
-        "Unable write file at path".bright_red(),
+        "unable write file at path".bright_red(),
         format!("\"{path}\"").bright_blue(),
     );
 }
 
 pub fn print_output(output: String) {
-    println!("{}", output);
-}
-
-pub fn print_output_pretty(output: String) {
     println!("{}", output.bright_blue());
 }
 
 pub fn print_source_line(line_number: usize, line: String) {
-    print!(
-        "{} {}\n",
+    println!(
+        "{} {}",
         line_number.to_string().dimmed(),
         line.bright_blue()
     );
 }
 
-pub fn report_repl_parse_error(source: String) {
-    eprintln!(
-        "{} {} {}\n",
-        "Error:".bright_red(),
-        "Unable to parse".bright_red(),
-        format!("\"{source}\"").bright_blue(),
-    );
+pub fn report_repl_parse_error(message: String) {
+    eprintln!("{} {}\n", "Error:".bright_red(), message.bright_red(),);
 }
 
 pub fn report_unrecognized_command(source: String) {
     eprintln!(
         "{} {} {}\n",
         "Error:".bright_red(),
-        "Unrecognized command".bright_red(),
+        "unrecognized command".bright_red(),
         format!("\"{source}\"").bright_blue(),
     );
 }
 
-pub fn report_parse_error(source: String, line_source: String, line: usize) {
-    eprintln!(
-        "{} {} {} {} {}{}{}{}",
-        "Error:".bright_red(),
-        "Unable to parse".bright_red(),
-        format!("\"{source}\"").bright_blue(),
-        "on line".bright_red(),
-        line.to_string().bright_blue(),
-        ":\n\n".bright_red(),
-        format!("{line}: ").dimmed(),
-        line_source
-    );
+pub fn report_parse_error(message: String) {
+    eprintln!("{} {}", "Error:".bright_red(), message.bright_red());
 }
 
 pub fn report_read_input_error() {
     eprintln!(
         "{} {}",
         "Error:".bright_red(),
-        "Unable to read input".bright_red(),
+        "unable to read input".bright_red(),
     );
 }
 
