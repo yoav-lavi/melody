@@ -7,9 +7,14 @@ but if you want to contribute you absolutely should!
 
 ## Pull Requests
 
-To create a new pull request, fork this repository and creating a new branch from `main`. 
-Add your code changes, add tests if relevant, and change / add documentation as needed if any API changed.
-Make sure to lint your code and run the test suit!
+To create a new pull request: 
+
+- Fork this repository and creating a new branch from `main`
+- Add your code changes
+- Add tests if relevant
+- Change / add documentation as needed if any API changed
+- Make sure to lint your code and run the test suit
+
 When you're done, submit your pull request!
 
 ## Reporting a Bug
