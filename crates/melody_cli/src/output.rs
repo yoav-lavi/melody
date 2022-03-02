@@ -19,10 +19,6 @@ pub fn report_write_file_error(path: String) {
 }
 
 pub fn print_output(output: String) {
-    println!("{}", output);
-}
-
-pub fn print_output_pretty(output: String) {
     println!("{}", output.bright_blue());
 }
 
