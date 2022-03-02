@@ -33,16 +33,20 @@ pub fn alphabetic_first_char(value: &str) -> bool {
 
 pub fn unquote_escape_raw(pair: Pair<Rule>) -> String {
     let pair_str = pair.as_str();
-    pair_str[1..pair_str.len() - 1]
-        .replace("\\`", "`")
-        .to_owned()
+    pair_str[1..pair_str.len() - 1].replace("\\`", "`")
 }
 
 pub fn unquote_escape_literal(pair: Pair<Rule>) -> String {
-    let pair_str = escape_chars(pair.as_str());
-    pair_str[1..pair_str.len() - 1]
-        .replace("\\\"", "\"")
-        .to_owned()
+    let raw_literal = pair.as_str();
+    let quote_type = raw_literal.chars().next().unwrap_or('"');
+    let pair_str = escape_chars(raw_literal);
+    let literal = pair_str[1..pair_str.len() - 1].to_owned();
+
+    match quote_type {
+        '"' => literal.replace(r#"\\""#, r#"""#),
+        '\'' => literal.replace(r#"\\'"#, r#"'"#),
+        _ => unreachable!(),
+    }
 }
 
 fn escape_chars(source: &str) -> String {
@@ -75,4 +79,23 @@ pub fn symbol_variants(
     } else {
         negative_variant.unwrap()
     }
+}
+
+/// maps over the items in `iterable` with `closure`,
+/// returning a vector of `ReturnItem` or an `Error`
+/// if one of the calls to `closure` returns an `Error`
+pub fn map_results<Iterable, Item, Closure, ReturnItem, Error>(
+    iterable: Iterable,
+    closure: Closure,
+) -> Result<Vec<ReturnItem>, Error>
+where
+    Iterable: Iterator<Item = Item>,
+    Closure: Fn(Item) -> Result<ReturnItem, Error>,
+{
+    let mut output = vec![];
+    for item in iterable {
+        let result = closure(item)?;
+        output.push(result);
+    }
+    Ok(output)
 }

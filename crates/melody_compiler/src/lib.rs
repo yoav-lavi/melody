@@ -1,13 +1,17 @@
 mod ast;
 pub mod errors;
 mod source;
+mod utils;
 
-use ast::ast::to_ast;
+use ast::to_ast;
 use errors::ParseError;
-use source::source::to_source;
+use source::to_source;
+use utils::format_line_comments;
 
 pub fn compiler(source: &str) -> Result<String, ParseError> {
-    let ast = to_ast(source)?;
+    let formatted_source = format_line_comments(source);
+
+    let ast = to_ast(formatted_source.as_str())?;
 
     let output = to_source(&ast);
 

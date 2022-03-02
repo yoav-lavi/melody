@@ -129,8 +129,16 @@ match {
 
 #[test]
 fn comment_test() {
-    let output = compiler("/*  a single digit in the range of 0 to 5 */ 0 to 5;");
-    assert_eq!(output.unwrap(), "/[0-5]/");
+    let output = compiler(
+        r#"/*  a single digit in the range of 0 to 5 */ 
+    // other comment
+    0 to 5; 
+    match { 
+      "x";
+    } 
+    "#,
+    );
+    assert_eq!(output.unwrap(), "/[0-5](?:x)/");
 }
 
 #[test]

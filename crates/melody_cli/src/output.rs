@@ -27,8 +27,8 @@ pub fn print_output_pretty(output: String) {
 }
 
 pub fn print_source_line(line_number: usize, line: String) {
-    print!(
-        "{} {}\n",
+    println!(
+        "{} {}",
         line_number.to_string().dimmed(),
         line.bright_blue()
     );

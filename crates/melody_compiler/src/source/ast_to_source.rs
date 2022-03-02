@@ -1,11 +1,12 @@
+use super::utils::wrap_quantified;
 use crate::ast::enums::{
     AssertionKind, Expression, GroupKind, Node, QuantifierKind, Range, SpecialSymbol, Symbol,
 };
 
-pub fn to_source(ast: &Vec<Node>) -> String {
+pub fn to_source(ast: &[Node]) -> String {
     let mut output = String::new();
     for node in ast {
-        output.push_str(node_to_source(&node).as_str());
+        output.push_str(node_to_source(node).as_str());
     }
     output
 }
@@ -33,7 +34,7 @@ fn node_to_source(node: &Node) -> String {
                 let body_source = group
                     .statements
                     .iter()
-                    .map(|node| node_to_source(node))
+                    .map(node_to_source)
                     .collect::<Vec<String>>()
                     .join("|");
                 output.push_str(format!("(?:{body_source})").as_str())
@@ -104,15 +105,25 @@ fn node_to_source(node: &Node) -> String {
                 Symbol::Word => "\\w",
                 Symbol::NotWord => "\\W",
                 Symbol::Feed => "\\f",
+                Symbol::Backspace => "[\\b]",
+                Symbol::Boundary => "\\b",
             };
             output.push_str(transformed_symbol);
         }
         Node::Range(range) => match range {
             Range::AsciiRange(range) => {
-                output.push_str(format!("[{}-{}]", range.start, range.end).as_str());
+                if range.negative {
+                    output.push_str(format!("[^{}-{}]", range.start, range.end).as_str());
+                } else {
+                    output.push_str(format!("[{}-{}]", range.start, range.end).as_str());
+                }
             }
             Range::NumericRange(range) => {
-                output.push_str(format!("[{}-{}]", range.start, range.end).as_str());
+                if range.negative {
+                    output.push_str(format!("[^{}-{}]", range.start, range.end).as_str());
+                } else {
+                    output.push_str(format!("[{}-{}]", range.start, range.end).as_str());
+                }
             }
         },
         Node::Assertion(assertion) => {
@@ -136,9 +147,10 @@ fn node_to_source(node: &Node) -> String {
             };
         }
         Node::SpecialSymbol(special_symbol) => match special_symbol {
-            SpecialSymbol::Start => output.push_str("^"),
-            SpecialSymbol::End => output.push_str("$"),
+            SpecialSymbol::Start => output.push('^'),
+            SpecialSymbol::End => output.push('$'),
         },
+        Node::NegativeCharClass(class) => output.push_str(format!("[^{}]", class).as_str()),
         Node::EndOfInput => {}
     }
     output
@@ -166,7 +178,7 @@ fn expression_to_source(expression: &Expression) -> String {
                 let body_source = group
                     .statements
                     .iter()
-                    .map(|node| node_to_source(node))
+                    .map(node_to_source)
                     .collect::<Vec<String>>()
                     .join("|");
                 output.push_str(format!("(?:{body_source})").as_str())
@@ -199,18 +211,12 @@ fn expression_to_source(expression: &Expression) -> String {
                 Symbol::Word => "\\w",
                 Symbol::NotWord => "\\W",
                 Symbol::Feed => "\\f",
+                Symbol::Backspace => "[\\b]",
+                Symbol::Boundary => "\\b",
             };
             output.push_str(transformed_symbol);
         }
+        Expression::NegativeCharClass(class) => output.push_str(format!("[^{}]", class).as_str()),
     }
     output
-}
-
-fn wrap_quantified(value: String) -> String {
-    let is_grouped = value.starts_with('(') && value.ends_with(')');
-    if !is_grouped && value.chars().count() > 1 {
-        format!("(?:{value})")
-    } else {
-        value
-    }
 }

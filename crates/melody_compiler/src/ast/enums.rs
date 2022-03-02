@@ -34,6 +34,7 @@ pub enum Expression {
     Group(Group),
     Symbol(Symbol),
     Range(Range),
+    NegativeCharClass(String),
 }
 
 #[derive(Debug)]
@@ -45,6 +46,7 @@ pub enum Range {
 #[derive(Debug)]
 #[allow(dead_code)]
 pub struct AsciiRange {
+    pub negative: bool,
     pub start: char,
     pub end: char,
 }
@@ -52,6 +54,7 @@ pub struct AsciiRange {
 #[derive(Debug)]
 #[allow(dead_code)]
 pub struct NumericRange {
+    pub negative: bool,
     pub start: char,
     pub end: char,
 }
@@ -73,6 +76,8 @@ pub enum Symbol {
     Word,
     NotWord,
     Feed,
+    Backspace,
+    Boundary,
 }
 
 #[derive(Debug)]
@@ -106,5 +111,6 @@ pub enum Node {
     Range(Range),
     Symbol(Symbol),
     SpecialSymbol(SpecialSymbol),
+    NegativeCharClass(String),
     EndOfInput,
 }
