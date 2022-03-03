@@ -1,7 +1,7 @@
 import { editor, languages } from 'monaco-editor';
 import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker';
 // build from ../crates/melody_wasm included manually due to issues with wasm-bindgen (similar to https://github.com/rustwasm/wasm-bindgen/issues/113)
-import init, { compiler } from 'melody';
+import init, { compiler } from './wasm/melody_wasm';
 
 declare global {
   interface Window {
