@@ -1,3 +1,6 @@
+<h1 align="center">
+  Melody
+</h1>
 
 <p align="center">
   <img width="520" alt="code example" src="https://user-images.githubusercontent.com/14347895/154124756-ddbd3c84-f8b2-45bd-b624-2c510482c4e2.png">
@@ -21,7 +24,7 @@
     <img alt="melody playground" src="https://img.shields.io/badge/melody-playground-brightgreen"
   </a>
   <a href="https://yoav-lavi.github.io/melody/docs/intro">
-    <img alt="melody playground" src="https://img.shields.io/badge/melody-docs-blue"
+    <img alt="melody playground" src="https://img.shields.io/badge/melody-docs-blue">
   </a>
 </p>
 
