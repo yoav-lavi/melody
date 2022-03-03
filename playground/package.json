@@ -12,6 +12,7 @@
     "vite": "^2.8.0"
   },
   "dependencies": {
-    "monaco-editor": "^0.32.1"
+    "monaco-editor": "^0.32.1",
+    "melody": "file:../crates/melody_wasm/pkg"
   }
 }

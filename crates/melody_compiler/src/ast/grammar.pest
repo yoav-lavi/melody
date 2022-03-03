@@ -91,7 +91,7 @@ quantifier = {
   quantifier_quantity ~ expression
 }
 
-block = { "{" ~ (statement)+ ~ "}"}
+block = { "{" ~ (statement)+ ~ "}" }
 
 identifier = { ('a'..'z' | 'A'..'Z' | "_")+ }
 

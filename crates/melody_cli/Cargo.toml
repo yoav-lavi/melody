@@ -15,6 +15,12 @@ clap = { version = "3.0.7", features = ["derive"] }
 colored = "2.0.0"
 melody_compiler = { version = "0.11.0", path = "../melody_compiler" }
 
+[dev-dependencies]
+assert_cmd = "2.0.4"
+assert_fs = "1.0.7"
+unindent = "0.1.8"
+tempfile = "3"
+
 [[bin]]
 name = "melody"
 path = "./src/main.rs"

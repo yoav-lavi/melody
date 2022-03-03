@@ -1,6 +1,7 @@
 use super::utils::wrap_quantified;
 use crate::ast::enums::{
-    AssertionKind, Expression, GroupKind, Node, QuantifierKind, Range, SpecialSymbol, Symbol,
+    Assertion, AssertionKind, Expression, Group, GroupKind, Node, Quantifier, QuantifierKind,
+    Range, SpecialSymbol, Symbol,
 };
 
 pub fn to_source(ast: &[Node]) -> String {
@@ -12,211 +13,148 @@ pub fn to_source(ast: &[Node]) -> String {
 }
 
 fn node_to_source(node: &Node) -> String {
-    let mut output = String::new();
-
     match node {
-        Node::Group(group) => match group.kind {
-            GroupKind::Match => {
-                let body_source = to_source(&group.statements);
-                output.push_str(format!("(?:{body_source})").as_str())
-            }
-            GroupKind::Capture => {
-                let body_source = to_source(&group.statements);
-                if group.ident.is_some() {
-                    output.push_str(
-                        format!("(?<{}>{body_source})", group.ident.as_ref().unwrap()).as_str(),
-                    )
-                } else {
-                    output.push_str(format!("({body_source})").as_str())
-                }
-            }
-            GroupKind::Either => {
-                let body_source = group
-                    .statements
-                    .iter()
-                    .map(node_to_source)
-                    .collect::<Vec<String>>()
-                    .join("|");
-                output.push_str(format!("(?:{body_source})").as_str())
-            }
-        },
-
-        Node::Quantifier(quantifier) => match &quantifier.kind {
-            QuantifierKind::Range { start, end } => output.push_str(
-                format!(
-                    "{}{{{start},{end}}}",
-                    wrap_quantified(expression_to_source(&quantifier.expression))
-                )
-                .as_str(),
-            ),
-            QuantifierKind::Some => output.push_str(
-                format!(
-                    "{}+",
-                    wrap_quantified(expression_to_source(&quantifier.expression))
-                )
-                .as_str(),
-            ),
-            QuantifierKind::Any => output.push_str(
-                format!(
-                    "{}*",
-                    wrap_quantified(expression_to_source(&quantifier.expression))
-                )
-                .as_str(),
-            ),
-            QuantifierKind::Over(amount) => output.push_str(
-                format!(
-                    "{}{{{},}}",
-                    wrap_quantified(expression_to_source(&quantifier.expression)),
-                    amount.parse::<usize>().unwrap() + 1
-                )
-                .as_str(),
-            ),
-            QuantifierKind::Option => output.push_str(
-                format!(
-                    "{}?",
-                    wrap_quantified(expression_to_source(&quantifier.expression))
-                )
-                .as_str(),
-            ),
-            QuantifierKind::Amount(amount) => output.push_str(
-                format!(
-                    "{}{{{amount}}}",
-                    wrap_quantified(expression_to_source(&quantifier.expression)),
-                )
-                .as_str(),
-            ),
-        },
-        Node::Atom(atom) => output.push_str(atom.as_str()),
-
-        Node::Symbol(symbol) => {
-            let transformed_symbol = match symbol {
-                Symbol::Space => " ",
-                Symbol::Newline => "\\n",
-                Symbol::Vertical => "\\v",
-                Symbol::Return => "\\r",
-                Symbol::Tab => "\\t",
-                Symbol::Null => "\\0",
-                Symbol::Whitespace => "\\s",
-                Symbol::NotWhitespace => "\\S",
-                Symbol::Alphabet => "[a-zA-Z]",
-                Symbol::Char => ".",
-                Symbol::Digit => "\\d",
-                Symbol::NotDigit => "\\D",
-                Symbol::Word => "\\w",
-                Symbol::NotWord => "\\W",
-                Symbol::Feed => "\\f",
-                Symbol::Backspace => "[\\b]",
-                Symbol::Boundary => "\\b",
-            };
-            output.push_str(transformed_symbol);
+        Node::Quantifier(quantifier) => transform_quantifier(quantifier),
+        Node::Assertion(assertion) => transform_assertion(assertion),
+        Node::SpecialSymbol(special_symbol) => transform_special_symbol(special_symbol),
+        Node::Group(group) => transform_group(group),
+        Node::Atom(atom) => String::from(atom),
+        Node::Symbol(symbol) => transform_symbol(symbol),
+        Node::Range(range) => transform_range(range),
+        Node::NegativeCharClass(negative_char_class) => {
+            transform_negative_char_class(negative_char_class)
         }
-        Node::Range(range) => match range {
-            Range::AsciiRange(range) => {
-                if range.negative {
-                    output.push_str(format!("[^{}-{}]", range.start, range.end).as_str());
-                } else {
-                    output.push_str(format!("[{}-{}]", range.start, range.end).as_str());
-                }
-            }
-            Range::NumericRange(range) => {
-                if range.negative {
-                    output.push_str(format!("[^{}-{}]", range.start, range.end).as_str());
-                } else {
-                    output.push_str(format!("[{}-{}]", range.start, range.end).as_str());
-                }
-            }
-        },
-        Node::Assertion(assertion) => {
-            match assertion.kind {
-                AssertionKind::Ahead => {
-                    let body_source = to_source(&assertion.statements);
-                    if assertion.negative {
-                        output.push_str(format!("(?!{body_source})").as_str())
-                    } else {
-                        output.push_str(format!("(?={body_source})").as_str())
-                    }
-                }
-                AssertionKind::Behind => {
-                    let body_source = to_source(&assertion.statements);
-                    if assertion.negative {
-                        output.push_str(format!("(?<!{body_source})").as_str())
-                    } else {
-                        output.push_str(format!("(?<={body_source})").as_str())
-                    }
-                }
-            };
-        }
-        Node::SpecialSymbol(special_symbol) => match special_symbol {
-            SpecialSymbol::Start => output.push('^'),
-            SpecialSymbol::End => output.push('$'),
-        },
-        Node::NegativeCharClass(class) => output.push_str(format!("[^{}]", class).as_str()),
-        Node::EndOfInput => {}
+        Node::EndOfInput => String::new(),
     }
-    output
 }
 
 fn expression_to_source(expression: &Expression) -> String {
-    let mut output = String::new();
     match expression {
-        Expression::Group(group) => match group.kind {
-            GroupKind::Match => {
-                let body_source = to_source(&group.statements);
-                output.push_str(format!("(?:{body_source})").as_str())
-            }
-            GroupKind::Capture => {
-                let body_source = to_source(&group.statements);
-                if group.ident.is_some() {
-                    output.push_str(
-                        format!("(?<{}>{body_source})", group.ident.as_ref().unwrap()).as_str(),
-                    )
-                } else {
-                    output.push_str(format!("({body_source})").as_str())
-                }
-            }
-            GroupKind::Either => {
-                let body_source = group
-                    .statements
-                    .iter()
-                    .map(node_to_source)
-                    .collect::<Vec<String>>()
-                    .join("|");
-                output.push_str(format!("(?:{body_source})").as_str())
-            }
-        },
-
-        Expression::Atom(atom) => output.push_str(atom.as_str()),
-        Expression::Range(range) => match range {
-            Range::AsciiRange(range) => {
-                output.push_str(format!("[{}-{}]", range.start, range.end).as_str());
-            }
-            Range::NumericRange(range) => {
-                output.push_str(format!("[{}-{}]", range.start, range.end).as_str());
-            }
-        },
-        Expression::Symbol(symbol) => {
-            let transformed_symbol = match symbol {
-                Symbol::Space => " ",
-                Symbol::Newline => "\\n",
-                Symbol::Vertical => "\\v",
-                Symbol::Return => "\\r",
-                Symbol::Tab => "\\t",
-                Symbol::Null => "\\0",
-                Symbol::Whitespace => "\\s",
-                Symbol::NotWhitespace => "\\S",
-                Symbol::Alphabet => "[a-zA-Z]",
-                Symbol::Char => ".",
-                Symbol::Digit => "\\d",
-                Symbol::NotDigit => "\\D",
-                Symbol::Word => "\\w",
-                Symbol::NotWord => "\\W",
-                Symbol::Feed => "\\f",
-                Symbol::Backspace => "[\\b]",
-                Symbol::Boundary => "\\b",
-            };
-            output.push_str(transformed_symbol);
+        Expression::Group(group) => transform_group(group),
+        Expression::Atom(atom) => String::from(atom),
+        Expression::Range(range) => transform_range(range),
+        Expression::Symbol(symbol) => transform_symbol(symbol),
+        Expression::NegativeCharClass(negative_char_class) => {
+            transform_negative_char_class(negative_char_class)
         }
-        Expression::NegativeCharClass(class) => output.push_str(format!("[^{}]", class).as_str()),
     }
-    output
+}
+
+fn transform_special_symbol(special_symbol: &SpecialSymbol) -> String {
+    let transformed_special_symbol = match special_symbol {
+        SpecialSymbol::Start => '^',
+        SpecialSymbol::End => '$',
+    };
+
+    String::from(transformed_special_symbol)
+}
+
+fn transform_quantifier(quantifier: &Quantifier) -> String {
+    let wrapped_expression = wrap_quantified(expression_to_source(&quantifier.expression));
+    match &quantifier.kind {
+        QuantifierKind::Range { start, end } => format!("{}{{{start},{end}}}", wrapped_expression),
+        QuantifierKind::Some => format!("{}+", wrapped_expression),
+        QuantifierKind::Any => format!("{}*", wrapped_expression),
+        QuantifierKind::Over(amount) => format!(
+            "{}{{{},}}",
+            wrapped_expression,
+            amount.parse::<usize>().unwrap() + 1
+        ),
+        QuantifierKind::Option => format!("{}?", wrapped_expression),
+        QuantifierKind::Amount(amount) => format!("{}{{{amount}}}", wrapped_expression),
+    }
+}
+
+fn transform_assertion(assertion: &Assertion) -> String {
+    let body_source = to_source(&assertion.statements);
+
+    match assertion.kind {
+        AssertionKind::Ahead => {
+            if assertion.negative {
+                format!("(?!{body_source})")
+            } else {
+                format!("(?={body_source})")
+            }
+        }
+        AssertionKind::Behind => {
+            if assertion.negative {
+                format!("(?<!{body_source})")
+            } else {
+                format!("(?<={body_source})")
+            }
+        }
+    }
+}
+
+fn transform_negative_char_class(class: &str) -> String {
+    format!("[^{}]", class)
+}
+
+fn transform_group(group: &Group) -> String {
+    match group.kind {
+        GroupKind::Match => {
+            let body_source = to_source(&group.statements);
+            format!("(?:{body_source})")
+        }
+        GroupKind::Capture => {
+            let body_source = to_source(&group.statements);
+            if group.ident.is_some() {
+                format!("(?<{}>{body_source})", group.ident.as_ref().unwrap())
+            } else {
+                format!("({body_source})")
+            }
+        }
+        GroupKind::Either => {
+            let body_source = group
+                .statements
+                .iter()
+                .map(node_to_source)
+                .collect::<Vec<String>>()
+                .join("|");
+            format!("(?:{body_source})")
+        }
+    }
+}
+
+fn transform_range(range: &Range) -> String {
+    match range {
+        Range::AsciiRange(range) => {
+            if range.negative {
+                format!("[^{}-{}]", range.start, range.end)
+            } else {
+                format!("[{}-{}]", range.start, range.end)
+            }
+        }
+        Range::NumericRange(range) => {
+            if range.negative {
+                format!("[^{}-{}]", range.start, range.end)
+            } else {
+                format!("[{}-{}]", range.start, range.end)
+            }
+        }
+    }
+}
+
+fn transform_symbol(symbol: &Symbol) -> String {
+    let transformed_symbol = match symbol {
+        Symbol::Space => " ",
+        Symbol::Newline => "\\n",
+        Symbol::Vertical => "\\v",
+        Symbol::Return => "\\r",
+        Symbol::Tab => "\\t",
+        Symbol::Null => "\\0",
+        Symbol::Whitespace => "\\s",
+        Symbol::NotWhitespace => "\\S",
+        Symbol::Alphabet => "[a-zA-Z]",
+        Symbol::Char => ".",
+        Symbol::Digit => "\\d",
+        Symbol::NotDigit => "\\D",
+        Symbol::Word => "\\w",
+        Symbol::NotWord => "\\W",
+        Symbol::Feed => "\\f",
+        Symbol::Backspace => "[\\b]",
+        Symbol::Boundary => "\\b",
+    };
+
+    String::from(transformed_symbol)
 }
