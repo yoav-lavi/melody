@@ -32,8 +32,6 @@ Melody is a language designed to compile to and maintain a 1-1 relationship with
 
 The current goal is supporting the JavaScript implementation of regular expressions.
 
-⚠️ Melody is very new and is unstable at the moment ⚠️
-
 ## Examples
 
 Note: these are for the currently supported syntax and may change
