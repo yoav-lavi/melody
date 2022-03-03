@@ -26,6 +26,7 @@ sidebar_position: 7
 | `A to Z;`                           | `[A-Z]`               | ✅          |
 | `a to z;`                           | `[a-z]`               | ✅          |
 | `0 to 9;`                           | `[0-9]`               | ✅          |
+| `not a to z;`                       | `[^a-z]`              | ✅          |
 | `<start>;`                          | `^`                   | ✅          |
 | `<end>;`                            | `$`                   | ✅          |
 | `<newline>;`                        | `\n`                  | ✅          |

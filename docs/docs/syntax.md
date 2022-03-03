@@ -7,7 +7,7 @@ sidebar_position: 6
 ## Keywords
 
 - `of` - used after a number or a range and before a sequence to be matched, e.g. `5 of "A";`, equivalent to regex `{5}`
-- `to` - used to create a range (either as a quantifier or as a character range), e.g. `5 to 9`, equivalent to regex `{5,9}` if before an `of` or `[5-9]` otherwise
+- `to` - used to create a range (either as a quantifier or as a character range), e.g. `5 to 9`, equivalent to regex `{5,9}` if before an `of` or `[5-9]` otherwise. `not` can be used before a range to create a negative range, e.g. `[^1-3]`
 - `capture` - used to open a `capture` or named `capture` block, equivalent to regex `(...)`
 - `match` - used to open a `match` block, equivalent to regex `(?:...)`
 - `either` - used to open an `either` block, equivalent to regex `(?:...|...)`

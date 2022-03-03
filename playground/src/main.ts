@@ -85,8 +85,6 @@ const nordTheme: editor.IStandaloneThemeData = {
 editor.defineTheme(NORD_THEME_ID, nordTheme);
 editor.setTheme(NORD_THEME_ID);
 
-await init('node_modules/melody/melody_wasm_bg.wasm');
-
 const editorInitialValue = `/* matches the batman theme tune */
 
 16 of "na";
@@ -116,6 +114,8 @@ const initEditors = async () => {
     readOnly: true,
     ...DEFAULT_EDITOR_SETTINGS,
   });
+
+  await init();
 
   const syncEditors = () => {
     try {
