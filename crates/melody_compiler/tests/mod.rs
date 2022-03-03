@@ -52,9 +52,10 @@ fn uppercase_range_test() {
     let output = compiler(
         r#"
       A to Z;
+      7 of A to Z;
       "#,
     );
-    assert_eq!(output.unwrap(), "/[A-Z]/");
+    assert_eq!(output.unwrap(), "/[A-Z](?:[A-Z]){7}/");
 }
 
 #[test]
@@ -62,9 +63,10 @@ fn lowercase_range_test() {
     let output = compiler(
         r#"
       a to z;
+      8 of a to z;
       "#,
     );
-    assert_eq!(output.unwrap(), "/[a-z]/");
+    assert_eq!(output.unwrap(), "/[a-z](?:[a-z]){8}/");
 }
 
 #[test]
@@ -110,21 +112,26 @@ fn symbol_test() {
       <alphabet>;
       <space>;
       <end>;
+      <boundary>;
+      <backspace>;
       "#,
     );
-    assert_eq!(output.unwrap(), r"/^.\s\S\n\t\r\f\0\d\D\w\W\v[a-zA-Z] $/");
+    assert_eq!(
+        output.unwrap(),
+        r"/^.\s\S\n\t\r\f\0\d\D\w\W\v[a-zA-Z] $\b[\b]/"
+    );
 }
 
 #[test]
 fn match_test() {
     let output = compiler(
         r#"
-match {
+3 of match {
   5 of "A";
   0 to 9;
 }"#,
     );
-    assert_eq!(output.unwrap(), "/(?:A{5}[0-9])/");
+    assert_eq!(output.unwrap(), "/(?:A{5}[0-9]){3}/");
 }
 
 #[test]
@@ -149,6 +156,16 @@ fn char_test() {
       "#,
     );
     assert_eq!(output.unwrap(), "/.{3}/");
+}
+
+#[test]
+fn negative_range_test() {
+    let output = compiler(
+        r#"
+      not 3 to 5;
+      "#,
+    );
+    assert_eq!(output.unwrap(), "/[^3-5]/");
 }
 
 #[test]
@@ -246,4 +263,15 @@ fn assertion_test() {
       "#,
     );
     assert_eq!(output.unwrap(), "/(?=a)(?<=a)(?!a)(?<!a)/");
+}
+
+#[test]
+fn negative_char_class_test() {
+    let output = compiler(
+        r#"
+        not abcd;
+        5 of not abcd;
+        "#,
+    );
+    assert_eq!(output.unwrap(), "/[^abcd](?:[^abcd]){5}/");
 }

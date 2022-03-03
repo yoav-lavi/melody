@@ -1,3 +1,5 @@
+use crate::errors::ParseError;
+
 use super::enums::Symbol;
 use super::ident_parser::Rule;
 use pest::iterators::Pair;
@@ -70,14 +72,16 @@ pub fn symbol_variants(
     negative_allowed: bool,
     positive_variant: Symbol,
     negative_variant: Option<Symbol>,
-) -> Symbol {
+) -> Result<Symbol, ParseError> {
     if negative && !negative_allowed {
-        panic!("negative {:?} not allowed", positive_variant)
+        return Err(ParseError {
+            message: format!("negative {:?} not allowed", positive_variant),
+        });
     }
     if !negative {
-        positive_variant
+        Ok(positive_variant)
     } else {
-        negative_variant.unwrap()
+        Ok(negative_variant.unwrap())
     }
 }
 

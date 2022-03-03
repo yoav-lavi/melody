@@ -36,42 +36,42 @@ fn create_ast_node(pair: Pair<Rule>) -> Result<Node, ParseError> {
             let negative = negative == NOT;
 
             match ident {
-                "space" => Node::Symbol(symbol_variants(negative, false, Symbol::Space, None)),
-                "newline" => Node::Symbol(symbol_variants(negative, false, Symbol::Newline, None)),
+                "space" => Node::Symbol(symbol_variants(negative, false, Symbol::Space, None)?),
+                "newline" => Node::Symbol(symbol_variants(negative, false, Symbol::Newline, None)?),
                 "vertical" => {
-                    Node::Symbol(symbol_variants(negative, false, Symbol::Vertical, None))
+                    Node::Symbol(symbol_variants(negative, false, Symbol::Vertical, None)?)
                 }
                 "word" => Node::Symbol(symbol_variants(
                     negative,
                     true,
                     Symbol::Word,
                     Some(Symbol::NotWord),
-                )),
+                )?),
                 "digit" => Node::Symbol(symbol_variants(
                     negative,
                     true,
                     Symbol::Digit,
                     Some(Symbol::NotDigit),
-                )),
+                )?),
                 "whitespace" => Node::Symbol(symbol_variants(
                     negative,
                     true,
                     Symbol::Whitespace,
                     Some(Symbol::NotWhitespace),
-                )),
-                "return" => Node::Symbol(symbol_variants(negative, false, Symbol::Return, None)),
-                "tab" => Node::Symbol(symbol_variants(negative, false, Symbol::Tab, None)),
-                "null" => Node::Symbol(symbol_variants(negative, false, Symbol::Null, None)),
+                )?),
+                "return" => Node::Symbol(symbol_variants(negative, false, Symbol::Return, None)?),
+                "tab" => Node::Symbol(symbol_variants(negative, false, Symbol::Tab, None)?),
+                "null" => Node::Symbol(symbol_variants(negative, false, Symbol::Null, None)?),
                 "alphabet" => {
-                    Node::Symbol(symbol_variants(negative, false, Symbol::Alphabet, None))
+                    Node::Symbol(symbol_variants(negative, false, Symbol::Alphabet, None)?)
                 }
-                "feed" => Node::Symbol(symbol_variants(negative, false, Symbol::Feed, None)),
-                "char" => Node::Symbol(symbol_variants(negative, false, Symbol::Char, None)),
+                "feed" => Node::Symbol(symbol_variants(negative, false, Symbol::Feed, None)?),
+                "char" => Node::Symbol(symbol_variants(negative, false, Symbol::Char, None)?),
                 "backspace" => {
-                    Node::Symbol(symbol_variants(negative, false, Symbol::Backspace, None))
+                    Node::Symbol(symbol_variants(negative, false, Symbol::Backspace, None)?)
                 }
                 "boundary" => {
-                    Node::Symbol(symbol_variants(negative, false, Symbol::Boundary, None))
+                    Node::Symbol(symbol_variants(negative, false, Symbol::Boundary, None)?)
                 }
 
                 "start" => Node::SpecialSymbol(SpecialSymbol::Start),
@@ -80,7 +80,6 @@ fn create_ast_node(pair: Pair<Rule>) -> Result<Node, ParseError> {
                 _ => unreachable!(),
             }
         }
-        Rule::atom => Node::Atom(pair.as_str().to_owned()),
 
         Rule::range => {
             let (first, end) = first_last_inner_str(pair.clone());
@@ -193,7 +192,9 @@ fn create_ast_node(pair: Pair<Rule>) -> Result<Node, ParseError> {
             let ident = nth_inner(declaration, 1).map(|ident| ident.as_str().trim().to_owned());
 
             if ident.is_some() && kind != GroupKind::Capture {
-                panic!("unexpected identifier")
+                return Err(ParseError {
+                    message: String::from("unexpected identifier for non capture group"),
+                });
             }
             let block = last_inner(pair);
 
