@@ -1,0 +1,1 @@
+export { Melody } from "./src/Melody.ts";
