@@ -14,11 +14,14 @@
   <a href="https://crates.io/crates/melody_cli">
     <img alt="Crates.io" src="https://img.shields.io/crates/v/melody_cli?label=cli">
   </a>
-  <a href="https://docs.rs/melody_compiler/">
-    <img alt="docs.rs" src="https://img.shields.io/docsrs/melody_compiler?label=docs.rs">
-  </a>
   <a href="https://github.com/yoav-lavi/melody/blob/main/LICENSE">
     <img alt="Crates.io" src="https://img.shields.io/crates/l/melody_compiler">
+  </a>
+  <a href="https://melody-playground.vercel.app">
+    <img alt="melody playground" src="https://img.shields.io/badge/melody-playground-brightgreen"
+  </a>
+  <a href="https://yoav-lavi.github.io/melody/docs/intro">
+    <img alt="melody playground" src="https://img.shields.io/badge/melody-docs-blue"
   </a>
 </p>
 
