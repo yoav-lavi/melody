@@ -4,6 +4,8 @@ sidebar_position: 8
 
 # Performance
 
+Last measured on v0.11.0
+
 Measured on a 8 core 2021 MacBook Pro 14-inch, Apple M1 Pro using [hyperfine](https://github.com/sharkdp/hyperfine), compiling a 2.3M LOC file via the Melody CLI (the file was made using a repetition of the examples in this repository):
 
 ```

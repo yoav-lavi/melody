@@ -1,5 +1,20 @@
 # Changelog
 
+## [v0.11.1] - 2022-03-03
+
+### Fixes
+
+- Fixes possible panics
+
+### Tests
+
+- Adds tests
+- Adds tests for CLI
+
+### Refactoring
+
+- Removes duplicated code
+
 ## [v0.11.0] - 2022-03-02
 
 ### Breaking
@@ -13,6 +28,7 @@
 
 - Uses a Pest grammar and an AST to parse Melody
 - Adds support for nested groups
+- Adds support for negative ranges
 - Adds initial support for negative character classes
 - Adds support for `<backspace>`, `<boundary>`
 - Adds support for inline comments
