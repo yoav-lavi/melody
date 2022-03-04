@@ -1,3 +1,5 @@
+use std::iter::repeat;
+
 use criterion::{criterion_group, criterion_main, Criterion};
 use melody_compiler::compiler;
 
@@ -68,12 +70,13 @@ fn criterion_benchmark(criterion: &mut Criterion) {
     }
     
     // v1.0.0
-    ".";
     ".";"##;
 
-    let long_source: String = (0..20000).map(|_| source).collect();
+    let source = format!("{}\n", source);
 
-    benchmark_group.bench_function("long input (1000001 lines)", |bencher| {
+    let long_source: String = repeat(source).take(20000).collect();
+
+    benchmark_group.bench_function("long input (1M lines)", |bencher| {
         bencher.iter(|| compiler(&long_source))
     });
 }
