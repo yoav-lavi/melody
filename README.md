@@ -1,12 +1,36 @@
+<h1 align="center">
+  Melody
+</h1>
+
 <p align="center">
   <img width="520" alt="code example" src="https://user-images.githubusercontent.com/14347895/154124756-ddbd3c84-f8b2-45bd-b624-2c510482c4e2.png">
+</p>
+
+
+<p align="center">
+  <a href="https://github.com/yoav-lavi/melody/actions/workflows/rust.yml">
+    <img alt="GitHub Workflow Status (branch)" src="https://img.shields.io/github/workflow/status/yoav-lavi/melody/Rust/main">
+  </a>
+  <a href="https://crates.io/crates/melody_compiler">
+    <img alt="Crates.io" src="https://img.shields.io/crates/v/melody_compiler?label=compiler">
+  </a>
+  <a href="https://crates.io/crates/melody_cli">
+    <img alt="Crates.io" src="https://img.shields.io/crates/v/melody_cli?label=cli">
+  </a>
+  <a href="https://github.com/yoav-lavi/melody/blob/main/LICENSE">
+    <img alt="Crates.io" src="https://img.shields.io/crates/l/melody_compiler">
+  </a>
+  <a href="https://melody-playground.vercel.app">
+    <img alt="melody playground" src="https://img.shields.io/badge/melody-playground-brightgreen"
+  </a>
+  <a href="https://yoav-lavi.github.io/melody/docs/intro">
+    <img alt="melody playground" src="https://img.shields.io/badge/melody-docs-blue">
+  </a>
 </p>
 
 Melody is a language designed to compile to and maintain a 1-1 relationship with regular expressions, while being more readable and maintainable.
 
 The current goal is supporting the JavaScript implementation of regular expressions.
-
-⚠️ Melody is very new and is unstable at the moment ⚠️
 
 ## Examples
 
