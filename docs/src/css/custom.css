@@ -13,6 +13,16 @@
   --ifm-menu-color-background-hover: #2E3440;
   --ifm-toc-link-color: #ECEFF4;
   --ifm-code-font-size: 95%;
+  --ifm-color-gray-900: #2E3440;
+  --ifm-color-info-dark: #5E81AC;
+}
+
+.alert {
+  --ifm-alert-background-color: #242933;
+}
+
+.copyButton_node_modules-\@docusaurus-theme-classic-lib-next-theme-CodeBlock-styles-module {
+  background: #242933 !important;
 }
 
 .docusaurus-highlight-code-line {

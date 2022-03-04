@@ -22,7 +22,7 @@ Note: these are for the currently supported syntax and may change
 Turns into
 
 ```
-/(?:na){16}(?:\sbatman){2}/
+(?:na){16}(?:\sbatman){2}
 ```
 
 ## Twitter Hashtag
@@ -37,7 +37,7 @@ some of <word>;
 Turns into
 
 ```
-/#\w+/
+#\w+
 ```
 
 ## Introductory Courses
@@ -54,7 +54,7 @@ some of <alphabet>;
 Turns into
 
 ```
-/[a-zA-Z]+\s1\d{2}/
+[a-zA-Z]+\s1\d{2}
 ```
 
 ## Indented Code (2 spaces)
@@ -73,7 +73,7 @@ some of char;
 Turns into
 
 ```
-/(?: {2})+.+;/
+(?: {2})+.+;
 ```
 
 ## Semantic Versions
@@ -107,5 +107,5 @@ capture patch {
 Turns into
 
 ```
-/^v?(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$/
+^v?(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
 ```

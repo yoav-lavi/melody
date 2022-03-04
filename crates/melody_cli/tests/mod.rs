@@ -39,7 +39,7 @@ fn cli_stdout_test() -> TestResult {
       some of "a";
     "#;
 
-    let expected_output = "/(?:A'){5}(?:(?<test>xy))[abc](?:a\"|b|.)a+/\n";
+    let expected_output = "(?:A'){5}(?:(?<test>xy))[abc](?:a\"|b|.)a+";
 
     melody_file.write_str(&unindent(source))?;
 
@@ -81,7 +81,7 @@ fn cli_file_test() -> TestResult {
     some of "a";
   "#;
 
-    let expected_output = "/(?:A'){5}(?:(?<test>xy))[abc](?:a\"|b|.)a+/";
+    let expected_output = "(?:A'){5}(?:(?<test>xy))[abc](?:a\"|b|.)a+";
 
     melody_file.write_str(&unindent(source))?;
 

@@ -1,3 +1,4 @@
+#![forbid(unsafe_code)]
 #![allow(clippy::unused_unit)]
 
 extern crate wasm_bindgen;

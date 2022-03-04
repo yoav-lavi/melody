@@ -19,6 +19,10 @@ pub fn report_write_file_error(path: String) {
 }
 
 pub fn print_output(output: String) {
+    print!("{}", output.bright_blue());
+}
+
+pub fn print_output_repl(output: String) {
     println!("{}", output.bright_blue());
 }
 

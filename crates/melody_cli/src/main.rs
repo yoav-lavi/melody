@@ -1,3 +1,5 @@
+#![forbid(unsafe_code)]
+
 pub mod consts;
 pub mod macros;
 pub mod output;
@@ -8,14 +10,14 @@ use colored::control::{ShouldColorize, SHOULD_COLORIZE};
 use consts::COMMAND_MARKER;
 use melody_compiler::{compiler, errors::ParseError};
 use output::{
-    print_output, print_repl_welcome, print_source_line, prompt, report_clear, report_exit,
-    report_missing_path, report_no_lines_to_print, report_nothing_to_redo, report_nothing_to_undo,
-    report_parse_error, report_read_file_error, report_read_input_error, report_redo,
-    report_repl_parse_error, report_source, report_undo, report_unrecognized_command,
+    print_output, print_output_repl, print_repl_welcome, print_source_line, prompt, report_clear,
+    report_exit, report_missing_path, report_no_lines_to_print, report_nothing_to_redo,
+    report_nothing_to_undo, report_parse_error, report_read_file_error, report_read_input_error,
+    report_redo, report_repl_parse_error, report_source, report_undo, report_unrecognized_command,
     report_write_file_error,
 };
-use std::fs::{read_to_string, write};
-use utils::{exit, read_input, ExitCode};
+use std::fs::read_to_string;
+use utils::{exit, read_input, write_output_to_file, ExitCode};
 
 #[derive(Parser, Debug)]
 #[clap(about, version, author)]
@@ -31,11 +33,16 @@ struct Args {
     output_file_path: Option<String>,
     #[clap(short = 'n', long = "no-color", help = "Print output with no color")]
     no_color_output: bool,
+    #[clap(
+        short = 'c',
+        long = "clean",
+        help = "Print output without opening and closing slashes, flags or newlines. Does not affect the REPL"
+    )]
     #[clap(short = 'r', long = "repl", help = "Start the Melody REPL")]
     start_repl: bool,
 }
 
-enum CliError {
+pub enum CliError {
     MissingPath,
     ReadFileError(String),
     ParseError(ParseError),
@@ -89,13 +96,8 @@ fn cli() -> Result<(), CliError> {
     let compiler_output = compiler(&source).map_err(CliError::ParseError)?;
 
     match output_file_path {
-        Some(output_file_path) => {
-            write(&output_file_path, compiler_output)
-                .map_err(|_| CliError::WriteFileError(output_file_path))?;
-        }
-        None => {
-            print_output(compiler_output);
-        }
+        Some(output_file_path) => write_output_to_file(output_file_path, compiler_output)?,
+        None => print_output(compiler_output),
     }
 
     Ok(())
@@ -128,7 +130,7 @@ fn repl() -> Result<(), CliError> {
                             let raw_output = compiler(source);
                             let output = raw_output.unwrap();
 
-                            print_output(format!("{output}\n"));
+                            print_output_repl(format!("{output}\n"));
                         }
                     }
                 }
@@ -145,7 +147,7 @@ fn repl() -> Result<(), CliError> {
                         let raw_output = compiler(source);
                         let output = raw_output.unwrap();
 
-                        print_output(format!("{output}\n"));
+                        print_output_repl(format!("{output}\n"));
                     }
                 }
                 format_command!("s", "source") => {
@@ -183,7 +185,7 @@ fn repl() -> Result<(), CliError> {
             let raw_output = compiler(source);
             let output = raw_output.unwrap();
 
-            print_output(format!("{output}\n"));
+            print_output_repl(format!("{output}\n"));
 
             continue 'repl;
         }
@@ -207,6 +209,6 @@ fn repl() -> Result<(), CliError> {
 
         let output = raw_output.unwrap();
 
-        print_output(format!("{output}\n"))
+        print_output_repl(format!("{output}\n"))
     }
 }

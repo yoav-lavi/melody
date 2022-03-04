@@ -1,5 +1,20 @@
 # Changelog
 
+## [v0.12.0] - 2022-03-04
+
+### Breaking
+
+- Produces clean output (no `//` and new newline after output)
+
+### Features
+
+- Adds favicons for documentation and playground
+- Adds `#![forbid(unsafe_code)]`
+
+### Benchmarks
+
+- Adds benchmarks
+
 ## [v0.11.1] - 2022-03-03
 
 ### Fixes

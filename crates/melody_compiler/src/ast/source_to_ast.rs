@@ -9,17 +9,17 @@ use crate::errors::ParseError;
 use pest::{iterators::Pair, Parser};
 
 pub fn to_ast(source: &str) -> Result<Vec<Node>, ParseError> {
-    let pairs = IdentParser::parse(Rule::root, source).map_err(|error| ParseError {
+    let mut pairs = IdentParser::parse(Rule::root, source).map_err(|error| ParseError {
         message: error.to_string(),
     })?;
 
     let mut ast = Vec::new();
 
-    for pair in pairs {
-        for inner in pair.into_inner() {
-            let node = create_ast_node(inner)?;
-            ast.push(node);
-        }
+    let root = pairs.next().unwrap();
+
+    for statement in root.into_inner() {
+        let node = create_ast_node(statement)?;
+        ast.push(node);
     }
 
     Ok(ast)
@@ -193,7 +193,7 @@ fn create_ast_node(pair: Pair<Rule>) -> Result<Node, ParseError> {
 
             if ident.is_some() && kind != GroupKind::Capture {
                 return Err(ParseError {
-                    message: String::from("unexpected identifier for non capture group"),
+                    message: "unexpected identifier for non capture group".to_owned(),
                 });
             }
             let block = last_inner(pair);

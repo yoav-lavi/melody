@@ -85,7 +85,7 @@ const nordTheme: editor.IStandaloneThemeData = {
 editor.defineTheme(NORD_THEME_ID, nordTheme);
 editor.setTheme(NORD_THEME_ID);
 
-const editorInitialValue = `/* matches the batman theme tune */
+const editorInitialValue = `// matches the batman theme tune
 
 16 of "na";
 
