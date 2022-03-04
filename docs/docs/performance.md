@@ -8,7 +8,7 @@ Last measured on v0.12.0
 
 Measured on a 8 core 2021 MacBook Pro 14-inch, Apple M1 Pro using [criterion](https://github.com/bheisler/criterion.rs):
 
-- 8 line file:
+- 8 lines:
   ```
   compiler/normal (8 lines)                                                                               
                           time:   [4.4636 us 4.4911 us 4.5162 us]
@@ -17,7 +17,7 @@ Measured on a 8 core 2021 MacBook Pro 14-inch, Apple M1 Pro using [criterion](ht
   median [4.4405 us 4.5161 us] med. abs. dev. [1.7263 ns 102.81 ns]
   ```
 
-- 1M line file:
+- 1M lines:
   ```
   compiler/long input (1M lines)                                                                          
                           time:   [414.41 ms 418.28 ms 421.92 ms]
