@@ -9,6 +9,7 @@
 ### Features
 
 - Adds favicons for documentation and playground
+- The Melody playground now supports add to homescreen
 - Adds `#![forbid(unsafe_code)]`
 
 ### Benchmarks
