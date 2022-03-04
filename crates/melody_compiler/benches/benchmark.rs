@@ -15,9 +15,7 @@ fn criterion_benchmark(criterion: &mut Criterion) {
 
     /* 🦇🦸‍♂️ */"#;
 
-    benchmark_group.bench_function("compiler normal", |bencher| {
-        bencher.iter(|| compiler(normal_source))
-    });
+    benchmark_group.bench_function("normal", |bencher| bencher.iter(|| compiler(normal_source)));
 
     let long_source = r##"16 of "na";
 
@@ -73,7 +71,7 @@ fn criterion_benchmark(criterion: &mut Criterion) {
 
     let heavy_source: String = (0..20000).map(|_| long_source).collect();
 
-    benchmark_group.bench_function("compiler long input", |bencher| {
+    benchmark_group.bench_function("long input", |bencher| {
         bencher.iter(|| compiler(&heavy_source))
     });
 }
