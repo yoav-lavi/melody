@@ -297,6 +297,16 @@ Measured on a 8 core 2021 MacBook Pro 14-inch, Apple M1 Pro using [criterion](ht
   median [412.74 ms 424.18 ms] med. abs. dev. [613.87 us 11.100 ms]
   ```
 
+- Deeply nested:
+
+  ```
+  compiler/deeply nested  
+                          time:   [5.0808 us 5.1471 us 5.2011 us]
+  slope  [5.0808 us 5.2011 us] R^2            [0.9926848 0.9936608]
+  mean   [5.0739 us 5.1884 us] std. dev.      [64.329 ns 110.75 ns]
+  median [5.0313 us 5.2249 us] med. abs. dev. [6.1076 ns 151.57 ns]
+  ```
+
 To reproduce, run `cargo benchmark`
 
 ## Feature Status

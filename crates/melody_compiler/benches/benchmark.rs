@@ -8,7 +8,7 @@ fn criterion_benchmark(criterion: &mut Criterion) {
 
     benchmark_group.sample_size(10);
 
-    let normal_source = r#"16 of "na";
+    let source = r#"16 of "na";
 
     2 of match {
       <space>;
@@ -18,10 +18,10 @@ fn criterion_benchmark(criterion: &mut Criterion) {
     /* 🦇🦸‍♂️ */"#;
 
     benchmark_group.bench_function("normal (8 lines)", |bencher| {
-        bencher.iter(|| compiler(black_box(normal_source)))
+        bencher.iter(|| compiler(black_box(source)))
     });
 
-    let source = r##"16 of "na";
+    let medium_source = r##"16 of "na";
 
     2 of match {
       <space>;
@@ -72,12 +72,54 @@ fn criterion_benchmark(criterion: &mut Criterion) {
     // v1.0.0
     ".";"##;
 
-    let source = format!("{}\n", source);
+    let medium_source = format!("{}\n", medium_source);
 
-    let long_source: String = repeat(source).take(20000).collect();
+    let long_source: String = repeat(medium_source).take(20000).collect();
 
     benchmark_group.bench_function("long input (1M lines)", |bencher| {
         bencher.iter(|| compiler(black_box(&long_source)))
+    });
+
+    let deeply_nested_source = r#"match {
+      "a";
+      "match {
+        "a";
+        "match {
+          "a";
+          "match {
+            "a";
+            "match {
+              "a";
+              "match {
+                "a";
+                "match {
+                  "a";
+                  "match {
+                    "a";
+                    "match {
+                      "a";
+                      "match {
+                        "a";
+                        "match {
+                          "a";
+                          "match {
+                            "a";
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    "#;
+
+    benchmark_group.bench_function("deeply nested", |bencher| {
+        bencher.iter(|| compiler(black_box(&deeply_nested_source)))
     });
 }
 
