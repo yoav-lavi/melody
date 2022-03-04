@@ -1,6 +1,6 @@
 use std::iter::repeat;
 
-use criterion::{criterion_group, criterion_main, Criterion};
+use criterion::{black_box, criterion_group, criterion_main, Criterion};
 use melody_compiler::compiler;
 
 fn criterion_benchmark(criterion: &mut Criterion) {
@@ -18,7 +18,7 @@ fn criterion_benchmark(criterion: &mut Criterion) {
     /* 🦇🦸‍♂️ */"#;
 
     benchmark_group.bench_function("normal (8 lines)", |bencher| {
-        bencher.iter(|| compiler(normal_source))
+        bencher.iter(|| compiler(black_box(normal_source)))
     });
 
     let source = r##"16 of "na";
@@ -77,7 +77,7 @@ fn criterion_benchmark(criterion: &mut Criterion) {
     let long_source: String = repeat(source).take(20000).collect();
 
     benchmark_group.bench_function("long input (1M lines)", |bencher| {
-        bencher.iter(|| compiler(&long_source))
+        bencher.iter(|| compiler(black_box(&long_source)))
     });
 }
 
