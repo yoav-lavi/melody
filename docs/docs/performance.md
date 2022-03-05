@@ -4,25 +4,26 @@ sidebar_position: 8
 
 # Performance
 
-Last measured on v0.12.0
+Last measured on V0.12.2
 
 Measured on an 8 core 2021 MacBook Pro 14-inch, Apple M1 Pro using [criterion](https://github.com/bheisler/criterion.rs):
 
 - 8 lines:
   ```
   compiler/normal (8 lines)                                                                               
-                          time:   [4.4636 us 4.4911 us 4.5162 us]
-  slope  [4.4636 us 4.5162 us] R^2            [0.9978146 0.9979425]
-  mean   [4.4456 us 4.5138 us] std. dev.      [30.807 ns 78.087 ns]
-  median [4.4405 us 4.5161 us] med. abs. dev. [1.7263 ns 102.81 ns]
+                          time:   [4.1149 us 4.1229 us 4.1297 us]
+  slope  [4.1149 us 4.1297 us] R^2            [0.9998391 0.9998566]
+  mean   [4.1158 us 4.1267 us] std. dev.      [5.5789 ns 11.255 ns]
+  median [4.1129 us 4.1300 us] med. abs. dev. [530.77 ps 16.729 ns]
   ```
 
 - 1M lines:
   ```
   compiler/long input (1M lines)                                                                          
-                          time:   [414.41 ms 418.28 ms 421.92 ms]
-  mean   [414.41 ms 421.92 ms] std. dev.      [3.9838 ms 7.6492 ms]
-  median [412.74 ms 424.18 ms] med. abs. dev. [613.87 us 11.100 ms]
+                          time:   [4.7121 us 4.7268 us 4.7395 us]                                      
+  slope  [4.7121 us 4.7395 us] R^2            [0.9995899 0.9996336]
+  mean   [4.7087 us 4.7311 us] std. dev.      [10.236 ns 25.070 ns]
+  median [4.7055 us 4.7333 us] med. abs. dev. [3.0236 ns 32.995 ns]
   ```
 
 - Deeply nested:
