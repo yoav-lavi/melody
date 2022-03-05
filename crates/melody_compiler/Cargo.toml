@@ -8,7 +8,9 @@ version = "0.12.0"
 edition = "2021"
 rust-version = "1.58.0"
 license = "MIT"
-keywords = ["melody", "melodylang"]
+keywords = ["melody", "melodylang", "language", "compiler"]
+categories = ["compilers"]
+
 
 [dependencies]
 pest = "2.1.3"

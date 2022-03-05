@@ -8,7 +8,8 @@ version = "0.12.1"
 edition = "2021"
 rust-version = "1.58.0"
 license = "MIT"
-keywords = ["melody", "melodylang"]
+keywords = ["melody", "melodylang", "language", "cli"]
+categories = ["command line utilities"]
 
 [dependencies]
 clap = { version = "3.0.7", features = ["derive"] }

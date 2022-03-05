@@ -33,12 +33,12 @@ pub fn alphabetic_first_char(value: &str) -> bool {
     to_char(value).is_alphabetic()
 }
 
-pub fn unquote_escape_raw(pair: Pair<Rule>) -> String {
+pub fn unquote_escape_raw(pair: &Pair<Rule>) -> String {
     let pair_str = pair.as_str();
     pair_str[1..pair_str.len() - 1].replace("\\`", "`")
 }
 
-pub fn unquote_escape_literal(pair: Pair<Rule>) -> String {
+pub fn unquote_escape_literal(pair: &Pair<Rule>) -> String {
     let raw_literal = pair.as_str();
     let quote_type = raw_literal.chars().next().unwrap_or('"');
     let pair_str = escape_chars(raw_literal);
@@ -61,7 +61,7 @@ fn escape_chars(source: &str) -> String {
             let escaped_char = format!("\\{char}");
             escaped_source.push_str(&escaped_char);
         } else {
-            escaped_source.push_str(&String::from(char))
+            escaped_source.push_str(&String::from(char));
         }
     }
     escaped_source
@@ -78,10 +78,10 @@ pub fn symbol_variants(
             message: format!("negative {:?} not allowed", positive_variant),
         });
     }
-    if !negative {
-        Ok(positive_variant)
-    } else {
+    if negative {
         Ok(negative_variant.unwrap())
+    } else {
+        Ok(positive_variant)
     }
 }
 

@@ -26,7 +26,7 @@ impl From<ErrorMessage> for ParseError {
             }
         };
 
-        ParseError {
+        Self {
             message: String::from(message),
         }
     }

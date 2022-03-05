@@ -13,7 +13,9 @@ use utils::format_line_comments;
 /**
 Compiles Melody source code to a regular expression.
 
-see also: [`ParseError`]
+# Errors
+
+Returns a [`ParseError`] upon encountering a syntax error
 
 # Example
 

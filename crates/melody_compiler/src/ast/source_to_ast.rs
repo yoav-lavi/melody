@@ -30,8 +30,8 @@ pub fn to_ast(source: &str) -> Result<Vec<Node>, ParseError> {
 
 fn create_ast_node(pair: Pair<Rule>) -> Result<Node, ParseError> {
     Ok(match pair.as_rule() {
-        Rule::raw => Node::Atom(unquote_escape_raw(pair)),
-        Rule::literal => Node::Atom(unquote_escape_literal(pair)),
+        Rule::raw => Node::Atom(unquote_escape_raw(&pair)),
+        Rule::literal => Node::Atom(unquote_escape_literal(&pair)),
 
         Rule::symbol => {
             let (negative, ident) = first_last_inner_str(pair);
