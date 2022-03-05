@@ -1,6 +1,6 @@
 use colored::Colorize;
 
-pub fn report_read_file_error(path: String) {
+pub fn report_read_file_error(path: &str) {
     eprintln!(
         "{} {} {}",
         "Error:".bright_red(),
@@ -9,7 +9,7 @@ pub fn report_read_file_error(path: String) {
     );
 }
 
-pub fn report_write_file_error(path: String) {
+pub fn report_write_file_error(path: &str) {
     eprintln!(
         "{} {} {}",
         "Error:".bright_red(),
@@ -18,15 +18,15 @@ pub fn report_write_file_error(path: String) {
     );
 }
 
-pub fn print_output(output: String) {
+pub fn print_output(output: &str) {
     print!("{}", output.bright_blue());
 }
 
-pub fn print_output_repl(output: String) {
+pub fn print_output_repl(output: &str) {
     println!("{}", output.bright_blue());
 }
 
-pub fn print_source_line(line_number: usize, line: String) {
+pub fn print_source_line(line_number: usize, line: &str) {
     println!(
         "{} {}",
         line_number.to_string().dimmed(),
@@ -34,11 +34,11 @@ pub fn print_source_line(line_number: usize, line: String) {
     );
 }
 
-pub fn report_repl_parse_error(message: String) {
+pub fn report_repl_parse_error(message: &str) {
     eprintln!("{} {}\n", "Error:".bright_red(), message.bright_red(),);
 }
 
-pub fn report_unrecognized_command(source: String) {
+pub fn report_unrecognized_command(source: &str) {
     eprintln!(
         "{} {} {}\n",
         "Error:".bright_red(),
@@ -47,7 +47,7 @@ pub fn report_unrecognized_command(source: String) {
     );
 }
 
-pub fn report_parse_error(message: String) {
+pub fn report_parse_error(message: &str) {
     eprintln!("{} {}", "Error:".bright_red(), message.bright_red());
 }
 

@@ -1,5 +1,5 @@
 #![forbid(unsafe_code)]
-
+#![warn(clippy::all, clippy::pedantic, clippy::nursery, clippy::cargo)]
 pub mod consts;
 pub mod macros;
 pub mod output;
@@ -58,14 +58,14 @@ fn main() {
         Err(error) => {
             match error {
                 CliError::MissingPath => report_missing_path(),
-                CliError::ReadFileError(path) => report_read_file_error(path),
+                CliError::ReadFileError(path) => report_read_file_error(&path),
                 CliError::WriteFileError(output_file_path) => {
-                    report_write_file_error(output_file_path)
+                    report_write_file_error(&output_file_path);
                 }
-                CliError::ParseError(parse_error) => report_parse_error(parse_error.message),
+                CliError::ParseError(parse_error) => report_parse_error(&parse_error.message),
                 CliError::ReadInputError => report_read_input_error(),
             }
-            exit(ExitCode::Error)
+            exit(ExitCode::Error);
         }
     };
 }
@@ -97,7 +97,7 @@ fn cli() -> Result<(), CliError> {
 
     match output_file_path {
         Some(output_file_path) => write_output_to_file(output_file_path, compiler_output)?,
-        None => print_output(compiler_output),
+        None => print_output(&compiler_output),
     }
 
     Ok(())
@@ -130,7 +130,7 @@ fn repl() -> Result<(), CliError> {
                             let raw_output = compiler(source);
                             let output = raw_output.unwrap();
 
-                            print_output_repl(format!("{output}\n"));
+                            print_output_repl(&format!("{output}\n"));
                         }
                     }
                 }
@@ -147,7 +147,7 @@ fn repl() -> Result<(), CliError> {
                         let raw_output = compiler(source);
                         let output = raw_output.unwrap();
 
-                        print_output_repl(format!("{output}\n"));
+                        print_output_repl(&format!("{output}\n"));
                     }
                 }
                 format_command!("s", "source") => {
@@ -157,7 +157,7 @@ fn repl() -> Result<(), CliError> {
                         report_source();
 
                         for (line_index, line) in valid_lines.iter().enumerate() {
-                            print_source_line(line_index + 1, String::from(line));
+                            print_source_line(line_index + 1, line);
                         }
 
                         println!();
@@ -174,7 +174,7 @@ fn repl() -> Result<(), CliError> {
 
                     return Ok(());
                 }
-                _ => report_unrecognized_command(input.trim().to_owned()),
+                _ => report_unrecognized_command(input.trim()),
             }
 
             continue 'repl;
@@ -185,7 +185,7 @@ fn repl() -> Result<(), CliError> {
             let raw_output = compiler(source);
             let output = raw_output.unwrap();
 
-            print_output_repl(format!("{output}\n"));
+            print_output_repl(&format!("{output}\n"));
 
             continue 'repl;
         }
@@ -198,7 +198,7 @@ fn repl() -> Result<(), CliError> {
         if let Err(error) = raw_output {
             let ParseError { message } = error;
 
-            report_repl_parse_error(message);
+            report_repl_parse_error(&message);
 
             valid_lines.pop();
 
@@ -209,6 +209,6 @@ fn repl() -> Result<(), CliError> {
 
         let output = raw_output.unwrap();
 
-        print_output_repl(format!("{output}\n"))
+        print_output_repl(&format!("{output}\n"));
     }
 }
