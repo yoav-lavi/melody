@@ -2,7 +2,7 @@
   "name": "melody",
   "displayName": "Melody",
   "description": "Melody syntax highlighting",
-  "version": "0.12.0",
+  "version": "0.12.2",
   "publisher": "yoavlavi",
   "repository": {
     "type": "git",

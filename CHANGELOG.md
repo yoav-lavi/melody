@@ -1,5 +1,21 @@
 # Changelog
 
+## [v0.12.2] - 2022-03-05
+
+### Refactoring
+
+- Performance improvements
+
+### Misc.
+
+- Adds keywords and categories to cargo.toml files
+
+## [v0.12.1] - 2022-03-04
+
+### Misc.
+
+- CLI documentation update
+
 ## [v0.12.0] - 2022-03-04
 
 ### Breaking
