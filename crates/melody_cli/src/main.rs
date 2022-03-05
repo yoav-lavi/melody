@@ -1,5 +1,5 @@
 #![forbid(unsafe_code)]
-#![warn(clippy::all, clippy::pedantic, clippy::nursery, clippy::cargo)]
+
 pub mod consts;
 pub mod macros;
 pub mod output;
