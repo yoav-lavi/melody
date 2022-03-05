@@ -1,5 +1,3 @@
-use std::iter::repeat;
-
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
 use melody_compiler::compiler;
 
