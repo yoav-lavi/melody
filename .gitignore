@@ -1,3 +1,4 @@
 /target
 **.vsix
 .DS_Store
+.idea

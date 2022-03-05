@@ -74,7 +74,7 @@ fn criterion_benchmark(criterion: &mut Criterion) {
 
     let medium_source = format!("{}\n", medium_source);
 
-    let long_source: String = repeat(medium_source).take(20000).collect();
+    let long_source: String = medium_source.repeat(20000);
 
     benchmark_group.bench_function("long input (1M lines)", |bencher| {
         bencher.iter(|| compiler(black_box(&long_source)))
@@ -119,7 +119,7 @@ fn criterion_benchmark(criterion: &mut Criterion) {
     "#;
 
     benchmark_group.bench_function("deeply nested", |bencher| {
-        bencher.iter(|| compiler(black_box(&deeply_nested_source)))
+        bencher.iter(|| compiler(black_box(deeply_nested_source)))
     });
 }
 
