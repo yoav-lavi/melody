@@ -21,7 +21,7 @@ impl From<ErrorMessage> for ParseError {
             ErrorMessage::UnexpectedEndOfInputInQuantifier => {
                 "unexpected end of input in quantifier"
             }
-            ErrorMessage::UnexpectedIdetifierForNonCaptureGroup => {
+            ErrorMessage::UnexpectedIdentifierForNonCaptureGroup => {
                 "unexpected identifier for non capture group"
             }
         };
