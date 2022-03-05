@@ -4,12 +4,12 @@ description = "A CLI wrapping the Melody language compiler"
 homepage = "https://github.com/yoav-lavi/melody"
 repository = "https://github.com/yoav-lavi/melody"
 readme = "README.md"
-version = "0.12.2"
+version = "0.12.3"
 edition = "2021"
 rust-version = "1.58.0"
 license = "MIT"
 keywords = ["melody", "melodylang", "language", "cli"]
-categories = ["command line utilities"]
+categories = ["command-line-utilities"]
 
 [dependencies]
 clap = { version = "3.0.7", features = ["derive"] }
