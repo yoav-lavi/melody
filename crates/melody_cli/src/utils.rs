@@ -15,7 +15,7 @@ pub enum ExitCode {
     Error,
 }
 
-pub fn exit(code: ExitCode) {
+pub fn exit(code: &ExitCode) {
     match code {
         ExitCode::Ok => std::process::exit(0),
         ExitCode::Error => std::process::exit(1),

@@ -1,4 +1,5 @@
 #![forbid(unsafe_code)]
+#![warn(clippy::needless_pass_by_value)]
 
 pub mod consts;
 pub mod macros;
@@ -54,7 +55,7 @@ fn main() {
     ShouldColorize::from_env();
 
     match cli() {
-        Ok(_) => exit(ExitCode::Ok),
+        Ok(_) => exit(&ExitCode::Ok),
         Err(error) => {
             match error {
                 CliError::MissingPath => report_missing_path(),
@@ -65,7 +66,7 @@ fn main() {
                 CliError::ParseError(parse_error) => report_parse_error(&parse_error.message),
                 CliError::ReadInputError => report_read_input_error(),
             }
-            exit(ExitCode::Error);
+            exit(&ExitCode::Error);
         }
     };
 }

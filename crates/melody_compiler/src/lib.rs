@@ -1,4 +1,5 @@
 #![forbid(unsafe_code)]
+#![warn(clippy::needless_pass_by_value)]
 
 mod ast;
 pub mod errors;
