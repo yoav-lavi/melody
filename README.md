@@ -21,7 +21,7 @@
     <img alt="Crates.io" src="https://img.shields.io/crates/l/melody_compiler">
   </a>
   <a href="https://melody-playground.vercel.app">
-    <img alt="melody playground" src="https://img.shields.io/badge/melody-playground-brightgreen"
+    <img alt="melody playground" src="https://img.shields.io/badge/melody-playground-brightgreen">
   </a>
   <a href="https://yoav-lavi.github.io/melody/docs/intro">
     <img alt="melody playground" src="https://img.shields.io/badge/melody-docs-blue">

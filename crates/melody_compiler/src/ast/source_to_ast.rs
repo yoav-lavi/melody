@@ -18,7 +18,7 @@ pub fn to_ast(source: &str) -> Result<Vec<Node>, ParseError> {
 
     let root = pairs
         .next()
-        .ok_or(ParseError::from(ErrorMessage::MissingRootNode))?;
+        .ok_or_else(|| ParseError::from(ErrorMessage::MissingRootNode))?;
 
     for statement in root.into_inner() {
         let node = create_ast_node(statement)?;
@@ -187,7 +187,7 @@ fn create_ast_node(pair: Pair<Rule>) -> Result<Node, ParseError> {
             let ident = nth_inner(declaration, 1).map(|ident| ident.as_str().trim().to_owned());
 
             if ident.is_some() && kind != GroupKind::Capture {
-                return Err(ErrorMessage::UnexpectedIdetifierForNonCaptureGroup.into());
+                return Err(ErrorMessage::UnexpectedIdentifierForNonCaptureGroup.into());
             }
             let block = last_inner(pair);
 

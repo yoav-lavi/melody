@@ -6,7 +6,7 @@ pub enum ErrorMessage {
     UnexpectedQuantifierInQuantifier,
     UnexpectedAssertionInQuantifier,
     UnexpectedEndOfInputInQuantifier,
-    UnexpectedIdetifierForNonCaptureGroup,
+    UnexpectedIdentifierForNonCaptureGroup,
 }
 
 impl From<ErrorMessage> for ParseError {
