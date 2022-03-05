@@ -26,9 +26,6 @@
   <a href="https://yoav-lavi.github.io/melody/docs/intro">
     <img alt="melody playground" src="https://img.shields.io/badge/melody-docs-blue">
   </a>
-  <a href="https://marketplace.visualstudio.com/items?itemName=yoavlavi.melody">
-    <img alt="Visual Studio Code Marketplace Version" src="https://img.shields.io/visual-studio-marketplace/v/yoavlavi.melody?label=vscode%20extension">
-  </a>
 </p>
 
 Melody is a language designed to compile to and maintain a 1-1 relationship with regular expressions, while being more readable and maintainable.
