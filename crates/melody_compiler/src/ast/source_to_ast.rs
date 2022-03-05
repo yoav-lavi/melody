@@ -1,5 +1,6 @@
 use super::consts::NOT;
 use super::enums::*;
+use super::error_messages::ErrorMessage;
 use super::ident_parser::{IdentParser, Rule};
 use super::utils::{
     alphabetic_first_char, first_inner, first_last_inner_str, last_inner, map_results, nth_inner,
@@ -15,7 +16,9 @@ pub fn to_ast(source: &str) -> Result<Vec<Node>, ParseError> {
 
     let mut ast = Vec::new();
 
-    let root = pairs.next().unwrap();
+    let root = pairs
+        .next()
+        .ok_or(ParseError::from(ErrorMessage::MissingRootNode))?;
 
     for statement in root.into_inner() {
         let node = create_ast_node(statement)?;
@@ -118,24 +121,16 @@ fn create_ast_node(pair: Pair<Rule>) -> Result<Node, ParseError> {
 
                 // unexpected nodes
                 Node::SpecialSymbol(_) => {
-                    return Err(ParseError {
-                        message: "unexpected special symbol in quantifier".to_owned(),
-                    })
+                    return Err(ErrorMessage::UnexpectedSpecialSymbolInQuantifier.into())
                 }
                 Node::Quantifier(_) => {
-                    return Err(ParseError {
-                        message: "unexpected quantifier in quantifier".to_owned(),
-                    })
+                    return Err(ErrorMessage::UnexpectedQuantifierInQuantifier.into())
                 }
                 Node::Assertion(_) => {
-                    return Err(ParseError {
-                        message: "unexpected assertion in quantifier".to_owned(),
-                    })
+                    return Err(ErrorMessage::UnexpectedAssertionInQuantifier.into())
                 }
                 Node::EndOfInput => {
-                    return Err(ParseError {
-                        message: "unexpected end of input in quantifier".to_owned(),
-                    })
+                    return Err(ErrorMessage::UnexpectedEndOfInputInQuantifier.into())
                 }
             };
 
@@ -192,9 +187,7 @@ fn create_ast_node(pair: Pair<Rule>) -> Result<Node, ParseError> {
             let ident = nth_inner(declaration, 1).map(|ident| ident.as_str().trim().to_owned());
 
             if ident.is_some() && kind != GroupKind::Capture {
-                return Err(ParseError {
-                    message: "unexpected identifier for non capture group".to_owned(),
-                });
+                return Err(ErrorMessage::UnexpectedIdetifierForNonCaptureGroup.into());
             }
             let block = last_inner(pair);
 
