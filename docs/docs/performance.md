@@ -22,10 +22,9 @@ Measured on an 8 core 2021 MacBook Pro 14-inch, Apple M1 Pro using [criterion](h
 
   ```
   compiler/long input (1M lines)                                                                          
-                          time:   [4.7121 us 4.7268 us 4.7395 us]                                      
-  slope  [4.7121 us 4.7395 us] R^2            [0.9995899 0.9996336]
-  mean   [4.7087 us 4.7311 us] std. dev.      [10.236 ns 25.070 ns]
-  median [4.7055 us 4.7333 us] med. abs. dev. [3.0236 ns 32.995 ns]
+                          time:   [384.89 ms 386.00 ms 387.17 ms]
+  mean   [384.89 ms 387.17 ms] std. dev.      [959.54 us 2.4290 ms]
+  median [384.86 ms 388.01 ms] med. abs. dev. [143.33 us 3.3847 ms]
   ```
 
 - Deeply nested:
