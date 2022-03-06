@@ -4,13 +4,13 @@ name: build
 
 jobs:
   check:
-    name: Coverage
+    name: Measure and upload coverage
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Install stable toolchain
+      - name: Install stable Rust toolchain
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
@@ -22,5 +22,5 @@ jobs:
       - name: Run cargo-tarpaulin
         run: "cargo tarpaulin --out Xml --verbose --all-features --run-types Tests,Doctests"
 
-      - name: Upload to codecov.io
+      - name: Upload coverage to codecov.io
         uses: codecov/codecov-action@v2
