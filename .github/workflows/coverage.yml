@@ -20,11 +20,12 @@ jobs:
         uses: actions-rs/tarpaulin@v0.1
         with:
           version: "0.15.0"
-          args: "-- --test-threads 1"
+          args: "-- --test-threads 1  --output-dir ."
           out-type: "Html"
 
-      - name: Archive code coverage results
-        uses: actions/upload-artifact@v1
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
         with:
           name: code-coverage-report
           path: coverage.html
+          retention-days: 90
