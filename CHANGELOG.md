@@ -1,5 +1,11 @@
 # Changelog
 
+## [v0.12.3] - 2022-03-06
+
+### Fixes
+
+- Fixes an issue with identifying negative char ranges
+
 ## [v0.12.2] - 2022-03-05
 
 ### Refactoring
