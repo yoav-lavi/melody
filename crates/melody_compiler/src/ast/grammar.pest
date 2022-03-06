@@ -66,7 +66,7 @@ ascii_range_start = { ASCII }
 ascii_range_end = { ASCII }
 
 range = {
-  not? ~ numeric_range_start ~ "to" ~ numeric_range_end | ascii_range_start ~ "to" ~ ascii_range_end
+  not? ~ numeric_range_start ~ "to" ~ numeric_range_end | not? ~ ascii_range_start ~ "to" ~ ascii_range_end
 }
 
 single_digit =  _{ '0'..'9' }
