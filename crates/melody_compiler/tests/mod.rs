@@ -163,9 +163,10 @@ fn negative_range_test() {
     let output = compiler(
         r#"
       not 3 to 5;
+      not a to z;
       "#,
     );
-    assert_eq!(output.unwrap(), "[^3-5]");
+    assert_eq!(output.unwrap(), "[^3-5][^a-z]");
 }
 
 #[test]
