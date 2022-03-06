@@ -295,3 +295,13 @@ fn double_quote_test() {
     );
     assert_eq!(output.unwrap(), "hello \"quoted\"");
 }
+
+#[test]
+fn auto_escape_test() {
+    let output = compiler(
+        r#"
+        "[](){}*+?|^$.-\\";
+        "#,
+    );
+    assert_eq!(output.unwrap(), r"\[\]\(\)\{\}\*\+\?\|\^\$\.\-\\\\");
+}
