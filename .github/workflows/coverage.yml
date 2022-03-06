@@ -16,15 +16,12 @@ jobs:
           toolchain: stable
           override: true
 
-      - name: Run cargo-tarpaulin
-        uses: actions-rs/tarpaulin@v0.1
-        with:
-          version: "0.15.0"
-          args: "-- --test-threads 1"
+      - name: Install cargo-tarpaulin
+         run: "cargo install cargo-tarpaulin -f"
 
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: code-coverage-report
-          path: coverage.xml
-          retention-days: 90
+      - name: Run cargo-tarpaulin
+         run: "cargo tarpaulin --out Xml --verbose --all-features --run-types Tests,Doctests"
+
+       - name: Upload to codecov.io
+         uses: codecov/codecov-action@v1
+
