@@ -238,10 +238,10 @@ fn any_test() {
 fn raw_test() {
     let output = compiler(
         r#"
-      5 of `.*`;
+      5 of `.*\``;
       "#,
     );
-    assert_eq!(output.unwrap(), "(?:.*){5}");
+    assert_eq!(output.unwrap(), "(?:.*`){5}");
 }
 
 #[test]
@@ -274,4 +274,24 @@ fn negative_char_class_test() {
         "#,
     );
     assert_eq!(output.unwrap(), "[^abcd](?:[^abcd]){5}");
+}
+
+#[test]
+fn single_quote_test() {
+    let output = compiler(
+        r#"
+        'hello \'quoted\'';
+        "#,
+    );
+    assert_eq!(output.unwrap(), "hello 'quoted'");
+}
+
+#[test]
+fn double_quote_test() {
+    let output = compiler(
+        r#"
+        "hello \"quoted\"";
+        "#,
+    );
+    assert_eq!(output.unwrap(), "hello \"quoted\"");
 }
