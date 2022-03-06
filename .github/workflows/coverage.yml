@@ -21,7 +21,7 @@ jobs:
         with:
           version: "0.15.0"
           args: "-- --test-threads 1"
-          out-type: "html"
+          out-type: "Html"
 
       - name: Archive code coverage results
         uses: actions/upload-artifact@v1
