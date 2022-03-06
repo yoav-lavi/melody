@@ -10,15 +10,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Install stable toolchain
-        run: "curl https://sh.rustup.rs -sSf | sh"
-        
       - name: Install cargo-tarpaulin
-         run: "cargo install cargo-tarpaulin -f"
+        run: "cargo install cargo-tarpaulin -f"
 
       - name: Run cargo-tarpaulin
-         run: "cargo tarpaulin --out Xml --verbose --all-features --run-types Tests,Doctests"
+        run: "cargo tarpaulin --out Xml --verbose --all-features --run-types Tests,Doctests"
 
-       - name: Upload to codecov.io
-         uses: codecov/codecov-action@v2
-
+      - name: Upload to codecov.io
+        uses: codecov/codecov-action@v2
