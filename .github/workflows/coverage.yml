@@ -23,5 +23,5 @@ jobs:
          run: "cargo tarpaulin --out Xml --verbose --all-features --run-types Tests,Doctests"
 
        - name: Upload to codecov.io
-         uses: codecov/codecov-action@v1
+         uses: codecov/codecov-action@v2
 
