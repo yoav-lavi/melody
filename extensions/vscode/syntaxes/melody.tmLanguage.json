@@ -16,6 +16,9 @@
     },
     {
       "include": "#strings"
+    },
+    {
+      "include": "#variables"
     }
   ],
   "repository": {
@@ -23,7 +26,7 @@
       "patterns": [
         {
           "name": "keyword.other.melody",
-          "match": "\\b(of|capture|to|of|some|match|over|option|not|either|any|ahead|behind|lazy)\\b"
+          "match": "\\b(of|capture|to|of|some|match|over|option|not|either|any|ahead|behind|lazy|let)\\b"
         }
       ]
     },
@@ -56,6 +59,14 @@
         {
           "name": "comment.line.double-slash.melody",
           "match": "//.*"
+        }
+      ]
+    },
+    "variables": {
+      "patterns": [
+        {
+          "name": "variable.other.melody",
+          "match": "\\.(?:\\w)+"
         }
       ]
     },

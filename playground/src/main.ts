@@ -39,7 +39,7 @@ languages.setMonarchTokensProvider(MELODY_LANGUAGE_ID, {
   tokenizer: {
     root: [
       [
-        /(of|capture|to|some|match|over|option|not|either|any|ahead|behind|lazy/,
+        /(of|capture|to|some|match|over|option|not|either|any|ahead|behind|lazy|let)/,
         'keyword',
       ],
       [/\d/, 'digit'],
@@ -52,6 +52,7 @@ languages.setMonarchTokensProvider(MELODY_LANGUAGE_ID, {
         'character',
       ],
       [/[A-Za-z]/, 'character'],
+      [/\.(\w)+/, 'variable'],
       [/\/\*.*\*\//, 'comment'],
       [/\/\/.*/, 'comment'],
     ],
@@ -68,6 +69,7 @@ const nordTheme: editor.IStandaloneThemeData = {
     { token: 'string', foreground: '#A3BE8C' },
     { token: 'character', foreground: '#EBCB8B' },
     { token: 'comment', foreground: '#616E88' },
+    { token: 'variable', foreground: '#D8DEE9' },
   ],
   colors: {
     foreground: '#D8DEE9',
