@@ -210,42 +210,44 @@ OPTIONS:
 
 See the changelog [here](https://github.com/yoav-lavi/melody/blob/main/CHANGELOG.md) or in the [release page](https://github.com/yoav-lavi/melody/releases)
 
-## Keywords
+## Quantifiers
 
-- `of` - used after a number or a range and before a sequence to be matched, e.g. `5 of "A";`, equivalent to regex `{5}`
-- `to` - used to create a range (either as a quantifier or as a character range), e.g. `5 to 9`, equivalent to regex `{5,9}` if before an `of` or `[5-9]` otherwise. `not` can be used before a range to create a negative range, e.g. `[^1-3]`
-- `capture` - used to open a `capture` or named `capture` block, equivalent to regex `(...)`
-- `match` - used to open a `match` block, equivalent to regex `(?:...)`
-- `some` - used with `of` to express 1 or more of a pattern, equivalent to regex `+`
-- `over` - used with `of` to express more than an amount of a pattern, equivalent to regex `{6,}` (assuming `over 5 of ...`)
-- `option` - used with `of` to express 0 or 1 of a pattern, equivalent to regex `?`
-- `either` - used to open an `either` block, equivalent to regex `(?:...|...)`
-- `any` - used with `of` to express 0 or more of a pattern, equivalent to regex `*`
-- `ahead` - used to open an `ahead` block, equivalent to regex `(?=...)`. use after an expression
-- `not ahead` - used to open a `not ahead` block, equivalent to regex `(?!...)`. use after an expression
-- `behind` - used to open an `behind` block, equivalent to regex `(?<=...)`. use before an expression
-- `not behind` - used to open a `not behind` block, equivalent to regex `(?<!...)`. use before an expression
+- `... of` - used to express a specific amount of a pattern. equivalent to regex `{5}` (assuming `5 of ...`)
+- `... to ... of` - used to express an amount within a range of a pattern. equivalent to regex `{5,9}` (assuming `5 to 9 of ...`)
+- `over ... of` - used to express more than an amount of a pattern. equivalent to regex `{6,}` (assuming `over 5 of ...`)
+- `some of` - used to express 1 or more of a pattern. equivalent to regex `+`
+- `any of` - used to express 0 or more of a pattern. equivalent to regex `*`
+- `option of` - used to express 0 or 1 of a pattern. equivalent to regex `?`
+
+All quantifiers can be preceded by `lazy` to match the least amount of characters rather than the most characters (greedy). Equivalent to regex `+?`, `*?`, etc.
 
 ## Symbols
 
-- `<start>` - matches the start of the string, equivalent to regex `^`
-- `<end>` - matches the end of the string, equivalent to regex `$`
-- `<char>` - matches a single character, equivalent to regex `.`
-- `<whitespace>` - equivalent to regex `\s`
-- `not <whitespace>` - equivalent to regex `\S`
-- `<newline>` - equivalent to regex `\n`
-- `<tab>` - equivalent to regex `\t`
-- `<return>` - equivalent to regex `\r`
-- `<feed>` - equivalent to regex `\f`
-- `<null>` - equivalent to regex `\0`
-- `<digit>` - equivalent to regex `\d`
-- `not <digit>` - equivalent to regex `\D`
-- `<vertical>` - equivalent to regex `\v`
-- `<word>` - equivalent to regex `\w`
-- `not <word>` - equivalent to regex `\W`
-- `<alphabet>` - equivalent to regex `[a-zA-Z]`
-- `<boundary>` - equivalent to regex `\b`
-- `<backspace>` - equivalent to regex `[\b]`
+- `<char>` - matches any single character. equivalent to regex `.`
+- `<whitespace>` - matches any kind of whitespace character. equivalent to regex `\s` or `[ \t\n\v\f\r]`
+- `<newline>` - matches a newline character. equivalent to regex `\n`  or `[0-9]`
+- `<tab>` - matches a tab character. equivalent to regex `\t`
+- `<return>` -  matches a carriage return character. equivalent to regex `\r`
+- `<feed>` - matches a form feed character. equivalent to regex `\f`
+- `<null>` - matches a null characther. equivalent to regex `\0`
+- `<digit>` - matches any single digit. equivalent to regex `\d` or `[0-9]`
+- `<vertical>` - matches a vertical tab character. equivalent to regex `\v`
+- `<word>` - matches a word character (any latin letter, any digit or an underscore). equivalent to regex `\w` or `[a-zA-Z0-9_]`
+- `<alphabetic>` - matches any single latin letter. equivalent to regex `[a-zA-Z]`
+- `<alphanumeric>` - matches any single latin letter or any single digit. equivalent to regex `[a-zA-Z0-9]`
+- `<boundary>` - Matches a character between a character matched by `<word>` and a character not matched by `<word>` without consuming the character. equivalent to regex `\b`
+- `<backspace>` - matches a backspace control character. equivalent to regex `[\b]`
+
+All symbols can be preceeded with `not` to match any character other than the symbol
+
+## Special Symbols
+
+- `<start>` - matches the start of the string. equivalent to regex `^`
+- `<end>` - matches the end of the string. equivalent to regex `$`
+
+## Character Ranges
+
+- `... to ...` - used with digits or alphabetic characters to express a character range. equivalent to regex `[5-9]` (assuming `5 to 9`) or `[a-z]` (assuming `a to z`)
 
 ## Literals
 
@@ -254,6 +256,19 @@ See the changelog [here](https://github.com/yoav-lavi/melody/blob/main/CHANGELOG
 ## Raw
 
 - <code>\`...\`</code> - added directly to the output without any escaping
+
+## Groups
+
+- `capture` - used to open a `capture` or named `capture` block. capture patterns are later available in the list of matches (either positional or named). equivalent to regex `(...)`
+- `match` - used to open a `match` block, matches the contents without capturing. equivalent to regex `(?:...)`
+- `either` - used to open an `either` block, matches one of the statements within the block. equivalent to regex `(?:...|...)`
+
+## Assertions
+
+- `ahead` - used to open an `ahead` block. equivalent to regex `(?=...)`. use after an expression
+- `behind` - used to open an `behind` block. equivalent to regex `(?<=...)`. use before an expression
+
+Assertions can be preceeded by `not` to create a negative assertion (equivalent to regex `(?!...)`, `(?<!...)`)
 
 ## Extras
 
@@ -272,7 +287,6 @@ The Melody file extension is `.mdy`
 ## Extensions
 
 - [VSCode](https://marketplace.visualstudio.com/items?itemName=yoavlavi.melody)
-
 
 ## Performance
 
@@ -311,85 +325,23 @@ Measured on an 8 core 2021 MacBook Pro 14-inch, Apple M1 Pro using [criterion](h
 
 To reproduce, run `cargo benchmark`
 
-## Feature Status
-
-✅ - Implemented
+## Future Feature Status
 
 🐣 - Partially implemented
 
 ❌ - Not implemented
 
-❓ - Unclear whether this will be implemented
-
 ❔ - Unclear what the syntax will be
+
+❓ - Unclear whether this will be implemented
 
 | Melody                              | Regex                 | Status      |
 | ----------------------------------- | --------------------- | ----------- |
-| `5 of "hello";`                     | `(?:hello){5}`        | ✅          |
-| `5 to 7 of "A";`                    | `A{5,7}`              | ✅          |
-| `capture { ... }`                   | `(...)`               | ✅          |
-| `capture name { ... }`              | `(?<name>...)`        | ✅          |
-| `match { ... }`                     | `(?:...)`             | ✅          |
-| `<whitespace>;`                     | `\s`                  | ✅          |
-| `<space>;`                          | ` `                   | ✅          |
-| `A to Z;`                           | `[A-Z]`               | ✅          |
-| `a to z;`                           | `[a-z]`               | ✅          |
-| `0 to 9;`                           | `[0-9]`               | ✅          |
-| `not a to z;`                       | `[^a-z]`              | ✅          |
-| `<start>;`                          | `^`                   | ✅          |
-| `<end>;`                            | `$`                   | ✅          |
-| `<newline>;`                        | `\n`                  | ✅          |
-| `<tab>;`                            | `\t`                  | ✅          |
-| `<return>;`                         | `\r`                  | ✅          |
-| `<feed>;`                           | `\f`                  | ✅          |
-| `<null>;`                           | `\0`                  | ✅          |
-| `<digit>;`                          | `\d`                  | ✅          |
-| `<vertical>;`                       | `\v`                  | ✅          |
-| `<word>;`                           | `\w`                  | ✅          |
-| `<alphabet>;`                       | `[a-zA-Z]`            | ✅          |
-| `"...";` (literal)                  | `...`                 | ✅          |
-| `'...';` (literal)                  | `...`                 | ✅          |
-| <code>\`...\`;</code> (raw)         | `...`                 | ✅          |
-| `'\'';`                             | `'`                   | ✅          |
-| `"\"";`                             | `"`                   | ✅          |
-| <code>`\\\``;</code>                | <code>\`</code>       | ✅          |
-| support non alphanumeric characters |                       | ✅          |
-| output to file                      |                       | ✅          |
-| no color output                     |                       | ✅          |
-| `<char>`                            | `.`                   | ✅          |
-| `some of`                           | `+`                   | ✅          |
-| syntax highlighting extension       |                       | ✅          |
-| `over 5 of "A";`                    | `A{6,}`               | ✅          |
-| `not <digit>;`                      | `\D`                  | ✅          |
-| `not <whitespace>;`                 | `\S`                  | ✅          |
-| `not <word>;`                       | `\W`                  | ✅          |
-| WASM binding                        |                       | ✅          |
-| Rust crate                          |                       | ✅          |
-| `option of`                         | `?`                   | ✅          |
-| `any of`                            | `*`                   | ✅          |
-| `either { ...; ...; }`              | `(?:...\|...)`        | ✅          |
-| tests                               |                       | ✅          |
-| auto escape for literals            |                       | ✅          |
-| `ahead { ... }`                     | `(?=...)`             | ✅          |
-| `behind { ... }`                    | `(?<=...)`            | ✅          |
-| `not ahead { ... }`                 | `(?!...)`             | ✅          |
-| `not behind { ... }`                | `(?<!...)`            | ✅          |
-| `/* comment */`                     |                       | ✅          |
-| enforce group close                 |                       | ✅          |
-| nested groups                       | `(...(...))`          | ✅          |
-| general cleanup and modules         |                       | ✅          |
-| more robust parsing mechanism (ast) |                       | ✅          |
-| `<backspace>`                       | `[\b]`                | ✅          |
-| `<boundary>`                        | `\b`                  | ✅          |
-| `// comment`                        |                       | ✅          |
 | `not "A";`                          | `[^A]`                | 🐣          |
 | file watcher                        |                       | ❌          |
-| multiple ranges                     | `[a-zA-Z0-9]`         | ❌          |
 | TS / JS build step                  |                       | ❌          |
 | multiline groups in REPL            |                       | ❌          |
 | `flags: global, multiline, ...`     | `/.../gm...`          | ❔          |
-| `any of "a", "b", "c"`              | `[abc]`               | ❔          |
-| (?)                                 | `*?`                  | ❔          |
 | (?)                                 | `\#`                  | ❔          |
 | (?)                                 | `\k<name>`            | ❔          |
 | (?)                                 | `\p{...}`             | ❔          |
@@ -398,14 +350,16 @@ To reproduce, run `cargo benchmark`
 | (?)                                 | `\xYY`                | ❔          |
 | (?)                                 | `\ddd`                | ❔          |
 | (?)                                 | `\cY`                 | ❔          |
-| (?)                                 | `\b`                  | ❔          |
-| (?)                                 | `\B`                  | ❔          |
 | (?)                                 | `$1`                  | ❔          |
 | (?)                                 | <code>$\`</code>      | ❔          |
 | (?)                                 | `$&`                  | ❔          |
 | (?)                                 | `x20`                 | ❔          |
 | (?)                                 | `x{06fa}`             | ❔          |
+| `any of "a", "b", "c"` *            | `[abc]`               | ❓          |
+| multiple ranges *                   | `[a-zA-Z0-9]`         | ❓          |
 | variables / macros                  |                       | ❓          |
 | regex optimization                  |                       | ❓          |
 | standard library / patterns         |                       | ❓          |
 | reverse compiler                    |                       | ❓          |
+
+\* these are expressable in the current syntax using other methods

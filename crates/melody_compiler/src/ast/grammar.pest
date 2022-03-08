@@ -85,7 +85,7 @@ over = { "over" ~ amount }
 
 quantifier_range = { (quantifier_start ~ "to" ~ quantifier_end) }
 
-quantifier_quantity = { (quantifier_range | amount | some | any | over | option) ~ "of" }
+quantifier_quantity = { "lazy"? ~ (quantifier_range | amount | some | any | over | option) ~ "of" }
 
 quantifier = {
   quantifier_quantity ~ expression

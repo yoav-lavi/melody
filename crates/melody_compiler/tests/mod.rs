@@ -97,28 +97,41 @@ fn symbol_test() {
         r#"
       <start>;
       <char>;
+      not <char>;
       <whitespace>;
       not <whitespace>;
       <newline>;
+      not <newline>;
       <tab>;
+      not <tab>;
       <return>;
+      not <return>;
       <feed>;
+      not <feed>;
       <null>;
+      not <null>;
       <digit>;
       not <digit>;
       <word>;
       not <word>;
       <vertical>;
-      <alphabet>;
+      not <vertical>;
+      <alphabetic>;
+      not <alphabetic>;
+      <alphanumeric>;
+      not <alphanumeric>;
       <space>;
-      <end>;
+      not <space>;
       <boundary>;
+      not <boundary>;
       <backspace>;
+      not <backspace>;
+      <end>;
       "#,
     );
     assert_eq!(
         output.unwrap(),
-        r"^.\s\S\n\t\r\f\0\d\D\w\W\v[a-zA-Z] $\b[\b]"
+        r"^.[^.]\s\S\n[^\n]\t[^\t]\r[^\r]\f[^\f]\0[^\0]\d\D\w\W\v[^\v][a-zA-Z][^a-zA-Z][a-zA-Z0-9][^a-zA-Z0-9] [^ ]\b\B[\b][^\b]$"
     );
 }
 
@@ -305,4 +318,19 @@ fn auto_escape_test() {
         "#,
     );
     assert_eq!(output.unwrap(), r"\[\]\(\)\{\}\*\+\?\|\^\$\.\-\\\\");
+}
+
+#[test]
+fn lazy_test() {
+    let output = compiler(
+        r#"
+        lazy any of "A";
+        lazy some of "A";
+        lazy option of "A";
+        lazy 5 of "A";
+        lazy over 5 of "A";
+        lazy 5 to 6 of "A";
+        "#,
+    );
+    assert_eq!(output.unwrap(), r"A*?A+?A??A{5}?A{6,}?A{5,6}?");
 }

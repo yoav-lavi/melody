@@ -3,12 +3,12 @@
 
 mod ast;
 pub mod errors;
-mod source;
+mod regex;
 mod utils;
 
 use ast::to_ast;
 use errors::ParseError;
-use source::to_source;
+use regex::to_regex;
 use utils::format_line_comments;
 
 /**
@@ -34,7 +34,7 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
 
     let ast = to_ast(formatted_source.as_str())?;
 
-    let output = to_source(&ast);
+    let output = to_regex(&ast);
 
     Ok(output)
 }

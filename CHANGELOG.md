@@ -1,5 +1,17 @@
 # Changelog
 
+## [v0.13.0] - 2022-03-08
+
+### Breaking
+
+- `<alphabet>` is now `<alphabetic>`
+
+### Features
+
+- Support for lazy quantifiers
+- All symbols now have negative counterparts
+- `<alphanumeric>` symbol added
+
 ## [v0.12.4] - 2022-03-06
 
 ### Misc.

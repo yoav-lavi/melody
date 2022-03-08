@@ -1,10 +1,10 @@
-use super::consts::NOT;
+use super::consts::{LAZY, NOT};
 use super::enums::*;
 use super::error_messages::ErrorMessage;
 use super::ident_parser::{IdentParser, Rule};
 use super::utils::{
     alphabetic_first_char, first_inner, first_last_inner_str, last_inner, map_results, nth_inner,
-    symbol_variants, to_char, unquote_escape_literal, unquote_escape_raw,
+    to_char, unquote_escape_literal, unquote_escape_raw,
 };
 use crate::errors::ParseError;
 use pest::{iterators::Pair, Parser};
@@ -38,44 +38,75 @@ fn create_ast_node(pair: Pair<Rule>) -> Result<Node, ParseError> {
 
             let negative = negative == NOT;
 
+            if negative {
+                match ident {
+                    "start" => return Err(ErrorMessage::NegativeStartNotAllowed.into()),
+                    "end" => return Err(ErrorMessage::NegativeEndNotAllowed.into()),
+                    _ => {}
+                }
+            }
+
             match ident {
-                "space" => Node::Symbol(symbol_variants(negative, false, Symbol::Space, None)?),
-                "newline" => Node::Symbol(symbol_variants(negative, false, Symbol::Newline, None)?),
-                "vertical" => {
-                    Node::Symbol(symbol_variants(negative, false, Symbol::Vertical, None)?)
-                }
-                "word" => Node::Symbol(symbol_variants(
+                "space" => Node::Symbol(Symbol {
+                    kind: SymbolKind::Space,
                     negative,
-                    true,
-                    Symbol::Word,
-                    Some(Symbol::NotWord),
-                )?),
-                "digit" => Node::Symbol(symbol_variants(
+                }),
+                "newline" => Node::Symbol(Symbol {
+                    kind: SymbolKind::Newline,
                     negative,
-                    true,
-                    Symbol::Digit,
-                    Some(Symbol::NotDigit),
-                )?),
-                "whitespace" => Node::Symbol(symbol_variants(
+                }),
+                "vertical" => Node::Symbol(Symbol {
+                    kind: SymbolKind::Vertical,
                     negative,
-                    true,
-                    Symbol::Whitespace,
-                    Some(Symbol::NotWhitespace),
-                )?),
-                "return" => Node::Symbol(symbol_variants(negative, false, Symbol::Return, None)?),
-                "tab" => Node::Symbol(symbol_variants(negative, false, Symbol::Tab, None)?),
-                "null" => Node::Symbol(symbol_variants(negative, false, Symbol::Null, None)?),
-                "alphabet" => {
-                    Node::Symbol(symbol_variants(negative, false, Symbol::Alphabet, None)?)
-                }
-                "feed" => Node::Symbol(symbol_variants(negative, false, Symbol::Feed, None)?),
-                "char" => Node::Symbol(symbol_variants(negative, false, Symbol::Char, None)?),
-                "backspace" => {
-                    Node::Symbol(symbol_variants(negative, false, Symbol::Backspace, None)?)
-                }
-                "boundary" => {
-                    Node::Symbol(symbol_variants(negative, false, Symbol::Boundary, None)?)
-                }
+                }),
+                "word" => Node::Symbol(Symbol {
+                    kind: SymbolKind::Word,
+                    negative,
+                }),
+                "digit" => Node::Symbol(Symbol {
+                    kind: SymbolKind::Digit,
+                    negative,
+                }),
+                "whitespace" => Node::Symbol(Symbol {
+                    kind: SymbolKind::Whitespace,
+                    negative,
+                }),
+                "boundary" => Node::Symbol(Symbol {
+                    kind: SymbolKind::Boundary,
+                    negative,
+                }),
+                "alphabetic" => Node::Symbol(Symbol {
+                    kind: SymbolKind::Alphabetic,
+                    negative,
+                }),
+                "alphanumeric" => Node::Symbol(Symbol {
+                    kind: SymbolKind::Alphanumeric,
+                    negative,
+                }),
+                "return" => Node::Symbol(Symbol {
+                    kind: SymbolKind::Return,
+                    negative,
+                }),
+                "tab" => Node::Symbol(Symbol {
+                    kind: SymbolKind::Tab,
+                    negative,
+                }),
+                "null" => Node::Symbol(Symbol {
+                    kind: SymbolKind::Null,
+                    negative,
+                }),
+                "feed" => Node::Symbol(Symbol {
+                    kind: SymbolKind::Feed,
+                    negative,
+                }),
+                "char" => Node::Symbol(Symbol {
+                    kind: SymbolKind::Char,
+                    negative,
+                }),
+                "backspace" => Node::Symbol(Symbol {
+                    kind: SymbolKind::Backspace,
+                    negative,
+                }),
 
                 "start" => Node::SpecialSymbol(SpecialSymbol::Start),
                 "end" => Node::SpecialSymbol(SpecialSymbol::End),
@@ -109,7 +140,7 @@ fn create_ast_node(pair: Pair<Rule>) -> Result<Node, ParseError> {
 
         Rule::quantifier => {
             let quantity = first_inner(pair.clone());
-            let kind = first_inner(quantity);
+            let kind = first_inner(quantity.clone());
             let expression = create_ast_node(last_inner(pair))?;
 
             let expression = match expression {
@@ -134,25 +165,32 @@ fn create_ast_node(pair: Pair<Rule>) -> Result<Node, ParseError> {
                 }
             };
 
+            let lazy = quantity.as_str().starts_with(LAZY);
+
             match kind.as_rule() {
                 Rule::amount => Node::Quantifier(Quantifier {
                     kind: QuantifierKind::Amount(kind.as_str().to_owned()),
+                    lazy,
                     expression: Box::new(expression),
                 }),
                 Rule::over => Node::Quantifier(Quantifier {
                     kind: QuantifierKind::Over(last_inner(kind).as_str().to_owned()),
+                    lazy,
                     expression: Box::new(expression),
                 }),
                 Rule::option => Node::Quantifier(Quantifier {
                     kind: QuantifierKind::Option,
+                    lazy,
                     expression: Box::new(expression),
                 }),
                 Rule::any => Node::Quantifier(Quantifier {
                     kind: QuantifierKind::Any,
+                    lazy,
                     expression: Box::new(expression),
                 }),
                 Rule::some => Node::Quantifier(Quantifier {
                     kind: QuantifierKind::Some,
+                    lazy,
                     expression: Box::new(expression),
                 }),
 
@@ -163,6 +201,7 @@ fn create_ast_node(pair: Pair<Rule>) -> Result<Node, ParseError> {
                             start: start.to_owned(),
                             end: end.to_owned(),
                         },
+                        lazy,
                         expression: Box::new(expression),
                     })
                 }

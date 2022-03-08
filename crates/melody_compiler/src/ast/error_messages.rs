@@ -7,6 +7,8 @@ pub enum ErrorMessage {
     UnexpectedAssertionInQuantifier,
     UnexpectedEndOfInputInQuantifier,
     UnexpectedIdentifierForNonCaptureGroup,
+    NegativeStartNotAllowed,
+    NegativeEndNotAllowed,
 }
 
 impl From<ErrorMessage> for ParseError {
@@ -24,6 +26,8 @@ impl From<ErrorMessage> for ParseError {
             ErrorMessage::UnexpectedIdentifierForNonCaptureGroup => {
                 "unexpected identifier for non capture group"
             }
+            ErrorMessage::NegativeStartNotAllowed => "negative start not allowed",
+            ErrorMessage::NegativeEndNotAllowed => "negative end not allowed",
         };
 
         Self {

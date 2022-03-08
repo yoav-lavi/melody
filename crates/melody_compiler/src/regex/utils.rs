@@ -6,3 +6,11 @@ pub fn wrap_quantified(value: String) -> String {
         value
     }
 }
+
+pub fn mark_lazy(quantifier: String, lazy: bool) -> String {
+    if lazy {
+        format!("{quantifier}?")
+    } else {
+        quantifier
+    }
+}

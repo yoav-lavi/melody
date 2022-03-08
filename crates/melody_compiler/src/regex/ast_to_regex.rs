@@ -1,18 +1,18 @@
-use super::utils::wrap_quantified;
+use super::utils::{mark_lazy, wrap_quantified};
 use crate::ast::enums::{
     Assertion, AssertionKind, Expression, Group, GroupKind, Node, Quantifier, QuantifierKind,
-    Range, SpecialSymbol, Symbol,
+    Range, SpecialSymbol, Symbol, SymbolKind,
 };
 
-pub fn to_source(ast: &[Node]) -> String {
+pub fn to_regex(ast: &[Node]) -> String {
     let mut output = String::new();
     for node in ast {
-        output.push_str(node_to_source(node).as_str());
+        output.push_str(node_to_regex(node).as_str());
     }
     output
 }
 
-fn node_to_source(node: &Node) -> String {
+fn node_to_regex(node: &Node) -> String {
     match node {
         Node::Quantifier(quantifier) => transform_quantifier(quantifier),
         Node::Assertion(assertion) => transform_assertion(assertion),
@@ -28,7 +28,7 @@ fn node_to_source(node: &Node) -> String {
     }
 }
 
-fn expression_to_source(expression: &Expression) -> String {
+fn expression_to_regex(expression: &Expression) -> String {
     match expression {
         Expression::Group(group) => transform_group(group),
         Expression::Atom(atom) => String::from(atom),
@@ -50,8 +50,8 @@ fn transform_special_symbol(special_symbol: &SpecialSymbol) -> String {
 }
 
 fn transform_quantifier(quantifier: &Quantifier) -> String {
-    let wrapped_expression = wrap_quantified(expression_to_source(&quantifier.expression));
-    match &quantifier.kind {
+    let wrapped_expression = wrap_quantified(expression_to_regex(&quantifier.expression));
+    let formatted_quantifier = match &quantifier.kind {
         QuantifierKind::Range { start, end } => format!("{}{{{start},{end}}}", wrapped_expression),
         QuantifierKind::Some => format!("{}+", wrapped_expression),
         QuantifierKind::Any => format!("{}*", wrapped_expression),
@@ -62,11 +62,13 @@ fn transform_quantifier(quantifier: &Quantifier) -> String {
         ),
         QuantifierKind::Option => format!("{}?", wrapped_expression),
         QuantifierKind::Amount(amount) => format!("{}{{{amount}}}", wrapped_expression),
-    }
+    };
+
+    mark_lazy(formatted_quantifier, quantifier.lazy)
 }
 
 fn transform_assertion(assertion: &Assertion) -> String {
-    let body_source = to_source(&assertion.statements);
+    let body_source = to_regex(&assertion.statements);
 
     match assertion.kind {
         AssertionKind::Ahead => {
@@ -93,11 +95,11 @@ fn transform_negative_char_class(class: &str) -> String {
 fn transform_group(group: &Group) -> String {
     match group.kind {
         GroupKind::Match => {
-            let body_source = to_source(&group.statements);
+            let body_source = to_regex(&group.statements);
             format!("(?:{body_source})")
         }
         GroupKind::Capture => {
-            let body_source = to_source(&group.statements);
+            let body_source = to_regex(&group.statements);
             if group.ident.is_some() {
                 format!("(?<{}>{body_source})", group.ident.as_ref().unwrap())
             } else {
@@ -105,13 +107,13 @@ fn transform_group(group: &Group) -> String {
             }
         }
         GroupKind::Either => {
-            let body_source = group
+            let body = group
                 .statements
                 .iter()
-                .map(node_to_source)
+                .map(node_to_regex)
                 .collect::<Vec<String>>()
                 .join("|");
-            format!("(?:{body_source})")
+            format!("(?:{body})")
         }
     }
 }
@@ -136,24 +138,42 @@ fn transform_range(range: &Range) -> String {
 }
 
 fn transform_symbol(symbol: &Symbol) -> String {
-    let transformed_symbol = match symbol {
-        Symbol::Space => " ",
-        Symbol::Newline => "\\n",
-        Symbol::Vertical => "\\v",
-        Symbol::Return => "\\r",
-        Symbol::Tab => "\\t",
-        Symbol::Null => "\\0",
-        Symbol::Whitespace => "\\s",
-        Symbol::NotWhitespace => "\\S",
-        Symbol::Alphabet => "[a-zA-Z]",
-        Symbol::Char => ".",
-        Symbol::Digit => "\\d",
-        Symbol::NotDigit => "\\D",
-        Symbol::Word => "\\w",
-        Symbol::NotWord => "\\W",
-        Symbol::Feed => "\\f",
-        Symbol::Backspace => "[\\b]",
-        Symbol::Boundary => "\\b",
+    let transformed_symbol = if symbol.negative {
+        match symbol.kind {
+            SymbolKind::Space => "[^ ]",
+            SymbolKind::Newline => "[^\\n]",
+            SymbolKind::Vertical => "[^\\v]",
+            SymbolKind::Return => "[^\\r]",
+            SymbolKind::Tab => "[^\\t]",
+            SymbolKind::Null => "[^\\0]",
+            SymbolKind::Whitespace => "\\S",
+            SymbolKind::Alphabetic => "[^a-zA-Z]",
+            SymbolKind::Alphanumeric => "[^a-zA-Z0-9]",
+            SymbolKind::Char => "[^.]",
+            SymbolKind::Digit => "\\D",
+            SymbolKind::Word => "\\W",
+            SymbolKind::Feed => "[^\\f]",
+            SymbolKind::Backspace => "[^\\b]",
+            SymbolKind::Boundary => "\\B",
+        }
+    } else {
+        match symbol.kind {
+            SymbolKind::Space => " ",
+            SymbolKind::Newline => "\\n",
+            SymbolKind::Vertical => "\\v",
+            SymbolKind::Return => "\\r",
+            SymbolKind::Tab => "\\t",
+            SymbolKind::Null => "\\0",
+            SymbolKind::Whitespace => "\\s",
+            SymbolKind::Alphabetic => "[a-zA-Z]",
+            SymbolKind::Alphanumeric => "[a-zA-Z0-9]",
+            SymbolKind::Char => ".",
+            SymbolKind::Digit => "\\d",
+            SymbolKind::Word => "\\w",
+            SymbolKind::Feed => "\\f",
+            SymbolKind::Backspace => "[\\b]",
+            SymbolKind::Boundary => "\\b",
+        }
     };
 
     String::from(transformed_symbol)

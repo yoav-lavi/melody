@@ -25,6 +25,7 @@ pub enum QuantifierKind {
 #[allow(dead_code)]
 pub struct Quantifier {
     pub kind: QuantifierKind,
+    pub lazy: bool,
     pub expression: Box<Expression>,
 }
 
@@ -60,7 +61,13 @@ pub struct NumericRange {
 }
 
 #[derive(Debug)]
-pub enum Symbol {
+pub struct Symbol {
+    pub kind: SymbolKind,
+    pub negative: bool,
+}
+
+#[derive(Debug)]
+pub enum SymbolKind {
     Space,
     Newline,
     Vertical,
@@ -68,13 +75,11 @@ pub enum Symbol {
     Tab,
     Null,
     Whitespace,
-    NotWhitespace,
-    Alphabet,
+    Alphabetic,
+    Alphanumeric,
     Char,
     Digit,
-    NotDigit,
     Word,
-    NotWord,
     Feed,
     Backspace,
     Boundary,

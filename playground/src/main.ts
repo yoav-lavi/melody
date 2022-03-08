@@ -39,7 +39,7 @@ languages.setMonarchTokensProvider(MELODY_LANGUAGE_ID, {
   tokenizer: {
     root: [
       [
-        /(of|capture|to|some|match|over|option|not|either|any|ahead|behind)/,
+        /(of|capture|to|some|match|over|option|not|either|any|ahead|behind|lazy/,
         'keyword',
       ],
       [/\d/, 'digit'],
@@ -48,7 +48,7 @@ languages.setMonarchTokensProvider(MELODY_LANGUAGE_ID, {
       [/"(\\"|[^"\n])*"/, 'string'],
       [/`(\\`|[^`\n])*`/, 'string'],
       [
-        /(<whitespace>|<space>|<newline>|<tab>|<return>|<feed>|<null>|<digit>|<word>|<vertical>|<start>|<end>|<char>|<alphabet>|<boundary>|<backspace>)/,
+        /(<whitespace>|<space>|<newline>|<tab>|<return>|<feed>|<null>|<digit>|<word>|<vertical>|<start>|<end>|<char>|<alphabetic>|<alphanumeric>|<boundary>|<backspace>)/,
         'character',
       ],
       [/[A-Za-z]/, 'character'],

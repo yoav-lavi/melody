@@ -1,6 +1,3 @@
-use crate::errors::ParseError;
-
-use super::enums::Symbol;
 use super::ident_parser::Rule;
 use pest::iterators::Pair;
 use std::collections::HashSet;
@@ -65,24 +62,6 @@ fn escape_chars(source: &str) -> String {
         }
     }
     escaped_source
-}
-
-pub fn symbol_variants(
-    negative: bool,
-    negative_allowed: bool,
-    positive_variant: Symbol,
-    negative_variant: Option<Symbol>,
-) -> Result<Symbol, ParseError> {
-    if negative && !negative_allowed {
-        return Err(ParseError {
-            message: format!("negative {:?} not allowed", positive_variant),
-        });
-    }
-    if negative {
-        Ok(negative_variant.unwrap())
-    } else {
-        Ok(positive_variant)
-    }
 }
 
 /// maps over the items in `iterable` with `closure`,

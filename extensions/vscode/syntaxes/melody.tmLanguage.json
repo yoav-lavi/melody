@@ -23,7 +23,7 @@
       "patterns": [
         {
           "name": "keyword.other.melody",
-          "match": "\\b(of|capture|to|of|some|match|over|option|not|either|any|ahead|behind)\\b"
+          "match": "\\b(of|capture|to|of|some|match|over|option|not|either|any|ahead|behind|lazy)\\b"
         }
       ]
     },
@@ -31,7 +31,7 @@
       "patterns": [
         {
           "name": "constant.character.melody",
-          "match": "(<whitespace>|<space>|<newline>|<tab>|<return>|<feed>|<null>|<digit>|<word>|<vertical>|<start>|<end>|<char>|<alphabet>|<boundary>|<backspace>)"
+          "match": "(<whitespace>|<space>|<newline>|<tab>|<return>|<feed>|<null>|<digit>|<word>|<vertical>|<start>|<end>|<char>|<alphabetic>|<alphanumeric>|<boundary>|<backspace>)"
         },
         {
           "name": "constant.character.melody",
