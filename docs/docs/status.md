@@ -15,6 +15,7 @@ sidebar_position: 7
 | Melody                              | Regex                 | Status      |
 | ----------------------------------- | --------------------- | ----------- |
 | `not "A";`                          | `[^A]`                | 🐣          |
+| variables / macros                  |                       | 🐣          |
 | file watcher                        |                       | ❌          |
 | TS / JS build step                  |                       | ❌          |
 | multiline groups in REPL            |                       | ❌          |
@@ -34,7 +35,6 @@ sidebar_position: 7
 | (?)                                 | `x{06fa}`             | ❔          |
 | `any of "a", "b", "c"` *            | `[abc]`               | ❓          |
 | multiple ranges *                   | `[a-zA-Z0-9]`         | ❓          |
-| variables / macros                  |                       | ❓          |
 | regex optimization                  |                       | ❓          |
 | standard library / patterns         |                       | ❓          |
 | reverse compiler                    |                       | ❓          |
