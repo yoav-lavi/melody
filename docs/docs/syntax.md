@@ -71,7 +71,7 @@ Assertions can be preceeded by `not` to create a negative assertion (equivalent 
   
   example:
 
-  ```rs
+  ```
   let .a_and_b = {
     "a";
     "b";
