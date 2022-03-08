@@ -5,10 +5,12 @@ pub enum ErrorMessage {
     UnexpectedSpecialSymbolInQuantifier,
     UnexpectedQuantifierInQuantifier,
     UnexpectedAssertionInQuantifier,
-    UnexpectedEndOfInputInQuantifier,
+    UnexpectedEmptyNodeInQuantifier,
     UnexpectedIdentifierForNonCaptureGroup,
     NegativeStartNotAllowed,
     NegativeEndNotAllowed,
+    UninitializedVariable,
+    UnexpectedVariableInvocationInQuantifier,
 }
 
 impl From<ErrorMessage> for ParseError {
@@ -20,14 +22,16 @@ impl From<ErrorMessage> for ParseError {
             }
             ErrorMessage::UnexpectedQuantifierInQuantifier => "unexpected quantifier in quantifier",
             ErrorMessage::UnexpectedAssertionInQuantifier => "unexpected assertion in quantifier",
-            ErrorMessage::UnexpectedEndOfInputInQuantifier => {
-                "unexpected end of input in quantifier"
+            ErrorMessage::UnexpectedEmptyNodeInQuantifier => "unexpected empty node in quantifier",
+            ErrorMessage::UnexpectedVariableInvocationInQuantifier => {
+                "unexpected variable invocation in quantifier"
             }
             ErrorMessage::UnexpectedIdentifierForNonCaptureGroup => {
                 "unexpected identifier for non capture group"
             }
             ErrorMessage::NegativeStartNotAllowed => "negative start not allowed",
             ErrorMessage::NegativeEndNotAllowed => "negative end not allowed",
+            ErrorMessage::UninitializedVariable => "usage of an uninitialized variable",
         };
 
         Self {

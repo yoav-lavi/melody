@@ -11,6 +11,7 @@
 - Support for lazy quantifiers
 - All symbols now have negative counterparts
 - `<alphanumeric>` symbol added
+- Adds an experimental implementation of variables
 
 ## [v0.12.4] - 2022-03-06
 

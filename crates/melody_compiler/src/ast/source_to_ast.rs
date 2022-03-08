@@ -8,8 +8,11 @@ use super::utils::{
 };
 use crate::errors::ParseError;
 use pest::{iterators::Pair, Parser};
+use std::collections::HashMap;
 
 pub fn to_ast(source: &str) -> Result<Vec<Node>, ParseError> {
+    let mut variables: HashMap<String, Vec<Node>> = HashMap::new();
+
     let mut pairs = IdentParser::parse(Rule::root, source).map_err(|error| ParseError {
         message: error.to_string(),
     })?;
@@ -21,14 +24,17 @@ pub fn to_ast(source: &str) -> Result<Vec<Node>, ParseError> {
         .ok_or_else(|| ParseError::from(ErrorMessage::MissingRootNode))?;
 
     for statement in root.into_inner() {
-        let node = create_ast_node(statement)?;
+        let node = create_ast_node(statement, &mut variables)?;
         ast.push(node);
     }
 
     Ok(ast)
 }
 
-fn create_ast_node(pair: Pair<Rule>) -> Result<Node, ParseError> {
+fn create_ast_node(
+    pair: Pair<Rule>,
+    variables: &mut HashMap<String, Vec<Node>>,
+) -> Result<Node, ParseError> {
     Ok(match pair.as_rule() {
         Rule::raw => Node::Atom(unquote_escape_raw(&pair)),
         Rule::literal => Node::Atom(unquote_escape_literal(&pair)),
@@ -141,7 +147,7 @@ fn create_ast_node(pair: Pair<Rule>) -> Result<Node, ParseError> {
         Rule::quantifier => {
             let quantity = first_inner(pair.clone());
             let kind = first_inner(quantity.clone());
-            let expression = create_ast_node(last_inner(pair))?;
+            let expression = create_ast_node(last_inner(pair), variables)?;
 
             let expression = match expression {
                 Node::Group(group) => Expression::Group(group),
@@ -160,8 +166,9 @@ fn create_ast_node(pair: Pair<Rule>) -> Result<Node, ParseError> {
                 Node::Assertion(_) => {
                     return Err(ErrorMessage::UnexpectedAssertionInQuantifier.into())
                 }
-                Node::EndOfInput => {
-                    return Err(ErrorMessage::UnexpectedEndOfInputInQuantifier.into())
+                Node::Empty => return Err(ErrorMessage::UnexpectedEmptyNodeInQuantifier.into()),
+                Node::VariableInvocation(_) => {
+                    return Err(ErrorMessage::UnexpectedVariableInvocationInQuantifier.into())
                 }
             };
 
@@ -230,7 +237,9 @@ fn create_ast_node(pair: Pair<Rule>) -> Result<Node, ParseError> {
             }
             let block = last_inner(pair);
 
-            let statements = map_results(block.into_inner(), create_ast_node)?;
+            let statements = map_results(block.into_inner(), &mut |statement| {
+                create_ast_node(statement, variables)
+            })?;
 
             Node::Group(Group {
                 ident,
@@ -254,7 +263,9 @@ fn create_ast_node(pair: Pair<Rule>) -> Result<Node, ParseError> {
 
             let block = last_inner(pair);
 
-            let statements = map_results(block.into_inner(), create_ast_node)?;
+            let statements = map_results(block.into_inner(), &mut |statement| {
+                create_ast_node(statement, variables)
+            })?;
 
             Node::Assertion(Assertion {
                 kind,
@@ -266,7 +277,28 @@ fn create_ast_node(pair: Pair<Rule>) -> Result<Node, ParseError> {
             let class = last_inner(pair.clone());
             Node::NegativeCharClass(class.as_str().to_owned())
         }
-        Rule::EOI => Node::EndOfInput,
+        Rule::variable_invocation => {
+            let identifier = last_inner(pair.clone());
+            let statements = variables.get(identifier.as_str());
+            if statements.is_none() {
+                return Err(ErrorMessage::UninitializedVariable.into());
+            }
+            Node::VariableInvocation(VariableInvocation {
+                statements: statements.unwrap().clone(),
+            })
+        }
+        Rule::variable_declaration => {
+            let identifier = first_inner(pair.clone());
+            let statements = last_inner(pair);
+            variables.insert(
+                identifier.as_str().to_owned(),
+                map_results(statements.into_inner(), &mut |statement| {
+                    create_ast_node(statement, &mut variables.clone())
+                })?,
+            );
+            Node::Empty
+        }
+        Rule::EOI => Node::Empty,
 
         _ => unreachable!(),
     })

@@ -69,11 +69,11 @@ fn escape_chars(source: &str) -> String {
 /// if one of the calls to `closure` returns an `Error`
 pub fn map_results<Iterable, Item, Closure, ReturnItem, Error>(
     iterable: Iterable,
-    closure: Closure,
+    closure: &mut Closure,
 ) -> Result<Vec<ReturnItem>, Error>
 where
     Iterable: Iterator<Item = Item>,
-    Closure: Fn(Item) -> Result<ReturnItem, Error>,
+    Closure: FnMut(Item) -> Result<ReturnItem, Error>,
 {
     let mut output = vec![];
     for item in iterable {

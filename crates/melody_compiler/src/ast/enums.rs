@@ -1,17 +1,17 @@
-#[derive(Debug, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub enum GroupKind {
     Match,
     Capture,
     Either,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub enum AssertionKind {
     Ahead,
     Behind,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub enum QuantifierKind {
     Range { start: String, end: String },
     Some,
@@ -21,7 +21,7 @@ pub enum QuantifierKind {
     Amount(String),
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(dead_code)]
 pub struct Quantifier {
     pub kind: QuantifierKind,
@@ -29,7 +29,7 @@ pub struct Quantifier {
     pub expression: Box<Expression>,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub enum Expression {
     Atom(String),
     Group(Group),
@@ -38,13 +38,13 @@ pub enum Expression {
     NegativeCharClass(String),
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub enum Range {
     AsciiRange(AsciiRange),
     NumericRange(NumericRange),
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(dead_code)]
 pub struct AsciiRange {
     pub negative: bool,
@@ -52,7 +52,7 @@ pub struct AsciiRange {
     pub end: char,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(dead_code)]
 pub struct NumericRange {
     pub negative: bool,
@@ -60,13 +60,13 @@ pub struct NumericRange {
     pub end: char,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Symbol {
     pub kind: SymbolKind,
     pub negative: bool,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub enum SymbolKind {
     Space,
     Newline,
@@ -85,13 +85,13 @@ pub enum SymbolKind {
     Boundary,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub enum SpecialSymbol {
     Start,
     End,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(dead_code)]
 pub struct Group {
     pub ident: Option<String>,
@@ -99,7 +99,13 @@ pub struct Group {
     pub statements: Vec<Node>,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
+#[allow(dead_code)]
+pub struct VariableInvocation {
+    pub statements: Vec<Node>,
+}
+
+#[derive(Debug, Clone)]
 #[allow(dead_code)]
 pub struct Assertion {
     pub kind: AssertionKind,
@@ -107,7 +113,7 @@ pub struct Assertion {
     pub negative: bool,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub enum Node {
     Group(Group),
     Assertion(Assertion),
@@ -117,5 +123,6 @@ pub enum Node {
     Symbol(Symbol),
     SpecialSymbol(SpecialSymbol),
     NegativeCharClass(String),
-    EndOfInput,
+    VariableInvocation(VariableInvocation),
+    Empty,
 }

@@ -65,6 +65,23 @@ All symbols can be preceeded with `not` to match any character other than the sy
 
 Assertions can be preceeded by `not` to create a negative assertion (equivalent to regex `(?!...)`, `(?<!...)`)
 
+## Variables
+
+- `let .variable_name = { ... }` - defines a variable from a block of statements. can later be used with `.variable_name`. Variables must be declared before being used
+  
+  example:
+
+  ```rs
+  let .a_and_b = {
+    "a";
+    "b";
+  }
+  
+  .a_and_b;
+  "c";
+
+  // abc
+```
 ## Extras
 
 - `/* ... */`, `// ...` - used to mark comments (note: `// ...` comments must be on separate line)

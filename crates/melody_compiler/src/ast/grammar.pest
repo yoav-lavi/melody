@@ -47,10 +47,10 @@ class_content = { ('a'..'z'|'A'..'Z'| '0'..'9' | "_" | "\\" | "@" | "*" | "$" | 
 
 negative_char_class = { not ~ class_content }
 
-atom = _{ (literal | range | symbol | raw | negative_char_class) ~ semicolon  }
+atom = _{ (literal | range | symbol | raw | negative_char_class | variable_invocation) ~ semicolon  }
 
 expression = _{
-  (atom | group | assertion)
+  (atom | group | variable_declaration | assertion)
 }
 
 statement = _{
@@ -110,5 +110,9 @@ assertion_type = {  ("ahead" | "behind") }
 assertion_declaration = { not? ~ assertion_type }
 
 assertion = { assertion_declaration ~ block }
+
+variable_declaration = {"let" ~ "." ~ identifier ~ "=" ~ block}
+
+variable_invocation = { "." ~ identifier}
 
 root = {  SOI ~ (statement | "\n")* ~ EOI }

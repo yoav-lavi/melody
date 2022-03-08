@@ -1,7 +1,7 @@
 use super::utils::{mark_lazy, wrap_quantified};
 use crate::ast::enums::{
     Assertion, AssertionKind, Expression, Group, GroupKind, Node, Quantifier, QuantifierKind,
-    Range, SpecialSymbol, Symbol, SymbolKind,
+    Range, SpecialSymbol, Symbol, SymbolKind, VariableInvocation,
 };
 
 pub fn to_regex(ast: &[Node]) -> String {
@@ -24,7 +24,10 @@ fn node_to_regex(node: &Node) -> String {
         Node::NegativeCharClass(negative_char_class) => {
             transform_negative_char_class(negative_char_class)
         }
-        Node::EndOfInput => String::new(),
+        Node::Empty => String::new(),
+        Node::VariableInvocation(variable_invocation) => {
+            transform_variable_invocation(variable_invocation)
+        }
     }
 }
 
@@ -92,18 +95,22 @@ fn transform_negative_char_class(class: &str) -> String {
     format!("[^{}]", class)
 }
 
+fn transform_variable_invocation(variable_invocation: &VariableInvocation) -> String {
+    to_regex(&variable_invocation.statements)
+}
+
 fn transform_group(group: &Group) -> String {
     match group.kind {
         GroupKind::Match => {
-            let body_source = to_regex(&group.statements);
-            format!("(?:{body_source})")
+            let body = to_regex(&group.statements);
+            format!("(?:{body})")
         }
         GroupKind::Capture => {
-            let body_source = to_regex(&group.statements);
+            let body = to_regex(&group.statements);
             if group.ident.is_some() {
-                format!("(?<{}>{body_source})", group.ident.as_ref().unwrap())
+                format!("(?<{}>{body})", group.ident.as_ref().unwrap())
             } else {
-                format!("({body_source})")
+                format!("({body})")
             }
         }
         GroupKind::Either => {

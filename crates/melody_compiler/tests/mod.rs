@@ -334,3 +334,21 @@ fn lazy_test() {
     );
     assert_eq!(output.unwrap(), r"A*?A+?A??A{5}?A{6,}?A{5,6}?");
 }
+
+#[test]
+fn variable_test() {
+    let output = compiler(
+        r#"
+        let .test_variable = {
+          "A";
+          "B";
+        }
+        let .second_test_variable = {
+          "C";
+        }
+        .test_variable;
+        .second_test_variable;
+        "#,
+    );
+    assert_eq!(output.unwrap(), r"ABC");
+}
