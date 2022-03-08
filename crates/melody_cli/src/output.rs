@@ -66,27 +66,27 @@ pub fn print_repl_welcome() {
         "Commands:".bright_green(),
         format_args!(
             "- {} - {}",
-            ".u, .undo".bright_blue(),
+            ":u, :undo".bright_blue(),
             "undo the latest line".bright_green()
         ),
         format_args!(
             "- {} - {}",
-            ".r, .redo".bright_blue(),
+            ":r, :redo".bright_blue(),
             "redo the latest undo".bright_green()
         ),
         format_args!(
             "- {} - {}",
-            ".c, .clear".bright_blue(),
+            ":c, :clear".bright_blue(),
             "clear all REPL history and previous input".bright_green()
         ),
         format_args!(
             "- {} - {}",
-            ".s, .source".bright_blue(),
+            ":s, :source".bright_blue(),
             "print all previously entered lines".bright_green()
         ),
         format_args!(
             "- {} - {}",
-            ".e, .exit".bright_blue(),
+            ":e, :exit".bright_blue(),
             "exit the REPL".bright_green()
         ),
     );

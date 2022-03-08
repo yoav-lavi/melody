@@ -291,7 +291,7 @@ fn create_ast_node(
             let identifier = first_inner(pair.clone());
             let statements = last_inner(pair);
             variables.insert(
-                identifier.as_str().to_owned(),
+                identifier.as_str().trim().to_owned(),
                 map_results(statements.into_inner(), &mut |statement| {
                     create_ast_node(statement, &mut variables.clone())
                 })?,
