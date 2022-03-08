@@ -36,11 +36,9 @@ The current goal is supporting the JavaScript implementation of regular expressi
 
 Note: these are for the currently supported syntax and may change
 
-Note: these are for the currently supported syntax and may change
-
 ### Batman Theme
 
-```rs
+```rust
 16 of "na";
 
 2 of match {
@@ -53,13 +51,13 @@ Note: these are for the currently supported syntax and may change
 
 Turns into
 
-```
+```regex
 (?:na){16}(?: batman){2}
 ```
 
 ### Twitter Hashtag
 
-```rs
+```rust
 "#";
 some of <word>;
 
@@ -68,13 +66,13 @@ some of <word>;
 
 Turns into
 
-```
+```regex
 #(?:\w)+
 ```
 
 ### Introductory Courses
 
-```rs
+```rust
 some of <alphabetic>;
 <space>;
 "1";
@@ -85,13 +83,13 @@ some of <alphabetic>;
 
 Turns into
 
-```
+```regex
 (?:[a-zA-Z])+ 1(?:\d){2}
 ```
 
 ### Indented Code (2 spaces)
 
-```rs
+```rust
 some of match {
   2 of <space>;
 }
@@ -104,13 +102,13 @@ some of <char>;
 
 Turns into
 
-```
+```regex
 (?: {2})+.+;
 ```
 
 ### Semantic Versions
 
-```rs
+```rust
 <start>;
 
 option of "v";
@@ -138,7 +136,7 @@ capture patch {
 
 Turns into
 
-```
+```regex
 ^v?(?<major>(?:\d)+)\.(?<minor>(?:\d)+)\.(?<patch>(?:\d)+)$
 ```
 
