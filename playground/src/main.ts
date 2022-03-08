@@ -52,7 +52,7 @@ languages.setMonarchTokensProvider(MELODY_LANGUAGE_ID, {
         'character',
       ],
       [/[A-Za-z]/, 'character'],
-      [/\.(\w)+/, 'variable'],
+      [/\.(?:\w)+/, 'variable'],
       [/\/\*.*\*\//, 'comment'],
       [/\/\/.*/, 'comment'],
     ],
