@@ -1,5 +1,12 @@
 # Changelog
 
+## [v0.13.1] - 2022-03-08
+
+### Fixes
+
+- Fixes an issue with single letter variable identifiers matching a following space
+- Fixes a clash between REPL commands and variables
+
 ## [v0.13.0] - 2022-03-08
 
 ### Breaking
