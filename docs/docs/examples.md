@@ -22,7 +22,7 @@ Note: these are for the currently supported syntax and may change
 Turns into
 
 ```
-(?:na){16}(?:\sbatman){2}
+(?:na){16}(?: batman){2}
 ```
 
 ## Twitter Hashtag
@@ -37,13 +37,13 @@ some of <word>;
 Turns into
 
 ```
-#\w+
+#(?:\w)+
 ```
 
 ## Introductory Courses
 
 ```
-some of <alphabet>;
+some of <alphabetic>;
 <space>;
 "1";
 2 of <digit>;
@@ -54,7 +54,7 @@ some of <alphabet>;
 Turns into
 
 ```
-[a-zA-Z]+\s1\d{2}
+(?:[a-zA-Z])+ 1(?:\d){2}
 ```
 
 ## Indented Code (2 spaces)
@@ -64,7 +64,7 @@ some of match {
   2 of <space>;
 }
 
-some of char;
+some of <char>;
 ";";
 
 // let value = 5;
@@ -107,5 +107,5 @@ capture patch {
 Turns into
 
 ```
-^v?(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
+^v?(?<major>(?:\d)+)\.(?<minor>(?:\d)+)\.(?<patch>(?:\d)+)$
 ```

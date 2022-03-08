@@ -36,9 +36,11 @@ The current goal is supporting the JavaScript implementation of regular expressi
 
 Note: these are for the currently supported syntax and may change
 
+Note: these are for the currently supported syntax and may change
+
 ### Batman Theme
 
-```rust
+```rs
 16 of "na";
 
 2 of match {
@@ -51,13 +53,13 @@ Note: these are for the currently supported syntax and may change
 
 Turns into
 
-```regex
+```
 (?:na){16}(?: batman){2}
 ```
 
 ### Twitter Hashtag
 
-```rust
+```rs
 "#";
 some of <word>;
 
@@ -66,14 +68,14 @@ some of <word>;
 
 Turns into
 
-```regex
-#\w+
+```
+#(?:\w)+
 ```
 
 ### Introductory Courses
 
-```rust
-some of <word>;
+```rs
+some of <alphabetic>;
 <space>;
 "1";
 2 of <digit>;
@@ -83,13 +85,13 @@ some of <word>;
 
 Turns into
 
-```regex
-\w+ 1\d{2}
+```
+(?:[a-zA-Z])+ 1(?:\d){2}
 ```
 
 ### Indented Code (2 spaces)
 
-```rust
+```rs
 some of match {
   2 of <space>;
 }
@@ -102,13 +104,13 @@ some of <char>;
 
 Turns into
 
-```regex
+```
 (?: {2})+.+;
 ```
 
 ### Semantic Versions
 
-```rust
+```rs
 <start>;
 
 option of "v";
@@ -136,8 +138,8 @@ capture patch {
 
 Turns into
 
-```regex
-^v?(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
+```
+^v?(?<major>(?:\d)+)\.(?<minor>(?:\d)+)\.(?<patch>(?:\d)+)$
 ```
 
 ## Playground
