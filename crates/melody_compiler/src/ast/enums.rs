@@ -16,7 +16,7 @@ pub enum QuantifierKind {
     Range { start: String, end: String },
     Some,
     Any,
-    Over(String),
+    Over(usize),
     Option,
     Amount(String),
 }

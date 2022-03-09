@@ -1,33 +1,55 @@
-use super::ident_parser::Rule;
+use super::{error_messages::ErrorMessage, ident_parser::Rule};
+use crate::errors::ParseError;
 use pest::iterators::Pair;
 use std::collections::HashSet;
 
-pub fn first_inner(pair: Pair<Rule>) -> Pair<Rule> {
-    pair.into_inner().next().unwrap()
+pub fn first_inner(pair: Pair<Rule>) -> Result<Pair<Rule>, ParseError> {
+    let last = pair
+        .into_inner()
+        .next()
+        .ok_or_else(|| ParseError::from(ErrorMessage::MissingNode))?;
+
+    Ok(last)
 }
 
-pub fn last_inner(pair: Pair<Rule>) -> Pair<Rule> {
-    pair.into_inner().last().unwrap()
+pub fn last_inner(pair: Pair<Rule>) -> Result<Pair<Rule>, ParseError> {
+    let last = pair
+        .into_inner()
+        .last()
+        .ok_or_else(|| ParseError::from(ErrorMessage::MissingNode))?;
+
+    Ok(last)
 }
 
-pub fn first_last_inner_str(pair: Pair<Rule>) -> (&str, &str) {
+pub fn first_last_inner_str(pair: Pair<Rule>) -> Result<(&str, &str), ParseError> {
     let pairs: Vec<Pair<Rule>> = pair.into_inner().collect();
-    (
-        pairs.first().unwrap().as_str(),
-        pairs.last().unwrap().as_str(),
-    )
+    Ok((
+        pairs
+            .first()
+            .ok_or_else(|| ParseError::from(ErrorMessage::MissingNode))?
+            .as_str(),
+        pairs
+            .last()
+            .ok_or_else(|| ParseError::from(ErrorMessage::MissingNode))?
+            .as_str(),
+    ))
 }
 
 pub fn nth_inner(pair: Pair<Rule>, n: usize) -> Option<Pair<Rule>> {
     pair.into_inner().nth(n)
 }
 
-pub fn to_char(value: &str) -> char {
-    value.chars().next().unwrap()
+pub fn to_char(value: &str) -> Result<char, ParseError> {
+    let char = value
+        .chars()
+        .next()
+        .ok_or_else(|| ParseError::from(ErrorMessage::MissingNode))?;
+
+    Ok(char)
 }
 
-pub fn alphabetic_first_char(value: &str) -> bool {
-    to_char(value).is_alphabetic()
+pub fn alphabetic_first_char(value: &str) -> Result<bool, ParseError> {
+    Ok(to_char(value)?.is_alphabetic())
 }
 
 pub fn unquote_escape_raw(pair: &Pair<Rule>) -> String {

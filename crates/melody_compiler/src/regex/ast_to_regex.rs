@@ -58,11 +58,7 @@ fn transform_quantifier(quantifier: &Quantifier) -> String {
         QuantifierKind::Range { start, end } => format!("{}{{{start},{end}}}", wrapped_expression),
         QuantifierKind::Some => format!("{}+", wrapped_expression),
         QuantifierKind::Any => format!("{}*", wrapped_expression),
-        QuantifierKind::Over(amount) => format!(
-            "{}{{{},}}",
-            wrapped_expression,
-            amount.parse::<usize>().unwrap() + 1
-        ),
+        QuantifierKind::Over(amount) => format!("{}{{{},}}", wrapped_expression, amount),
         QuantifierKind::Option => format!("{}?", wrapped_expression),
         QuantifierKind::Amount(amount) => format!("{}{{{amount}}}", wrapped_expression),
     };
@@ -107,10 +103,9 @@ fn transform_group(group: &Group) -> String {
         }
         GroupKind::Capture => {
             let body = to_regex(&group.statements);
-            if group.ident.is_some() {
-                format!("(?<{}>{body})", group.ident.as_ref().unwrap())
-            } else {
-                format!("({body})")
+            match group.ident.as_ref() {
+                Some(ident) => format!("(?<{}>{body})", ident),
+                None => format!("({body})"),
             }
         }
         GroupKind::Either => {

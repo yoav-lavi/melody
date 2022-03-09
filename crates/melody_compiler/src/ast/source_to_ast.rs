@@ -40,7 +40,7 @@ fn create_ast_node(
         Rule::literal => Node::Atom(unquote_escape_literal(&pair)),
 
         Rule::symbol => {
-            let (negative, ident) = first_last_inner_str(pair);
+            let (negative, ident) = first_last_inner_str(pair)?;
 
             let negative = negative == NOT;
 
@@ -122,32 +122,34 @@ fn create_ast_node(
         }
 
         Rule::range => {
-            let (first, end) = first_last_inner_str(pair.clone());
+            let (first, end) = first_last_inner_str(pair.clone())?;
             let negative = first == NOT;
             let start = if negative {
-                nth_inner(pair, 1).unwrap().as_str()
+                nth_inner(pair, 1)
+                    .ok_or_else(|| ParseError::from(ErrorMessage::MissingNode))?
+                    .as_str()
             } else {
                 first
             };
-            if alphabetic_first_char(start) {
+            if alphabetic_first_char(start)? {
                 Node::Range(Range::AsciiRange(AsciiRange {
                     negative,
-                    start: to_char(start),
-                    end: to_char(end),
+                    start: to_char(start)?,
+                    end: to_char(end)?,
                 }))
             } else {
                 Node::Range(Range::NumericRange(NumericRange {
                     negative,
-                    start: to_char(start),
-                    end: to_char(end),
+                    start: to_char(start)?,
+                    end: to_char(end)?,
                 }))
             }
         }
 
         Rule::quantifier => {
-            let quantity = first_inner(pair.clone());
-            let kind = first_inner(quantity.clone());
-            let expression = create_ast_node(last_inner(pair), variables)?;
+            let quantity = first_inner(pair.clone())?;
+            let kind = first_inner(quantity.clone())?;
+            let expression = create_ast_node(last_inner(pair)?, variables)?;
 
             let expression = match expression {
                 Node::Group(group) => Expression::Group(group),
@@ -180,11 +182,19 @@ fn create_ast_node(
                     lazy,
                     expression: Box::new(expression),
                 }),
-                Rule::over => Node::Quantifier(Quantifier {
-                    kind: QuantifierKind::Over(last_inner(kind).as_str().to_owned()),
-                    lazy,
-                    expression: Box::new(expression),
-                }),
+                Rule::over => {
+                    let raw_amount = last_inner(kind)?.as_str().to_owned();
+                    let amount = raw_amount
+                        .parse::<usize>()
+                        .map_err(|_| ParseError::from(ErrorMessage::CouldNotParseAnAmount))?
+                        .checked_add(1)
+                        .ok_or_else(|| ParseError::from(ErrorMessage::CouldNotParseAnAmount))?;
+                    Node::Quantifier(Quantifier {
+                        kind: QuantifierKind::Over(amount),
+                        lazy,
+                        expression: Box::new(expression),
+                    })
+                }
                 Rule::option => Node::Quantifier(Quantifier {
                     kind: QuantifierKind::Option,
                     lazy,
@@ -202,7 +212,7 @@ fn create_ast_node(
                 }),
 
                 Rule::quantifier_range => {
-                    let (start, end) = first_last_inner_str(kind);
+                    let (start, end) = first_last_inner_str(kind)?;
                     Node::Quantifier(Quantifier {
                         kind: QuantifierKind::Range {
                             start: start.to_owned(),
@@ -218,9 +228,9 @@ fn create_ast_node(
         }
 
         Rule::group => {
-            let declaration = first_inner(pair.clone());
+            let declaration = first_inner(pair.clone())?;
 
-            let kind = first_inner(declaration.clone()).as_str();
+            let kind = first_inner(declaration.clone())?.as_str();
 
             let kind = match kind {
                 "either" => GroupKind::Either,
@@ -235,7 +245,8 @@ fn create_ast_node(
             if ident.is_some() && kind != GroupKind::Capture {
                 return Err(ErrorMessage::UnexpectedIdentifierForNonCaptureGroup.into());
             }
-            let block = last_inner(pair);
+
+            let block = last_inner(pair)?;
 
             let statements = map_results(block.into_inner(), &mut |statement| {
                 create_ast_node(statement, variables)
@@ -249,9 +260,9 @@ fn create_ast_node(
         }
 
         Rule::assertion => {
-            let assertion_declaration = first_inner(pair.clone());
+            let assertion_declaration = first_inner(pair.clone())?;
 
-            let (negative, kind) = first_last_inner_str(assertion_declaration);
+            let (negative, kind) = first_last_inner_str(assertion_declaration)?;
 
             let negative = negative == NOT;
 
@@ -261,7 +272,7 @@ fn create_ast_node(
                 _ => unreachable!(),
             };
 
-            let block = last_inner(pair);
+            let block = last_inner(pair)?;
 
             let statements = map_results(block.into_inner(), &mut |statement| {
                 create_ast_node(statement, variables)
@@ -274,22 +285,20 @@ fn create_ast_node(
             })
         }
         Rule::negative_char_class => {
-            let class = last_inner(pair.clone());
+            let class = last_inner(pair.clone())?;
             Node::NegativeCharClass(class.as_str().to_owned())
         }
         Rule::variable_invocation => {
-            let identifier = last_inner(pair.clone());
-            let statements = variables.get(identifier.as_str());
-            if statements.is_none() {
-                return Err(ErrorMessage::UninitializedVariable.into());
-            }
-            Node::VariableInvocation(VariableInvocation {
-                statements: statements.unwrap().clone(),
-            })
+            let identifier = last_inner(pair.clone())?;
+            let statements = match variables.get(identifier.as_str()) {
+                Some(statements) => statements.clone(),
+                None => return Err(ErrorMessage::UninitializedVariable.into()),
+            };
+            Node::VariableInvocation(VariableInvocation { statements })
         }
         Rule::variable_declaration => {
-            let identifier = first_inner(pair.clone());
-            let statements = last_inner(pair);
+            let identifier = first_inner(pair.clone())?;
+            let statements = last_inner(pair)?;
             variables.insert(
                 identifier.as_str().trim().to_owned(),
                 map_results(statements.into_inner(), &mut |statement| {
