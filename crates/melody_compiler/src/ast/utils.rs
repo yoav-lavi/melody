@@ -80,7 +80,6 @@ static RESERVED_CHARS: Lazy<HashSet<char>> = Lazy::new(|| {
 fn escape_chars(source: &str) -> String {
     let mut escaped_source = String::new();
     for char in source.chars() {
-        // this `unwrap` will not panic as there are no other uses of RESERVED_CHARS
         if RESERVED_CHARS.contains(&char) {
             let escaped_char = format!("\\{char}");
             escaped_source.push_str(&escaped_char);
