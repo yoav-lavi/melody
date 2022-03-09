@@ -4,7 +4,7 @@ sidebar_position: 8
 
 # Performance
 
-Last measured on V0.13.2
+Last measured on V0.13.3
 
 Measured on an 8 core 2021 MacBook Pro 14-inch, Apple M1 Pro using [criterion](https://github.com/bheisler/criterion.rs):
 
@@ -12,27 +12,29 @@ Measured on an 8 core 2021 MacBook Pro 14-inch, Apple M1 Pro using [criterion](h
 
   ```
   compiler/normal (8 lines)
-                          time:   [3.6689 us 3.6741 us 3.6781 us]
-  slope  [3.6689 us 3.6781 us] R^2            [0.9999147 0.9999302]
-  mean   [3.6705 us 3.6798 us] std. dev.      [4.8109 ns 9.6190 ns]
-  median [3.6683 us 3.6820 us] med. abs. dev. [1.4209 ns 13.508 ns]
+                          time:   [3.6560 us 3.6596 us 3.6644 us]
+  slope  [3.6560 us 3.6644 us] R^2            [0.9999367 0.9999233]
+  mean   [3.6577 us 3.6676 us] std. dev.      [3.2234 ns 11.399 ns]
+  median [3.6549 us 3.6674 us] med. abs. dev. [642.70 ps 12.973 ns]
   ```
 
 - 1M lines:
 
   ```
   compiler/long input (1M lines)
-                          time:   [3.6689 us 3.6741 us 3.6781 us]
-  mean   [346.12 ms 350.70 ms] std. dev.      [659.46 us 5.0580 ms]
-  median [345.91 ms 350.70 ms] med. abs. dev. [176.21 us 5.3785 ms]
+                          time:   [345.99 ms 348.85 ms 351.91 ms]
+  mean   [345.99 ms 351.91 ms] std. dev.      [2.8317 ms 6.3397 ms]
+  median [344.55 ms 352.85 ms] med. abs. dev. [893.36 us 8.5853 ms]
   ```
 
 - Deeply nested:
 
   ```
   compiler/deeply nested
-                          time:   [4.8100 us 4.8228 us 4.8336 us]
-  slope  [4.8100 us 4.8336 us] R^2            [0.9997070 0.9997448]
-  mean   [4.8162 us 4.8298 us] std. dev.      [4.9737 ns 16.288 ns]
-  median [4.8181 us 4.8311 us] med. abs. dev. [885.24 ps 16.563 ns]
+                          time:   [4.8259 us 4.8330 us 4.8399 us]
+  slope  [4.8259 us 4.8399 us] R^2            [0.9998793 0.9998830]
+  mean   [4.8259 us 4.8476 us] std. dev.      [7.6412 ns 24.306 ns]
+  median [4.8234 us 4.8484 us] med. abs. dev. [4.1349 ns 30.340 ns]
   ```
+
+To reproduce, run `cargo benchmark`
