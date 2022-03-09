@@ -1,7 +1,6 @@
-use super::{error_messages::ErrorMessage, ident_parser::Rule};
+use super::{error_messages::ErrorMessage, ident_parser::Rule, RESERVED_CHARS};
 use crate::errors::ParseError;
 use pest::iterators::Pair;
-use std::collections::HashSet;
 
 pub fn first_inner(pair: Pair<Rule>) -> Result<Pair<Rule>, ParseError> {
     let last = pair
@@ -71,12 +70,9 @@ pub fn unquote_escape_literal(pair: &Pair<Rule>) -> String {
 }
 
 fn escape_chars(source: &str) -> String {
-    let reserved_chars = HashSet::from([
-        '[', ']', '(', ')', '{', '}', '*', '+', '?', '|', '^', '$', '.', '-', '\\',
-    ]);
     let mut escaped_source = String::new();
     for char in source.chars() {
-        if reserved_chars.contains(&char) {
+        if RESERVED_CHARS.contains(&char) {
             let escaped_char = format!("\\{char}");
             escaped_source.push_str(&escaped_char);
         } else {
