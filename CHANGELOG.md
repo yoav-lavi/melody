@@ -2,6 +2,12 @@
 
 ## [v0.13.3] - 2022-03-09
 
+### Refactoring
+
+- Replaces `lazy_static` with `once_cell`
+
+## [v0.13.2] - 2022-03-09
+
 ### Performance
 
 - Improves literal parse performance
