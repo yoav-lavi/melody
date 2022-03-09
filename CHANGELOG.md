@@ -4,7 +4,7 @@
 
 ### Performance
 
-- Improves string parse performance
+- Improves literal parse performance
 
 ### Refactoring
 
