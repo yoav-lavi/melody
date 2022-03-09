@@ -1,9 +1,6 @@
 #![forbid(unsafe_code)]
 #![warn(clippy::needless_pass_by_value)]
 
-#[macro_use]
-extern crate lazy_static;
-
 mod ast;
 pub mod errors;
 mod regex;

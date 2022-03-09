@@ -1,6 +1,8 @@
-use super::{error_messages::ErrorMessage, ident_parser::Rule, RESERVED_CHARS};
+use super::{error_messages::ErrorMessage, ident_parser::Rule};
 use crate::errors::ParseError;
+use once_cell::sync::Lazy;
 use pest::iterators::Pair;
+use std::collections::HashSet;
 
 pub fn first_inner(pair: Pair<Rule>) -> Result<Pair<Rule>, ParseError> {
     let last = pair
@@ -69,9 +71,16 @@ pub fn unquote_escape_literal(pair: &Pair<Rule>) -> String {
     }
 }
 
+static RESERVED_CHARS: Lazy<HashSet<char>> = Lazy::new(|| {
+    HashSet::from([
+        '[', ']', '(', ')', '{', '}', '*', '+', '?', '|', '^', '$', '.', '-', '\\',
+    ])
+});
+
 fn escape_chars(source: &str) -> String {
     let mut escaped_source = String::new();
     for char in source.chars() {
+        // this `unwrap` will not panic as there are no other uses of RESERVED_CHARS
         if RESERVED_CHARS.contains(&char) {
             let escaped_char = format!("\\{char}");
             escaped_source.push_str(&escaped_char);
