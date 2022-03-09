@@ -1,5 +1,15 @@
 # Changelog
 
+## [v0.13.2] - 2022-03-09
+
+### Performance
+
+- Improves string parse performance
+
+### Refactoring
+
+- Reports a few possible panics with a ParseError
+
 ## [v0.13.1] - 2022-03-08
 
 ### Fixes

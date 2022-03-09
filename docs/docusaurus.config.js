@@ -50,7 +50,7 @@ const config = {
       footer: {
         links: [
           {
-            html: `<code style="color: #ECEFF4; background-color: #2E3440;">v0.13.1</code>`,
+            html: `<code style="color: #ECEFF4; background-color: #2E3440;">v0.13.2</code>`,
           },
         ],
         style: "dark",
