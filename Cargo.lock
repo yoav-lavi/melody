@@ -486,7 +486,7 @@ checksum = "3e2e65a1a2e43cfcb47a895c4c8b10d1f4a61097f9f254f183aee60cad9c651d"
 
 [[package]]
 name = "melody_cli"
-version = "0.13.3"
+version = "0.13.4"
 dependencies = [
  "assert_cmd",
  "assert_fs",
