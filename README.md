@@ -1,5 +1,5 @@
 <p align="center">
-  <img alt="Melody Logo" height="250px" src="https://user-images.githubusercontent.com/14347895/157920860-2dfc3278-1526-4a96-a3d3-97b5daca8390.png"
+  <img alt="Melody Logo" height="200px" src="https://user-images.githubusercontent.com/14347895/157920860-2dfc3278-1526-4a96-a3d3-97b5daca8390.png"
 </p>
 
 <p align="center">
