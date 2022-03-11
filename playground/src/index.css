@@ -67,10 +67,10 @@ html,body {
   color: #ECEFF4;
   background: #2E3440;
   font: inherit;
-  font-size: 11px;
+  font-size: 10px;
   cursor: copy;
   padding: 5px;
-  width: 75px;
+  width: 90px;
   overflow: hidden;
   line-break:normal;
 
