@@ -6,11 +6,18 @@ sidebar_position: 10
 
 ## [v0.13.5] - 2022-03-11
 
+### Misc.
+
 - Version bump
 
 ## [v0.13.4] - 2022-03-11
 
+### Tooling
+
 - Strips binaries
+
+### Dependencies
+
 - Updates dependencies
 
 ## [v0.13.3] - 2022-03-09
