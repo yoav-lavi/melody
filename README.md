@@ -1,10 +1,9 @@
-<h1 align="center">
-  Melody
-</h1>
-
 <p align="center">
-  <img width="520" alt="code example" src="https://user-images.githubusercontent.com/14347895/154124756-ddbd3c84-f8b2-45bd-b624-2c510482c4e2.png">
+  <img alt="Melody Logo" height="250px" src="https://user-images.githubusercontent.com/14347895/157920860-2dfc3278-1526-4a96-a3d3-97b5daca8390.png"
 </p>
+
+
+
 
 
 <p align="center">
@@ -28,11 +27,18 @@
   </a>
 </p>
 
-Melody is a language designed to compile to and maintain a 1-1 relationship with regular expressions, while being more readable and maintainable.
 
-The current goal is supporting the JavaScript implementation of regular expressions.
+<p align="center">
+Melody is a language designed to compile to and maintain a 1-1 relationship with ECMAScript regular expressions, while being more readable and maintainable.
+</p>
+
+<p align="center">
+  <img width="400" alt="code example" src="https://user-images.githubusercontent.com/14347895/154124756-ddbd3c84-f8b2-45bd-b624-2c510482c4e2.png">
+</p>
+
 
 ## Examples
+
 
 Note: these are for the currently supported syntax and may change
 
