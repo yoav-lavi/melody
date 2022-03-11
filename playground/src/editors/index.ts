@@ -55,6 +55,7 @@ export const initEditors = async () => {
 
   melodyEditor.setPosition({ lineNumber, column });
   melodyEditor.focus();
+  melodyEditor.revealLineInCenter(lineNumber);
 
   const regexEditor = editor.create(regexEditorTarget, {
     value: '',
