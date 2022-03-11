@@ -12,7 +12,7 @@ keywords = ["melody", "melodylang", "language", "cli"]
 categories = ["command-line-utilities"]
 
 [dependencies]
-clap = { version = "3.0.7", features = ["derive"] }
+clap = { version = "3.1.6", features = ["derive"] }
 colored = "2.0.0"
 melody_compiler = { version = "0.13.3", path = "../melody_compiler" }
 
@@ -20,7 +20,7 @@ melody_compiler = { version = "0.13.3", path = "../melody_compiler" }
 assert_cmd = "2.0.4"
 assert_fs = "1.0.7"
 unindent = "0.1.8"
-tempfile = "3"
+tempfile = "3.3.0"
 
 [[bin]]
 name = "melody"
