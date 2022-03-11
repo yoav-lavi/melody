@@ -29,7 +29,7 @@
 
 
 <p align="center">
-Melody is a language designed to compile to and maintain a 1-1 relationship with ECMAScript regular expressions, while being more readable and maintainable.
+Melody is a readable language that compiles to ECMAScript regular expressions, while aiming to be more readable and maintainable.
 </p>
 
 <p align="center">
