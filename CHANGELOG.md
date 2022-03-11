@@ -1,5 +1,14 @@
 # Changelog
 
+## [v0.13.5] - 2022-03-11
+
+- Version bump
+
+## [v0.13.4] - 2022-03-11
+
+- Strips binaries
+- Updates dependencies
+
 ## [v0.13.3] - 2022-03-09
 
 ### Refactoring
