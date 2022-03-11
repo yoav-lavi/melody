@@ -25,7 +25,6 @@ html,body {
 
 .header-container {
   margin-left: 15px;
-  margin-top: 10px;
 }
 
 .header {
@@ -54,6 +53,7 @@ html,body {
 }
 
 .top-bar {
+  margin-top: 10px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
