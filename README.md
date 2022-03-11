@@ -213,7 +213,9 @@ OPTIONS:
 
 See the changelog [here](https://github.com/yoav-lavi/melody/blob/main/CHANGELOG.md) or in the [release page](https://github.com/yoav-lavi/melody/releases)
 
-## Quantifiers
+## Syntax
+
+### Quantifiers
 
 - `... of` - used to express a specific amount of a pattern. equivalent to regex `{5}` (assuming `5 of ...`)
 - `... to ... of` - used to express an amount within a range of a pattern. equivalent to regex `{5,9}` (assuming `5 to 9 of ...`)
@@ -224,7 +226,7 @@ See the changelog [here](https://github.com/yoav-lavi/melody/blob/main/CHANGELOG
 
 All quantifiers can be preceded by `lazy` to match the least amount of characters rather than the most characters (greedy). Equivalent to regex `+?`, `*?`, etc.
 
-## Symbols
+### Symbols
 
 - `<char>` - matches any single character. equivalent to regex `.`
 - `<whitespace>` - matches any kind of whitespace character. equivalent to regex `\s` or `[ \t\n\v\f\r]`
@@ -243,37 +245,37 @@ All quantifiers can be preceded by `lazy` to match the least amount of character
 
 All symbols can be preceeded with `not` to match any character other than the symbol
 
-## Special Symbols
+### Special Symbols
 
 - `<start>` - matches the start of the string. equivalent to regex `^`
 - `<end>` - matches the end of the string. equivalent to regex `$`
 
-## Character Ranges
+### Character Ranges
 
 - `... to ...` - used with digits or alphabetic characters to express a character range. equivalent to regex `[5-9]` (assuming `5 to 9`) or `[a-z]` (assuming `a to z`)
 
-## Literals
+### Literals
 
 - `"..."` or `'...'` - used to mark a literal part of the match. Melody will automatically escape characters as needed. Quotes (of the same kind surrounding the literal) should be escaped
 
-## Raw
+### Raw
 
 - <code>\`...\`</code> - added directly to the output without any escaping
 
-## Groups
+### Groups
 
 - `capture` - used to open a `capture` or named `capture` block. capture patterns are later available in the list of matches (either positional or named). equivalent to regex `(...)`
 - `match` - used to open a `match` block, matches the contents without capturing. equivalent to regex `(?:...)`
 - `either` - used to open an `either` block, matches one of the statements within the block. equivalent to regex `(?:...|...)`
 
-## Assertions
+### Assertions
 
 - `ahead` - used to open an `ahead` block. equivalent to regex `(?=...)`. use after an expression
 - `behind` - used to open an `behind` block. equivalent to regex `(?<=...)`. use before an expression
 
 Assertions can be preceeded by `not` to create a negative assertion (equivalent to regex `(?!...)`, `(?<!...)`)
 
-## Variables
+### Variables
 
 - `let .variable_name = { ... }` - defines a variable from a block of statements. can later be used with `.variable_name`. Variables must be declared before being used. Variable invocations cannot be quantified directly, use a group if you want to quantify a variable invocation
 
@@ -290,7 +292,7 @@ Assertions can be preceeded by `not` to create a negative assertion (equivalent 
 
   // abc
 
-## Extras
+### Extras
 
 - `/* ... */`, `// ...` - used to mark comments (note: `// ...` comments must be on separate line)
 
