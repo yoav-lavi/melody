@@ -53,6 +53,34 @@ html,body {
   margin: 5px;
 }
 
+.top-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+#copy-button {
+  margin-right: 15px;
+  border-radius: 10px;
+  border: 1px solid #ECEFF4;
+  color: #ECEFF4;
+  background: #2E3440;
+  font: inherit;
+  font-size: 11px;
+  cursor: copy;
+  padding: 5px;
+  width: 75px;
+  overflow: hidden;
+  line-break:normal;
+
+  /* reset  */
+  line-height: normal;
+  -webkit-font-smoothing: inherit;
+  -moz-osx-font-smoothing: inherit;
+  -webkit-appearance: none;
+}
+
 @media only screen and (max-width: 600px){
   .parent-container {
     flex-direction: column;
@@ -63,3 +91,4 @@ html,body {
     width: 100%;
   }
 }
+
