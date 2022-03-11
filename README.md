@@ -2,10 +2,6 @@
   <img alt="Melody Logo" height="250px" src="https://user-images.githubusercontent.com/14347895/157920860-2dfc3278-1526-4a96-a3d3-97b5daca8390.png"
 </p>
 
-
-
-
-
 <p align="center">
   <a href="https://github.com/yoav-lavi/melody/actions/workflows/rust.yml">
     <img alt="GitHub Workflow Status (branch)" src="https://img.shields.io/github/workflow/status/yoav-lavi/melody/Rust/main">
