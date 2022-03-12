@@ -46,6 +46,11 @@ html,body {
   color: #81A1C1;
 }
 
+.link {
+  font-size: 10px;
+  color: #81A1C1;
+}
+
 .editor {
   height: 100%;
   width: 50%;
