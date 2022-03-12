@@ -42,12 +42,12 @@ html,body {
 }
 
 .version {
-  font-size: 10px;
+  font-size: 12px;
   color: #81A1C1;
 }
 
 .link {
-  font-size: 11px;
+  font-size: 12px;
   color: #81A1C1;
 }
 
@@ -72,7 +72,7 @@ html,body {
   color: #ECEFF4;
   background: #2E3440;
   font: inherit;
-  font-size: 10px;
+  font-size: 12px;
   cursor: pointer;
   padding: 5px;
   width: 90px;
