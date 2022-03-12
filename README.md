@@ -39,7 +39,7 @@ Melody is a language that compiles to ECMAScript regular expressions, while aimi
 
 Note: these are for the currently supported syntax and may change
 
-### Batman Theme
+### Batman Theme &nbsp;<sub><sup><a href="https://melody-playground-yoav-lavi.vercel.app?content=MTYlMjBvZiUyMCUyMm5hJTIyJTNCJTBBJTBBMiUyMG9mJTIwbWF0Y2glMjAlN0IlMEElMjAlMjAlM0NzcGFjZSUzRSUzQiUwQSUyMCUyMCUyMmJhdG1hbiUyMiUzQiUwQSU3RCUwQSUwQSUyRiUyRiUyMCVGMCU5RiVBNiU4NyVGMCU5RiVBNiVCOCVFMiU4MCU4RCVFMiU5OSU4MiVFRiVCOCU4Rg==">try in playground</a></sup></sub>
 
 ```rust
 16 of "na";
@@ -58,7 +58,7 @@ Turns into
 (?:na){16}(?: batman){2}
 ```
 
-### Twitter Hashtag
+### Twitter Hashtag &nbsp;<sub><sup><a href="https://melody-playground-yoav-lavi.vercel.app?content=JTIyJTIzJTIyJTNCJTBBc29tZSUyMG9mJTIwJTNDd29yZCUzRSUzQiUwQSUwQSUyRiUyRiUyMCUyM21lbG9keQ==">try in playground</a></sup></sub>
 
 ```rust
 "#";
@@ -73,7 +73,7 @@ Turns into
 #(?:\w)+
 ```
 
-### Introductory Courses
+### Introductory Courses &nbsp;<sub><sup><a href="https://melody-playground-yoav-lavi.vercel.app?content=c29tZSUyMG9mJTIwJTNDYWxwaGFiZXRpYyUzRSUzQiUwQSUzQ3NwYWNlJTNFJTNCJTBBJTIyMSUyMiUzQiUwQTIlMjBvZiUyMCUzQ2RpZ2l0JTNFJTNCJTBBJTBBJTJGJTJGJTIwY2xhc3NuYW1lJTIwMXh4">try in playground</a></sup></sub>
 
 ```rust
 some of <alphabetic>;
@@ -90,7 +90,7 @@ Turns into
 (?:[a-zA-Z])+ 1(?:\d){2}
 ```
 
-### Indented Code (2 spaces)
+### Indented Code (2 spaces) &nbsp;<sub><sup><a href="https://melody-playground-yoav-lavi.vercel.app?content=c29tZSUyMG9mJTIwbWF0Y2glMjAlN0IlMEElMjAlMjAyJTIwb2YlMjAlM0NzcGFjZSUzRSUzQiUwQSU3RCUwQSUwQXNvbWUlMjBvZiUyMCUzQ2NoYXIlM0UlM0IlMEElMjIlM0IlMjIlM0IlMEElMEElMkYlMkYlMjBsZXQlMjB2YWx1ZSUyMCUzRCUyMDUlM0I=">try in playground</a></sup></sub>
 
 ```rust
 some of match {
@@ -109,7 +109,7 @@ Turns into
 (?: {2})+.+;
 ```
 
-### Semantic Versions
+### Semantic Versions &nbsp;<sub><sup><a href="https://melody-playground.vercel.app?content=JTNDc3RhcnQlM0UlM0IlMEElMEFvcHRpb24lMjBvZiUyMCUyMnYlMjIlM0IlMEElMEFjYXB0dXJlJTIwbWFqb3IlMjAlN0IlMEElMjAlMjBzb21lJTIwb2YlMjAlM0NkaWdpdCUzRSUzQiUwQSU3RCUwQSUwQSUyMi4lMjIlM0IlMEElMEFjYXB0dXJlJTIwbWlub3IlMjAlN0IlMEElMjAlMjBzb21lJTIwb2YlMjAlM0NkaWdpdCUzRSUzQiUwQSU3RCUwQSUwQSUyMi4lMjIlM0IlMEElMEFjYXB0dXJlJTIwcGF0Y2glMjAlN0IlMEElMjAlMjBzb21lJTIwb2YlMjAlM0NkaWdpdCUzRSUzQiUwQSU3RCUwQSUwQSUzQ2VuZCUzRSUzQiUwQSUwQSUyRiUyRiUyMHYxLjAuMA==">try in playground</a></sup></sub>
 
 ```rust
 <start>;
