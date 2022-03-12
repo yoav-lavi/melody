@@ -1,5 +1,4 @@
 import { initCopyButton } from './copy-button';
-import { initEditors } from './editors';
 
 declare global {
   interface Window {
@@ -9,4 +8,7 @@ declare global {
 }
 
 initCopyButton();
-initEditors();
+
+import('./editors').then((exports) => {
+  exports.initEditors();
+});
