@@ -2,6 +2,7 @@
   "background_color": "#242933",
   "description": "The Melody language playground",
   "display": "fullscreen",
+  "theme_color": "#242933",
   "icons": [
     {
       "src": "icon.png",
