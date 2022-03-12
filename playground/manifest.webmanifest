@@ -3,14 +3,14 @@
   "description": "The Melody language playground",
   "display": "fullscreen",
   "theme_color": "#242933",
+  "start_url": "https://melody-playground.vercel.app",
   "icons": [
     {
-      "src": "icon.png",
+      "src": "static/icon.png",
       "sizes": "192x192",
       "type": "image/png"
     }
   ],
   "name": "Melody Playground",
-  "short_name": "Melody Playground",
-  "start_url": "/"
+  "short_name": "Melody Playground"
 }
