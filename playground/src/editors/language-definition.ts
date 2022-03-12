@@ -1,4 +1,4 @@
-import { languages } from 'monaco-editor';
+import { languages } from 'monaco-editor/esm/vs/editor/editor.api';
 
 export const languageDefinition: languages.IMonarchLanguage = {
   tokenizer: {

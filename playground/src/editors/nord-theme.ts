@@ -1,4 +1,4 @@
-import { editor } from 'monaco-editor';
+import { editor } from 'monaco-editor/esm/vs/editor/editor.api';
 
 // colors taken from the Nord palette (https://www.nordtheme.com and https://github.com/arcticicestudio/nord-visual-studio-code/)
 export const nordTheme: editor.IStandaloneThemeData = {
