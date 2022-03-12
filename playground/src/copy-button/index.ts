@@ -1,7 +1,7 @@
 enum CopyButtonTextState {
   Copied = 'Copied',
   Error = 'Error',
-  Default = 'Embed Source in Link',
+  Default = 'Copy Link to Source',
 }
 
 const copyButton = document.getElementById('copy-button');
