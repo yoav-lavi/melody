@@ -16,7 +16,7 @@ pub fn first_inner(pair: Pair<Rule>) -> Result<Pair<Rule>, ParseError> {
 pub fn last_inner(pair: Pair<Rule>) -> Result<Pair<Rule>, ParseError> {
     let last = pair
         .into_inner()
-        .last()
+        .next_back()
         .ok_or_else(|| ParseError::from(ErrorMessage::MissingNode))?;
 
     Ok(last)
