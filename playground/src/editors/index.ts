@@ -1,4 +1,4 @@
-import { editor, languages } from 'monaco-editor/esm/vs/editor/editor.api';
+import { editor, languages } from 'monaco-editor';
 import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker';
 import {
   DEFAULT_EDITOR_VALUE,

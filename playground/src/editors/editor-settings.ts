@@ -1,4 +1,4 @@
-import { editor } from 'monaco-editor/esm/vs/editor/editor.api';
+import { editor } from 'monaco-editor';
 import { NORD_THEME_ID } from './consts';
 
 export const DEFAULT_EDITOR_SETTINGS: editor.IStandaloneEditorConstructionOptions =
