@@ -117,7 +117,7 @@ fn create_ast_node(
                 "start" => Node::SpecialSymbol(SpecialSymbol::Start),
                 "end" => Node::SpecialSymbol(SpecialSymbol::End),
 
-                _ => unreachable!(),
+                _ => return Err(ErrorMessage::UnrecognizedSymbol.into()),
             }
         }
 
@@ -223,7 +223,7 @@ fn create_ast_node(
                     })
                 }
 
-                _ => unreachable!(),
+                _ => return Err(ErrorMessage::UnrecognizedSyntax.into()),
             }
         }
 
@@ -237,7 +237,7 @@ fn create_ast_node(
                 "capture" => GroupKind::Capture,
                 "match" => GroupKind::Match,
 
-                _ => unreachable!(),
+                _ => return Err(ErrorMessage::UnrecognizedGroup.into()),
             };
 
             let ident = nth_inner(declaration, 1).map(|ident| ident.as_str().trim().to_owned());
@@ -269,7 +269,7 @@ fn create_ast_node(
             let kind = match kind {
                 "ahead" => AssertionKind::Ahead,
                 "behind" => AssertionKind::Behind,
-                _ => unreachable!(),
+                _ => return Err(ErrorMessage::UnrecognizedAssertion.into()),
             };
 
             let block = last_inner(pair)?;
@@ -309,6 +309,6 @@ fn create_ast_node(
         }
         Rule::EOI => Node::Empty,
 
-        _ => unreachable!(),
+        _ => return Err(ErrorMessage::UnrecognizedSyntax.into()),
     })
 }

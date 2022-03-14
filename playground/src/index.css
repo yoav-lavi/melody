@@ -16,6 +16,61 @@ html,body {
   font-family: 'Fira Code', monospace;
 }
 
+@keyframes flicker {
+  0% {
+    background-position-x: 0;
+  }
+  100% {
+    background-position-x: 100vw;
+  }
+}
+
+.editor-loader {
+  opacity: 1;
+  height: 100%;
+  width: 50%;
+  margin: 5px;
+  overflow: hidden;
+  border: 1px solid #4C566A55;
+  padding: 10px;
+}
+
+.editor-loader-line {
+  border-radius: 3px;
+  animation: flicker 15s ease-in-out alternate infinite;
+  margin-bottom: 10px;
+  height: 5px;
+  background-color: #4C566A;
+  background: linear-gradient(to right, #4C566AAA, #3B4252AA, #3B4252AA, #4C566AAA);
+  background-position-x: 0;
+}
+
+@media (prefers-reduced-motion) {
+  .editor-loader-line {
+    animation: none;
+  }
+}
+
+.editor-loader-line-1 {
+  width: 100%;
+}
+
+.editor-loader-line-2 {
+  width: 75%
+}
+
+.editor-loader-line-3 {
+  width: 75%
+}
+
+.editor-loader-line-4 {
+  width: 50%
+}
+
+.editor-loader-line-5 {
+  width: 25%
+}
+
 .parent-container {
   height: 100%;
   overflow: hidden;
@@ -57,6 +112,7 @@ html,body {
   height: 100%;
   width: 50%;
   margin: 5px;
+  display: none;
 }
 
 .top-bar {
@@ -94,6 +150,11 @@ html,body {
   }
 
   .editor {
+    height: 50%; 
+    width: 100%;
+  }
+
+  .editor-loader {
     height: 50%; 
     width: 100%;
   }

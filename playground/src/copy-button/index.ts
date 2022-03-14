@@ -11,7 +11,7 @@ const onCopyButtonClick = async (copyButton: HTMLElement) => {
   try {
     await navigator.clipboard.writeText(
       `${location.origin}?content=${btoa(
-        encodeURIComponent(window.currentEditorContent),
+        encodeURIComponent(window.currentEditorContent ?? ''),
       )}`,
     );
     copyButton.textContent = CopyButtonTextState.Copied;

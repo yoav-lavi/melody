@@ -42,6 +42,9 @@ export const initEditors = async () => {
     return;
   }
 
+  melodyEditorTarget.style.display = 'block';
+  regexEditorTarget.style.display = 'block';
+
   const melodyEditor = editor.create(melodyEditorTarget, {
     value: initialValue,
     language: MELODY_LANGUAGE_ID,

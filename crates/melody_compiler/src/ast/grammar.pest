@@ -111,8 +111,8 @@ assertion_declaration = { not? ~ assertion_type }
 
 assertion = { assertion_declaration ~ block }
 
-variable_declaration = {"let" ~ "." ~ identifier ~ "=" ~ block}
+variable_declaration = { "let" ~ "." ~ identifier ~ "=" ~ block }
 
-variable_invocation = { "." ~ identifier}
+variable_invocation = { "." ~ identifier }
 
 root = {  SOI ~ (statement | "\n")* ~ EOI }

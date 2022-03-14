@@ -13,6 +13,10 @@ pub enum ErrorMessage {
     UnexpectedSpecialSymbolInQuantifier,
     UnexpectedVariableInvocationInQuantifier,
     UninitializedVariable,
+    UnrecognizedAssertion,
+    UnrecognizedGroup,
+    UnrecognizedSyntax,
+    UnrecognizedSymbol,
 }
 
 impl From<ErrorMessage> for ParseError {
@@ -36,6 +40,10 @@ impl From<ErrorMessage> for ParseError {
                 "unexpected variable invocation in quantifier"
             }
             ErrorMessage::UninitializedVariable => "usage of an uninitialized variable",
+            ErrorMessage::UnrecognizedAssertion => "usage of an unrecognized assertion",
+            ErrorMessage::UnrecognizedGroup => "usage of an unrecognized group",
+            ErrorMessage::UnrecognizedSyntax => "usage of unrecognized syntax",
+            ErrorMessage::UnrecognizedSymbol => "usage of an unrecognized symbol",
         };
 
         Self {

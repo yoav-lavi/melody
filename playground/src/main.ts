@@ -10,5 +10,7 @@ declare global {
 initCopyButton();
 
 import('./editors').then((exports) => {
+  document.getElementById('editor-loader')?.remove();
+  document.getElementById('output-loader')?.remove();
   exports.initEditors();
 });
