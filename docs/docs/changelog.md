@@ -4,6 +4,12 @@ sidebar_position: 10
 
 # Changelog
 
+## [v0.13.6] - 2022-03-11
+
+### Fixes
+
+- Handles a few possible panics
+
 ## [v0.13.5] - 2022-03-11
 
 ### Misc.
