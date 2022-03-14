@@ -1,4 +1,5 @@
 #[derive(Debug, Clone, PartialEq, Eq)]
+#[cfg_attr(feature = "fuzzer", derive(arbitrary::Arbitrary))]
 pub enum GroupKind {
     Match,
     Capture,
@@ -6,12 +7,14 @@ pub enum GroupKind {
 }
 
 #[derive(Debug, Clone)]
+#[cfg_attr(feature = "fuzzer", derive(arbitrary::Arbitrary))]
 pub enum AssertionKind {
     Ahead,
     Behind,
 }
 
 #[derive(Debug, Clone)]
+#[cfg_attr(feature = "fuzzer", derive(arbitrary::Arbitrary))]
 pub enum QuantifierKind {
     Range { start: String, end: String },
     Some,
@@ -23,6 +26,7 @@ pub enum QuantifierKind {
 
 #[derive(Debug, Clone)]
 #[allow(dead_code)]
+#[cfg_attr(feature = "fuzzer", derive(arbitrary::Arbitrary))]
 pub struct Quantifier {
     pub kind: QuantifierKind,
     pub lazy: bool,
@@ -30,6 +34,7 @@ pub struct Quantifier {
 }
 
 #[derive(Debug, Clone)]
+#[cfg_attr(feature = "fuzzer", derive(arbitrary::Arbitrary))]
 pub enum Expression {
     Atom(String),
     Group(Group),
@@ -39,6 +44,7 @@ pub enum Expression {
 }
 
 #[derive(Debug, Clone)]
+#[cfg_attr(feature = "fuzzer", derive(arbitrary::Arbitrary))]
 pub enum Range {
     AsciiRange(AsciiRange),
     NumericRange(NumericRange),
@@ -46,6 +52,7 @@ pub enum Range {
 
 #[derive(Debug, Clone)]
 #[allow(dead_code)]
+#[cfg_attr(feature = "fuzzer", derive(arbitrary::Arbitrary))]
 pub struct AsciiRange {
     pub negative: bool,
     pub start: char,
@@ -54,6 +61,7 @@ pub struct AsciiRange {
 
 #[derive(Debug, Clone)]
 #[allow(dead_code)]
+#[cfg_attr(feature = "fuzzer", derive(arbitrary::Arbitrary))]
 pub struct NumericRange {
     pub negative: bool,
     pub start: char,
@@ -61,12 +69,14 @@ pub struct NumericRange {
 }
 
 #[derive(Debug, Clone)]
+#[cfg_attr(feature = "fuzzer", derive(arbitrary::Arbitrary))]
 pub struct Symbol {
     pub kind: SymbolKind,
     pub negative: bool,
 }
 
 #[derive(Debug, Clone)]
+#[cfg_attr(feature = "fuzzer", derive(arbitrary::Arbitrary))]
 pub enum SymbolKind {
     Space,
     Newline,
@@ -86,6 +96,7 @@ pub enum SymbolKind {
 }
 
 #[derive(Debug, Clone)]
+#[cfg_attr(feature = "fuzzer", derive(arbitrary::Arbitrary))]
 pub enum SpecialSymbol {
     Start,
     End,
@@ -93,6 +104,7 @@ pub enum SpecialSymbol {
 
 #[derive(Debug, Clone)]
 #[allow(dead_code)]
+#[cfg_attr(feature = "fuzzer", derive(arbitrary::Arbitrary))]
 pub struct Group {
     pub ident: Option<String>,
     pub kind: GroupKind,
@@ -101,12 +113,14 @@ pub struct Group {
 
 #[derive(Debug, Clone)]
 #[allow(dead_code)]
+#[cfg_attr(feature = "fuzzer", derive(arbitrary::Arbitrary))]
 pub struct VariableInvocation {
     pub statements: Vec<Node>,
 }
 
 #[derive(Debug, Clone)]
 #[allow(dead_code)]
+#[cfg_attr(feature = "fuzzer", derive(arbitrary::Arbitrary))]
 pub struct Assertion {
     pub kind: AssertionKind,
     pub statements: Vec<Node>,
@@ -114,6 +128,7 @@ pub struct Assertion {
 }
 
 #[derive(Debug, Clone)]
+#[cfg_attr(feature = "fuzzer", derive(arbitrary::Arbitrary))]
 pub enum Node {
     Group(Group),
     Assertion(Assertion),
