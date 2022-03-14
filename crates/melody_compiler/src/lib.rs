@@ -1,14 +1,20 @@
 #![forbid(unsafe_code)]
 #![warn(clippy::needless_pass_by_value)]
 
+#[cfg(not(feature = "fuzzer"))]
 mod ast;
+#[cfg(feature = "fuzzer")]
+pub mod ast;
 pub mod errors;
 mod regex;
 mod utils;
 
 use ast::to_ast;
 use errors::ParseError;
+#[cfg(not(feature = "fuzzer"))]
 use regex::to_regex;
+#[cfg(feature = "fuzzer")]
+pub use regex::to_regex;
 use utils::format_line_comments;
 
 /**
