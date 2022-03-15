@@ -1,5 +1,4 @@
 use std::env;
-
 use xshell::{cmd, Shell};
 
 fn main() {
