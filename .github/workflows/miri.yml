@@ -1,15 +1,15 @@
 on: push
-name: Miri
+name: miri
 jobs:
   miri:
-    name: "Miri"
+    name: "miri"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Install Miri
+      - name: install miri
         run: |
           rustup toolchain install nightly --component miri
           rustup override set nightly
           cargo miri setup
-      - name: Test with Miri
+      - name: test with Miri
         run: cargo miri test
