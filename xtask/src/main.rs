@@ -3,9 +3,9 @@ use std::env;
 use xshell::{cmd, Shell};
 
 fn main() {
-    if let Err(e) = try_main() {
-        eprintln!("{}", e);
-        std::process::exit(-1);
+    if let Err(error) = try_main() {
+        eprintln!("{error}");
+        std::process::exit(1);
     }
 }
 
