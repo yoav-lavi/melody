@@ -11,7 +11,7 @@ fn main() {
 fn try_main() -> anyhow::Result<()> {
     let task = env::args().nth(1);
     match task.as_ref().map(|task| task.as_str()) {
-        Some("wasm") => wasm()?,
+        Some("playground-wasm") => playground_wasm()?,
         Some("deploy-playground") => deploy_playground()?,
         Some("deploy-docs") => deploy_docs()?,
         Some("publish-compiler") => publish_compiler()?,
@@ -21,7 +21,7 @@ fn try_main() -> anyhow::Result<()> {
     Ok(())
 }
 
-fn wasm() -> anyhow::Result<()> {
+fn playground_wasm() -> anyhow::Result<()> {
     let shell = Shell::new()?;
     shell.change_dir("crates/melody_wasm");
     cmd!(shell, "wasm-pack build --target web").run()?;
@@ -62,7 +62,7 @@ fn publish_compiler() -> anyhow::Result<()> {
 fn print_help() {
     eprintln!(
         r#"Tasks: 
-    wasm
+    playground-wasm
     deploy-playground
     deploy-docs
     publish-compiler
