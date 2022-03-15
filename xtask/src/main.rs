@@ -21,12 +21,10 @@ fn try_main() -> anyhow::Result<()> {
     Ok(())
 }
 
-fn playground_wasm() -> anyhow::Result<()> {
+fn deploy_docs() -> anyhow::Result<()> {
     let shell = Shell::new()?;
-    shell.change_dir("crates/melody_wasm");
-    cmd!(shell, "wasm-pack build --target web").run()?;
-    cmd!(shell, "rm -r ../../playground/src/wasm").run()?;
-    cmd!(shell, "cp -r ./pkg/. ../../playground/src/wasm").run()?;
+    shell.change_dir("docs");
+    cmd!(shell, "yarn deploy").run()?;
     Ok(())
 }
 
@@ -38,10 +36,12 @@ fn deploy_playground() -> anyhow::Result<()> {
     Ok(())
 }
 
-fn deploy_docs() -> anyhow::Result<()> {
+fn playground_wasm() -> anyhow::Result<()> {
     let shell = Shell::new()?;
-    shell.change_dir("docs");
-    cmd!(shell, "yarn deploy").run()?;
+    shell.change_dir("crates/melody_wasm");
+    cmd!(shell, "wasm-pack build --target web").run()?;
+    cmd!(shell, "rm -r ../../playground/src/wasm").run()?;
+    cmd!(shell, "cp -r ./pkg/. ../../playground/src/wasm").run()?;
     Ok(())
 }
 
