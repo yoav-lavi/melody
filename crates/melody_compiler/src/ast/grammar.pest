@@ -6,23 +6,21 @@ digit = { '0'..'9' }
 
 amount = @{ digit+ }
 
-number = { digit+ } 
-
-literal_content = @{ literal_char* }
-
 literal_char = _{
     !("\"" | "\\") ~ ANY
     | "\\" ~ ("\"" | "\\" | "/" | "b" | "f" | "n" | "r" | "t")
     | "\\" ~ ("u" ~ ASCII_HEX_DIGIT{4})
 }
 
-single_literal_content = @{ single_literal_char* }
+literal_content = @{ literal_char* }
 
 single_literal_char = _{
     !("'" | "\\") ~ ANY
     | "\\" ~ ("'" | "\\" | "/" | "b" | "f" | "n" | "r" | "t")
     | "\\" ~ ("u" ~ ASCII_HEX_DIGIT{4})
 }
+
+single_literal_content = @{ single_literal_char* }
 
 literal = ${ (("\"" ~ literal_content ~ "\"") | ("'" ~ single_literal_content ~ "'"))   }
 
@@ -68,8 +66,6 @@ ascii_range_end = { ASCII }
 range = {
   not? ~ numeric_range_start ~ "to" ~ numeric_range_end | not? ~ ascii_range_start ~ "to" ~ ascii_range_end
 }
-
-single_digit =  _{ '0'..'9' }
 
 quantifier_start = { amount }
 
