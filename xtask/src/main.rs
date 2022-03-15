@@ -11,11 +11,11 @@ fn main() {
 fn try_main() -> anyhow::Result<()> {
     let task = env::args().nth(1);
     match task.as_ref().map(|task| task.as_str()) {
-        Some("playground-wasm") => playground_wasm()?,
-        Some("deploy-playground") => deploy_playground()?,
         Some("deploy-docs") => deploy_docs()?,
-        Some("publish-compiler") => publish_compiler()?,
+        Some("deploy-playground") => deploy_playground()?,
+        Some("playground-wasm") => playground_wasm()?,
         Some("publish-cli") => publish_cli()?,
+        Some("publish-compiler") => publish_compiler()?,
         _ => print_help(),
     }
     Ok(())
@@ -62,11 +62,11 @@ fn publish_compiler() -> anyhow::Result<()> {
 fn print_help() {
     eprintln!(
         r#"Tasks: 
-    playground-wasm
-    deploy-playground
     deploy-docs
-    publish-compiler
+    deploy-playground
+    playground-wasm
     publish-cli
+    publish-compiler
     "#
     )
 }
