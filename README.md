@@ -277,7 +277,7 @@ Assertions can be preceeded by `not` to create a negative assertion (equivalent 
 
 ### Variables
 
-- `let .variable_name = { ... }` - defines a variable from a block of statements. can later be used with `.variable_name`. Variables must be declared before being used. Variable invocations cannot be quantified directly, use a group if you want to quantify a variable invocation
+- `let .variable_name = { ... }` - defines a variable from a block of statements. can later be used with `.variable_name`. Variables must be declared before being used. Variables do not allow recursion. Variable invocations cannot be quantified directly, use a group if you want to quantify a variable invocation
 
   example:
 
