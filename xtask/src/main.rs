@@ -23,40 +23,40 @@ fn try_main() -> anyhow::Result<()> {
 }
 
 fn wasm() -> anyhow::Result<()> {
-    let sh = Shell::new()?;
-    sh.change_dir("crates/melody_wasm");
-    cmd!(sh, "wasm-pack build --target web").run()?;
-    cmd!(sh, "rm -r ../../playground/src/wasm").run()?;
-    cmd!(sh, "cp -r ./pkg/. ../../playground/src/wasm").run()?;
+    let shell = Shell::new()?;
+    shell.change_dir("crates/melody_wasm");
+    cmd!(shell, "wasm-pack build --target web").run()?;
+    cmd!(shell, "rm -r ../../playground/src/wasm").run()?;
+    cmd!(shell, "cp -r ./pkg/. ../../playground/src/wasm").run()?;
     Ok(())
 }
 
 fn deploy_playground() -> anyhow::Result<()> {
-    let sh = Shell::new()?;
-    sh.change_dir("playground");
-    cmd!(sh, "vercel").run()?;
-    cmd!(sh, "vercel --prod").run()?;
+    let shell = Shell::new()?;
+    shell.change_dir("playground");
+    cmd!(shell, "vercel").run()?;
+    cmd!(shell, "vercel --prod").run()?;
     Ok(())
 }
 
 fn deploy_docs() -> anyhow::Result<()> {
-    let sh = Shell::new()?;
-    sh.change_dir("docs");
-    cmd!(sh, "yarn deploy").run()?;
+    let shell = Shell::new()?;
+    shell.change_dir("docs");
+    cmd!(shell, "yarn deploy").run()?;
     Ok(())
 }
 
 fn publish_cli() -> anyhow::Result<()> {
-    let sh = Shell::new()?;
-    sh.change_dir("crates/melody_cli");
-    cmd!(sh, "cargo publish").run()?;
+    let shell = Shell::new()?;
+    shell.change_dir("crates/melody_cli");
+    cmd!(shell, "cargo publish").run()?;
     Ok(())
 }
 
 fn publish_compiler() -> anyhow::Result<()> {
-    let sh = Shell::new()?;
-    sh.change_dir("crates/melody_cli");
-    cmd!(sh, "cargo publish").run()?;
+    let shell = Shell::new()?;
+    shell.change_dir("crates/melody_cli");
+    cmd!(shell, "cargo publish").run()?;
     Ok(())
 }
 
