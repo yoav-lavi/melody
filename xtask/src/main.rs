@@ -61,7 +61,7 @@ fn publish_compiler() -> anyhow::Result<()> {
 
 fn print_help() {
     eprintln!(
-        r#"Tasks: 
+        r#"Tasks:
     deploy-docs
     deploy-playground
     playground-wasm
