@@ -62,7 +62,7 @@ pub fn report_read_input_error() {
 pub fn print_repl_welcome() {
     println!(
         "{}\n\n{}\n\n{}\n{}\n{}\n{}\n{}\n",
-        "Melody REPL v0.13.6".bright_green(),
+        format!("Melody REPL v{}", env!("CARGO_PKG_VERSION")).bright_green(),
         "Commands:".bright_green(),
         format_args!(
             "- {} - {}",
