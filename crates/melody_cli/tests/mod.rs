@@ -2,10 +2,9 @@
 
 mod utils;
 
-use std::fs::read_to_string;
-
 use assert_cmd::Command;
 use assert_fs::{fixture::FileWriteStr, NamedTempFile};
+use std::fs::read_to_string;
 use tempfile::tempdir;
 use unindent::unindent;
 use utils::TestResult;
