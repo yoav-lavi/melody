@@ -297,7 +297,7 @@ Assertions can be preceeded by `not` to create a negative assertion (equivalent 
 
 ## File Extension
 
-The Melody file extension is `.mdy`
+The Melody file extensions are `.mdy` and `.melody`
 
 ## Crates
 
