@@ -5,7 +5,7 @@
 - [Playground](./playground.md)
 - [Install](./install.md)
 - [CLI](./cli.md)
-- [Syntax](./examples.md)
+- [Syntax](./syntax.md)
 - [Future Feature Status](./status.md)
 - [Performance](./performance.md)
 - [Extensions](./extensions.md)
