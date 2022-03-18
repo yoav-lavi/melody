@@ -17,6 +17,12 @@
     "Programming Languages"
   ],
   "contributes": {
+    "snippets": [
+      {
+        "language": "melody",
+        "path": "./snippets.json"
+      }
+    ],
     "languages": [
       {
         "id": "melody",
