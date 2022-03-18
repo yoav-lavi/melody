@@ -27,4 +27,4 @@ assert_eq!(output.unwrap(), "A{1,5}");
 ## Links
 
 - [docs.rs](https://docs.rs/melody_compiler/)
-- [Language Documentation](https://yoav-lavi.github.io/melody/)
+- [Language Documentation](https://yoav-lavi.github.io/melody/book/)
