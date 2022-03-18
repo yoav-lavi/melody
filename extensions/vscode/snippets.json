@@ -1,40 +1,39 @@
 {
   "Match": {
     "prefix": "match",
-    "body": ["match {\n $1 \n}", "$2"],
+    "body": ["match {\n $1 \n}", "$0"],
     "description": "Open a match group"
   },
   "Capture": {
     "prefix": "capture",
-    "body": ["capture $1 {\n $2 \n}", "$3"],
+    "body": ["capture $1 {\n $2 \n}", "$0"],
     "description": "Open a capture group"
   },
   "Either": {
     "prefix": "either",
-    "body": ["either {\n $2 \n}", "$3"],
+    "body": ["either {\n $2 \n}", "$0"],
     "description": "Open an either group"
   },
   "Ahead": {
     "prefix": "ahead",
-    "body": ["ahead {\n $2 \n}", "$3"],
+    "body": ["ahead {\n $2 \n}", "$0"],
     "description": "Open an ahead assertion"
   },
   "Behind": {
     "prefix": "behind",
-    "body": ["behind {\n $2 \n}", "$3"],
+    "body": ["behind {\n $2 \n}", "$0"],
     "description": "Open a behind assertion"
   },
   "Symbol": {
     "prefix": "symbol",
     "body": [
-      "<${1|whitespace,space,newline,tab,return,feed,null,digit,word,vertical,start,end,char,alphabetic,alphanumeric,boundary,backspace|}>",
-      "$2"
+      "<${1|whitespace,space,newline,tab,return,feed,null,digit,word,vertical,start,end,char,alphabetic,alphanumeric,boundary,backspace|}>$0"
     ],
     "description": "Add a symbol"
   },
   "Let": {
     "prefix": "let",
-    "body": ["let .$1 = {\n $2 \n}", "$3"],
+    "body": ["let .$1 = {\n $2 \n}", "$0"],
     "description": "Define a variable"
   }
 }
