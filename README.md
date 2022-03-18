@@ -1,6 +1,6 @@
 <p align="center">
-  <img alt="Melody Logo" height="250px" src="https://user-images.githubusercontent.com/14347895/157920860-2dfc3278-1526-4a96-a3d3-97b5daca8390.png#gh-dark-mode-only">
-    <img alt="Melody Logo" height="250px" src="https://user-images.githubusercontent.com/14347895/157926614-8434c590-e810-494c-ac9d-3657e9aa4583.png#gh-light-mode-only">
+  <img alt="Melody Logo" height="195px" src="https://user-images.githubusercontent.com/14347895/159065812-ab1242ea-e29d-4cbb-9d1f-4224eb5cc4ce.png#gh-dark-mode-only">
+    <img alt="Melody Logo" height="195px" src="https://user-images.githubusercontent.com/14347895/159065887-51a2d948-ae6f-48c4-9dd2-1ee69e76b19f.png#gh-light-mode-only">
 </p>
 
 <p align="center">
