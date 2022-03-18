@@ -19,7 +19,7 @@
   <a href="https://melody-playground.vercel.app">
     <img alt="melody playground" src="https://img.shields.io/badge/melody-playground-brightgreen">
   </a>
-  <a href="https://yoav-lavi.github.io/melody/docs/intro">
+  <a href="https://yoav-lavi.github.io/melody/book/">
     <img alt="melody playground" src="https://img.shields.io/badge/melody-docs-blue">
   </a>
 </p>
@@ -148,7 +148,7 @@ You can try Melody in your browser using the [playground](https://melody-playgro
 
 ## Documentation
 
-Read the documentation [here](https://yoav-lavi.github.io/melody/)
+Read the documentation [here](https://yoav-lavi.github.io/melody/book/)
 
 ## Install
 
