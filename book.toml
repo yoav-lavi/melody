@@ -4,3 +4,7 @@ language = "en"
 multilingual = false
 src = "src"
 title = "Melody"
+
+[output.html]
+git-repository-url = "https://github.com/yoav-lavi/melody"
+git-repository-icon = "fa-github"
