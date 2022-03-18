@@ -1,6 +1,6 @@
 [package]
 name = "melody_wasm"
-version = "0.13.7"
+version = "0.13.8"
 edition = "2021"
 rust-version = "1.58.0"
 description = "WASM bindings for the Melody language compiler"
@@ -15,4 +15,4 @@ crate-type = ["cdylib"]
 
 [dependencies]
 wasm-bindgen = "0.2.79"
-melody_compiler = { version = "0.13.7", path = "../melody_compiler" }
+melody_compiler = { version = "0.13.8", path = "../melody_compiler" }
