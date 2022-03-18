@@ -1,8 +1,8 @@
 {
   "name": "melody",
   "displayName": "Melody",
-  "description": "Melody syntax highlighting",
-  "version": "0.13.10",
+  "description": "Melody syntax highlighting and snippets",
+  "version": "0.13.11",
   "publisher": "yoavlavi",
   "icon": "melody.png",
   "repository": {
