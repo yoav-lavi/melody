@@ -1,5 +1,11 @@
 # Changelog
 
+## [v0.13.7] - 2022-03-11
+
+### Misc.
+
+- Version bump for documentation update
+
 ## [v0.13.6] - 2022-03-11
 
 ### Fixes
