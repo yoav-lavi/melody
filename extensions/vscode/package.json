@@ -2,9 +2,9 @@
   "name": "melody",
   "displayName": "Melody",
   "description": "Melody syntax highlighting and snippets",
-  "version": "0.13.13",
+  "version": "0.13.14",
   "publisher": "yoavlavi",
-  "icon": "melody.png",
+  "icon": "melody-dark.png",
   "repository": {
     "type": "git",
     "url": "https://github.com/yoav-lavi/melody.git",
@@ -34,6 +34,10 @@
           ".mdy",
           ".melody"
         ],
+        "icon": {
+          "dark": "melody-icon-64.png",
+          "light": "melody-icon-dark-64.png"
+        },
         "configuration": "./language-configuration.json"
       }
     ],
