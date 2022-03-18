@@ -10,7 +10,7 @@ The Melody language compiler
 
 ```toml
 [dependencies]
-melody_compiler = "0.13.8"
+melody_compiler = "0.13.9"
 ```
 
 ## Usage
