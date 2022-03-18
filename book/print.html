@@ -1,0 +1,669 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Melody</title>
+        <meta name="robots" content="noindex" />
+
+
+        <!-- Custom HTML head -->
+        
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="welcome.html"><strong aria-hidden="true">1.</strong> Welcome</a></li><li class="chapter-item expanded "><a href="examples.html"><strong aria-hidden="true">2.</strong> Examples</a></li><li class="chapter-item expanded "><a href="playground.html"><strong aria-hidden="true">3.</strong> Playground</a></li><li class="chapter-item expanded "><a href="install.html"><strong aria-hidden="true">4.</strong> Install</a></li><li class="chapter-item expanded "><a href="cli.html"><strong aria-hidden="true">5.</strong> CLI</a></li><li class="chapter-item expanded "><a href="syntax.html"><strong aria-hidden="true">6.</strong> Syntax</a></li><li class="chapter-item expanded "><a href="status.html"><strong aria-hidden="true">7.</strong> Future Feature Status</a></li><li class="chapter-item expanded "><a href="performance.html"><strong aria-hidden="true">8.</strong> Performance</a></li><li class="chapter-item expanded "><a href="extensions.html"><strong aria-hidden="true">9.</strong> Extensions</a></li><li class="chapter-item expanded "><a href="changelog.html"><strong aria-hidden="true">10.</strong> Changelog</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Melody</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="welcome"><a class="header" href="#welcome">Welcome</a></h1>
+<p>Welcome to the melody documentation!</p>
+<p>Melody is a language that compiles to regular expressions and aims to be more easily readable and maintainable</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="examples"><a class="header" href="#examples">Examples</a></h1>
+<p>Note: these are for the currently supported syntax and may change</p>
+<h2 id="batman-theme"><a class="header" href="#batman-theme">Batman Theme</a></h2>
+<pre><code class="language-rs">16 of &quot;na&quot;;
+
+2 of match {
+  &lt;space&gt;;
+  &quot;batman&quot;;
+}
+
+// 🦇🦸‍♂️
+</code></pre>
+<p>Turns into</p>
+<pre><code>(?:na){16}(?: batman){2}
+</code></pre>
+<h2 id="twitter-hashtag"><a class="header" href="#twitter-hashtag">Twitter Hashtag</a></h2>
+<pre><code class="language-rs">&quot;#&quot;;
+some of &lt;word&gt;;
+
+// #melody
+</code></pre>
+<p>Turns into</p>
+<pre><code>#(?:\w)+
+</code></pre>
+<h2 id="introductory-courses"><a class="header" href="#introductory-courses">Introductory Courses</a></h2>
+<pre><code class="language-rs">some of &lt;alphabetic&gt;;
+&lt;space&gt;;
+&quot;1&quot;;
+2 of &lt;digit&gt;;
+
+// classname 1xx
+</code></pre>
+<p>Turns into</p>
+<pre><code>(?:[a-zA-Z])+ 1(?:\d){2}
+</code></pre>
+<h2 id="indented-code-2-spaces"><a class="header" href="#indented-code-2-spaces">Indented Code (2 spaces)</a></h2>
+<pre><code class="language-rs">some of match {
+  2 of &lt;space&gt;;
+}
+
+some of &lt;char&gt;;
+&quot;;&quot;;
+
+// let value = 5;
+</code></pre>
+<p>Turns into</p>
+<pre><code>(?: {2})+.+;
+</code></pre>
+<h2 id="semantic-versions"><a class="header" href="#semantic-versions">Semantic Versions</a></h2>
+<pre><code class="language-rs">&lt;start&gt;;
+
+option of &quot;v&quot;;
+
+capture major {
+  some of &lt;digit&gt;;
+}
+
+&quot;.&quot;;
+
+capture minor {
+  some of &lt;digit&gt;;
+}
+
+&quot;.&quot;;
+
+capture patch {
+  some of &lt;digit&gt;;
+}
+
+&lt;end&gt;;
+
+// v1.0.0
+</code></pre>
+<p>Turns into</p>
+<pre><code>^v?(?&lt;major&gt;(?:\d)+)\.(?&lt;minor&gt;(?:\d)+)\.(?&lt;patch&gt;(?:\d)+)$
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="playground"><a class="header" href="#playground">Playground</a></h1>
+<p>You can try Melody in your browser by visiting the <a href="https://melody-playground.vercel.app">playground</a></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="install"><a class="header" href="#install">Install</a></h1>
+<h2 id="cargo"><a class="header" href="#cargo">Cargo</a></h2>
+<pre><code class="language-sh">cargo install melody_cli
+</code></pre>
+<h2 id="from-source"><a class="header" href="#from-source">From Source</a></h2>
+<pre><code class="language-sh">git clone https://github.com/yoav-lavi/melody.git
+cd melody
+cargo install --path crates/melody_cli
+</code></pre>
+<h2 id="binary"><a class="header" href="#binary">Binary</a></h2>
+<ul>
+<li>macOS binaries (aarch64 and x86_64) can be downloaded from the <a href="https://github.com/yoav-lavi/melody/releases">release page</a></li>
+</ul>
+<h2 id="community"><a class="header" href="#community">Community</a></h2>
+<ul>
+<li>
+<p><a href="https://aur.archlinux.org/packages/melody">Arch Linux</a> (maintained by <a href="https://github.com/ilai-deutel">@ilai-deutel</a>)</p>
+<details><summary>Installation instructions</summary>
+<ol>
+<li>
+<p>Installation with an AUR helper, for instance using <code>paru</code>:</p>
+<pre><code class="language-bash">paru -Syu melody
+</code></pre>
+</li>
+<li>
+<p>Install manually with <code>makepkg</code>:</p>
+<pre><code class="language-bash">git clone https://aur.archlinux.org/melody.git
+cd melody
+makepkg -si
+</code></pre>
+</li>
+</ol>
+</details>
+</li>
+<li>
+<p>NixOS (soon, see <a href="https://github.com/NixOS/nixpkgs/pull/160985">PR</a>) (maintained by <a href="https://github.com/jyooru">@jyooru</a>)</p>
+</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="cli"><a class="header" href="#cli">CLI</a></h1>
+<pre><code class="language-sh">melody [OPTIONS] [INPUT_FILE_PATH]
+
+ARGS:
+    &lt;INPUT_FILE_PATH&gt;    Read from a file
+
+OPTIONS:
+    -h, --help                         Print help information
+    -n, --no-color                     Print output with no color
+    -o, --output &lt;OUTPUT_FILE_PATH&gt;    Write to a file
+    -r, --repl                         Start the Melody REPL
+    -V, --version                      Print version information
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="syntax"><a class="header" href="#syntax">Syntax</a></h1>
+<h2 id="quantifiers"><a class="header" href="#quantifiers">Quantifiers</a></h2>
+<ul>
+<li><code>... of</code> - used to express a specific amount of a pattern. equivalent to regex <code>{5}</code> (assuming <code>5 of ...</code>)</li>
+<li><code>... to ... of</code> - used to express an amount within a range of a pattern. equivalent to regex <code>{5,9}</code> (assuming <code>5 to 9 of ...</code>)</li>
+<li><code>over ... of</code> - used to express more than an amount of a pattern. equivalent to regex <code>{6,}</code> (assuming <code>over 5 of ...</code>)</li>
+<li><code>some of</code> - used to express 1 or more of a pattern. equivalent to regex <code>+</code></li>
+<li><code>any of</code> - used to express 0 or more of a pattern. equivalent to regex <code>*</code></li>
+<li><code>option of</code> - used to express 0 or 1 of a pattern. equivalent to regex <code>?</code></li>
+</ul>
+<p>All quantifiers can be preceded by <code>lazy</code> to match the least amount of characters rather than the most characters (greedy). Equivalent to regex  <code>+?</code>, <code>*?</code>, etc.</p>
+<h2 id="symbols"><a class="header" href="#symbols">Symbols</a></h2>
+<ul>
+<li><code>&lt;char&gt;</code> - matches any single character. equivalent to regex <code>.</code></li>
+<li><code>&lt;whitespace&gt;</code> - matches any kind of whitespace character. equivalent to regex <code>\s</code> or <code>[ \t\n\v\f\r]</code></li>
+<li><code>&lt;newline&gt;</code> - matches a newline character. equivalent to regex <code>\n</code>  or <code>[0-9]</code></li>
+<li><code>&lt;tab&gt;</code> - matches a tab character. equivalent to regex <code>\t</code></li>
+<li><code>&lt;return&gt;</code> -  matches a carriage return character. equivalent to regex <code>\r</code></li>
+<li><code>&lt;feed&gt;</code> - matches a form feed character. equivalent to regex <code>\f</code></li>
+<li><code>&lt;null&gt;</code> - matches a null characther. equivalent to regex <code>\0</code></li>
+<li><code>&lt;digit&gt;</code> - matches any single digit. equivalent to regex <code>\d</code> or <code>[0-9]</code></li>
+<li><code>&lt;vertical&gt;</code> - matches a vertical tab character. equivalent to regex <code>\v</code></li>
+<li><code>&lt;word&gt;</code> - matches a word character (any latin letter, any digit or an underscore). equivalent to regex <code>\w</code> or <code>[a-zA-Z0-9_]</code></li>
+<li><code>&lt;alphabetic&gt;</code> - matches any single latin letter. equivalent to regex <code>[a-zA-Z]</code></li>
+<li><code>&lt;alphanumeric&gt;</code> - matches any single latin letter or any single digit. equivalent to regex <code>[a-zA-Z0-9]</code></li>
+<li><code>&lt;boundary&gt;</code> - Matches a character between a character matched by <code>&lt;word&gt;</code> and a character not matched by <code>&lt;word&gt;</code> without consuming the character. equivalent to regex <code>\b</code></li>
+<li><code>&lt;backspace&gt;</code> - matches a backspace control character. equivalent to regex <code>[\b]</code></li>
+</ul>
+<p>All symbols can be preceeded with <code>not</code> to match any character other than the symbol</p>
+<h2 id="special-symbols"><a class="header" href="#special-symbols">Special Symbols</a></h2>
+<ul>
+<li><code>&lt;start&gt;</code> - matches the start of the string. equivalent to regex <code>^</code></li>
+<li><code>&lt;end&gt;</code> - matches the end of the string. equivalent to regex <code>$</code></li>
+</ul>
+<h2 id="character-ranges"><a class="header" href="#character-ranges">Character Ranges</a></h2>
+<ul>
+<li><code>... to ...</code> - used with digits or alphabetic characters to express a character range. equivalent to regex <code>[5-9]</code> (assuming <code>5 to 9</code>) or <code>[a-z]</code> (assuming <code>a to z</code>)</li>
+</ul>
+<h2 id="literals"><a class="header" href="#literals">Literals</a></h2>
+<ul>
+<li><code>&quot;...&quot;</code> or <code>'...'</code> - used to mark a literal part of the match. Melody will automatically escape characters as needed. Quotes (of the same kind surrounding the literal) should be escaped</li>
+</ul>
+<h2 id="raw"><a class="header" href="#raw">Raw</a></h2>
+<ul>
+<li><code>`...`</code> - added directly to the output without any escaping</li>
+</ul>
+<h2 id="groups"><a class="header" href="#groups">Groups</a></h2>
+<ul>
+<li><code>capture</code> - used to open a <code>capture</code> or named <code>capture</code> block. captured patterns are later available in the list of matches (either positional or named). equivalent to regex <code>(...)</code></li>
+<li><code>match</code> - used to open a <code>match</code> block, matches the contents without capturing. equivalent to regex <code>(?:...)</code></li>
+<li><code>either</code> - used to open an <code>either</code> block, matches one of the statements within the block. equivalent to regex <code>(?:...|...)</code></li>
+</ul>
+<h2 id="assertions"><a class="header" href="#assertions">Assertions</a></h2>
+<ul>
+<li><code>ahead</code> - used to open an <code>ahead</code> block. equivalent to regex <code>(?=...)</code>. use after an expression</li>
+<li><code>behind</code> - used to open an <code>behind</code> block. equivalent to regex <code>(?&lt;=...)</code>. use before an expression</li>
+</ul>
+<p>Assertions can be preceeded by <code>not</code> to create a negative assertion (equivalent to regex <code>(?!...)</code>, <code>(?&lt;!...)</code>)</p>
+<h2 id="variables"><a class="header" href="#variables">Variables</a></h2>
+<ul>
+<li>
+<p><code>let .variable_name = { ... }</code> - defines a variable from a block of statements. can later be used with <code>.variable_name</code>. Variables must be declared before being used. Variable invocations cannot be quantified directly, use a group if you want to quantify a variable invocation</p>
+<p>example:</p>
+<pre><code class="language-rs">let .a_and_b = {
+  &quot;a&quot;;
+  &quot;b&quot;;
+}
+
+.a_and_b;
+&quot;c&quot;;
+
+// abc
+
+</code></pre>
+</li>
+</ul>
+<h2 id="extras"><a class="header" href="#extras">Extras</a></h2>
+<ul>
+<li><code>/* ... */</code>, <code>// ...</code> - used to mark comments (note: <code>// ...</code> comments must be on separate line)</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="future-feature-status"><a class="header" href="#future-feature-status">Future Feature Status</a></h1>
+<p>🐣 - Partially implemented</p>
+<p>❌ - Not implemented</p>
+<p>❔ - Unclear what the syntax will be</p>
+<p>❓ - Unclear whether this will be implemented</p>
+<table><thead><tr><th>Melody</th><th>Regex</th><th>Status</th></tr></thead><tbody>
+<tr><td><code>not &quot;A&quot;;</code></td><td><code>[^A]</code></td><td>🐣</td></tr>
+<tr><td>variables / macros</td><td></td><td>🐣</td></tr>
+<tr><td>file watcher</td><td></td><td>❌</td></tr>
+<tr><td>TS / JS build step</td><td></td><td>❌</td></tr>
+<tr><td>multiline groups in REPL</td><td></td><td>❌</td></tr>
+<tr><td><code>flags: global, multiline, ...</code></td><td><code>/.../gm...</code></td><td>❔</td></tr>
+<tr><td>(?)</td><td><code>\#</code></td><td>❔</td></tr>
+<tr><td>(?)</td><td><code>\k&lt;name&gt;</code></td><td>❔</td></tr>
+<tr><td>(?)</td><td><code>\p{...}</code></td><td>❔</td></tr>
+<tr><td>(?)</td><td><code>\P{...}</code></td><td>❔</td></tr>
+<tr><td>(?)</td><td><code>\uYYYY</code></td><td>❔</td></tr>
+<tr><td>(?)</td><td><code>\xYY</code></td><td>❔</td></tr>
+<tr><td>(?)</td><td><code>\ddd</code></td><td>❔</td></tr>
+<tr><td>(?)</td><td><code>\cY</code></td><td>❔</td></tr>
+<tr><td>(?)</td><td><code>$1</code></td><td>❔</td></tr>
+<tr><td>(?)</td><td><code>$`</code></td><td>❔</td></tr>
+<tr><td>(?)</td><td><code>$&amp;</code></td><td>❔</td></tr>
+<tr><td>(?)</td><td><code>x20</code></td><td>❔</td></tr>
+<tr><td>(?)</td><td><code>x{06fa}</code></td><td>❔</td></tr>
+<tr><td><code>any of &quot;a&quot;, &quot;b&quot;, &quot;c&quot;</code> *</td><td><code>[abc]</code></td><td>❓</td></tr>
+<tr><td>multiple ranges *</td><td><code>[a-zA-Z0-9]</code></td><td>❓</td></tr>
+<tr><td>regex optimization</td><td></td><td>❓</td></tr>
+<tr><td>standard library / patterns</td><td></td><td>❓</td></tr>
+<tr><td>reverse compiler</td><td></td><td>❓</td></tr>
+</tbody></table>
+<p>* these are expressable in the current syntax using other methods</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="performance"><a class="header" href="#performance">Performance</a></h1>
+<p>Last measured on V0.13.3</p>
+<p>Measured on an 8 core 2021 MacBook Pro 14-inch, Apple M1 Pro using <a href="https://github.com/bheisler/criterion.rs">criterion</a>:</p>
+<ul>
+<li>
+<p>8 lines:</p>
+<pre><code>compiler/normal (8 lines)
+                        time:   [3.6560 us 3.6596 us 3.6644 us]
+slope  [3.6560 us 3.6644 us] R^2            [0.9999367 0.9999233]
+mean   [3.6577 us 3.6676 us] std. dev.      [3.2234 ns 11.399 ns]
+median [3.6549 us 3.6674 us] med. abs. dev. [642.70 ps 12.973 ns]
+</code></pre>
+</li>
+<li>
+<p>1M lines:</p>
+<pre><code>compiler/long input (1M lines)
+                        time:   [345.99 ms 348.85 ms 351.91 ms]
+mean   [345.99 ms 351.91 ms] std. dev.      [2.8317 ms 6.3397 ms]
+median [344.55 ms 352.85 ms] med. abs. dev. [893.36 us 8.5853 ms]
+</code></pre>
+</li>
+<li>
+<p>Deeply nested:</p>
+<pre><code>compiler/deeply nested
+                        time:   [4.8259 us 4.8330 us 4.8399 us]
+slope  [4.8259 us 4.8399 us] R^2            [0.9998793 0.9998830]
+mean   [4.8259 us 4.8476 us] std. dev.      [7.6412 ns 24.306 ns]
+median [4.8234 us 4.8484 us] med. abs. dev. [4.1349 ns 30.340 ns]
+</code></pre>
+</li>
+</ul>
+<p>To reproduce, run <code>cargo benchmark</code></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="extensions"><a class="header" href="#extensions">Extensions</a></h1>
+<ul>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=yoavlavi.melody">VSCode</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="changelog"><a class="header" href="#changelog">Changelog</a></h1>
+<h2 id="v0136---2022-03-11"><a class="header" href="#v0136---2022-03-11">[v0.13.6] - 2022-03-11</a></h2>
+<h3 id="fixes"><a class="header" href="#fixes">Fixes</a></h3>
+<ul>
+<li>Handles a few possible panics</li>
+</ul>
+<h2 id="v0135---2022-03-11"><a class="header" href="#v0135---2022-03-11">[v0.13.5] - 2022-03-11</a></h2>
+<h3 id="misc"><a class="header" href="#misc">Misc.</a></h3>
+<ul>
+<li>Version bump</li>
+</ul>
+<h2 id="v0134---2022-03-11"><a class="header" href="#v0134---2022-03-11">[v0.13.4] - 2022-03-11</a></h2>
+<h3 id="tooling"><a class="header" href="#tooling">Tooling</a></h3>
+<ul>
+<li>Strips binaries</li>
+</ul>
+<h3 id="dependencies"><a class="header" href="#dependencies">Dependencies</a></h3>
+<ul>
+<li>Updates dependencies</li>
+</ul>
+<h2 id="v0133---2022-03-09"><a class="header" href="#v0133---2022-03-09">[v0.13.3] - 2022-03-09</a></h2>
+<h3 id="refactoring"><a class="header" href="#refactoring">Refactoring</a></h3>
+<ul>
+<li>Replaces <code>lazy_static</code> with <code>once_cell</code></li>
+</ul>
+<h2 id="v0132---2022-03-09"><a class="header" href="#v0132---2022-03-09">[v0.13.2] - 2022-03-09</a></h2>
+<h3 id="performance-1"><a class="header" href="#performance-1">Performance</a></h3>
+<ul>
+<li>Improves literal parse performance</li>
+</ul>
+<h3 id="refactoring-1"><a class="header" href="#refactoring-1">Refactoring</a></h3>
+<ul>
+<li>Reports a few possible panics with a ParseError</li>
+</ul>
+<h2 id="v0131---2022-03-08"><a class="header" href="#v0131---2022-03-08">[v0.13.1] - 2022-03-08</a></h2>
+<h3 id="fixes-1"><a class="header" href="#fixes-1">Fixes</a></h3>
+<ul>
+<li>Fixes an issue with single letter variable identifiers matching a following space</li>
+<li>Fixes a clash between REPL commands and variables</li>
+</ul>
+<h2 id="v0130---2022-03-08"><a class="header" href="#v0130---2022-03-08">[v0.13.0] - 2022-03-08</a></h2>
+<h3 id="breaking"><a class="header" href="#breaking">Breaking</a></h3>
+<ul>
+<li><code>&lt;alphabet&gt;</code> is now <code>&lt;alphabetic&gt;</code></li>
+</ul>
+<h3 id="features"><a class="header" href="#features">Features</a></h3>
+<ul>
+<li>Support for lazy quantifiers</li>
+<li>All symbols now have negative counterparts</li>
+<li><code>&lt;alphanumeric&gt;</code> symbol added</li>
+<li>Adds an experimental implementation of variables</li>
+</ul>
+<h2 id="v0124---2022-03-06"><a class="header" href="#v0124---2022-03-06">[v0.12.4] - 2022-03-06</a></h2>
+<h3 id="misc-1"><a class="header" href="#misc-1">Misc.</a></h3>
+<ul>
+<li>Version bump</li>
+</ul>
+<h2 id="v0123---2022-03-06"><a class="header" href="#v0123---2022-03-06">[v0.12.3] - 2022-03-06</a></h2>
+<h3 id="fixes-2"><a class="header" href="#fixes-2">Fixes</a></h3>
+<ul>
+<li>Fixes an issue with identifying negative char ranges</li>
+</ul>
+<h2 id="v0122---2022-03-05"><a class="header" href="#v0122---2022-03-05">[v0.12.2] - 2022-03-05</a></h2>
+<h3 id="refactoring-2"><a class="header" href="#refactoring-2">Refactoring</a></h3>
+<ul>
+<li>Performance improvements</li>
+</ul>
+<h3 id="misc-2"><a class="header" href="#misc-2">Misc.</a></h3>
+<ul>
+<li>Adds keywords and categories to cargo.toml files</li>
+</ul>
+<h2 id="v0121---2022-03-04"><a class="header" href="#v0121---2022-03-04">[v0.12.1] - 2022-03-04</a></h2>
+<h3 id="misc-3"><a class="header" href="#misc-3">Misc.</a></h3>
+<ul>
+<li>CLI documentation update</li>
+</ul>
+<h2 id="v0120---2022-03-04"><a class="header" href="#v0120---2022-03-04">[v0.12.0] - 2022-03-04</a></h2>
+<h3 id="breaking-1"><a class="header" href="#breaking-1">Breaking</a></h3>
+<ul>
+<li>Produces clean output (no <code>//</code> and new newline after output)</li>
+</ul>
+<h3 id="features-1"><a class="header" href="#features-1">Features</a></h3>
+<ul>
+<li>Adds favicons for documentation and playground</li>
+<li>The Melody playground now supports add to homescreen</li>
+<li>Adds <code>#![forbid(unsafe_code)]</code></li>
+</ul>
+<h3 id="benchmarks"><a class="header" href="#benchmarks">Benchmarks</a></h3>
+<ul>
+<li>Adds benchmarks</li>
+</ul>
+<h2 id="v0111---2022-03-03"><a class="header" href="#v0111---2022-03-03">[v0.11.1] - 2022-03-03</a></h2>
+<h3 id="fixes-3"><a class="header" href="#fixes-3">Fixes</a></h3>
+<ul>
+<li>Fixes possible panics</li>
+</ul>
+<h3 id="tests"><a class="header" href="#tests">Tests</a></h3>
+<ul>
+<li>Adds tests</li>
+<li>Adds tests for CLI</li>
+</ul>
+<h3 id="refactoring-3"><a class="header" href="#refactoring-3">Refactoring</a></h3>
+<ul>
+<li>Removes duplicated code</li>
+</ul>
+<h2 id="v0110---2022-03-02"><a class="header" href="#v0110---2022-03-02">[v0.11.0] - 2022-03-02</a></h2>
+<h3 id="breaking-2"><a class="header" href="#breaking-2">Breaking</a></h3>
+<ul>
+<li><code>ParseError</code> now contains only one <code>message</code> field, may be changed in the future</li>
+<li>Line comments (<code>//</code>) may only be used in a separate line</li>
+<li>The REPL currently accepts blocks on a single line but not multiple lines</li>
+<li>Semicolons are no longer optional</li>
+</ul>
+<h3 id="features-2"><a class="header" href="#features-2">Features</a></h3>
+<ul>
+<li>Uses a Pest grammar and an AST to parse Melody</li>
+<li>Adds support for nested groups</li>
+<li>Adds support for negative ranges</li>
+<li>Adds initial support for negative character classes</li>
+<li>Adds support for <code>&lt;backspace&gt;</code>, <code>&lt;boundary&gt;</code></li>
+<li>Adds support for inline comments</li>
+<li>Enforces group closing</li>
+<li>Supports NO_COLOR in CLI</li>
+<li><code>-n</code> removes color from REPL as well</li>
+</ul>
+<h2 id="v0103---2022-02-26"><a class="header" href="#v0103---2022-02-26">[v0.10.3] - 2022-02-26</a></h2>
+<h3 id="fixes-4"><a class="header" href="#fixes-4">Fixes</a></h3>
+<ul>
+<li>Removes quantifiers after newlines</li>
+</ul>
+<h2 id="v0102---2022-02-26"><a class="header" href="#v0102---2022-02-26">[v0.10.2] - 2022-02-26</a></h2>
+<h3 id="fixes-5"><a class="header" href="#fixes-5">Fixes</a></h3>
+<ul>
+<li>Fixes the handling of some newline issues in the REPL</li>
+<li>Adds an error message for a read error in the REPL</li>
+</ul>
+<h2 id="v0101---2022-02-26"><a class="header" href="#v0101---2022-02-26">[v0.10.1] - 2022-02-26</a></h2>
+<h3 id="fixes-6"><a class="header" href="#fixes-6">Fixes</a></h3>
+<ul>
+<li>Trims only the end off of REPL input</li>
+</ul>
+<h2 id="v0100---2022-02-26"><a class="header" href="#v0100---2022-02-26">[v0.10.0] - 2022-02-26</a></h2>
+<h3 id="breaking-3"><a class="header" href="#breaking-3">Breaking</a></h3>
+<ul>
+<li>Changes the <code>-f, --file</code> CLI argument to <code>-o, --output</code></li>
+</ul>
+<h3 id="features-3"><a class="header" href="#features-3">Features</a></h3>
+<ul>
+<li>Adds descriptions to CLI commands</li>
+</ul>
+<h2 id="v090---2022-02-26"><a class="header" href="#v090---2022-02-26">[v0.9.0] - 2022-02-26</a></h2>
+<h3 id="features-4"><a class="header" href="#features-4">Features</a></h3>
+<ul>
+<li>Adds <code>ahead</code>, <code>not ahead</code>, <code>behind</code> and <code>not behind</code> assertions</li>
+</ul>
+<h2 id="v080---2022-02-26"><a class="header" href="#v080---2022-02-26">[v0.8.0] - 2022-02-26</a></h2>
+<h3 id="features-5"><a class="header" href="#features-5">Features</a></h3>
+<ul>
+<li>Changes <code>&lt;space&gt;</code> to <code>&lt;whitespace&gt;</code> (thanks @amirali #34)</li>
+<li>Adds <code>&lt;space&gt;</code> and <code>&lt;alphabet&gt;</code> (thanks @amirali #34)</li>
+<li>Adds long versions for REPL commands</li>
+<li>Adds <code>.s, .source</code> to print the current source in the REPL</li>
+<li>Adds <code>.c, .clear</code> to clear REPL history</li>
+<li>Adds better error reporting to the playground</li>
+</ul>
+<h3 id="fixes-7"><a class="header" href="#fixes-7">Fixes</a></h3>
+<ul>
+<li>Fixes some undo / redo issues in the REPL</li>
+</ul>
+<h3 id="refactoring-4"><a class="header" href="#refactoring-4">Refactoring</a></h3>
+<ul>
+<li>Better error handling in the CLI</li>
+</ul>
+<h2 id="v070---2022-02-24"><a class="header" href="#v070---2022-02-24">[v0.7.0] - 2022-02-24</a></h2>
+<h3 id="features-6"><a class="header" href="#features-6">Features</a></h3>
+<ul>
+<li>Adds a REPL for <code>melody_cli</code></li>
+<li>Adds better error messages for the playground</li>
+</ul>
+<h2 id="v060---2022-02-23"><a class="header" href="#v060---2022-02-23">[v0.6.0] - 2022-02-23</a></h2>
+<h3 id="features-7"><a class="header" href="#features-7">Features</a></h3>
+<ul>
+<li>Adds support for raw sequences (<code>`...`</code>)</li>
+<li>Allows any word character in <code>capture</code> names</li>
+<li>Adds auto escaping for literals</li>
+<li>Adds the Melody version number to the documentation</li>
+</ul>
+<h3 id="syntax-changes"><a class="header" href="#syntax-changes">Syntax Changes</a></h3>
+<ul>
+<li>Changes <code>start</code>, <code>end</code>, and <code>char</code> to symbols (<code>&lt;start&gt;</code>, <code>&lt;end&gt;</code>, <code>&lt;char&gt;</code>)</li>
+<li><code>either</code> creates a non capturing group</li>
+</ul>
+<h3 id="refactoring-5"><a class="header" href="#refactoring-5">Refactoring</a></h3>
+<ul>
+<li><code>cargo clippy</code> fixes in <code>melody_wasm</code></li>
+</ul>
+<h3 id="fixes-8"><a class="header" href="#fixes-8">Fixes</a></h3>
+<ul>
+<li>Uses the correct <code>url</code> in the documentation site config</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+
+
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+
+        <script type="text/javascript">
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+    </body>
+</html>
