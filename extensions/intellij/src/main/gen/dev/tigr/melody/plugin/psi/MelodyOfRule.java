@@ -8,13 +8,13 @@ import com.intellij.psi.PsiElement;
 public interface MelodyOfRule extends PsiElement {
 
   @NotNull
-  List<MelodyExpression> getExpressionList();
+  MelodyExpression getExpression();
 
   @Nullable
   MelodyOverRule getOverRule();
 
   @Nullable
-  MelodyToRule getToRule();
+  MelodyRangeRule getRangeRule();
 
   @Nullable
   PsiElement getNumber();

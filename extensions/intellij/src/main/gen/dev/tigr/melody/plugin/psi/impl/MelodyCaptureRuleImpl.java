@@ -28,15 +28,27 @@ public class MelodyCaptureRuleImpl extends ASTWrapperPsiElement implements Melod
   }
 
   @Override
-  @Nullable
-  public MelodyExpression getExpression() {
-    return findChildByClass(MelodyExpression.class);
+  @NotNull
+  public List<MelodyExpression> getExpressionList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, MelodyExpression.class);
+  }
+
+  @Override
+  @NotNull
+  public List<MelodyLetRule> getLetRuleList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, MelodyLetRule.class);
+  }
+
+  @Override
+  @NotNull
+  public List<MelodyOfRule> getOfRuleList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, MelodyOfRule.class);
   }
 
   @Override
   @Nullable
-  public MelodyOfRule getOfRule() {
-    return findChildByClass(MelodyOfRule.class);
+  public PsiElement getIdentifier() {
+    return findChildByType(IDENTIFIER);
   }
 
 }

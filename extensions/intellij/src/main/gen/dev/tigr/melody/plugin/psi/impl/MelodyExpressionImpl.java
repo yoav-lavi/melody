@@ -77,8 +77,14 @@ public class MelodyExpressionImpl extends ASTWrapperPsiElement implements Melody
 
   @Override
   @Nullable
-  public PsiElement getComment() {
-    return findChildByType(COMMENT);
+  public MelodyToRule getToRule() {
+    return findChildByClass(MelodyToRule.class);
+  }
+
+  @Override
+  @Nullable
+  public MelodyVariableRule getVariableRule() {
+    return findChildByClass(MelodyVariableRule.class);
   }
 
 }

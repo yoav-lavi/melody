@@ -13,26 +13,37 @@ public interface MelodyTypes {
   IElementType CAPTURE_RULE = new MelodyElementType("CAPTURE_RULE");
   IElementType EITHER_RULE = new MelodyElementType("EITHER_RULE");
   IElementType EXPRESSION = new MelodyElementType("EXPRESSION");
+  IElementType LET_RULE = new MelodyElementType("LET_RULE");
   IElementType MATCH_RULE = new MelodyElementType("MATCH_RULE");
   IElementType NOT_RULE = new MelodyElementType("NOT_RULE");
   IElementType OF_RULE = new MelodyElementType("OF_RULE");
   IElementType OVER_RULE = new MelodyElementType("OVER_RULE");
+  IElementType RANGE_RULE = new MelodyElementType("RANGE_RULE");
   IElementType STRING_RULE = new MelodyElementType("STRING_RULE");
   IElementType SYMBOLS_RULE = new MelodyElementType("SYMBOLS_RULE");
   IElementType TO_RULE = new MelodyElementType("TO_RULE");
+  IElementType VARIABLE_RULE = new MelodyElementType("VARIABLE_RULE");
 
   IElementType AHEAD = new MelodyTokenType("ahead");
-  IElementType ALPHABET = new MelodyTokenType("<alphabet>");
+  IElementType ALPHABET = new MelodyTokenType("<alphabetic>");
+  IElementType ALPHANUMERIC = new MelodyTokenType("<alphanumeric>");
   IElementType ANY = new MelodyTokenType("any");
+  IElementType BACKSPACE = new MelodyTokenType("<backspace>");
   IElementType BEHIND = new MelodyTokenType("behind");
+  IElementType BOUNDARY = new MelodyTokenType("<boundary>");
   IElementType CAPTURE = new MelodyTokenType("capture");
   IElementType CHAR = new MelodyTokenType("<char>");
+  IElementType CHARACTER = new MelodyTokenType("character");
   IElementType CLOSEBRACE = new MelodyTokenType("}");
   IElementType COMMENT = new MelodyTokenType("comment");
   IElementType DIGIT = new MelodyTokenType("<digit>");
   IElementType EITHER = new MelodyTokenType("either");
   IElementType END = new MelodyTokenType("<end>");
+  IElementType EQUALS = new MelodyTokenType("=");
   IElementType FEED = new MelodyTokenType("<feed>");
+  IElementType IDENTIFIER = new MelodyTokenType("identifier");
+  IElementType LAZY = new MelodyTokenType("lazy");
+  IElementType LET = new MelodyTokenType("let");
   IElementType MATCH = new MelodyTokenType("match");
   IElementType NEWLINE = new MelodyTokenType("<newline>");
   IElementType NOT = new MelodyTokenType("not");
@@ -50,6 +61,7 @@ public interface MelodyTypes {
   IElementType STRING = new MelodyTokenType("string");
   IElementType TAB = new MelodyTokenType("<tab>");
   IElementType TO = new MelodyTokenType("to");
+  IElementType VARIABLE = new MelodyTokenType("variable");
   IElementType VERTICAL = new MelodyTokenType("<vertical>");
   IElementType WHITESPACELITERAL = new MelodyTokenType("<whitespace>");
   IElementType WORD = new MelodyTokenType("<word>");
@@ -72,6 +84,9 @@ public interface MelodyTypes {
       else if (type == EXPRESSION) {
         return new MelodyExpressionImpl(node);
       }
+      else if (type == LET_RULE) {
+        return new MelodyLetRuleImpl(node);
+      }
       else if (type == MATCH_RULE) {
         return new MelodyMatchRuleImpl(node);
       }
@@ -84,6 +99,9 @@ public interface MelodyTypes {
       else if (type == OVER_RULE) {
         return new MelodyOverRuleImpl(node);
       }
+      else if (type == RANGE_RULE) {
+        return new MelodyRangeRuleImpl(node);
+      }
       else if (type == STRING_RULE) {
         return new MelodyStringRuleImpl(node);
       }
@@ -92,6 +110,9 @@ public interface MelodyTypes {
       }
       else if (type == TO_RULE) {
         return new MelodyToRuleImpl(node);
+      }
+      else if (type == VARIABLE_RULE) {
+        return new MelodyVariableRuleImpl(node);
       }
       throw new AssertionError("Unknown element type: " + type);
     }

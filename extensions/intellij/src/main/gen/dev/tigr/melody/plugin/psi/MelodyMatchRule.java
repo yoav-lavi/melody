@@ -7,10 +7,13 @@ import com.intellij.psi.PsiElement;
 
 public interface MelodyMatchRule extends PsiElement {
 
-  @Nullable
-  MelodyExpression getExpression();
+  @NotNull
+  List<MelodyExpression> getExpressionList();
 
-  @Nullable
-  MelodyOfRule getOfRule();
+  @NotNull
+  List<MelodyLetRule> getLetRuleList();
+
+  @NotNull
+  List<MelodyOfRule> getOfRuleList();
 
 }

@@ -32,6 +32,9 @@ public interface MelodyExpression extends PsiElement {
   MelodySymbolsRule getSymbolsRule();
 
   @Nullable
-  PsiElement getComment();
+  MelodyToRule getToRule();
+
+  @Nullable
+  MelodyVariableRule getVariableRule();
 
 }

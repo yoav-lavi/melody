@@ -62,40 +62,69 @@ public class MelodyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // openbrace rules closebrace | openbrace closebrace
+  // openbrace [rules*] closebrace
   static boolean block_rule(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "block_rule")) return false;
     if (!nextTokenIs(b, OPENBRACE)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = block_rule_0(b, l + 1);
-    if (!r) r = parseTokens(b, 0, OPENBRACE, CLOSEBRACE);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // openbrace rules closebrace
-  private static boolean block_rule_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "block_rule_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
     r = consumeToken(b, OPENBRACE);
-    r = r && rules(b, l + 1);
+    r = r && block_rule_1(b, l + 1);
     r = r && consumeToken(b, CLOSEBRACE);
     exit_section_(b, m, null, r);
     return r;
   }
 
+  // [rules*]
+  private static boolean block_rule_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "block_rule_1")) return false;
+    block_rule_1_0(b, l + 1);
+    return true;
+  }
+
+  // rules*
+  private static boolean block_rule_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "block_rule_1_0")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!rules(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "block_rule_1_0", c)) break;
+    }
+    return true;
+  }
+
   /* ********************************************************** */
-  // capture block_rule
+  // capture identifier block_rule | capture block_rule
   public static boolean capture_rule(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "capture_rule")) return false;
     if (!nextTokenIs(b, CAPTURE)) return false;
     boolean r;
     Marker m = enter_section_(b);
+    r = capture_rule_0(b, l + 1);
+    if (!r) r = capture_rule_1(b, l + 1);
+    exit_section_(b, m, CAPTURE_RULE, r);
+    return r;
+  }
+
+  // capture identifier block_rule
+  private static boolean capture_rule_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "capture_rule_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, CAPTURE, IDENTIFIER);
+    r = r && block_rule(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // capture block_rule
+  private static boolean capture_rule_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "capture_rule_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
     r = consumeToken(b, CAPTURE);
     r = r && block_rule(b, l + 1);
-    exit_section_(b, m, CAPTURE_RULE, r);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -113,13 +142,12 @@ public class MelodyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // comment | string_rule | not_rule | symbols_rule | match_rule | capture_rule | either_rule | ahead_rule | behind_rule
+  // string_rule | not_rule | symbols_rule | match_rule | capture_rule | either_rule | ahead_rule | behind_rule | variable_rule | to_rule
   public static boolean expression(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "expression")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, EXPRESSION, "<expression>");
-    r = consumeToken(b, COMMENT);
-    if (!r) r = string_rule(b, l + 1);
+    r = string_rule(b, l + 1);
     if (!r) r = not_rule(b, l + 1);
     if (!r) r = symbols_rule(b, l + 1);
     if (!r) r = match_rule(b, l + 1);
@@ -127,7 +155,22 @@ public class MelodyParser implements PsiParser, LightPsiParser {
     if (!r) r = either_rule(b, l + 1);
     if (!r) r = ahead_rule(b, l + 1);
     if (!r) r = behind_rule(b, l + 1);
+    if (!r) r = variable_rule(b, l + 1);
+    if (!r) r = to_rule(b, l + 1);
     exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // let variable equals block_rule
+  public static boolean let_rule(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "let_rule")) return false;
+    if (!nextTokenIs(b, LET)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, LET, VARIABLE, EQUALS);
+    r = r && block_rule(b, l + 1);
+    exit_section_(b, m, LET_RULE, r);
     return r;
   }
 
@@ -145,7 +188,7 @@ public class MelodyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // not (ahead_rule | behind_rule | whitespaceliteral semicolon | digit semicolon | word semicolon)
+  // not (ahead_rule | behind_rule | symbols_rule)
   public static boolean not_rule(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "not_rule")) return false;
     if (!nextTokenIs(b, NOT)) return false;
@@ -157,26 +200,22 @@ public class MelodyParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // ahead_rule | behind_rule | whitespaceliteral semicolon | digit semicolon | word semicolon
+  // ahead_rule | behind_rule | symbols_rule
   private static boolean not_rule_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "not_rule_1")) return false;
     boolean r;
-    Marker m = enter_section_(b);
     r = ahead_rule(b, l + 1);
     if (!r) r = behind_rule(b, l + 1);
-    if (!r) r = parseTokens(b, 0, WHITESPACELITERAL, SEMICOLON);
-    if (!r) r = parseTokens(b, 0, DIGIT, SEMICOLON);
-    if (!r) r = parseTokens(b, 0, WORD, SEMICOLON);
-    exit_section_(b, m, null, r);
+    if (!r) r = symbols_rule(b, l + 1);
     return r;
   }
 
   /* ********************************************************** */
-  // to_rule | number | some | over_rule | option | any
+  // range_rule | number | some | over_rule | option | any
   static boolean of_first(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "of_first")) return false;
     boolean r;
-    r = to_rule(b, l + 1);
+    r = range_rule(b, l + 1);
     if (!r) r = consumeToken(b, NUMBER);
     if (!r) r = consumeToken(b, SOME);
     if (!r) r = over_rule(b, l + 1);
@@ -186,33 +225,30 @@ public class MelodyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // of_first of [expression*]
+  // [lazy?] of_first of expression
   public static boolean of_rule(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "of_rule")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, OF_RULE, "<of rule>");
-    r = of_first(b, l + 1);
+    r = of_rule_0(b, l + 1);
+    r = r && of_first(b, l + 1);
     r = r && consumeToken(b, OF);
-    r = r && of_rule_2(b, l + 1);
+    r = r && expression(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
 
-  // [expression*]
-  private static boolean of_rule_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "of_rule_2")) return false;
-    of_rule_2_0(b, l + 1);
+  // [lazy?]
+  private static boolean of_rule_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "of_rule_0")) return false;
+    of_rule_0_0(b, l + 1);
     return true;
   }
 
-  // expression*
-  private static boolean of_rule_2_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "of_rule_2_0")) return false;
-    while (true) {
-      int c = current_position_(b);
-      if (!expression(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "of_rule_2_0", c)) break;
-    }
+  // lazy?
+  private static boolean of_rule_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "of_rule_0_0")) return false;
+    consumeToken(b, LAZY);
     return true;
   }
 
@@ -225,6 +261,18 @@ public class MelodyParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b);
     r = consumeTokens(b, 0, OVER, NUMBER);
     exit_section_(b, m, OVER_RULE, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // number to number
+  public static boolean range_rule(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "range_rule")) return false;
+    if (!nextTokenIs(b, NUMBER)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, NUMBER, TO, NUMBER);
+    exit_section_(b, m, RANGE_RULE, r);
     return r;
   }
 
@@ -248,12 +296,14 @@ public class MelodyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // expression | of_rule
+  // comment | expression | of_rule | let_rule
   static boolean rules(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "rules")) return false;
     boolean r;
-    r = expression(b, l + 1);
+    r = consumeToken(b, COMMENT);
+    if (!r) r = expression(b, l + 1);
     if (!r) r = of_rule(b, l + 1);
+    if (!r) r = let_rule(b, l + 1);
     return r;
   }
 
@@ -270,7 +320,7 @@ public class MelodyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // start | end | char | whitespaceliteral | space | newline | tab | return | feed | null | digit | vertical | word | alphabet
+  // start | end | char | whitespaceliteral | space | newline | tab | return | feed | null | digit | vertical | word | alphabet | alphanumeric | boundary | backspace
   static boolean symbols_(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "symbols_")) return false;
     boolean r;
@@ -288,6 +338,9 @@ public class MelodyParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, VERTICAL);
     if (!r) r = consumeToken(b, WORD);
     if (!r) r = consumeToken(b, ALPHABET);
+    if (!r) r = consumeToken(b, ALPHANUMERIC);
+    if (!r) r = consumeToken(b, BOUNDARY);
+    if (!r) r = consumeToken(b, BACKSPACE);
     return r;
   }
 
@@ -304,14 +357,47 @@ public class MelodyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // number to number
+  // (character | number) to (character | number) semicolon
   public static boolean to_rule(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "to_rule")) return false;
-    if (!nextTokenIs(b, NUMBER)) return false;
+    if (!nextTokenIs(b, "<to rule>", CHARACTER, NUMBER)) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, TO_RULE, "<to rule>");
+    r = to_rule_0(b, l + 1);
+    r = r && consumeToken(b, TO);
+    r = r && to_rule_2(b, l + 1);
+    r = r && consumeToken(b, SEMICOLON);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // character | number
+  private static boolean to_rule_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "to_rule_0")) return false;
+    boolean r;
+    r = consumeToken(b, CHARACTER);
+    if (!r) r = consumeToken(b, NUMBER);
+    return r;
+  }
+
+  // character | number
+  private static boolean to_rule_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "to_rule_2")) return false;
+    boolean r;
+    r = consumeToken(b, CHARACTER);
+    if (!r) r = consumeToken(b, NUMBER);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // variable semicolon
+  public static boolean variable_rule(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "variable_rule")) return false;
+    if (!nextTokenIs(b, VARIABLE)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, NUMBER, TO, NUMBER);
-    exit_section_(b, m, TO_RULE, r);
+    r = consumeTokens(b, 0, VARIABLE, SEMICOLON);
+    exit_section_(b, m, VARIABLE_RULE, r);
     return r;
   }
 

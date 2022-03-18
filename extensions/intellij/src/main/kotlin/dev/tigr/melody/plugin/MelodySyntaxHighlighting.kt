@@ -31,6 +31,7 @@ class MelodySyntaxHighlighter: SyntaxHighlighterBase() {
         internal val NUMBER_KEY = createTextAttributesKey("MELODY_NUMBER", DefaultLanguageHighlighterColors.NUMBER)
         internal val SEMICOLON_KEY = createTextAttributesKey("MELODY_SEMICOLON", DefaultLanguageHighlighterColors.SEMICOLON)
         internal val BRACES_KEY = createTextAttributesKey("MELODY_BRACES", DefaultLanguageHighlighterColors.BRACES)
+        internal val EQUALS_KEY = createTextAttributesKey("MELODY_OPERATOR", DefaultLanguageHighlighterColors.OPERATION_SIGN)
 
         private val BAD_CHAR_KEYS = arrayOf(BAD_CHAR_KEY)
         private val COMMENT_KEYS = arrayOf(COMMENT_KEY)
@@ -40,6 +41,7 @@ class MelodySyntaxHighlighter: SyntaxHighlighterBase() {
         private val NUMBER_KEYS = arrayOf(NUMBER_KEY)
         private val SEMICOLON_KEYS = arrayOf(SEMICOLON_KEY)
         private val BRACES_KEYS = arrayOf(BRACES_KEY)
+        private val EQUALS_KEYS = arrayOf(EQUALS_KEY)
         private val EMPTY_KEYS = arrayOf<TextAttributesKey>()
     }
 
@@ -48,13 +50,16 @@ class MelodySyntaxHighlighter: SyntaxHighlighterBase() {
     override fun getTokenHighlights(tokenType: IElementType?): Array<TextAttributesKey> {
         return when(tokenType) {
             COMMENT -> COMMENT_KEYS
-            OF, TO, CAPTURE, MATCH, OVER, NOT, EITHER, AHEAD, BEHIND -> KEYWORD_KEYS
+            OF, TO, CAPTURE, MATCH, OVER, NOT, EITHER, AHEAD, BEHIND, LET, LAZY
+            -> KEYWORD_KEYS
             SOME, OPTION, ANY, START, END, CHAR, WHITESPACELITERAL, SPACE,
             NEWLINE, TAB, RETURN, FEED, NULL, DIGIT, VERTICAL, WORD, ALPHABET,
+            ALPHANUMERIC, BOUNDARY, BACKSPACE, CHARACTER
             -> SYMBOL_KEYS
             STRING -> STRING_KEYS
             NUMBER -> NUMBER_KEYS
             SEMICOLON -> SEMICOLON_KEYS
+            EQUALS -> EQUALS_KEYS
             OPENBRACE, CLOSEBRACE -> BRACES_KEYS
             TokenType.BAD_CHARACTER -> BAD_CHAR_KEYS
             else -> EMPTY_KEYS
@@ -78,6 +83,7 @@ class MelodyColorSettingsPage: ColorSettingsPage {
             AttributesDescriptor("Number", MelodySyntaxHighlighter.NUMBER_KEY),
             AttributesDescriptor("Semicolon", MelodySyntaxHighlighter.SEMICOLON_KEY),
             AttributesDescriptor("Braces", MelodySyntaxHighlighter.BRACES_KEY),
+            AttributesDescriptor("Equals", MelodySyntaxHighlighter.EQUALS_KEY),
             AttributesDescriptor("Bad value", MelodySyntaxHighlighter.BAD_CHAR_KEY)
         )
     }

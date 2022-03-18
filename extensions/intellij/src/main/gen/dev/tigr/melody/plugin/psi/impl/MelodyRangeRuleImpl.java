@@ -11,38 +11,20 @@ import static dev.tigr.melody.plugin.psi.MelodyTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import dev.tigr.melody.plugin.psi.*;
 
-public class MelodyBehindRuleImpl extends ASTWrapperPsiElement implements MelodyBehindRule {
+public class MelodyRangeRuleImpl extends ASTWrapperPsiElement implements MelodyRangeRule {
 
-  public MelodyBehindRuleImpl(@NotNull ASTNode node) {
+  public MelodyRangeRuleImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull MelodyVisitor visitor) {
-    visitor.visitBehindRule(this);
+    visitor.visitRangeRule(this);
   }
 
   @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof MelodyVisitor) accept((MelodyVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @NotNull
-  public List<MelodyExpression> getExpressionList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, MelodyExpression.class);
-  }
-
-  @Override
-  @NotNull
-  public List<MelodyLetRule> getLetRuleList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, MelodyLetRule.class);
-  }
-
-  @Override
-  @NotNull
-  public List<MelodyOfRule> getOfRuleList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, MelodyOfRule.class);
   }
 
 }

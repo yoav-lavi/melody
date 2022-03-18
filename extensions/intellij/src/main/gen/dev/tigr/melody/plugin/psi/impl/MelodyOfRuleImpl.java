@@ -29,8 +29,8 @@ public class MelodyOfRuleImpl extends ASTWrapperPsiElement implements MelodyOfRu
 
   @Override
   @NotNull
-  public List<MelodyExpression> getExpressionList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, MelodyExpression.class);
+  public MelodyExpression getExpression() {
+    return findNotNullChildByClass(MelodyExpression.class);
   }
 
   @Override
@@ -41,8 +41,8 @@ public class MelodyOfRuleImpl extends ASTWrapperPsiElement implements MelodyOfRu
 
   @Override
   @Nullable
-  public MelodyToRule getToRule() {
-    return findChildByClass(MelodyToRule.class);
+  public MelodyRangeRule getRangeRule() {
+    return findChildByClass(MelodyRangeRule.class);
   }
 
   @Override

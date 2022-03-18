@@ -11,14 +11,14 @@ import static dev.tigr.melody.plugin.psi.MelodyTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import dev.tigr.melody.plugin.psi.*;
 
-public class MelodyBehindRuleImpl extends ASTWrapperPsiElement implements MelodyBehindRule {
+public class MelodyLetRuleImpl extends ASTWrapperPsiElement implements MelodyLetRule {
 
-  public MelodyBehindRuleImpl(@NotNull ASTNode node) {
+  public MelodyLetRuleImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull MelodyVisitor visitor) {
-    visitor.visitBehindRule(this);
+    visitor.visitLetRule(this);
   }
 
   @Override
@@ -43,6 +43,12 @@ public class MelodyBehindRuleImpl extends ASTWrapperPsiElement implements Melody
   @NotNull
   public List<MelodyOfRule> getOfRuleList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, MelodyOfRule.class);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getVariable() {
+    return findNotNullChildByType(VARIABLE);
   }
 
 }

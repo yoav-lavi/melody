@@ -27,6 +27,10 @@ public class MelodyVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitLetRule(@NotNull MelodyLetRule o) {
+    visitPsiElement(o);
+  }
+
   public void visitMatchRule(@NotNull MelodyMatchRule o) {
     visitPsiElement(o);
   }
@@ -43,6 +47,10 @@ public class MelodyVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitRangeRule(@NotNull MelodyRangeRule o) {
+    visitPsiElement(o);
+  }
+
   public void visitStringRule(@NotNull MelodyStringRule o) {
     visitPsiElement(o);
   }
@@ -52,6 +60,10 @@ public class MelodyVisitor extends PsiElementVisitor {
   }
 
   public void visitToRule(@NotNull MelodyToRule o) {
+    visitPsiElement(o);
+  }
+
+  public void visitVariableRule(@NotNull MelodyVariableRule o) {
     visitPsiElement(o);
   }
 

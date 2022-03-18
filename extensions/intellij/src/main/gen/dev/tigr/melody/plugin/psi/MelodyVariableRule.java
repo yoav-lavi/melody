@@ -5,15 +5,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface MelodyAheadRule extends PsiElement {
+public interface MelodyVariableRule extends PsiElement {
 
   @NotNull
-  List<MelodyExpression> getExpressionList();
-
-  @NotNull
-  List<MelodyLetRule> getLetRuleList();
-
-  @NotNull
-  List<MelodyOfRule> getOfRuleList();
+  PsiElement getVariable();
 
 }

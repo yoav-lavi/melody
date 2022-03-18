@@ -26,6 +26,8 @@
     any="any"
     ahead="ahead"
     behind="behind"
+    let="let"
+    lazy="lazy"
 
     // symbols
     start="<start>"
@@ -41,45 +43,59 @@
     digit="<digit>"
     vertical="<vertical>"
     word="<word>"
-    alphabet="<alphabet>"
+    alphabet="<alphabetic>"
+    alphanumeric="<alphanumeric>"
+    boundary="<boundary>"
+    backspace="<backspace>"
 
     // numbers
-    number="regexp:\p{N}*"
+    number="regexp:[0-9]+"
 
     // comments
-    comment="regexp://.*|"
+    comment="regexp://.*|/\*!(\*/)*\*/|/\*\*/"
 
     // strings
     string = "regexp:\"[^\"]*\"|'[^']*'|`[^`]*`"
+
+    // other patterns
+    character = "regexp:\S"
+    identifier = "regexp:\w+"
+    variable = "regexp:\.\w+"
 
     // whitespace and other language characters
     whitespace="regexp:\s+"
     openbrace="{"
     closebrace="}"
+    equals="="
     semicolon=";"
   ]
 }
 
 root ::= [rules*]
-private rules ::= expression | of_rule
-expression ::= comment | string_rule | not_rule | symbols_rule | match_rule | capture_rule | either_rule | ahead_rule | behind_rule
+private rules ::= comment | expression | of_rule | let_rule
+expression ::= string_rule | not_rule | symbols_rule | match_rule | capture_rule | either_rule | ahead_rule | behind_rule | variable_rule | to_rule
 
 string_rule ::= string semicolon
 
-private symbols_ ::= start | end | char | whitespaceliteral | space | newline | tab | return | feed | null | digit | vertical | word | alphabet
+private symbols_ ::= start | end | char | whitespaceliteral | space | newline | tab | return | feed | null | digit | vertical | word | alphabet | alphanumeric | boundary | backspace
 symbols_rule ::= symbols_ semicolon
 
-of_rule ::= of_first of [expression*]
-private of_first ::= to_rule | number | some | over_rule | option | any
+to_rule ::= (character | number) to (character | number) semicolon
 
-to_rule ::= number to number
+of_rule ::= [lazy?] of_first of expression
+private of_first ::= range_rule | number | some | over_rule | option | any
+
+range_rule ::= number to number
 over_rule ::= over number
 
-private block_rule ::= openbrace rules closebrace | openbrace closebrace
-capture_rule ::= capture block_rule
+private block_rule ::= openbrace [rules*] closebrace
+capture_rule ::= capture identifier block_rule | capture block_rule
 match_rule ::= match block_rule
 either_rule ::= either block_rule
 ahead_rule ::= ahead block_rule
 behind_rule ::= behind block_rule
 
-not_rule ::= not (ahead_rule | behind_rule | whitespaceliteral semicolon | digit semicolon | word semicolon)
+not_rule ::= not (ahead_rule | behind_rule | symbols_rule)
+
+let_rule ::= let variable equals block_rule
+variable_rule ::= variable semicolon
