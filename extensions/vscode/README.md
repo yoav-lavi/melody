@@ -1,7 +1,7 @@
 # Melody VSCode Extension
 
 <p align="center">
-    <img alt="Melody Logo" height="250px" src="https://user-images.githubusercontent.com/14347895/159065887-51a2d948-ae6f-48c4-9dd2-1ee69e76b19f.png">
+    <img alt="Melody Logo" height="250px" src="https://user-images.githubusercontent.com/14347895/159069181-53bce5b3-a831-43f1-8c14-af6c6ed7b92b.svg">
 </p>
 
 Provides syntax highlighting and snipptets for Melody. 
