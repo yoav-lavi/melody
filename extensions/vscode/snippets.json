@@ -28,7 +28,7 @@
     "prefix": "symbol",
     "body": [
       "<${1|whitespace,space,newline,tab,return,feed,null,digit,word,vertical,start,end,char,alphabetic,alphanumeric,boundary,backspace|}>",
-      "$3"
+      "$2"
     ],
     "description": "Add a symbol"
   },
