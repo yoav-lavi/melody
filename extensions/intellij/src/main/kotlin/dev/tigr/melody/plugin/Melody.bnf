@@ -58,7 +58,7 @@
     string = "regexp:\"[^\"]*\"|'[^']*'|`[^`]*`"
 
     // other patterns
-    character = "regexp:\S"
+    character = "regexp:[a-zA-Z0-9_\\@*$#&\^!%]"
     identifier = "regexp:\w+"
     variable = "regexp:\.\w+"
 
