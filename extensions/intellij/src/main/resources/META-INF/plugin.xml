@@ -16,7 +16,7 @@
                   implementationClass="dev.tigr.melody.plugin.MelodyLanguageFileType"
                   fieldName="INSTANCE"
                   language="Melody"
-                  extensions="mdy"/>
+                  extensions="mdy;melody"/>
 
         <lang.parserDefinition language="Melody"
                                implementationClass="dev.tigr.melody.plugin.MelodyParserDefinition"/>

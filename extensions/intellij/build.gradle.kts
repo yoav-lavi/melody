@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "dev.tigr"
-version = "0.1"
+version = "0.2"
 
 sourceSets["main"].java.srcDirs("src/main/gen")
 
@@ -23,7 +23,15 @@ intellij {
 tasks {
     patchPluginXml {
         changeNotes.set("""
-            Added syntax highlighting
+            <ul>
+                <li>Added let and lazy keyword support</li>
+                <li>Added &lt;backspace&gt;, &lt;boundary&gt;, and &lt;alphanumeric&gt; support</li>
+                <li>Renamed &lt;alphabet&gt; to &lt;alphabetic&gt;</li>
+                <li>Added multi-line comment support</li>
+                <li>Added character range support</li>
+                <li>Added .melody file extension support</li>
+                <li>Switch to new Melody logo!</li>
+            </ul>
         """.trimIndent())
         version.set(project.version.toString())
     }
