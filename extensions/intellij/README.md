@@ -1,5 +1,5 @@
-# Melody Intellij Extension
-Provides syntax highlighting for `.mdy` files.
+# Melody Intellij Plugin
+Provides syntax highlighting for `.mdy` and `.melody` files.
 
 ## Install from the JetBrains Marketplace
 https://plugins.jetbrains.com/plugin/18693-melody
