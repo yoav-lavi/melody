@@ -28,14 +28,14 @@
      fit-margin-left="0"
      fit-margin-right="0"
      fit-margin-bottom="0"
-     inkscape:zoom="11.973675"
-     inkscape:cx="9.4791283"
-     inkscape:cy="23.676942"
-     inkscape:window-width="1312"
-     inkscape:window-height="816"
+     inkscape:zoom="16.933333"
+     inkscape:cx="4.0452756"
+     inkscape:cy="24.271653"
+     inkscape:window-width="1920"
+     inkscape:window-height="1025"
      inkscape:window-x="0"
-     inkscape:window-y="38"
-     inkscape:window-maximized="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
      inkscape:current-layer="g55" />
   <defs
      id="defs2">
@@ -138,181 +138,169 @@
            clip-path="url(#clipPath59)">
           <g
              id="g61"
-             transform="matrix(0.94162959,0,0,0.94162959,1135.5972,799.02926)"
+             transform="matrix(0.94162521,0,0,0.94162521,1135.5966,799.02988)"
              inkscape:export-filename="/Users/yoavlavi/Desktop/melody-dark.png"
              inkscape:export-xdpi="96"
-             inkscape:export-ydpi="96"
-             style="fill:#000000">
+             inkscape:export-ydpi="96">
             <path
                d="m 0,0 c -14.21,0 -27.335,7.104 -35.11,19.001 l -44.264,66.767 9.376,6.215 44.286,-66.798 C -20.002,16.447 -10.398,11.25 0,11.25 c 3.798,0 7.533,0.704 11.032,2.062 l -93.087,142.131 -80.709,127.991 c -5.083,7.138 -9.227,14.378 -13.237,21.38 -11.365,19.857 -19.577,34.205 -40.166,34.205 -26.036,0 -48.343,-19.467 -51.883,-45.284 l -0.316,-2.297 -25.484,-19.461 32.205,-11.419 1.041,-1.676 c 7.533,-12.125 19.804,-20.743 33.665,-23.645 l -2.301,-11.01 c -16.207,3.39 -30.614,13.195 -39.831,27.028 l -48.107,17.058 38.348,29.288 c 5.293,30.189 31.823,52.667 62.663,52.667 27.112,0 38.197,-19.364 49.929,-39.865 3.898,-6.805 7.926,-13.843 12.724,-20.566 l 0.179,-0.268 L -72.593,161.525 27.027,9.42 22.169,6.372 C 15.525,2.204 7.86,0 0,0"
-               style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+               style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none"
                id="path63" />
           </g>
           <g
              id="g65"
-             transform="matrix(0.94162959,0,0,0.94162959,1129.1626,877.51098)"
+             transform="matrix(0.94162521,0,0,0.94162521,1129.1621,877.51123)"
              inkscape:export-filename="/Users/yoavlavi/Desktop/melody-dark.png"
              inkscape:export-xdpi="96"
-             inkscape:export-ydpi="96"
-             style="fill:#000000">
+             inkscape:export-ydpi="96">
             <path
                d="m 0,0 c -54.425,0 -99.824,4.786 -135.48,14.314 -60.515,16.171 -93.098,46.088 -96.85,88.919 -3.455,39.423 9.907,62.513 39.711,68.631 19.17,3.982 44.632,-7.849 56.744,-26.363 l -9.416,-6.158 c -10.472,16.009 -32.171,24.184 -45.054,21.503 -15.078,-3.094 -34.66,-12.329 -30.779,-56.632 7.77,-88.671 126.806,-98.401 252.879,-90.943 L 32.42,2.041 C 9.389,0.68 20.508,0 0,0"
-               style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+               style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none"
                id="path67" />
           </g>
           <g
              id="g69"
-             transform="matrix(0.94162959,0,0,0.94162959,1084.8991,909.1066)"
+             transform="matrix(0.94162521,0,0,0.94162521,1084.8988,909.1067)"
              inkscape:export-filename="/Users/yoavlavi/Desktop/melody-dark.png"
              inkscape:export-xdpi="96"
-             inkscape:export-ydpi="96"
-             style="fill:#000000">
+             inkscape:export-ydpi="96">
             <path
                d="m 0,0 c -99.829,1.049 -152.648,26.516 -156.985,75.693 -2.559,29.275 7.476,46.461 29.829,51.083 13.998,2.878 34.456,-7.073 43.75,-21.295 l -9.414,-6.154 c -7.35,11.241 -23.562,18.169 -32.065,16.432 -11.115,-2.299 -23.539,-8.821 -20.894,-39.082 3.743,-42.436 52.829,-64.45 145.9,-65.427 z"
-               style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+               style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none"
                id="path71" />
           </g>
           <g
              id="g73"
-             transform="matrix(0.94162959,0,0,0.94162959,982.24908,1009.3778)"
+             transform="matrix(0.94162521,0,0,0.94162521,982.24915,1009.3771)"
              inkscape:export-filename="/Users/yoavlavi/Desktop/melody-dark.png"
              inkscape:export-xdpi="96"
-             inkscape:export-ydpi="96"
-             style="fill:#000000">
+             inkscape:export-ydpi="96">
             <path
                d="m 0,0 c -1.873,0 -3.579,-0.411 -5.081,-1.243 -5.202,-2.885 -8.014,-10.972 -7.163,-20.603 2.173,-24.938 31.202,-38.07 86.328,-39.104 L 15.047,-6.333 C 9.445,-2.149 4.282,0 0,0 m 81.519,-72.264 c -66.804,-0.001 -102.112,16.62 -104.968,49.436 -1.26,14.265 3.688,26.307 12.914,31.423 5.273,2.922 16.506,6.012 32.58,-6.112 l 0.432,-0.361 65.315,-60.427 -2.491,-2.692 c 0.417,0.005 0.837,0.009 1.26,0.014 l 0.138,-11.249 c -1.747,-0.02 -3.474,-0.032 -5.18,-0.032"
-               style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+               style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none"
                id="path75" />
           </g>
           <g
              id="g77"
-             transform="matrix(0.94162959,0,0,0.94162959,915.67935,1085.9579)"
+             transform="matrix(0.94162521,0,0,0.94162521,915.67974,1085.957)"
              inkscape:export-filename="/Users/yoavlavi/Desktop/melody-dark.png"
              inkscape:export-xdpi="96"
-             inkscape:export-ydpi="96"
-             style="fill:#000000">
+             inkscape:export-ydpi="96">
             <path
                d="m 0,0 c 0,-4.934 -3.999,-8.933 -8.933,-8.933 -4.934,0 -8.933,3.999 -8.933,8.933 0,4.934 3.999,8.934 8.933,8.934 C -3.999,8.934 0,4.934 0,0"
-               style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+               style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none"
                id="path79" />
           </g>
           <g
              id="g81"
-             transform="matrix(0.94162959,0,0,0.94162959,989.73701,787.53158)"
+             transform="matrix(0.94162521,0,0,0.94162521,989.73706,787.53224)"
              inkscape:export-filename="/Users/yoavlavi/Desktop/melody-dark.png"
              inkscape:export-xdpi="96"
-             inkscape:export-ydpi="96"
-             style="fill:#000000">
+             inkscape:export-ydpi="96">
             <path
                d="m 0,0 c -121.685,0 -220.685,98.999 -220.685,220.684 0,121.685 99,220.682 220.685,220.682 121.685,0 220.682,-98.997 220.682,-220.682 0,-43.042 -12.386,-84.727 -35.818,-120.55 l -1.665,-2.546 h -3.043 l -0.013,5.635 -4.694,3.069 c 22.232,33.988 33.984,73.543 33.984,114.392 0,115.482 -93.952,209.433 -209.433,209.433 -115.484,0 -209.436,-93.951 -209.436,-209.433 0,-115.483 93.952,-209.434 209.436,-209.434 32.981,0 64.56,7.463 93.853,22.181 L 98.901,23.379 C 68.028,7.866 34.753,0 0,0"
-               style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+               style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none"
                id="path83" />
           </g>
           <path
-             d="M 1128.2796,1137.0805 H 986.21409 v 10.5924 h 142.06551 z"
-             style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.94163"
+             d="M 1128.279,1137.0798 H 986.21416 v 10.5919 H 1128.279 Z"
+             style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.941625"
              id="path85"
              inkscape:export-filename="/Users/yoavlavi/Desktop/melody-dark.png"
              inkscape:export-xdpi="96"
              inkscape:export-ydpi="96" />
           <path
-             d="m 1170.8705,1080.6571 h -95.5462 v 10.5934 h 95.5462 z"
-             style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.94163"
+             d="m 1170.8696,1080.6567 h -95.5457 v 10.5928 h 95.5457 z"
+             style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.941625"
              id="path87"
              inkscape:export-filename="/Users/yoavlavi/Desktop/melody-dark.png"
              inkscape:export-xdpi="96"
              inkscape:export-ydpi="96" />
           <path
-             d="m 1185.4093,937.6829 h -78.2429 v 10.59239 h 78.2429 z"
-             style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.94163"
+             d="m 1185.4085,937.68287 h -78.2426 v 10.59233 h 78.2426 z"
+             style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.941625"
              id="path89"
              inkscape:export-filename="/Users/yoavlavi/Desktop/melody-dark.png"
              inkscape:export-xdpi="96"
              inkscape:export-ydpi="96" />
           <path
-             d="m 911.01649,879.62296 h -91.05934 v 10.59239 h 91.05934 z"
-             style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.94163"
+             d="M 911.01691,879.62322 H 819.958 v 10.59233 h 91.05891 z"
+             style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.941625"
              id="path91"
              inkscape:export-filename="/Users/yoavlavi/Desktop/melody-dark.png"
              inkscape:export-xdpi="96"
              inkscape:export-ydpi="96" />
           <path
-             d="m 961.48878,825.53199 h -91.05935 v 10.59239 h 91.05935 z"
-             style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.94163"
+             d="m 961.48897,825.53248 h -91.05894 v 10.5923 h 91.05894 z"
+             style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.941625"
              id="path93"
              inkscape:export-filename="/Users/yoavlavi/Desktop/melody-dark.png"
              inkscape:export-xdpi="96"
              inkscape:export-ydpi="96" />
           <g
              id="g95"
-             transform="matrix(0.94162959,0,0,0.94162959,732.20546,770.37029)"
+             transform="matrix(0.94162521,0,0,0.94162521,732.20671,770.37104)"
              inkscape:export-filename="/Users/yoavlavi/Desktop/melody-dark.png"
              inkscape:export-xdpi="96"
-             inkscape:export-ydpi="96"
-             style="fill:#000000">
+             inkscape:export-ydpi="96">
             <path
                d="M 0,0 48.853,35.701 -3.955,29.326 -7.272,33.863 14.781,82.332 -34.078,46.631 -39.93,54.64 23.251,100.81 29.431,92.359 5.119,39.507 62.923,46.53 69.034,38.163 5.855,-8.008 Z"
-               style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+               style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none"
                id="path97" />
           </g>
           <g
              id="g99"
-             transform="matrix(0.94162959,0,0,0.94162959,844.25072,693.79433)"
+             transform="matrix(0.94162521,0,0,0.94162521,844.25144,693.79544)"
              inkscape:export-filename="/Users/yoavlavi/Desktop/melody-dark.png"
              inkscape:export-xdpi="96"
-             inkscape:export-ydpi="96"
-             style="fill:#000000">
+             inkscape:export-ydpi="96">
             <path
                d="M 0,0 -4.526,-7.566 -50.116,19.705 -9.947,86.862 34.792,60.099 30.266,52.532 -5.959,74.201 -18.972,52.447 12.524,33.607 8.283,26.513 -23.218,45.353 -37.082,22.182 Z"
-               style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+               style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none"
                id="path101" />
           </g>
           <g
              id="g103"
-             transform="matrix(0.94162959,0,0,0.94162959,906.53198,662.18082)"
+             transform="matrix(0.94162521,0,0,0.94162521,906.53242,662.18206)"
              inkscape:export-filename="/Users/yoavlavi/Desktop/melody-dark.png"
              inkscape:export-xdpi="96"
-             inkscape:export-ydpi="96"
-             style="fill:#000000">
+             inkscape:export-ydpi="96">
             <path
                d="m 0,0 14.998,76.803 9.736,-1.9 -13.306,-68.151 42.838,-8.366 -1.692,-8.652 z"
-               style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+               style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none"
                id="path105" />
           </g>
           <g
              id="g107"
-             transform="matrix(0.94162959,0,0,0.94162959,1019.7644,688.62093)"
+             transform="matrix(0.94162521,0,0,0.94162521,1019.764,688.62207)"
              inkscape:export-filename="/Users/yoavlavi/Desktop/melody-dark.png"
              inkscape:export-xdpi="96"
-             inkscape:export-ydpi="96"
-             style="fill:#000000">
+             inkscape:export-ydpi="96">
             <path
                d="m 0,0 c 0.665,-3.911 1.944,-7.587 3.839,-11.027 1.89,-3.442 4.235,-6.375 7.039,-8.805 2.799,-2.43 5.971,-4.199 9.517,-5.309 3.542,-1.108 7.305,-1.322 11.29,-0.641 4.128,0.705 7.671,2.221 10.626,4.554 2.958,2.33 5.334,5.121 7.124,8.372 1.791,3.249 2.978,6.787 3.554,10.615 0.577,3.826 0.55,7.583 -0.079,11.28 -0.668,3.908 -1.953,7.585 -3.843,11.028 -1.889,3.44 -4.251,6.353 -7.08,8.74 -2.834,2.387 -6.001,4.136 -9.508,5.253 -3.51,1.116 -7.218,1.338 -11.128,0.671 C 17.22,34.027 13.677,32.526 10.716,30.231 7.75,27.937 5.372,25.182 3.57,21.969 1.774,18.754 0.566,15.229 -0.044,11.399 -0.659,7.565 -0.646,3.766 0,0 m 33.078,-34.602 c -5.432,-0.928 -10.563,-0.667 -15.397,0.78 -4.828,1.449 -9.151,3.73 -12.963,6.844 -3.812,3.112 -6.992,6.876 -9.53,11.288 -2.543,4.408 -4.235,9.077 -5.075,14.004 -0.879,5.143 -0.797,10.222 0.247,15.248 1.041,5.023 2.884,9.624 5.526,13.801 2.642,4.179 6.006,7.716 10.095,10.615 4.09,2.896 8.742,4.792 13.958,5.682 5.432,0.925 10.552,0.628 15.358,-0.9 4.806,-1.528 9.118,-3.865 12.941,-7.014 3.815,-3.15 6.995,-6.914 9.53,-11.288 2.538,-4.375 4.218,-8.99 5.045,-13.842 0.879,-5.142 0.796,-10.226 -0.245,-15.248 -1.043,-5.024 -2.872,-9.602 -5.481,-13.739 -2.609,-4.136 -5.96,-7.654 -10.049,-10.548 -4.09,-2.899 -8.742,-4.793 -13.96,-5.683"
-               style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+               style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none"
                id="path109" />
           </g>
           <g
              id="g111"
-             transform="matrix(0.94162959,0,0,0.94162959,1176.8749,748.56704)"
+             transform="matrix(0.94162521,0,0,0.94162521,1176.874,748.56789)"
              inkscape:export-filename="/Users/yoavlavi/Desktop/melody-dark.png"
              inkscape:export-xdpi="96"
-             inkscape:export-ydpi="96"
-             style="fill:#000000">
+             inkscape:export-ydpi="96">
             <path
                d="m 0,0 c -2.354,3.728 -5.031,6.837 -8.036,9.327 -3.007,2.49 -6.226,4.217 -9.659,5.179 -3.43,0.962 -7.012,1.158 -10.73,0.59 -3.724,-0.572 -7.454,-2.032 -11.183,-4.385 l -14.535,-9.179 32.353,-51.26 14.545,9.177 c 3.79,2.392 6.745,5.173 8.874,8.343 2.128,3.166 3.447,6.517 3.952,10.051 0.505,3.533 0.28,7.195 -0.676,10.979 C 3.952,-7.394 2.318,-3.667 0,0 m -25.467,-62.481 -41.77,66.175 22.926,14.473 c 5.279,3.333 10.476,5.395 15.578,6.185 5.108,0.791 9.937,0.537 14.49,-0.758 4.554,-1.296 8.767,-3.526 12.631,-6.69 3.864,-3.165 7.231,-7.017 10.096,-11.551 3.175,-5.033 5.303,-10.055 6.38,-15.066 1.082,-5.011 1.131,-9.843 0.159,-14.498 -0.972,-4.654 -2.93,-9.019 -5.877,-13.094 -2.947,-4.075 -6.839,-7.641 -11.684,-10.7 z"
-               style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+               style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none"
                id="path113" />
           </g>
           <g
              id="g115"
-             transform="matrix(0.94162959,0,0,0.94162959,1195.6708,815.1928)"
+             transform="matrix(0.94162521,0,0,0.94162521,1195.6697,815.19334)"
              inkscape:export-filename="/Users/yoavlavi/Desktop/melody-dark.png"
              inkscape:export-xdpi="96"
-             inkscape:export-ydpi="96"
-             style="fill:#000000">
+             inkscape:export-ydpi="96">
             <path
                d="M 0,0 46.837,-5.541 28.596,38.073 35.08,46.709 56.955,-6.937 79.778,-24.081 73.824,-32.012 50.825,-14.737 -6.553,-8.723 Z"
-               style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+               style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none"
                id="path117" />
           </g>
         </g>
