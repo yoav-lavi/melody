@@ -532,6 +532,7 @@ dependencies = [
  "once_cell",
  "pest",
  "pest_derive",
+ "rayon",
 ]
 
 [[package]]

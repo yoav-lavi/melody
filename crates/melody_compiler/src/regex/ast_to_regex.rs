@@ -1,33 +1,55 @@
 use super::utils::{mark_lazy, wrap_quantified};
 use crate::ast::enums::{
-    Assertion, AssertionKind, Expression, Group, GroupKind, Node, Quantifier, QuantifierKind,
-    Range, SpecialSymbol, Symbol, SymbolKind, VariableInvocation,
+    Assertion, AssertionKind, Expression, Group, GroupKind, MelodyAst, MelodyAstNode, Quantifier,
+    QuantifierKind, Range, SpecialSymbol, Symbol, SymbolKind, VariableInvocation,
 };
 
-pub fn to_regex(ast: &[Node]) -> String {
-    let mut output = String::new();
-    for node in ast {
-        output.push_str(node_to_regex(node).as_str());
+#[cfg(feature = "parallel")]
+use rayon::prelude::*;
+
+#[cfg(feature = "parallel")]
+const PARALLEL_MIN_LENGTH: usize = 5;
+
+#[cfg(feature = "parallel")]
+const PARALLEL_MAX_LENGTH: usize = 10;
+
+#[cfg(feature = "parallel")]
+pub fn ast_to_regex(ast: &MelodyAst) -> String {
+    match ast {
+        MelodyAst::Root(nodes) => nodes
+            .par_iter()
+            .with_min_len(PARALLEL_MIN_LENGTH)
+            .with_max_len(PARALLEL_MAX_LENGTH)
+            .map(|node| node_to_regex(node))
+            .collect(),
+        MelodyAst::Empty => String::new(),
     }
-    output
 }
 
-fn node_to_regex(node: &Node) -> String {
+#[cfg(not(feature = "parallel"))]
+pub fn ast_to_regex(ast: &MelodyAst) -> String {
+    match ast {
+        MelodyAst::Root(nodes) => nodes.iter().map(|node| node_to_regex(node)).collect(),
+        MelodyAst::Empty => String::new(),
+    }
+}
+
+pub fn node_to_regex(node: &MelodyAstNode) -> String {
     match node {
-        Node::Quantifier(quantifier) => transform_quantifier(quantifier),
-        Node::Assertion(assertion) => transform_assertion(assertion),
-        Node::SpecialSymbol(special_symbol) => transform_special_symbol(special_symbol),
-        Node::Group(group) => transform_group(group),
-        Node::Atom(atom) => String::from(atom),
-        Node::Symbol(symbol) => transform_symbol(symbol),
-        Node::Range(range) => transform_range(range),
-        Node::NegativeCharClass(negative_char_class) => {
+        MelodyAstNode::Quantifier(quantifier) => transform_quantifier(quantifier),
+        MelodyAstNode::Assertion(assertion) => transform_assertion(assertion),
+        MelodyAstNode::SpecialSymbol(special_symbol) => transform_special_symbol(special_symbol),
+        MelodyAstNode::Group(group) => transform_group(group),
+        MelodyAstNode::Atom(atom) => String::from(atom),
+        MelodyAstNode::Symbol(symbol) => transform_symbol(symbol),
+        MelodyAstNode::Range(range) => transform_range(range),
+        MelodyAstNode::NegativeCharClass(negative_char_class) => {
             transform_negative_char_class(negative_char_class)
         }
-        Node::Empty => String::new(),
-        Node::VariableInvocation(variable_invocation) => {
+        MelodyAstNode::VariableInvocation(variable_invocation) => {
             transform_variable_invocation(variable_invocation)
         }
+        MelodyAstNode::Skip => String::new(),
     }
 }
 
@@ -67,7 +89,7 @@ fn transform_quantifier(quantifier: &Quantifier) -> String {
 }
 
 fn transform_assertion(assertion: &Assertion) -> String {
-    let body_source = to_regex(&assertion.statements);
+    let body_source = ast_to_regex(&assertion.statements);
 
     match assertion.kind {
         AssertionKind::Ahead => {
@@ -92,29 +114,32 @@ fn transform_negative_char_class(class: &str) -> String {
 }
 
 fn transform_variable_invocation(variable_invocation: &VariableInvocation) -> String {
-    to_regex(&variable_invocation.statements)
+    ast_to_regex(&variable_invocation.statements)
 }
 
 fn transform_group(group: &Group) -> String {
     match group.kind {
         GroupKind::Match => {
-            let body = to_regex(&group.statements);
+            let body = ast_to_regex(&group.statements);
             format!("(?:{body})")
         }
         GroupKind::Capture => {
-            let body = to_regex(&group.statements);
+            let body = ast_to_regex(&group.statements);
             match group.ident.as_ref() {
                 Some(ident) => format!("(?<{}>{body})", ident),
                 None => format!("({body})"),
             }
         }
         GroupKind::Either => {
-            let body = group
-                .statements
-                .iter()
-                .map(node_to_regex)
-                .collect::<Vec<String>>()
-                .join("|");
+            let body = if let MelodyAst::Root(statements) = group.statements.as_ref() {
+                statements
+                    .iter()
+                    .map(node_to_regex)
+                    .collect::<Vec<String>>()
+                    .join("|")
+            } else {
+                ast_to_regex(&group.statements)
+            };
             format!("(?:{body})")
         }
     }

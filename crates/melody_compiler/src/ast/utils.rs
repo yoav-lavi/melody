@@ -89,22 +89,3 @@ fn escape_chars(source: &str) -> String {
     }
     escaped_source
 }
-
-/// maps over the items in `iterable` with `closure`,
-/// returning a vector of `ReturnItem` or an `Error`
-/// if one of the calls to `closure` returns an `Error`
-pub fn map_results<Iterable, Item, Closure, ReturnItem, Error>(
-    iterable: Iterable,
-    closure: &mut Closure,
-) -> Result<Vec<ReturnItem>, Error>
-where
-    Iterable: Iterator<Item = Item>,
-    Closure: FnMut(Item) -> Result<ReturnItem, Error>,
-{
-    let mut output = vec![];
-    for item in iterable {
-        let result = closure(item)?;
-        output.push(result);
-    }
-    Ok(output)
-}

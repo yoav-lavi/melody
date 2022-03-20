@@ -108,14 +108,14 @@ pub enum SpecialSymbol {
 pub struct Group {
     pub ident: Option<String>,
     pub kind: GroupKind,
-    pub statements: Vec<Node>,
+    pub statements: Box<MelodyAst>,
 }
 
 #[derive(Debug, Clone)]
 #[allow(dead_code)]
 #[cfg_attr(feature = "fuzzer", derive(arbitrary::Arbitrary))]
 pub struct VariableInvocation {
-    pub statements: Vec<Node>,
+    pub statements: Box<MelodyAst>,
 }
 
 #[derive(Debug, Clone)]
@@ -123,13 +123,13 @@ pub struct VariableInvocation {
 #[cfg_attr(feature = "fuzzer", derive(arbitrary::Arbitrary))]
 pub struct Assertion {
     pub kind: AssertionKind,
-    pub statements: Vec<Node>,
+    pub statements: Box<MelodyAst>,
     pub negative: bool,
 }
 
 #[derive(Debug, Clone)]
 #[cfg_attr(feature = "fuzzer", derive(arbitrary::Arbitrary))]
-pub enum Node {
+pub enum MelodyAstNode {
     Group(Group),
     Assertion(Assertion),
     Quantifier(Quantifier),
@@ -139,5 +139,12 @@ pub enum Node {
     SpecialSymbol(SpecialSymbol),
     NegativeCharClass(String),
     VariableInvocation(VariableInvocation),
+    Skip,
+}
+
+#[derive(Debug, Clone)]
+#[cfg_attr(feature = "fuzzer", derive(arbitrary::Arbitrary))]
+pub enum MelodyAst {
+    Root(Vec<MelodyAstNode>),
     Empty,
 }

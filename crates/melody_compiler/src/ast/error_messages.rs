@@ -7,9 +7,9 @@ pub enum ErrorMessage {
     NegativeEndNotAllowed,
     NegativeStartNotAllowed,
     UnexpectedAssertionInQuantifier,
-    UnexpectedEmptyNodeInQuantifier,
     UnexpectedIdentifierForNonCaptureGroup,
     UnexpectedQuantifierInQuantifier,
+    UnexpectedSkippedNodeInQuantifier,
     UnexpectedSpecialSymbolInQuantifier,
     UnexpectedVariableInvocationInQuantifier,
     UninitializedVariable,
@@ -28,11 +28,13 @@ impl From<ErrorMessage> for ParseError {
             ErrorMessage::NegativeEndNotAllowed => "negative end not allowed",
             ErrorMessage::NegativeStartNotAllowed => "negative start not allowed",
             ErrorMessage::UnexpectedAssertionInQuantifier => "unexpected assertion in quantifier",
-            ErrorMessage::UnexpectedEmptyNodeInQuantifier => "unexpected empty node in quantifier",
             ErrorMessage::UnexpectedIdentifierForNonCaptureGroup => {
                 "unexpected identifier for non capture group"
             }
             ErrorMessage::UnexpectedQuantifierInQuantifier => "unexpected quantifier in quantifier",
+            ErrorMessage::UnexpectedSkippedNodeInQuantifier => {
+                "unexpected skipped node in quantifier"
+            }
             ErrorMessage::UnexpectedSpecialSymbolInQuantifier => {
                 "unexpected special symbol in quantifier"
             }

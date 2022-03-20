@@ -12,9 +12,9 @@ mod utils;
 use ast::to_ast;
 use errors::ParseError;
 #[cfg(not(feature = "fuzzer"))]
-use regex::to_regex;
+use regex::ast_to_regex;
 #[cfg(feature = "fuzzer")]
-pub use regex::to_regex;
+pub use regex::ast_to_regex::ast_to_regex;
 use utils::format_line_comments;
 
 /**
@@ -40,7 +40,7 @@ pub fn compiler(source: &str) -> Result<String, ParseError> {
 
     let ast = to_ast(formatted_source.as_str())?;
 
-    let output = to_regex(&ast);
+    let output = ast_to_regex(&ast);
 
     Ok(output)
 }
