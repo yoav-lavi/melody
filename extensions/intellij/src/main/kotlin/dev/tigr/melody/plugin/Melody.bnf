@@ -1,0 +1,101 @@
+{
+  parserClass="dev.tigr.melody.plugin.parser.MelodyParser"
+
+  extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+  psiClassPrefix="Melody"
+  psiImplClassSuffix="Impl"
+  psiPackage="dev.tigr.melody.plugin.psi"
+  psiImplPackage="dev.tigr.melody.plugin.psi.impl"
+
+  elementTypeHolderClass="dev.tigr.melody.plugin.psi.MelodyTypes"
+  elementTypeClass="dev.tigr.melody.plugin.psi.MelodyElementType"
+  tokenTypeClass="dev.tigr.melody.plugin.psi.MelodyTokenType"
+
+  tokens=[
+    // keywords
+    of="of"
+    to="to"
+    capture="capture"
+    some="some"
+    match="match"
+    over="over"
+    option="option"
+    not="not"
+    either="either"
+    any="any"
+    ahead="ahead"
+    behind="behind"
+    let="let"
+    lazy="lazy"
+
+    // symbols
+    start="<start>"
+    end="<end>"
+    char="<char>"
+    whitespaceliteral="<whitespace>"
+    space="<space>"
+    newline="<newline>"
+    tab="<tab>"
+    return="<return>"
+    feed="<feed>"
+    null="<null>"
+    digit="<digit>"
+    vertical="<vertical>"
+    word="<word>"
+    alphabet="<alphabetic>"
+    alphanumeric="<alphanumeric>"
+    boundary="<boundary>"
+    backspace="<backspace>"
+
+    // numbers
+    number="regexp:[0-9]+"
+
+    // comments
+    comment="regexp://.*|/\*!(\*/)*\*/|/\*\*/"
+
+    // strings
+    string = "regexp:\"[^\"]*\"|'[^']*'|`[^`]*`"
+
+    // other patterns
+    character = "regexp:[a-zA-Z0-9_\\@*$#&\^!%]"
+    identifier = "regexp:\w+"
+    variable = "regexp:\.\w+"
+
+    // whitespace and other language characters
+    whitespace="regexp:\s+"
+    openbrace="{"
+    closebrace="}"
+    equals="="
+    semicolon=";"
+  ]
+}
+
+root ::= [rules*]
+private rules ::= comment | expression | of_rule | let_rule
+expression ::= string_rule | not_rule | symbols_rule | match_rule | capture_rule | either_rule | ahead_rule | behind_rule | variable_rule | to_rule
+
+string_rule ::= string semicolon
+
+private symbols_ ::= start | end | char | whitespaceliteral | space | newline | tab | return | feed | null | digit | vertical | word | alphabet | alphanumeric | boundary | backspace
+symbols_rule ::= symbols_ semicolon
+
+to_rule ::= (character | number) to (character | number) semicolon
+
+of_rule ::= [lazy?] of_first of expression
+private of_first ::= range_rule | number | some | over_rule | option | any
+
+range_rule ::= number to number
+over_rule ::= over number
+
+private block_rule ::= openbrace [rules*] closebrace
+capture_rule ::= capture identifier block_rule | capture block_rule
+match_rule ::= match block_rule
+either_rule ::= either block_rule
+ahead_rule ::= ahead block_rule
+behind_rule ::= behind block_rule
+
+not_rule ::= not (ahead_rule | behind_rule | symbols_rule)
+
+let_rule ::= let variable equals block_rule
+variable_rule ::= variable semicolon
