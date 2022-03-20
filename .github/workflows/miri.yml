@@ -12,4 +12,4 @@ jobs:
           rustup override set nightly
           cargo miri setup
       - name: test with Miri
-        run: export RUSTFLAGS="-Zmiri-disable-isolation"; cargo miri test
+        run: RUSTFLAGS="-Zmiri-disable-isolation" cargo miri test
