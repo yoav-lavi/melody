@@ -1,7 +1,7 @@
 use super::consts::{LAZY, NOT};
-use super::enums::*;
 use super::error_messages::ErrorMessage;
 use super::ident_parser::{IdentParser, Rule};
+use super::types::*;
 use super::utils::{
     alphabetic_first_char, first_inner, first_last_inner_str, last_inner, nth_inner, to_char,
     unquote_escape_literal, unquote_escape_raw,

@@ -1,5 +1,5 @@
-pub mod enums;
 pub mod source_to_ast;
+pub mod types;
 
 mod consts;
 mod error_messages;
