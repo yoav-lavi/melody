@@ -12,16 +12,13 @@ keywords = ["melody", "melodylang", "language", "compiler"]
 categories = ["compilers"]
 
 [features]
-default = ["parallel"]
 fuzzer = ["arbitrary"]
-parallel = ["rayon"]
 
 [dependencies]
 pest = "2.1.3"
 pest_derive = "2.1.0"
 once_cell = "1.10.0"
 arbitrary = { version = "1", features = ["derive"], optional = true }
-rayon = { version = "1.5", optional = true }
 
 [dev-dependencies]
 criterion = "0.3.5"
