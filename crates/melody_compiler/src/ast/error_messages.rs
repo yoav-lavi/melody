@@ -2,6 +2,7 @@ use crate::errors::ParseError;
 
 pub enum ErrorMessage {
     CouldNotParseAnAmount,
+    InvalidQuantifierRange,
     MissingNode,
     MissingRootNode,
     NegativeEndNotAllowed,
@@ -23,6 +24,7 @@ impl From<ErrorMessage> for ParseError {
     fn from(error: ErrorMessage) -> Self {
         let message = match error {
             ErrorMessage::CouldNotParseAnAmount => "could not parse an amount",
+            ErrorMessage::InvalidQuantifierRange => "usage of an invalid quantifier range",
             ErrorMessage::MissingNode => "encountered a missing positional node",
             ErrorMessage::MissingRootNode => "missing root node",
             ErrorMessage::NegativeEndNotAllowed => "negative end not allowed",

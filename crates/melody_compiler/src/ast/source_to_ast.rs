@@ -242,6 +242,18 @@ fn quantifier(
 
         Rule::quantifier_range => {
             let (start, end) = first_last_inner_str(kind)?;
+
+            let parsed_start = start
+                .parse::<usize>()
+                .map_err(|_| ParseError::from(ErrorMessage::InvalidQuantifierRange))?;
+            let parsed_end = end
+                .parse::<usize>()
+                .map_err(|_| ParseError::from(ErrorMessage::InvalidQuantifierRange))?;
+
+            if parsed_start > parsed_end {
+                return Err(ErrorMessage::InvalidQuantifierRange.into());
+            }
+
             MelodyAstNode::Quantifier(Quantifier {
                 kind: QuantifierKind::Range {
                     start: start.to_owned(),
