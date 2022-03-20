@@ -20,7 +20,7 @@ pub fn ast_to_regex(ast: &MelodyAst) -> String {
             .par_iter()
             .with_min_len(PARALLEL_MIN_LENGTH)
             .with_max_len(PARALLEL_MAX_LENGTH)
-            .map(|node| node_to_regex(node))
+            .map(node_to_regex)
             .collect(),
         MelodyAst::Empty => String::new(),
     }

@@ -24,15 +24,19 @@ pub fn to_ast(source: &str) -> Result<MelodyAst, ParseError> {
         .next()
         .ok_or_else(|| ParseError::from(ErrorMessage::MissingRootNode))?;
 
-    pairs_to_ast(root_statements.into_inner())
+    let mut variables: HashMap<String, MelodyAst> = HashMap::new();
+
+    pairs_to_ast(root_statements.into_inner(), &mut variables)
 }
 
-pub fn pairs_to_ast(pairs: Pairs<Rule>) -> Result<MelodyAst, ParseError> {
-    let mut variables: HashMap<String, MelodyAst> = HashMap::new();
+pub fn pairs_to_ast(
+    pairs: Pairs<Rule>,
+    variables: &mut HashMap<String, MelodyAst>,
+) -> Result<MelodyAst, ParseError> {
     let mut nodes = Vec::new();
 
     for pair in pairs {
-        let node = create_ast_node(pair, &mut variables)?;
+        let node = create_ast_node(pair, variables)?;
         nodes.push(node);
     }
 
@@ -49,8 +53,8 @@ fn create_ast_node(
         Rule::symbol => symbol(pair)?,
         Rule::range => range(pair)?,
         Rule::quantifier => quantifier(pair, variables)?,
-        Rule::group => group(pair)?,
-        Rule::assertion => assertion(pair)?,
+        Rule::group => group(pair, variables)?,
+        Rule::assertion => assertion(pair, variables)?,
         Rule::negative_char_class => negative_char_class(&pair)?,
         Rule::variable_invocation => variable_invocation(&pair, variables)?,
         Rule::variable_declaration => variable_declaration(pair, variables)?,
@@ -270,7 +274,10 @@ fn quantifier(
     Ok(quantifier_node)
 }
 
-fn group(pair: Pair<Rule>) -> Result<MelodyAstNode, ParseError> {
+fn group(
+    pair: Pair<Rule>,
+    variables: &mut HashMap<String, MelodyAst>,
+) -> Result<MelodyAstNode, ParseError> {
     let declaration = first_inner(pair.clone())?;
 
     let kind = first_inner(declaration.clone())?.as_str();
@@ -294,13 +301,16 @@ fn group(pair: Pair<Rule>) -> Result<MelodyAstNode, ParseError> {
     let group_node = MelodyAstNode::Group(Group {
         ident,
         kind,
-        statements: Box::new(pairs_to_ast(block.into_inner())?),
+        statements: Box::new(pairs_to_ast(block.into_inner(), variables)?),
     });
 
     Ok(group_node)
 }
 
-fn assertion(pair: Pair<Rule>) -> Result<MelodyAstNode, ParseError> {
+fn assertion(
+    pair: Pair<Rule>,
+    variables: &mut HashMap<String, MelodyAst>,
+) -> Result<MelodyAstNode, ParseError> {
     let assertion_declaration = first_inner(pair.clone())?;
 
     let (negative, kind) = first_last_inner_str(assertion_declaration)?;
@@ -318,7 +328,7 @@ fn assertion(pair: Pair<Rule>) -> Result<MelodyAstNode, ParseError> {
     let assertion_node = MelodyAstNode::Assertion(Assertion {
         kind,
         negative,
-        statements: Box::new(pairs_to_ast(block.into_inner())?),
+        statements: Box::new(pairs_to_ast(block.into_inner(), variables)?),
     });
 
     Ok(assertion_node)
@@ -351,9 +361,7 @@ fn variable_declaration(
 ) -> Result<MelodyAstNode, ParseError> {
     let identifier = first_inner(pair.clone())?;
     let statements = last_inner(pair)?;
-    variables.insert(
-        identifier.as_str().trim().to_owned(),
-        pairs_to_ast(statements.into_inner())?,
-    );
+    let variable_ast = pairs_to_ast(statements.into_inner(), variables)?;
+    variables.insert(identifier.as_str().trim().to_owned(), variable_ast);
     Ok(MelodyAstNode::Skip)
 }
