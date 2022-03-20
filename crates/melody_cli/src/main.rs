@@ -9,7 +9,7 @@ pub mod utils;
 use clap::Parser;
 use colored::control::{ShouldColorize, SHOULD_COLORIZE};
 use consts::COMMAND_MARKER;
-use melody_compiler::{compiler, errors::ParseError};
+use melody_compiler::compiler;
 use output::{
     print_output, print_output_repl, print_repl_welcome, print_source_line, prompt, report_clear,
     report_exit, report_missing_path, report_no_lines_to_print, report_nothing_to_redo,
@@ -46,7 +46,7 @@ struct Args {
 pub enum CliError {
     MissingPath,
     ReadFileError(String),
-    ParseError(ParseError),
+    ParseError(String),
     WriteFileError(String),
     ReadInputError,
 }
@@ -63,7 +63,7 @@ fn main() {
                 CliError::WriteFileError(output_file_path) => {
                     report_write_file_error(&output_file_path);
                 }
-                CliError::ParseError(parse_error) => report_parse_error(&parse_error.message),
+                CliError::ParseError(error) => report_parse_error(&error),
                 CliError::ReadInputError => report_read_input_error(),
             }
             exit(&ExitCode::Error);
@@ -94,7 +94,8 @@ fn cli() -> Result<(), CliError> {
     let source = read_to_string(input_file_path.clone())
         .map_err(|_| CliError::ReadFileError(input_file_path))?;
 
-    let compiler_output = compiler(&source).map_err(CliError::ParseError)?;
+    let compiler_output =
+        compiler(&source).map_err(|error| CliError::ParseError(error.to_string()))?;
 
     match output_file_path {
         Some(output_file_path) => write_output_to_file(output_file_path, compiler_output)?,
@@ -197,9 +198,7 @@ fn repl() -> Result<(), CliError> {
         let raw_output = compiler(source);
 
         if let Err(error) = raw_output {
-            let ParseError { message } = error;
-
-            report_repl_parse_error(&message);
+            report_repl_parse_error(&error.to_string());
 
             valid_lines.pop();
 

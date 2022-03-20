@@ -9,8 +9,8 @@ pub mod errors;
 mod regex;
 mod utils;
 
+use anyhow::Result;
 use ast::to_ast;
-use errors::ParseError;
 #[cfg(not(feature = "fuzzer"))]
 use regex::ast_to_regex;
 #[cfg(feature = "fuzzer")]
@@ -35,7 +35,7 @@ let output = compiler(source);
 assert_eq!(output.unwrap(), "A{1,5}");
 ```
 */
-pub fn compiler(source: &str) -> Result<String, ParseError> {
+pub fn compiler(source: &str) -> Result<String> {
     let formatted_source = format_line_comments(source);
 
     let ast = to_ast(formatted_source.as_str())?;

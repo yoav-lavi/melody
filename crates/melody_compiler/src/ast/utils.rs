@@ -1,38 +1,30 @@
-use super::{error_messages::ErrorMessage, ident_parser::Rule};
-use crate::errors::ParseError;
+use super::ident_parser::Rule;
+use crate::errors::CompilerError;
+use anyhow::Result;
 use once_cell::sync::Lazy;
 use pest::iterators::Pair;
 use std::collections::HashSet;
 
-pub fn first_inner(pair: Pair<Rule>) -> Result<Pair<Rule>, ParseError> {
-    let last = pair
-        .into_inner()
-        .next()
-        .ok_or_else(|| ParseError::from(ErrorMessage::MissingNode))?;
+pub fn first_inner(pair: Pair<Rule>) -> Result<Pair<Rule>> {
+    let last = pair.into_inner().next().ok_or(CompilerError::MissingNode)?;
 
     Ok(last)
 }
 
-pub fn last_inner(pair: Pair<Rule>) -> Result<Pair<Rule>, ParseError> {
+pub fn last_inner(pair: Pair<Rule>) -> Result<Pair<Rule>> {
     let last = pair
         .into_inner()
         .next_back()
-        .ok_or_else(|| ParseError::from(ErrorMessage::MissingNode))?;
+        .ok_or(CompilerError::MissingNode)?;
 
     Ok(last)
 }
 
-pub fn first_last_inner_str(pair: Pair<Rule>) -> Result<(&str, &str), ParseError> {
+pub fn first_last_inner_str(pair: Pair<Rule>) -> Result<(&str, &str)> {
     let pairs: Vec<Pair<Rule>> = pair.into_inner().collect();
     Ok((
-        pairs
-            .first()
-            .ok_or_else(|| ParseError::from(ErrorMessage::MissingNode))?
-            .as_str(),
-        pairs
-            .last()
-            .ok_or_else(|| ParseError::from(ErrorMessage::MissingNode))?
-            .as_str(),
+        pairs.first().ok_or(CompilerError::MissingNode)?.as_str(),
+        pairs.last().ok_or(CompilerError::MissingNode)?.as_str(),
     ))
 }
 
@@ -40,16 +32,13 @@ pub fn nth_inner(pair: Pair<Rule>, n: usize) -> Option<Pair<Rule>> {
     pair.into_inner().nth(n)
 }
 
-pub fn to_char(value: &str) -> Result<char, ParseError> {
-    let char = value
-        .chars()
-        .next()
-        .ok_or_else(|| ParseError::from(ErrorMessage::MissingNode))?;
+pub fn to_char(value: &str) -> Result<char> {
+    let char = value.chars().next().ok_or(CompilerError::MissingNode)?;
 
     Ok(char)
 }
 
-pub fn alphabetic_first_char(value: &str) -> Result<bool, ParseError> {
+pub fn alphabetic_first_char(value: &str) -> Result<bool> {
     Ok(to_char(value)?.is_alphabetic())
 }
 
