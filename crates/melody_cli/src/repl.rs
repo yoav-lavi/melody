@@ -1,7 +1,7 @@
 use crate::consts::COMMAND_MARKER;
 use crate::errors::CliError;
 use crate::output::{
-    print_output_repl, print_repl_welcome, print_source_line, prompt, report_clear, report_exit,
+    print_repl_output, print_repl_welcome, print_source_line, prompt, report_clear, report_exit,
     report_no_lines_to_print, report_nothing_to_redo, report_nothing_to_undo, report_redo,
     report_repl_error, report_source, report_undo, report_unrecognized_command,
 };
@@ -38,7 +38,7 @@ fn repl_loop(
         let raw_output = compiler(source);
         let output = raw_output.unwrap();
 
-        print_output_repl(&output);
+        print_repl_output(&output);
 
         return Ok(NextLoop::Continue);
     }
@@ -60,7 +60,7 @@ fn repl_loop(
 
     let output = raw_output.unwrap();
 
-    print_output_repl(&output);
+    print_repl_output(&output);
 
     Ok(NextLoop::Continue)
 }
@@ -84,7 +84,7 @@ fn repl_command(
                     let raw_output = compiler(source);
                     let output = raw_output.unwrap();
 
-                    print_output_repl(&output);
+                    print_repl_output(&output);
                 } else {
                     report_undo(true);
                 }
@@ -103,7 +103,7 @@ fn repl_command(
                 let raw_output = compiler(source);
                 let output = raw_output.unwrap();
 
-                print_output_repl(&output);
+                print_repl_output(&output);
             }
         }
         format_command!("s", "source") => {
