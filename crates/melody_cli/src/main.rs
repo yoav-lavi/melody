@@ -30,7 +30,7 @@ fn main() {
         }
     };
 
-    process::exit(exit_code.to_i32());
+    process::exit(exit_code.into());
 }
 
 fn try_main() -> anyhow::Result<()> {
