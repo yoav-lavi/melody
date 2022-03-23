@@ -27,9 +27,7 @@ fn repl_loop(
     valid_lines: &mut Vec<String>,
     redo_lines: &mut Vec<String>,
 ) -> anyhow::Result<NextLoop> {
-    prompt();
-
-    let input = read_input().map_err(|_| CliError::ReadInputError)?;
+    let input = prompt_and_read()?;
 
     if input.starts_with(COMMAND_MARKER) {
         return Ok(repl_command(&input, valid_lines, redo_lines));
@@ -136,4 +134,9 @@ fn repl_command(
     }
 
     NextLoop::Continue
+}
+
+fn prompt_and_read() -> anyhow::Result<String> {
+    prompt();
+    Ok(read_input().map_err(|_| CliError::ReadInputError)?)
 }
