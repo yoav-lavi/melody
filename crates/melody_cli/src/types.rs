@@ -36,3 +36,8 @@ pub struct Args {
     #[clap(short = 'r', long = "repl", help = "Start the Melody REPL")]
     pub start_repl: bool,
 }
+
+pub enum NextLoop {
+    Continue,
+    Exit,
+}

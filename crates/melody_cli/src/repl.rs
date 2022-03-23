@@ -5,6 +5,7 @@ use crate::output::{
     report_no_lines_to_print, report_nothing_to_redo, report_nothing_to_undo, report_redo,
     report_repl_error, report_source, report_undo, report_unrecognized_command,
 };
+use crate::types::NextLoop;
 use crate::utils::read_input;
 use melody_compiler::compiler;
 
@@ -14,104 +15,124 @@ pub fn repl() -> anyhow::Result<()> {
     let mut valid_lines: Vec<String> = Vec::new();
     let mut redo_lines: Vec<String> = Vec::new();
 
-    'repl: loop {
-        prompt();
-
-        let input = read_input().map_err(|_| CliError::ReadInputError)?;
-
-        if input.starts_with(COMMAND_MARKER) {
-            match input.as_str() {
-                format_command!("u", "undo") => {
-                    if valid_lines.is_empty() {
-                        report_nothing_to_undo();
-                    } else {
-                        report_undo(false);
-
-                        let latest = valid_lines.pop().unwrap();
-                        redo_lines.push(latest);
-
-                        if !valid_lines.is_empty() {
-                            let source = &valid_lines.join("\n");
-                            let raw_output = compiler(source);
-                            let output = raw_output.unwrap();
-
-                            print_output_repl(&output);
-                        }
-                    }
-                }
-                format_command!("r", "redo") => {
-                    if redo_lines.is_empty() {
-                        report_nothing_to_redo();
-                    } else {
-                        report_redo();
-
-                        let latest = redo_lines.pop().unwrap();
-                        valid_lines.push(latest);
-
-                        let source = &valid_lines.join("\n");
-                        let raw_output = compiler(source);
-                        let output = raw_output.unwrap();
-
-                        print_output_repl(&output);
-                    }
-                }
-                format_command!("s", "source") => {
-                    if valid_lines.is_empty() {
-                        report_no_lines_to_print();
-                    } else {
-                        report_source();
-
-                        for (line_index, line) in valid_lines.iter().enumerate() {
-                            print_source_line(line_index + 1, line);
-                        }
-
-                        println!();
-                    }
-                }
-                format_command!("c", "clear") => {
-                    report_clear();
-
-                    valid_lines.clear();
-                    redo_lines.clear();
-                }
-                format_command!("e", "exit") => {
-                    report_exit();
-
-                    return Ok(());
-                }
-                _ => report_unrecognized_command(input.trim()),
-            }
-
-            continue 'repl;
+    loop {
+        match repl_loop(&mut valid_lines, &mut redo_lines)? {
+            NextLoop::Continue => {}
+            NextLoop::Exit => return Ok(()),
         }
+    }
+}
 
-        if input.is_empty() {
-            let source = &valid_lines.join("\n");
-            let raw_output = compiler(source);
-            let output = raw_output.unwrap();
+fn repl_loop(
+    valid_lines: &mut Vec<String>,
+    redo_lines: &mut Vec<String>,
+) -> anyhow::Result<NextLoop> {
+    prompt();
 
-            print_output_repl(&output);
+    let input = read_input().map_err(|_| CliError::ReadInputError)?;
 
-            continue 'repl;
-        }
+    if input.starts_with(COMMAND_MARKER) {
+        return Ok(repl_command(input, valid_lines, redo_lines));
+    }
 
-        valid_lines.push(input);
-
+    if input.is_empty() {
         let source = &valid_lines.join("\n");
         let raw_output = compiler(source);
-
-        if let Err(error) = raw_output {
-            report_repl_error(&error.to_string());
-
-            valid_lines.pop();
-
-            continue 'repl;
-        }
-
-        redo_lines.clear();
-
         let output = raw_output.unwrap();
 
         print_output_repl(&output);
+
+        return Ok(NextLoop::Continue);
     }
+
+    valid_lines.push(input);
+
+    let source = &valid_lines.join("\n");
+    let raw_output = compiler(source);
+
+    if let Err(error) = raw_output {
+        report_repl_error(&error.to_string());
+
+        valid_lines.pop();
+
+        return Ok(NextLoop::Continue);
+    }
+
+    redo_lines.clear();
+
+    let output = raw_output.unwrap();
+
+    print_output_repl(&output);
+
+    Ok(NextLoop::Continue)
+}
+
+fn repl_command(
+    input: String,
+    valid_lines: &mut Vec<String>,
+    redo_lines: &mut Vec<String>,
+) -> NextLoop {
+    match input.as_str() {
+        format_command!("u", "undo") => {
+            if valid_lines.is_empty() {
+                report_nothing_to_undo();
+            } else {
+                report_undo(false);
+
+                let latest = valid_lines.pop().unwrap();
+                redo_lines.push(latest);
+
+                if !valid_lines.is_empty() {
+                    let source = &valid_lines.join("\n");
+                    let raw_output = compiler(source);
+                    let output = raw_output.unwrap();
+
+                    print_output_repl(&output);
+                }
+            }
+        }
+        format_command!("r", "redo") => {
+            if redo_lines.is_empty() {
+                report_nothing_to_redo();
+            } else {
+                report_redo();
+
+                let latest = redo_lines.pop().unwrap();
+                valid_lines.push(latest);
+
+                let source = &valid_lines.join("\n");
+                let raw_output = compiler(source);
+                let output = raw_output.unwrap();
+
+                print_output_repl(&output);
+            }
+        }
+        format_command!("s", "source") => {
+            if valid_lines.is_empty() {
+                report_no_lines_to_print();
+            } else {
+                report_source();
+
+                for (line_index, line) in valid_lines.iter().enumerate() {
+                    print_source_line(line_index + 1, line);
+                }
+
+                println!();
+            }
+        }
+        format_command!("c", "clear") => {
+            report_clear();
+
+            valid_lines.clear();
+            redo_lines.clear();
+        }
+        format_command!("e", "exit") => {
+            report_exit();
+
+            return NextLoop::Exit;
+        }
+        _ => report_unrecognized_command(input.trim()),
+    }
+
+    NextLoop::Continue
 }
