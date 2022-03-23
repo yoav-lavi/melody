@@ -32,7 +32,7 @@ fn repl_loop(
     let input = read_input().map_err(|_| CliError::ReadInputError)?;
 
     if input.starts_with(COMMAND_MARKER) {
-        return Ok(repl_command(input, valid_lines, redo_lines));
+        return Ok(repl_command(&input, valid_lines, redo_lines));
     }
 
     if input.is_empty() {
@@ -68,11 +68,11 @@ fn repl_loop(
 }
 
 fn repl_command(
-    input: String,
+    input: &str,
     valid_lines: &mut Vec<String>,
     redo_lines: &mut Vec<String>,
 ) -> NextLoop {
-    match input.as_str() {
+    match input {
         format_command!("u", "undo") => {
             if valid_lines.is_empty() {
                 report_nothing_to_undo();
