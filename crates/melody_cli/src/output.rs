@@ -1,29 +1,11 @@
 use colored::Colorize;
 
-pub fn report_read_file_error(path: &str) {
-    eprintln!(
-        "{} {} {}",
-        "Error:".bright_red(),
-        "unable read file at path".bright_red(),
-        format!("\"{path}\"").bright_blue(),
-    );
-}
-
-pub fn report_write_file_error(path: &str) {
-    eprintln!(
-        "{} {} {}",
-        "Error:".bright_red(),
-        "unable write file at path".bright_red(),
-        format!("\"{path}\"").bright_blue(),
-    );
-}
-
 pub fn print_output(output: &str) {
     print!("{}", output.bright_blue());
 }
 
 pub fn print_output_repl(output: &str) {
-    println!("{}", output.bright_blue());
+    println!("{}\n", output.bright_blue());
 }
 
 pub fn print_source_line(line_number: usize, line: &str) {
@@ -34,28 +16,12 @@ pub fn print_source_line(line_number: usize, line: &str) {
     );
 }
 
-pub fn report_repl_parse_error(message: &str) {
-    eprintln!("{} {}\n", "Error:".bright_red(), message.bright_red(),);
-}
-
 pub fn report_unrecognized_command(source: &str) {
     eprintln!(
         "{} {} {}\n",
         "Error:".bright_red(),
         "unrecognized command".bright_red(),
         format!("\"{source}\"").bright_blue(),
-    );
-}
-
-pub fn report_parse_error(message: &str) {
-    eprintln!("{} {}", "Error:".bright_red(), message.bright_red());
-}
-
-pub fn report_read_input_error() {
-    eprintln!(
-        "{} {}",
-        "Error:".bright_red(),
-        "unable to read input".bright_red(),
     );
 }
 
@@ -132,9 +98,10 @@ pub fn report_source() {
     println!("{}", "source".bright_green());
 }
 
-pub fn report_missing_path() {
-    eprintln!(
-        "{}",
-        "Error: invalid arguments, please supply a path argument or use --repl".bright_red()
-    );
+pub fn report_error(error: &str) {
+    eprintln!("{}", format!("Error: {}", error).bright_red(),);
+}
+
+pub fn report_repl_error(error: &str) {
+    eprintln!("{}\n", format!("Error: {}", error).bright_red(),);
 }

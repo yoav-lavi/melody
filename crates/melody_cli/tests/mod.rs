@@ -1,17 +1,14 @@
 #![cfg(test)]
 
-mod utils;
-
 use assert_cmd::Command;
 use assert_fs::{fixture::FileWriteStr, NamedTempFile};
 use std::fs::read_to_string;
 use tempfile::tempdir;
 use unindent::unindent;
-use utils::TestResult;
 
 #[test]
 #[cfg_attr(miri, ignore)]
-fn cli_stdout_test() -> TestResult {
+fn cli_stdout_test() -> anyhow::Result<()> {
     let mut command = Command::cargo_bin("melody")?;
     let melody_file = NamedTempFile::new("test.mdy")?;
 
@@ -53,7 +50,7 @@ fn cli_stdout_test() -> TestResult {
 
 #[test]
 #[cfg_attr(miri, ignore)]
-fn cli_file_test() -> TestResult {
+fn cli_file_test() -> anyhow::Result<()> {
     let mut command = Command::cargo_bin("melody")?;
     let melody_file = NamedTempFile::new("test.mdy")?;
     let dir = tempdir()?;

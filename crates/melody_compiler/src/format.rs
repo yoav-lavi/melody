@@ -1,6 +1,8 @@
-/// changes line comments to inline comments
-/// while preserving line numbers
-pub fn format_line_comments(source: &str) -> String {
+pub fn format(source: &str) -> String {
+    format_line_comments(source)
+}
+
+fn format_line_comments(source: &str) -> String {
     source
         .lines()
         .map(|line| {
