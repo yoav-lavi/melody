@@ -6,7 +6,7 @@
 A CLI wrapping the Melody language compiler
 </p>
 
-# Install
+## Install
 
 ```sh
 cargo install melody_cli
