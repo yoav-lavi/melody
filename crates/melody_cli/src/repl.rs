@@ -77,17 +77,18 @@ fn repl_command(
             if valid_lines.is_empty() {
                 report_nothing_to_undo();
             } else {
-                report_undo(false);
-
                 let latest = valid_lines.pop().unwrap();
                 redo_lines.push(latest);
 
                 if !valid_lines.is_empty() {
+                    report_undo(false);
                     let source = &valid_lines.join("\n");
                     let raw_output = compiler(source);
                     let output = raw_output.unwrap();
 
                     print_output_repl(&output);
+                } else {
+                    report_undo(true);
                 }
             }
         }
