@@ -3,7 +3,7 @@ use std::fs::write;
 use std::io::{self, stdin, stdout, Write};
 
 pub fn read_input() -> io::Result<String> {
-    let _ = stdout().flush();
+    stdout().flush()?;
     let mut input = String::new();
     stdin().read_line(&mut input)?;
 

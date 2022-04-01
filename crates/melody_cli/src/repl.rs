@@ -78,15 +78,15 @@ fn repl_command(
                 let latest = valid_lines.pop().unwrap();
                 redo_lines.push(latest);
 
-                if !valid_lines.is_empty() {
+                if valid_lines.is_empty() {
+                    report_undo(true);
+                } else {
                     report_undo(false);
                     let source = &valid_lines.join("\n");
                     let raw_output = compiler(source);
                     let output = raw_output.unwrap();
 
                     print_repl_output(&output);
-                } else {
-                    report_undo(true);
                 }
             }
         }

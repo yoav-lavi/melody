@@ -6,7 +6,7 @@ pub enum ExitCode {
 }
 
 impl From<ExitCode> for i32 {
-    fn from(exit_code: ExitCode) -> i32 {
+    fn from(exit_code: ExitCode) -> Self {
         match exit_code {
             ExitCode::Ok => 0,
             ExitCode::Error => 1,
