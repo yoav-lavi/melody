@@ -3,6 +3,7 @@ members = [
   "crates/melody_cli",
   "crates/melody_compiler",
   "crates/melody_wasm",
+  "crates/melody_node",
   "xtask",
 ]
 
