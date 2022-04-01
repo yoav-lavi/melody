@@ -304,7 +304,6 @@ The Melody file extensions are `.mdy` and `.melody`
 - `melody_compiler` - The Melody compiler [📦](https://crates.io/crates/melody_compiler) [📖](https://docs.rs/melody_compiler)
 - `melody_cli` - A CLI wrapping the Melody compiler [📦](https://crates.io/crates/melody_cli) [📖](https://docs.rs/crate/melody_cli)
 - `melody_wasm` - WASM bindings for the Melody compiler
-- `melody_node` - NodeJS bindings for the Melody compiler
 
 ## Extensions
 
