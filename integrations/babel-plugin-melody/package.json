@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-melody",
-  "version": "0.13.9",
+  "version": "0.13.10",
   "main": "src/index.js",
   "license": "MIT",
   "dependencies": {
