@@ -22,13 +22,37 @@ yarn add melodyc
 ```js
 const { compiler } = require("melodyc");
 
-const source = `1 to 5 of "A";`;
+const source = `
+<start>;
+
+option of "v";
+
+capture major {
+  some of <digit>;
+}
+
+".";
+
+capture minor {
+  some of <digit>;
+}
+
+".";
+
+capture patch {
+  some of <digit>;
+}
+
+<end>;
+`;
 
 try {
   const output = compiler(source);
-  // do something with output
+  let regexp = new RegExp(output);
+  let match = regexp.test("v1.1.1");
+  console.log({ match }); // true
 } catch (error) {
-  // do something with error
+  // handle compilation error
 }
 ```
 

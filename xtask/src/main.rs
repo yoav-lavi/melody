@@ -154,6 +154,10 @@ fn publish_node() -> anyhow::Result<()> {
 fn publish_playground() -> anyhow::Result<()> {
     let shell = shell_in_dir("playground")?;
 
+    // to prevent cases where we publish
+    // different bindings
+    wasm_playground()?;
+
     cmd!(shell, "vercel").run()?;
     cmd!(shell, "vercel --prod").run()?;
 
