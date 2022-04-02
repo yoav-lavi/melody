@@ -56,7 +56,7 @@ const rawRegex = "^other$";
 const thirdRegex = new RegExp(rawRegex);
 ```
 
-### Known issues
+## Known issues
 
 - Interpolation within template strings is not currently supported
 
