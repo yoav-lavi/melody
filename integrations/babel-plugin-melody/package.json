@@ -1,0 +1,14 @@
+{
+  "name": "babel-plugin-melody",
+  "version": "0.13.9",
+  "main": "src/index.js",
+  "license": "MIT",
+  "dependencies": {
+    "melodyc": "^0.13.16"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.17.8",
+    "babel-plugin-tester": "^10.1.0",
+    "jest": "^27.5.1"
+  }
+}

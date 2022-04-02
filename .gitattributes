@@ -1,3 +1,4 @@
 playground/** linguist-vendored
 extensions/** linguist-vendored
 xtask/** linguist-vendored
+integrations/** linguist-vendored
