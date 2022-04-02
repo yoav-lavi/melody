@@ -314,6 +314,10 @@ The Melody file extensions are `.mdy` and `.melody`
 
 - [NodeJS](https://www.npmjs.com/package/melodyc)
 
+## Integrations
+
+- [Babel](https://www.npmjs.com/package/babel-plugin-melody)
+
 ## Performance
 
 Last measured on V0.13.3
