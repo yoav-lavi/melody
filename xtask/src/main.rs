@@ -177,12 +177,20 @@ fn wasm_node() -> anyhow::Result<()> {
     cmd!(shell, "wasm-pack build --target nodejs").run()?;
     cmd!(
         shell,
-        "sed -i '' 's/\"name\":.*/\"name\": \"melodyc\",/g' pkg/package.json"
+        "sed -i '' 's/\"name\":.*/\"name\": \"melodyc\",/g' ./pkg/package.json"
     )
     .run()?;
     cmd!(
         shell,
-        "sed -i '' 's/\"description\":.*/\"description\": \"NodeJS bindings for the Melody language compiler\",/g' pkg/package.json"
+        "sed -i '' 's/\"description\":.*/\"description\": \"NodeJS bindings for the Melody language compiler\",/g' ./pkg/package.json"
+    )
+    .run()?;
+
+    cmd!(shell, "rm ./pkg/README.md").run()?;
+
+    cmd!(
+        shell,
+        "cp ../../xtask/assets/node-readme.md ./pkg/README.md"
     )
     .run()?;
 
