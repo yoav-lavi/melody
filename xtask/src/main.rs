@@ -55,6 +55,7 @@ fn publish() -> anyhow::Result<()> {
         Some("compiler") => publish_compiler()?,
         Some("docs") => publish_docs()?,
         Some("extension") => publish_extension()?,
+        Some("node") => publish_node()?,
         Some("playground") => publish_playground()?,
         _ => Help::Publish.print(),
     }
@@ -89,6 +90,7 @@ fn wasm() -> anyhow::Result<()> {
 
     match target.as_deref() {
         Some("playground") => wasm_playground()?,
+        Some("node") => wasm_node()?,
         _ => Help::Wasm.print(),
     }
 
@@ -135,6 +137,20 @@ fn publish_extension_vscode() -> anyhow::Result<()> {
     Ok(())
 }
 
+fn publish_node() -> anyhow::Result<()> {
+    let shell = shell_in_dir("crates/melody_wasm")?;
+
+    // to prevent cases where we publish
+    // different bindings
+    wasm_node()?;
+
+    shell.change_dir("./pkg");
+
+    cmd!(shell, "npm publish --access=public").run()?;
+
+    Ok(())
+}
+
 fn publish_playground() -> anyhow::Result<()> {
     let shell = shell_in_dir("playground")?;
 
@@ -150,6 +166,25 @@ fn wasm_playground() -> anyhow::Result<()> {
     cmd!(shell, "wasm-pack build --target web").run()?;
     cmd!(shell, "rm -r ../../playground/wasm").run()?;
     cmd!(shell, "cp -r ./pkg/. ../../playground/wasm").run()?;
+
+    Ok(())
+}
+
+fn wasm_node() -> anyhow::Result<()> {
+    let shell = shell_in_dir("crates/melody_wasm")?;
+
+    cmd!(shell, "rm -r -f ./pkg/").run()?;
+    cmd!(shell, "wasm-pack build --target nodejs").run()?;
+    cmd!(
+        shell,
+        "sed -i '' 's/\"name\":.*/\"name\": \"melodyc\",/g' pkg/package.json"
+    )
+    .run()?;
+    cmd!(
+        shell,
+        "sed -i '' 's/\"description\":.*/\"description\": \"NodeJS bindings for the Melody language compiler\",/g' pkg/package.json"
+    )
+    .run()?;
 
     Ok(())
 }

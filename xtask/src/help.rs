@@ -38,6 +38,7 @@ impl Display for Help {
       docs - publishes the docs to github pages
       extension - publishes specific extensions
       playground - publishes the playground to vercel
+      node - publishes the melodyc npm package
       "#,
             ),
             Help::PublishExtension => formatter.write_str(
@@ -48,6 +49,7 @@ impl Display for Help {
             Help::Wasm => formatter.write_str(
                 r#"wasm commands:
       playground - builds wasm dependencies for the playground
+      node - builds wasm dependencies for nodejs
       "#,
             ),
         }

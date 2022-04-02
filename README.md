@@ -310,6 +310,10 @@ The Melody file extensions are `.mdy` and `.melody`
 - [VSCode](https://marketplace.visualstudio.com/items?itemName=yoavlavi.melody)
 - [IntelliJ](https://plugins.jetbrains.com/plugin/18693-melody)
 
+## Packages
+
+- [NodeJS](https://www.npmjs.com/package/melodyc)
+
 ## Performance
 
 Last measured on V0.13.3
