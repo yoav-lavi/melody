@@ -385,7 +385,7 @@ To reproduce, run `cargo benchmark`
 | (?)                                 | `$&`                  | ❔          |
 | (?)                                 | `x20`                 | ❔          |
 | (?)                                 | `x{06fa}`             | ❔          |
-| `any of "a", "b", "c"` *            | `[abc]`               | ❓          |
+| `any of "a", "b", "c"` \*            | `[abc]`               | ❓          |
 | multiple ranges *                   | `[a-zA-Z0-9]`         | ❓          |
 | regex optimization                  |                       | ❓          |
 | standard library / patterns         |                       | ❓          |
