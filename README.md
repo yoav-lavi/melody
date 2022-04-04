@@ -320,7 +320,7 @@ The Melody file extensions are `.mdy` and `.melody`
 
 ## Performance
 
-Last measured on V0.13.3
+Last measured on v0.13.3
 
 Measured on an 8 core 2021 MacBook Pro 14-inch, Apple M1 Pro using [criterion](https://github.com/bheisler/criterion.rs):
 
