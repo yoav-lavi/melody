@@ -316,7 +316,7 @@ The Melody file extensions are `.mdy` and `.melody`
 
 ## Integrations
 
-- [Babel](https://www.npmjs.com/package/babel-plugin-melody)
+- [Babel Plugin](https://www.npmjs.com/package/babel-plugin-melody)
 
 ## Performance
 
