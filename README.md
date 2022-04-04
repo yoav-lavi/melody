@@ -370,7 +370,6 @@ To reproduce, run `cargo benchmark`
 | `not "A";`                          | `[^A]`                | 🐣          |
 | variables / macros                  |                       | 🐣          |
 | file watcher                        |                       | ❌          |
-| TS / JS build step                  |                       | ❌          |
 | multiline groups in REPL            |                       | ❌          |
 | `flags: global, multiline, ...`     | `/.../gm...`          | ❔          |
 | (?)                                 | `\#`                  | ❔          |
