@@ -248,9 +248,9 @@ anymatch@~3.1.2:
     picomatch "^2.0.4"
 
 babel-plugin-melody@../../babel-plugin-melody:
-  version "1.0.0"
+  version "0.13.19"
   dependencies:
-    melodyc "^0.13.16"
+    melodyc "^0.13.17"
 
 balanced-match@^1.0.0:
   version "1.0.2"
@@ -484,10 +484,10 @@ make-dir@^2.1.0:
     pify "^4.0.1"
     semver "^5.6.0"
 
-melodyc@^0.13.16:
-  version "0.13.16"
-  resolved "https://registry.yarnpkg.com/melodyc/-/melodyc-0.13.16.tgz#b377f965b8be153baf2412dc4b1da0b25a96af68"
-  integrity sha512-p5/gpZS9raf/o1biqfQWhIdXpKhwbAkd0Zw0bWFRGUBem/GdyMfXs/yDBa+ExJ51hYkCwiBamnNUYJLi4/bWhg==
+melodyc@^0.13.17:
+  version "0.13.17"
+  resolved "https://registry.yarnpkg.com/melodyc/-/melodyc-0.13.17.tgz#4fde71903de819e621de488b4592792db5f8a7a6"
+  integrity sha512-FkWYo3FHfpsIPVrtl18akAfuT/I+kM61ffzY+dQ4EP76E0Ps2V2epb3KWfb8ggIRoBgp70eMeRbM8HWDXiWcxg==
 
 minimatch@^3.0.4:
   version "3.1.2"

@@ -1,5 +1,5 @@
 use super::utils::{mark_lazy, wrap_quantified};
-use crate::ast::types::{
+use crate::ast::types::ast::{
     Assertion, AssertionKind, Expression, Group, GroupKind, MelodyAst, MelodyAstNode, Quantifier,
     QuantifierKind, Range, SpecialSymbol, Symbol, SymbolKind, VariableInvocation,
 };

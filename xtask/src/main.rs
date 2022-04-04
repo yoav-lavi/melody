@@ -1,21 +1,28 @@
 mod help;
 mod utils;
 
-use std::env;
-
+use colored::control::ShouldColorize;
 use help::Help;
-use utils::{positional_argument, shell_in_dir};
+use std::env;
+use utils::{help_flag_used, positional_argument, shell_in_dir};
 use xshell::{cmd, Shell};
 
 fn main() {
+    ShouldColorize::from_env();
     if let Err(error) = try_main() {
         eprintln!("{error}");
         std::process::exit(1);
     }
+    std::process::exit(0);
 }
 
 fn try_main() -> anyhow::Result<()> {
     let task = positional_argument(1);
+
+    if help_flag_used() {
+        Help::general();
+        return Ok(());
+    }
 
     match task.as_deref() {
         Some("run") => run()?,
@@ -23,7 +30,7 @@ fn try_main() -> anyhow::Result<()> {
         Some("fuzz") => fuzz()?,
         Some("publish") => publish()?,
         Some("wasm") => wasm()?,
-        _ => Help::Main.print(),
+        _ => Help::Main.mistake(task.as_deref()),
     }
 
     Ok(())
@@ -53,11 +60,10 @@ fn publish() -> anyhow::Result<()> {
     match target.as_deref() {
         Some("cli") => publish_cli()?,
         Some("compiler") => publish_compiler()?,
-        Some("docs") => publish_docs()?,
         Some("extension") => publish_extension()?,
         Some("node") => publish_node()?,
         Some("playground") => publish_playground()?,
-        _ => Help::Publish.print(),
+        _ => Help::Publish.mistake(target.as_deref()),
     }
 
     Ok(())
@@ -68,7 +74,7 @@ fn fuzz() -> anyhow::Result<()> {
 
     match target.as_deref() {
         Some("compiler") => fuzz_compiler()?,
-        _ => Help::Fuzz.print(),
+        _ => Help::Fuzz.mistake(target.as_deref()),
     }
 
     Ok(())
@@ -79,7 +85,7 @@ fn publish_extension() -> anyhow::Result<()> {
 
     match extension.as_deref() {
         Some("vscode") => publish_extension_vscode()?,
-        _ => Help::PublishExtension.print(),
+        _ => Help::PublishExtension.mistake(extension.as_deref()),
     }
 
     Ok(())
@@ -91,7 +97,7 @@ fn wasm() -> anyhow::Result<()> {
     match target.as_deref() {
         Some("playground") => wasm_playground()?,
         Some("node") => wasm_node()?,
-        _ => Help::Wasm.print(),
+        _ => Help::Wasm.mistake(target.as_deref()),
     }
 
     Ok(())
@@ -117,14 +123,6 @@ fn publish_compiler() -> anyhow::Result<()> {
     let shell = shell_in_dir("crates/melody_compiler")?;
 
     cmd!(shell, "cargo publish").run()?;
-
-    Ok(())
-}
-
-fn publish_docs() -> anyhow::Result<()> {
-    let shell = shell_in_dir("docs")?;
-
-    cmd!(shell, "yarn deploy").run()?;
 
     Ok(())
 }
@@ -168,7 +166,7 @@ fn wasm_playground() -> anyhow::Result<()> {
     let shell = shell_in_dir("crates/melody_wasm")?;
 
     cmd!(shell, "wasm-pack build --target web").run()?;
-    cmd!(shell, "rm -r ../../playground/wasm").run()?;
+    cmd!(shell, "rm -r -f ../../playground/wasm").run()?;
     cmd!(shell, "cp -r ./pkg/. ../../playground/wasm").run()?;
 
     Ok(())

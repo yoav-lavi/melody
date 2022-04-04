@@ -10,3 +10,7 @@ pub fn shell_in_dir(dir: &str) -> anyhow::Result<Shell> {
 pub fn positional_argument(n: usize) -> Option<String> {
     env::args().nth(n)
 }
+
+pub fn help_flag_used() -> bool {
+    env::args().any(|arg| arg == "-h") || env::args().any(|arg| arg == "--help")
+}

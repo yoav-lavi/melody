@@ -74,8 +74,8 @@ export const initEditors = async () => {
       window.currentEditorContent = melodyEditor.getValue();
       const regex = compiler(melodyEditor.getValue());
       regexEditor.setValue(regex);
-    } catch (error) {
-      regexEditor.setValue(error as string);
+    } catch (error: unknown) {
+      regexEditor.setValue((error as Error).message);
     }
   };
 

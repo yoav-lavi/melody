@@ -6,3 +6,4 @@ edition = "2021"
 [dependencies]
 xshell = "0.2.0"
 anyhow = "1.0.56"
+colored = "2.0.0"

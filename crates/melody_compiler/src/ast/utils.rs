@@ -1,4 +1,4 @@
-use super::ident_parser::Rule;
+use super::types::pest::Rule;
 use crate::errors::CompilerError;
 use anyhow::Result;
 use once_cell::sync::Lazy;

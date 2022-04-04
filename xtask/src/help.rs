@@ -1,3 +1,4 @@
+use colored::{self, Colorize};
 use std::fmt::Display;
 
 pub enum Help {
@@ -8,9 +9,89 @@ pub enum Help {
     Wasm,
 }
 
+fn print_suggestion(current: Option<&str>, for_command: &str) {
+    match current {
+        Some(current) => eprintln!(
+            "Did you mean this?\n\t{} {}\n",
+            current.bright_blue(),
+            for_command.bright_blue()
+        ),
+        None => eprintln!("Did you mean this?\n\t{}\n", for_command.bright_blue()),
+    }
+}
+
+fn print_not_a_command(current: Option<&str>, command: &str) {
+    match current {
+        Some(current) => eprintln!("'{} {}' is not a command.\n", current, command),
+        None => eprintln!("'{}' is not a command.\n", command),
+    }
+}
+
+fn print_for_more_information() {
+    eprintln!("For more information, see 'cargo xtask --help'.");
+}
+
 impl Help {
-    pub fn print(&self) {
-        eprintln!("{}", self)
+    pub fn general() {
+        println!("usage: cargo xtask <command>\n");
+        println!("A CLI allowing to run various tasks in the Melody repository\n");
+        println!("{}\n", Help::Main);
+        println!("{}\n", Help::Fuzz);
+        println!("{}\n", Help::Publish);
+        println!("{}\n", Help::PublishExtension);
+        println!("{}", Help::Wasm);
+    }
+
+    pub fn mistake(&self, command: Option<&str>) {
+        if let Some(command) = command {
+            self.unrecognized_command(command);
+        }
+
+        eprintln!("{}", self);
+
+        if let Some(_) = command {
+            print_for_more_information();
+        }
+    }
+
+    fn unrecognized_command(&self, command: &str) {
+        match self {
+            Help::Main => {
+                print_not_a_command(None, command);
+                match command {
+                    "deploy" => print_suggestion(None, "publish"),
+                    "bench" => print_suggestion(None, "benchmark"),
+                    "fuzzer" => print_suggestion(None, "fuzz"),
+                    "WASM" => print_suggestion(None, "wasm"),
+                    _ => {}
+                }
+            }
+            Help::Publish => {
+                print_not_a_command(Some("publish"), command);
+                match command {
+                    "nodejs" => print_suggestion(Some("publish"), "node"),
+                    "vscode" => print_suggestion(Some("publish"), "extension vscode"),
+                    "vs-code" => print_suggestion(Some("publish"), "extension vscode"),
+                    "CLI" => print_suggestion(Some("publish"), "cli"),
+                    _ => {}
+                }
+            }
+            Help::Wasm => {
+                print_not_a_command(Some("wasm"), command);
+                match command {
+                    "nodejs" => print_suggestion(Some("wasm"), "node"),
+                    _ => {}
+                }
+            }
+            Help::PublishExtension => {
+                print_not_a_command(Some("publish extension"), command);
+                match command {
+                    "vs-code" => print_suggestion(Some("publish extension"), "vscode"),
+                    _ => {}
+                }
+            }
+            Help::Fuzz => print_not_a_command(Some("fuzz"), command),
+        }
     }
 }
 
@@ -19,37 +100,36 @@ impl Display for Help {
         match self {
             Help::Main => formatter.write_str(
                 r#"commands:
-      run - runs the melody cli binary
-      benchmark - runs benchmarks
-      fuzz - runs fuzz testing on specific crates
-      publish - publishes specific crates or projects
-      wasm - builds wasm dependencies for specific projects
+      run [arguments]          runs the melody_cli binary
+      benchmark                runs benchmarks
+      fuzz <crate>             runs fuzz testing on specific crates
+      publish <target>         publishes specific crates or projects
+      wasm <target>            builds wasm dependencies for specific projects
       "#,
             ),
             Help::Fuzz => formatter.write_str(
-                r#"fuzz commands:
-      compiler - runs fuzz testing on the compiler
+                r#"fuzz subcommands:
+      compiler                 runs fuzz testing on the compiler
       "#,
             ),
             Help::Publish => formatter.write_str(
-                r#"publish commands:
-      cli - publishes the cli to crates.io
-      compiler - publishes the compiler to crates.io
-      docs - publishes the docs to github pages
-      extension - publishes specific extensions
-      playground - publishes the playground to vercel
-      node - publishes the melodyc npm package
+                r#"publish subcommands:
+      cli                      publishes the melody_cli crate to crates.io
+      compiler                 publishes the melody_compiler crate to crates.io
+      playground               publishes the playground to vercel
+      node                     publishes the melodyc npm package
+      extension <target>       publishes specific extensions
       "#,
             ),
             Help::PublishExtension => formatter.write_str(
-                r#"publish extension commands:
-      vscode - publishes the vscode extension to the market
+                r#"publish extension subcommands:
+      vscode                   publishes the vscode extension to the market
       "#,
             ),
             Help::Wasm => formatter.write_str(
-                r#"wasm commands:
-      playground - builds wasm dependencies for the playground
-      node - builds wasm dependencies for nodejs
+                r#"wasm subcommands:
+      playground               builds wasm dependencies for the playground
+      node                     builds wasm dependencies for nodejs
       "#,
             ),
         }
