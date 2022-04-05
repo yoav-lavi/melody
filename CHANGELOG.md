@@ -1,5 +1,11 @@
 # Changelog
 
+## [v0.13.10] - 2022-03-11
+
+### Fixes
+
+- Fixes unnecessary grouping in quantifiers
+
 ## [v0.13.9] - 2022-03-11
 
 ### Misc.
