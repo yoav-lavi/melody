@@ -1904,10 +1904,10 @@ makeerror@1.0.12:
   dependencies:
     tmpl "1.0.5"
 
-melodyc@^0.13.18:
-  version "0.13.18"
-  resolved "https://registry.yarnpkg.com/melodyc/-/melodyc-0.13.18.tgz#c7155d0805b8e44b621aba5cc8b6b85309fda76b"
-  integrity sha512-uwqkdl3MJl2Yt4pMlEsHTyzREmIltdcjci6BnTkPcpUxhDsqYA5iDb5YQmL4FjnBh/37sbICyeMf7n7k546jXQ==
+melodyc@^0.13.20:
+  version "0.13.20"
+  resolved "https://registry.yarnpkg.com/melodyc/-/melodyc-0.13.20.tgz#374f57832d0cb8a3814550b8a84e4c93c02fee86"
+  integrity sha512-DGzyYnSdiBOux0opou4E3BCe3xiPSirECbiP1mG4s0pgEnQ5ozun6wXhcuc9VVIVe1CL8QHWCxfcf9/qBBLmaQ==
 
 merge-stream@^2.0.0:
   version "2.0.0"
