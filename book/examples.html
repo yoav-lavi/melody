@@ -167,7 +167,7 @@ some of &lt;word&gt;;
 // #melody
 </code></pre>
 <p>Turns into</p>
-<pre><code>#(?:\w)+
+<pre><code>#\w+
 </code></pre>
 <h2 id="introductory-courses"><a class="header" href="#introductory-courses">Introductory Courses</a></h2>
 <pre><code class="language-rs">some of &lt;alphabetic&gt;;
@@ -178,7 +178,7 @@ some of &lt;word&gt;;
 // classname 1xx
 </code></pre>
 <p>Turns into</p>
-<pre><code>(?:[a-zA-Z])+ 1(?:\d){2}
+<pre><code>[a-zA-Z]+ 1\d{2}
 </code></pre>
 <h2 id="indented-code-2-spaces"><a class="header" href="#indented-code-2-spaces">Indented Code (2 spaces)</a></h2>
 <pre><code class="language-rs">some of match {
@@ -219,7 +219,7 @@ capture patch {
 // v1.0.0
 </code></pre>
 <p>Turns into</p>
-<pre><code>^v?(?&lt;major&gt;(?:\d)+)\.(?&lt;minor&gt;(?:\d)+)\.(?&lt;patch&gt;(?:\d)+)$
+<pre><code>^v?(?&lt;major&gt;\d+)\.(?&lt;minor&gt;\d+)\.(?&lt;patch&gt;\d+)$
 </code></pre>
 
                     </main>

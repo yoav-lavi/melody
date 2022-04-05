@@ -33,7 +33,7 @@ some of <word>;
 Turns into
 
 ```
-#(?:\w)+
+#\w+
 ```
 
 ## Introductory Courses
@@ -50,7 +50,7 @@ some of <alphabetic>;
 Turns into
 
 ```
-(?:[a-zA-Z])+ 1(?:\d){2}
+[a-zA-Z]+ 1\d{2}
 ```
 
 ## Indented Code (2 spaces)
@@ -103,5 +103,5 @@ capture patch {
 Turns into
 
 ```
-^v?(?<major>(?:\d)+)\.(?<minor>(?:\d)+)\.(?<patch>(?:\d)+)$
+^v?(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
 ```
