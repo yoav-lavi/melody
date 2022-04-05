@@ -69,7 +69,7 @@ some of <word>;
 Turns into
 
 ```regex
-#(?:\w)+
+#\w+
 ```
 
 ### Introductory Courses &nbsp;<sub><sup><a href="https://melody-playground.vercel.app?content=c29tZSUyMG9mJTIwJTNDYWxwaGFiZXRpYyUzRSUzQiUwQSUzQ3NwYWNlJTNFJTNCJTBBJTIyMSUyMiUzQiUwQTIlMjBvZiUyMCUzQ2RpZ2l0JTNFJTNCJTBBJTBBJTJGJTJGJTIwY2xhc3NuYW1lJTIwMXh4">try in playground</a></sup></sub>
@@ -86,7 +86,7 @@ some of <alphabetic>;
 Turns into
 
 ```regex
-(?:[a-zA-Z])+ 1(?:\d){2}
+[a-zA-Z]+ 1\d{2}
 ```
 
 ### Indented Code (2 spaces) &nbsp;<sub><sup><a href="https://melody-playground.vercel.app?content=c29tZSUyMG9mJTIwbWF0Y2glMjAlN0IlMEElMjAlMjAyJTIwb2YlMjAlM0NzcGFjZSUzRSUzQiUwQSU3RCUwQSUwQXNvbWUlMjBvZiUyMCUzQ2NoYXIlM0UlM0IlMEElMjIlM0IlMjIlM0IlMEElMEElMkYlMkYlMjBsZXQlMjB2YWx1ZSUyMCUzRCUyMDUlM0I=">try in playground</a></sup></sub>
@@ -139,7 +139,7 @@ capture patch {
 Turns into
 
 ```regex
-^v?(?<major>(?:\d)+)\.(?<minor>(?:\d)+)\.(?<patch>(?:\d)+)$
+^v?(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
 ```
 
 ## Playground
