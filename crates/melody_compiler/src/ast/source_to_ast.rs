@@ -1,6 +1,10 @@
 use super::consts::{LAZY, NOT};
 use super::types::{
-    ast::*,
+    ast::{
+        AsciiRange, Assertion, AssertionKind, Expression, Group, GroupKind, MelodyAst,
+        MelodyAstNode, NumericRange, Quantifier, QuantifierKind, Range, SpecialSymbol, Symbol,
+        SymbolKind, VariableInvocation,
+    },
     pest::{IdentParser, Rule},
 };
 use super::utils::{

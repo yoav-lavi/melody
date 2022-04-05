@@ -49,7 +49,7 @@ impl Help {
 
         eprintln!("{}", self);
 
-        if let Some(_) = command {
+        if command.is_some() {
             print_for_more_information();
         }
     }
@@ -78,6 +78,7 @@ impl Help {
             }
             Help::Wasm => {
                 print_not_a_command(Some("wasm"), command);
+                #[allow(clippy::single_match)]
                 match command {
                     "nodejs" => print_suggestion(Some("wasm"), "node"),
                     _ => {}
@@ -85,6 +86,7 @@ impl Help {
             }
             Help::PublishExtension => {
                 print_not_a_command(Some("publish extension"), command);
+                #[allow(clippy::single_match)]
                 match command {
                     "vs-code" => print_suggestion(Some("publish extension"), "vscode"),
                     _ => {}

@@ -55,7 +55,7 @@ fn uppercase_range_test() {
       7 of A to Z;
       "#,
     );
-    assert_eq!(output.unwrap(), "[A-Z](?:[A-Z]){7}");
+    assert_eq!(output.unwrap(), "[A-Z][A-Z]{7}");
 }
 
 #[test]
@@ -66,7 +66,7 @@ fn lowercase_range_test() {
       8 of a to z;
       "#,
     );
-    assert_eq!(output.unwrap(), "[a-z](?:[a-z]){8}");
+    assert_eq!(output.unwrap(), "[a-z][a-z]{8}");
 }
 
 #[test]
@@ -249,6 +249,16 @@ fn any_test() {
 }
 
 #[test]
+fn directly_quantifiable() {
+    let single_output = compiler(
+        r#"
+      5 of <word>;
+      "#,
+    );
+    assert_eq!(single_output.unwrap(), r"\w{5}");
+}
+
+#[test]
 fn raw_test() {
     let output = compiler(
         r#"
@@ -287,7 +297,7 @@ fn negative_char_class_test() {
         5 of not abcd;
         "#,
     );
-    assert_eq!(output.unwrap(), "[^abcd](?:[^abcd]){5}");
+    assert_eq!(output.unwrap(), "[^abcd][^abcd]{5}");
 }
 
 #[test]
