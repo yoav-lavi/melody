@@ -390,33 +390,33 @@ OPTIONS:
 </tbody></table>
 <p>* these are expressable in the current syntax using other methods</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="performance"><a class="header" href="#performance">Performance</a></h1>
-<p>Last measured on V0.13.3</p>
+<p>Last measured on v0.13.10</p>
 <p>Measured on an 8 core 2021 MacBook Pro 14-inch, Apple M1 Pro using <a href="https://github.com/bheisler/criterion.rs">criterion</a>:</p>
 <ul>
 <li>
 <p>8 lines:</p>
-<pre><code>compiler/normal (8 lines)
-                        time:   [3.6560 us 3.6596 us 3.6644 us]
-slope  [3.6560 us 3.6644 us] R^2            [0.9999367 0.9999233]
-mean   [3.6577 us 3.6676 us] std. dev.      [3.2234 ns 11.399 ns]
-median [3.6549 us 3.6674 us] med. abs. dev. [642.70 ps 12.973 ns]
+<pre><code>compiler/normal (8 lines)                        
+                        time:   [3.6734 us 3.6775 us 3.6809 us]
+slope  [3.6734 us 3.6809 us] R^2            [0.9999393 0.9999460]
+mean   [3.6726 us 3.6854 us] std. dev.      [3.8234 ns 15.619 ns]
+median [3.6703 us 3.6833 us] med. abs. dev. [1.3873 ns 14.729 ns]
 </code></pre>
 </li>
 <li>
 <p>1M lines:</p>
-<pre><code>compiler/long input (1M lines)
-                        time:   [345.99 ms 348.85 ms 351.91 ms]
-mean   [345.99 ms 351.91 ms] std. dev.      [2.8317 ms 6.3397 ms]
-median [344.55 ms 352.85 ms] med. abs. dev. [893.36 us 8.5853 ms]
+<pre><code>compiler/long input (1M lines)                        
+                        time:   [344.68 ms 346.83 ms 349.29 ms]
+mean   [344.68 ms 349.29 ms] std. dev.      [1.4962 ms 4.9835 ms]
+median [344.16 ms 350.06 ms] med. abs. dev. [407.85 us 6.3428 ms]
 </code></pre>
 </li>
 <li>
 <p>Deeply nested:</p>
-<pre><code>compiler/deeply nested
-                        time:   [4.8259 us 4.8330 us 4.8399 us]
-slope  [4.8259 us 4.8399 us] R^2            [0.9998793 0.9998830]
-mean   [4.8259 us 4.8476 us] std. dev.      [7.6412 ns 24.306 ns]
-median [4.8234 us 4.8484 us] med. abs. dev. [4.1349 ns 30.340 ns]
+<pre><code>compiler/deeply nested  
+                        time:   [3.8017 us 3.8150 us 3.8342 us]
+slope  [3.8017 us 3.8342 us] R^2            [0.9992078 0.9989523]
+mean   [3.8158 us 3.8656 us] std. dev.      [8.8095 ns 65.691 ns]
+median [3.8144 us 3.8397 us] med. abs. dev. [2.5630 ns 40.223 ns]
 </code></pre>
 </li>
 </ul>
