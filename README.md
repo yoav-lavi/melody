@@ -353,7 +353,7 @@ Measured on an 8 core 2021 MacBook Pro 14-inch, Apple M1 Pro using [criterion](h
   median [3.8144 us 3.8397 us] med. abs. dev. [2.5630 ns 40.223 ns]
   ```
 
-To reproduce, run `cargo benchmark`
+To reproduce, run `cargo bench`
 
 ## Future Feature Status
 
