@@ -1,6 +1,7 @@
 #![forbid(unsafe_code)]
+#![warn(clippy::pedantic)]
 #![allow(clippy::unused_unit)]
-#![warn(clippy::needless_pass_by_value)]
+#![allow(clippy::module_name_repetitions)]
 
 extern crate wasm_bindgen;
 

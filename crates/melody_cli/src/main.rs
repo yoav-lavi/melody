@@ -1,5 +1,6 @@
 #![forbid(unsafe_code)]
-#![warn(clippy::needless_pass_by_value)]
+#![warn(clippy::pedantic)]
+#![allow(clippy::module_name_repetitions)]
 
 mod compile;
 mod consts;
