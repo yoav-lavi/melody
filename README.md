@@ -165,11 +165,21 @@ git clone https://github.com/yoav-lavi/melody.git
 cd melody
 cargo install --path crates/melody_cli
 ```
+
 ### Binary
 
 - macOS binaries (aarch64 and x86_64) can be downloaded from the [release page](https://github.com/yoav-lavi/melody/releases)
 
 ### Community
+
+- [Brew](https://formulae.brew.sh/formula/melody) (macOS and Linux)
+  <details><summary>Installation instructions</summary>
+  
+   ```sh
+   brew install melody
+   ```
+  
+  </details>
 
 - [Arch Linux](https://aur.archlinux.org/packages/melody) (maintained by [@ilai-deutel](https://github.com/ilai-deutel))
   <details><summary>Installation instructions</summary>
@@ -190,7 +200,21 @@ cargo install --path crates/melody_cli
 
   </details>
 
-- NixOS (soon, see [PR](https://github.com/NixOS/nixpkgs/pull/160985)) (maintained by [@jyooru](https://github.com/jyooru))
+- [NixOS](https://github.com/NixOS/nixpkgs/blob/master/pkgs/tools/misc/melody/default.nix) (maintained by [@jyooru](https://github.com/jyooru))
+  <details><summary>Installation instructions</summary>
+  
+  Should be the following once the registry is updated.
+  
+  If you've successfuly installed via this method please open an issue and let me know.
+  
+  Thanks!
+  
+   ```sh
+   nix-env -i melody
+   ```
+  
+  </details>
+
 
 ## CLI Usage
 
