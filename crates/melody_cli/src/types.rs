@@ -1,23 +1,13 @@
+use atty::Stream;
 use clap::Parser;
-
-pub enum ExitCode {
-    Ok,
-    Error,
-}
-
-impl From<ExitCode> for i32 {
-    fn from(exit_code: ExitCode) -> Self {
-        match exit_code {
-            ExitCode::Ok => 0,
-            ExitCode::Error => 1,
-        }
-    }
-}
 
 #[derive(Parser, Debug)]
 #[clap(about, version, author)]
 pub struct Args {
-    #[clap(value_name = "INPUT_FILE_PATH", help = "Read from a file")]
+    #[clap(
+        value_name = "INPUT_FILE_PATH",
+        help = "Read from a file. Use '-' and or pipe input to read from stdin"
+    )]
     pub input_file_path: Option<String>,
     #[clap(
         short = 'o',
@@ -40,4 +30,23 @@ pub struct Args {
 pub enum NextLoop {
     Continue,
     Exit,
+}
+
+pub struct Streams {
+    pub stdin: bool,
+    pub stdout: bool,
+    // pub stderr: bool,
+}
+
+impl Streams {
+    pub fn new() -> Self {
+        Self {
+            stdin: !atty::is(Stream::Stdin),
+            stdout: !atty::is(Stream::Stdout),
+            // stderr: !atty::is(Stream::Stderr),
+        }
+    }
+    pub fn any_pipe(&self) -> bool {
+        self.stdin || self.stdout
+    }
 }

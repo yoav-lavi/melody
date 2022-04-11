@@ -14,24 +14,20 @@ mod utils;
 use clap::Parser;
 use colored::control::{ShouldColorize, SHOULD_COLORIZE};
 use compile::compile_file;
-use errors::CliError;
-use output::report_error;
+use consts::STDIN_MARKER;
+use errors::{handle_error, CliError};
+use output::{report_error, report_info};
 use repl::repl;
 use std::process;
-use types::{Args, ExitCode};
+use types::{Args, Streams};
 
 fn main() {
     ShouldColorize::from_env();
 
-    let exit_code = match try_main() {
-        Ok(_) => ExitCode::Ok,
-        Err(error) => {
-            report_error(&error.to_string());
-            ExitCode::Error
-        }
+    match try_main() {
+        Ok(_) => process::exit(exitcode::OK),
+        Err(error) => handle_error(&error),
     };
-
-    process::exit(exit_code.into());
 }
 
 fn try_main() -> anyhow::Result<()> {
@@ -46,13 +42,28 @@ fn try_main() -> anyhow::Result<()> {
         SHOULD_COLORIZE.set_override(false);
     }
 
+    let input_file_path = input_file_path.unwrap_or_else(|| STDIN_MARKER.to_owned());
+
+    argument_env_validation(start_repl, &input_file_path)?;
+
     if start_repl {
         return repl();
     }
 
-    let input_file_path = input_file_path.ok_or(CliError::MissingPath)?;
+    compile_file(&input_file_path, output_file_path)?;
 
-    compile_file(input_file_path, output_file_path)?;
+    Ok(())
+}
+
+fn argument_env_validation(start_repl: bool, input_file_path: &str) -> anyhow::Result<()> {
+    let streams = Streams::new();
+
+    if streams.any_pipe() && start_repl {
+        return Err(CliError::ReplWithPipe.into());
+    }
+    if !streams.stdin && input_file_path == STDIN_MARKER {
+        return Err(CliError::StdinWithoutPipe.into());
+    }
 
     Ok(())
 }

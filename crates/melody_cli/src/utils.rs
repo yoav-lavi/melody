@@ -10,12 +10,9 @@ pub fn read_input() -> io::Result<String> {
     Ok(String::from(input.trim_end()))
 }
 
-pub fn write_output_to_file(
-    output_file_path: String,
-    compiler_output: String,
-) -> anyhow::Result<()> {
-    write(&output_file_path, compiler_output)
-        .map_err(|_| CliError::WriteFileError(output_file_path))?;
+pub fn write_output_to_file(output_file_path: &str, compiler_output: &str) -> anyhow::Result<()> {
+    write(output_file_path, compiler_output)
+        .map_err(|_| CliError::WriteFileError(output_file_path.to_owned()))?;
 
     Ok(())
 }

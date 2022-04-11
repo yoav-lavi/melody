@@ -1,5 +1,12 @@
 # Changelog
 
+## [v0.14.0] - 2022-04-11
+
+### Features
+
+- Support stdin in CLI
+- Emit proper exit codes on specific errors
+
 ## [v0.13.10] - 2022-03-11
 
 ### Fixes

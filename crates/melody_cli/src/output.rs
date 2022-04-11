@@ -99,7 +99,22 @@ pub fn report_source() {
 }
 
 pub fn report_error(error: &str) {
-    eprintln!("{}", format!("Error: {}", error).bright_red(),);
+    eprintln!("{}", format!("Error: {}", error).bright_red());
+}
+
+pub fn report_unhandled_error(error: &str) {
+    eprintln!(
+        "{}",
+        format!(
+            "An unhandled error occured.\nThis is a bug, please open an issue.\n\nCause: {}",
+            error
+        )
+        .bright_red()
+    );
+}
+
+pub fn report_info(error: &str) {
+    eprintln!("{}", error.bright_blue());
 }
 
 pub fn report_repl_error(error: &str) {

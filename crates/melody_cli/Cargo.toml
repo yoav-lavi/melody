@@ -17,6 +17,8 @@ colored = "2.0.0"
 thiserror = "1.0"
 anyhow = "1.0"
 melody_compiler = { version = "0.13.10", path = "../melody_compiler" }
+atty = "0.2"
+exitcode = "1.1.2"
 
 [dev-dependencies]
 assert_cmd = "2.0.4"

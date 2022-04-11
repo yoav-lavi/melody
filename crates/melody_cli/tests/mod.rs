@@ -8,7 +8,7 @@ use unindent::unindent;
 
 #[test]
 #[cfg_attr(miri, ignore)]
-fn cli_stdout_test() -> anyhow::Result<()> {
+fn cli_file_stdout_test() -> anyhow::Result<()> {
     let mut command = Command::cargo_bin("melody")?;
     let melody_file = NamedTempFile::new("test.mdy")?;
 
@@ -44,6 +44,44 @@ fn cli_stdout_test() -> anyhow::Result<()> {
         .arg(melody_file.path())
         .assert()
         .stdout(expected_output);
+
+    Ok(())
+}
+
+#[test]
+#[cfg_attr(miri, ignore)]
+fn cli_stdin_stdout_test() -> anyhow::Result<()> {
+    let mut command = Command::cargo_bin("melody")?;
+
+    let source = r#"
+    some of "a";
+    some of "b";
+    "#;
+
+    let expected_output = "a+b+";
+
+    command
+        .write_stdin(source)
+        .arg("-")
+        .assert()
+        .stdout(expected_output);
+
+    Ok(())
+}
+
+#[test]
+#[cfg_attr(miri, ignore)]
+fn cli_stdin_stdout_no_hyphen_test() -> anyhow::Result<()> {
+    let mut command = Command::cargo_bin("melody")?;
+
+    let source = r#"
+    some of "a";
+    some of "b";
+    "#;
+
+    let expected_output = "a+b+";
+
+    command.write_stdin(source).assert().stdout(expected_output);
 
     Ok(())
 }
