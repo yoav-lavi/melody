@@ -203,7 +203,9 @@ cargo install --path crates/melody_cli
   <details><summary>Installation instructions</summary>
   
   Should be the following once the registry is updated.
-  If you've successfuly installed via this method please open an issue and let me know. 
+  
+  If you've successfuly installed via this method please open an issue and let me know.
+  
   Thanks!
   
    ```sh
