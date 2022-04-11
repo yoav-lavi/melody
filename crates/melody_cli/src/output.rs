@@ -1,7 +1,7 @@
 use colored::Colorize;
 
 pub fn print_output(output: &str) {
-    print!("{}", output.bright_blue());
+    println!("{}", output.bright_blue());
 }
 
 pub fn print_repl_output(output: &str) {
