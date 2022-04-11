@@ -61,7 +61,7 @@ fn argument_env_validation(start_repl: bool, input_file_path: &str) -> anyhow::R
     if streams.any_pipe() && start_repl {
         return Err(CliError::ReplWithPipe.into());
     }
-    if !streams.stdin && input_file_path == STDIN_MARKER {
+    if !streams.stdin && !start_repl && input_file_path == STDIN_MARKER {
         return Err(CliError::StdinWithoutPipe.into());
     }
 
