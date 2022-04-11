@@ -36,7 +36,7 @@ fn cli_file_stdout_test() -> anyhow::Result<()> {
       some of "a";
     "#;
 
-    let expected_output = "(?:A'){5}(?:(?<test>xy))[abc](?:a\"|b|.)a+";
+    let expected_output = "(?:A'){5}(?:(?<test>xy))[abc](?:a\"|b|.)a+\n";
 
     melody_file.write_str(&unindent(source))?;
 
@@ -58,7 +58,7 @@ fn cli_stdin_stdout_test() -> anyhow::Result<()> {
     some of "b";
     "#;
 
-    let expected_output = "a+b+";
+    let expected_output = "a+b+\n";
 
     command
         .write_stdin(source)
@@ -79,7 +79,7 @@ fn cli_stdin_stdout_no_hyphen_test() -> anyhow::Result<()> {
     some of "b";
     "#;
 
-    let expected_output = "a+b+";
+    let expected_output = "a+b+\n";
 
     command.write_stdin(source).assert().stdout(expected_output);
 
