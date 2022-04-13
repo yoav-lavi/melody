@@ -1,6 +1,6 @@
 # CLI
 
-```sh
+```
 USAGE:
     melody [OPTIONS] [INPUT_FILE_PATH]
 
