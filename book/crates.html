@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Performance - Melody</title>
+        <title>Crates - Melody</title>
 
 
         <!-- Custom HTML head -->
@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="welcome.html"><strong aria-hidden="true">1.</strong> Welcome</a></li><li class="chapter-item expanded "><a href="examples.html"><strong aria-hidden="true">2.</strong> Examples</a></li><li class="chapter-item expanded "><a href="playground.html"><strong aria-hidden="true">3.</strong> Playground</a></li><li class="chapter-item expanded "><a href="install.html"><strong aria-hidden="true">4.</strong> Install</a></li><li class="chapter-item expanded "><a href="cli.html"><strong aria-hidden="true">5.</strong> CLI</a></li><li class="chapter-item expanded "><a href="crates.html"><strong aria-hidden="true">6.</strong> Crates</a></li><li class="chapter-item expanded "><a href="syntax.html"><strong aria-hidden="true">7.</strong> Syntax</a></li><li class="chapter-item expanded "><a href="status.html"><strong aria-hidden="true">8.</strong> Future Feature Status</a></li><li class="chapter-item expanded "><a href="performance.html" class="active"><strong aria-hidden="true">9.</strong> Performance</a></li><li class="chapter-item expanded "><a href="extensions.html"><strong aria-hidden="true">10.</strong> Extensions</a></li><li class="chapter-item expanded "><a href="packages.html"><strong aria-hidden="true">11.</strong> Packages</a></li><li class="chapter-item expanded "><a href="integrations.html"><strong aria-hidden="true">12.</strong> Integrations</a></li><li class="chapter-item expanded "><a href="changelog.html"><strong aria-hidden="true">13.</strong> Changelog</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="welcome.html"><strong aria-hidden="true">1.</strong> Welcome</a></li><li class="chapter-item expanded "><a href="examples.html"><strong aria-hidden="true">2.</strong> Examples</a></li><li class="chapter-item expanded "><a href="playground.html"><strong aria-hidden="true">3.</strong> Playground</a></li><li class="chapter-item expanded "><a href="install.html"><strong aria-hidden="true">4.</strong> Install</a></li><li class="chapter-item expanded "><a href="cli.html"><strong aria-hidden="true">5.</strong> CLI</a></li><li class="chapter-item expanded "><a href="crates.html" class="active"><strong aria-hidden="true">6.</strong> Crates</a></li><li class="chapter-item expanded "><a href="syntax.html"><strong aria-hidden="true">7.</strong> Syntax</a></li><li class="chapter-item expanded "><a href="status.html"><strong aria-hidden="true">8.</strong> Future Feature Status</a></li><li class="chapter-item expanded "><a href="performance.html"><strong aria-hidden="true">9.</strong> Performance</a></li><li class="chapter-item expanded "><a href="extensions.html"><strong aria-hidden="true">10.</strong> Extensions</a></li><li class="chapter-item expanded "><a href="packages.html"><strong aria-hidden="true">11.</strong> Packages</a></li><li class="chapter-item expanded "><a href="integrations.html"><strong aria-hidden="true">12.</strong> Integrations</a></li><li class="chapter-item expanded "><a href="changelog.html"><strong aria-hidden="true">13.</strong> Changelog</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -145,48 +145,20 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="performance"><a class="header" href="#performance">Performance</a></h1>
-<p>Last measured on v0.13.10</p>
-<p>Measured on an 8 core 2021 MacBook Pro 14-inch, Apple M1 Pro using <a href="https://github.com/bheisler/criterion.rs">criterion</a>:</p>
+                        <h1 id="crates"><a class="header" href="#crates">Crates</a></h1>
 <ul>
-<li>
-<p>8 lines:</p>
-<pre><code>compiler/normal (8 lines)                        
-                        time:   [3.6734 us 3.6775 us 3.6809 us]
-slope  [3.6734 us 3.6809 us] R^2            [0.9999393 0.9999460]
-mean   [3.6726 us 3.6854 us] std. dev.      [3.8234 ns 15.619 ns]
-median [3.6703 us 3.6833 us] med. abs. dev. [1.3873 ns 14.729 ns]
-</code></pre>
-</li>
-<li>
-<p>1M lines:</p>
-<pre><code>compiler/long input (1M lines)                        
-                        time:   [344.68 ms 346.83 ms 349.29 ms]
-mean   [344.68 ms 349.29 ms] std. dev.      [1.4962 ms 4.9835 ms]
-median [344.16 ms 350.06 ms] med. abs. dev. [407.85 us 6.3428 ms]
-</code></pre>
-</li>
-<li>
-<p>Deeply nested:</p>
-<pre><code>compiler/deeply nested  
-                        time:   [3.8017 us 3.8150 us 3.8342 us]
-slope  [3.8017 us 3.8342 us] R^2            [0.9992078 0.9989523]
-mean   [3.8158 us 3.8656 us] std. dev.      [8.8095 ns 65.691 ns]
-median [3.8144 us 3.8397 us] med. abs. dev. [2.5630 ns 40.223 ns]
-</code></pre>
-</li>
+<li><code>melody_compiler</code> - The Melody compiler <a href="https://crates.io/crates/melody_compiler">crates.io</a> <a href="https://docs.rs/melody_compiler">docs.rs</a></li>
 </ul>
-<p>To reproduce, run <code>cargo bench</code> or <code>cargo xtask benchmark</code></p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="status.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="cli.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next" href="extensions.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="syntax.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -196,11 +168,11 @@ median [3.8144 us 3.8397 us] med. abs. dev. [2.5630 ns 40.223 ns]
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="status.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="cli.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next" href="extensions.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="syntax.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
