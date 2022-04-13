@@ -120,3 +120,13 @@ pub fn report_info(error: &str) {
 pub fn report_repl_error(error: &str) {
     eprintln!("{}\n", format!("Error: {}", error).bright_red(),);
 }
+
+pub fn report_unsupported_shell(shell: &str) {
+    eprintln!(
+        "{}\n{}\n",
+        format!("Unknown or unsupported shell: '{}'", shell).bright_red(),
+        "Try one of: 'bash', 'zsh', 'fish', 'elvish', 'powershell'"
+            .to_owned()
+            .bright_blue()
+    );
+}

@@ -19,6 +19,7 @@ anyhow = "1.0"
 melody_compiler = { version = "0.14.0", path = "../melody_compiler" }
 atty = "0.2"
 exitcode = "1.1.2"
+clap_generate = "3.0.3"
 
 [dev-dependencies]
 assert_cmd = "2.0.4"

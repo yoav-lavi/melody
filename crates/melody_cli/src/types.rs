@@ -25,6 +25,11 @@ pub struct Args {
     )]
     #[clap(short = 'r', long = "repl", help = "Start the Melody REPL")]
     pub start_repl: bool,
+    #[clap(
+        long = "generate-completions",
+        help = "Outputs completions for the current shell. Write the output to the appropriate location for your shell"
+    )]
+    pub completions: Option<String>,
 }
 
 pub enum NextLoop {

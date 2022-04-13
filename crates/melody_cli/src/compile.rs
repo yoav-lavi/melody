@@ -1,18 +1,9 @@
 use crate::consts::STDIN_MARKER;
 use crate::errors::CliError;
 use crate::output::print_output;
-use crate::utils::write_output_to_file;
+use crate::utils::{read_stdin, write_output_to_file};
 use melody_compiler::compiler;
 use std::fs::read_to_string;
-use std::io::{self, Read};
-
-fn read_stdin() -> anyhow::Result<String> {
-    let mut buffer = String::new();
-    io::stdin()
-        .read_to_string(&mut buffer)
-        .map_err(|_| CliError::ReadStdinError)?;
-    Ok(buffer)
-}
 
 fn read_file(path: &str) -> anyhow::Result<String> {
     let contents = read_to_string(path).map_err(|_| CliError::ReadFileError(path.to_owned()))?;

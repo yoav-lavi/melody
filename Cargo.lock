@@ -172,6 +172,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "clap_complete"
+version = "3.1.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "df6f3613c0a3cddfd78b41b10203eb322cb29b600cbdf808a7d3db95691b8e25"
+dependencies = [
+ "clap 3.1.6",
+]
+
+[[package]]
 name = "clap_derive"
 version = "3.1.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -182,6 +191,16 @@ dependencies = [
  "proc-macro2",
  "quote",
  "syn",
+]
+
+[[package]]
+name = "clap_generate"
+version = "3.0.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "8e1b28c4a802ac3628604fd267cac62aaea74dc61af3410db6b1c44c03b42599"
+dependencies = [
+ "clap 3.1.6",
+ "clap_complete",
 ]
 
 [[package]]
@@ -525,6 +544,7 @@ dependencies = [
  "assert_fs",
  "atty",
  "clap 3.1.6",
+ "clap_generate",
  "colored",
  "exitcode",
  "melody_compiler",

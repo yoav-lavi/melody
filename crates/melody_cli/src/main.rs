@@ -3,6 +3,7 @@
 #![allow(clippy::module_name_repetitions)]
 
 mod compile;
+mod completions;
 mod consts;
 mod errors;
 mod macros;
@@ -14,6 +15,7 @@ mod utils;
 use clap::Parser;
 use colored::control::{ShouldColorize, SHOULD_COLORIZE};
 use compile::compile_file;
+use completions::generate_completions;
 use consts::STDIN_MARKER;
 use errors::{handle_error, CliError};
 use output::{report_error, report_info};
@@ -36,10 +38,16 @@ fn try_main() -> anyhow::Result<()> {
         input_file_path,
         output_file_path,
         no_color_output,
+        completions,
     } = Args::parse();
 
     if no_color_output {
         SHOULD_COLORIZE.set_override(false);
+    }
+
+    if let Some(completions) = completions {
+        generate_completions(&completions);
+        return Ok(());
     }
 
     let input_file_path = input_file_path.unwrap_or_else(|| STDIN_MARKER.to_owned());
