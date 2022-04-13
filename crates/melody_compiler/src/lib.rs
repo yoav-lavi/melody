@@ -23,7 +23,7 @@ Compiles Melody source code to a regular expression.
 
 # Errors
 
-Returns a [`ParseError`] upon encountering a syntax error
+Returns an [`errors::CompilerError`] upon encountering a syntax error
 
 # Example
 
