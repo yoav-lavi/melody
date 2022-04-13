@@ -6,7 +6,7 @@ use clap::Parser;
 pub struct Args {
     #[clap(
         value_name = "INPUT_FILE_PATH",
-        help = "Read from a file. Use '-' and or pipe input to read from stdin"
+        help = "Read from a file\nUse '-' and or pipe input to read from stdin"
     )]
     pub input_file_path: Option<String>,
     #[clap(
@@ -27,7 +27,7 @@ pub struct Args {
     pub start_repl: bool,
     #[clap(
         long = "generate-completions",
-        help = "Outputs completions for the current shell. Write the output to the appropriate location for your shell"
+        help = "Outputs completions for the selected shell\nTo use, write the output to the appropriate location for your shell"
     )]
     pub completions: Option<String>,
 }
