@@ -62,7 +62,7 @@ fn create_ast_node(
         Rule::variable_invocation => variable_invocation(&pair, variables)?,
         Rule::variable_declaration => variable_declaration(pair, variables)?,
         Rule::EOI => MelodyAstNode::Skip,
-        _ => return Err(CompilerError::UnrecognizedSyntax.into()),
+        _ => return Err(CompilerError::UnrecognizedSyntax),
     };
 
     Ok(node)
@@ -75,8 +75,8 @@ fn symbol(pair: Pair<Rule>) -> Result<MelodyAstNode> {
 
     if negative {
         match ident {
-            "start" => return Err(CompilerError::NegativeStartNotAllowed.into()),
-            "end" => return Err(CompilerError::NegativeEndNotAllowed.into()),
+            "start" => return Err(CompilerError::NegativeStartNotAllowed),
+            "end" => return Err(CompilerError::NegativeEndNotAllowed),
             _ => {}
         }
     }
@@ -146,7 +146,7 @@ fn symbol(pair: Pair<Rule>) -> Result<MelodyAstNode> {
         "start" => MelodyAstNode::SpecialSymbol(SpecialSymbol::Start),
         "end" => MelodyAstNode::SpecialSymbol(SpecialSymbol::End),
 
-        _ => return Err(CompilerError::UnrecognizedSymbol.into()),
+        _ => return Err(CompilerError::UnrecognizedSymbol),
     };
 
     Ok(symbol_node)
@@ -196,18 +196,16 @@ fn quantifier(
 
         // unexpected nodes
         MelodyAstNode::SpecialSymbol(_) => {
-            return Err(CompilerError::UnexpectedSpecialSymbolInQuantifier.into())
+            return Err(CompilerError::UnexpectedSpecialSymbolInQuantifier)
         }
         MelodyAstNode::Quantifier(_) => {
-            return Err(CompilerError::UnexpectedQuantifierInQuantifier.into())
+            return Err(CompilerError::UnexpectedQuantifierInQuantifier)
         }
-        MelodyAstNode::Assertion(_) => {
-            return Err(CompilerError::UnexpectedAssertionInQuantifier.into())
-        }
+        MelodyAstNode::Assertion(_) => return Err(CompilerError::UnexpectedAssertionInQuantifier),
         MelodyAstNode::VariableInvocation(_) => {
-            return Err(CompilerError::UnexpectedVariableInvocationInQuantifier.into())
+            return Err(CompilerError::UnexpectedVariableInvocationInQuantifier)
         }
-        MelodyAstNode::Skip => return Err(CompilerError::UnexpectedSkippedNodeInQuantifier.into()),
+        MelodyAstNode::Skip => return Err(CompilerError::UnexpectedSkippedNodeInQuantifier),
     };
 
     let lazy = quantity.as_str().starts_with(LAZY);
@@ -258,7 +256,7 @@ fn quantifier(
                 .map_err(|_| CompilerError::InvalidQuantifierRange)?;
 
             if parsed_start > parsed_end {
-                return Err(CompilerError::InvalidQuantifierRange.into());
+                return Err(CompilerError::InvalidQuantifierRange);
             }
 
             MelodyAstNode::Quantifier(Quantifier {
@@ -271,7 +269,7 @@ fn quantifier(
             })
         }
 
-        _ => return Err(CompilerError::UnrecognizedSyntax.into()),
+        _ => return Err(CompilerError::UnrecognizedSyntax),
     };
 
     Ok(quantifier_node)
@@ -287,13 +285,13 @@ fn group(pair: Pair<Rule>, variables: &mut HashMap<String, MelodyAst>) -> Result
         "capture" => GroupKind::Capture,
         "match" => GroupKind::Match,
 
-        _ => return Err(CompilerError::UnrecognizedGroup.into()),
+        _ => return Err(CompilerError::UnrecognizedGroup),
     };
 
     let ident = nth_inner(declaration, 1).map(|ident| ident.as_str().trim().to_owned());
 
     if ident.is_some() && kind != GroupKind::Capture {
-        return Err(CompilerError::UnexpectedIdentifierForNonCaptureGroup.into());
+        return Err(CompilerError::UnexpectedIdentifierForNonCaptureGroup);
     }
 
     let block = last_inner(pair)?;
@@ -320,7 +318,7 @@ fn assertion(
     let kind = match kind {
         "ahead" => AssertionKind::Ahead,
         "behind" => AssertionKind::Behind,
-        _ => return Err(CompilerError::UnrecognizedAssertion.into()),
+        _ => return Err(CompilerError::UnrecognizedAssertion),
     };
 
     let block = last_inner(pair)?;
@@ -347,7 +345,7 @@ fn variable_invocation(
     let identifier = last_inner(pair.clone())?;
     let statements = match variables.get(identifier.as_str()) {
         Some(statements) => statements.clone(),
-        None => return Err(CompilerError::UninitializedVariable.into()),
+        None => return Err(CompilerError::UninitializedVariable),
     };
     let variable_invocation_node = MelodyAstNode::VariableInvocation(VariableInvocation {
         statements: Box::new(statements),

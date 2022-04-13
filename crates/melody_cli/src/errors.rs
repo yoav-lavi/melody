@@ -59,10 +59,9 @@ impl CliError {
             | CliError::ReadFileError(_)
             | CliError::ReadInputError
             | CliError::ReadStdinError => exitcode::IOERR,
-            CliError::ParseError(_) => exitcode::DATAERR,
+            CliError::CompileRegex(_, _) | CliError::ParseError(_) => exitcode::DATAERR,
             CliError::ReplWithPipe => exitcode::USAGE,
             CliError::StdinWithoutPipe => exitcode::NOINPUT,
-            CliError::CompileRegex(_, _) => exitcode::DATAERR,
         }
     }
 }
