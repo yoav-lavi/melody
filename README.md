@@ -9,7 +9,7 @@
   </a>
   <a href="https://crates.io/crates/melody_compiler">
     <img alt="Crates.io" src="https://img.shields.io/crates/v/melody_compiler?label=compiler">
-  </a> 
+  </a>
   <a href="https://crates.io/crates/melody_cli">
     <img alt="Crates.io" src="https://img.shields.io/crates/v/melody_cli?label=cli">
   </a>
