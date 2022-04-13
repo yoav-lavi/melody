@@ -352,6 +352,7 @@ The Melody file extensions are `.mdy` and `.melody`
 ## Packages
 
 - [NodeJS](https://www.npmjs.com/package/melodyc)
+- [Deno](https://deno.land/x/melody@v0.15.0)
 
 ## Integrations
 
