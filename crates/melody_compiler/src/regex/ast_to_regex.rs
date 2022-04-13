@@ -17,7 +17,7 @@ pub fn node_to_regex(node: &MelodyAstNode) -> String {
         MelodyAstNode::Assertion(assertion) => transform_assertion(assertion),
         MelodyAstNode::SpecialSymbol(special_symbol) => transform_special_symbol(special_symbol),
         MelodyAstNode::Group(group) => transform_group(group),
-        MelodyAstNode::Atom(atom) => String::from(atom),
+        MelodyAstNode::Atom(atom) => atom.clone(),
         MelodyAstNode::Symbol(symbol) => transform_symbol(symbol),
         MelodyAstNode::Range(range) => transform_range(range),
         MelodyAstNode::NegativeCharClass(negative_char_class) => {
@@ -33,7 +33,7 @@ pub fn node_to_regex(node: &MelodyAstNode) -> String {
 fn expression_to_regex(expression: &Expression) -> String {
     match expression {
         Expression::Group(group) => transform_group(group),
-        Expression::Atom(atom) => String::from(atom),
+        Expression::Atom(atom) => atom.clone(),
         Expression::Range(range) => transform_range(range),
         Expression::Symbol(symbol) => transform_symbol(symbol),
         Expression::NegativeCharClass(negative_char_class) => {
