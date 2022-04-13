@@ -9,14 +9,15 @@ pub mod ast;
 pub mod errors;
 mod format;
 mod regex;
+mod types;
 
-use anyhow::Result;
 use ast::to_ast;
 use format::format;
 #[cfg(not(feature = "fuzzer"))]
 use regex::ast_to_regex;
 #[cfg(feature = "fuzzer")]
 pub use regex::ast_to_regex::ast_to_regex;
+use types::Result;
 
 /**
 Compiles Melody source code to a regular expression.

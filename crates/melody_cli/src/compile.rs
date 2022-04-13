@@ -16,5 +16,7 @@ pub fn compile_file(input_file_path: &str) -> anyhow::Result<String> {
         read_file(input_file_path)?
     };
 
-    compiler(&source)
+    let output = compiler(&source)?;
+
+    Ok(output)
 }

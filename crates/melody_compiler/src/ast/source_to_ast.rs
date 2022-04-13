@@ -12,7 +12,7 @@ use super::utils::{
     unquote_escape_literal, unquote_escape_raw,
 };
 use crate::errors::CompilerError;
-use anyhow::Result;
+use crate::types::Result;
 use pest::iterators::Pairs;
 use pest::{iterators::Pair, Parser};
 use std::collections::HashMap;
@@ -22,7 +22,8 @@ pub fn to_ast(source: &str) -> Result<MelodyAst> {
         return Ok(MelodyAst::Empty);
     }
 
-    let mut pairs = IdentParser::parse(Rule::root, source)?;
+    let mut pairs = IdentParser::parse(Rule::root, source)
+        .map_err(|error| CompilerError::ParseError(error.to_string()))?;
 
     let root_statements = pairs.next().ok_or(CompilerError::MissingRootNode)?;
 

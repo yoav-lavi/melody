@@ -1,6 +1,6 @@
 use super::types::pest::Rule;
 use crate::errors::CompilerError;
-use anyhow::Result;
+use crate::types::Result;
 use once_cell::sync::Lazy;
 use pest::iterators::Pair;
 use std::collections::HashSet;
