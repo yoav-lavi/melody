@@ -227,8 +227,8 @@ ARGS:
 
 OPTIONS:
         --generate-completions <COMPLETIONS>
-            Outputs completions for the current shell. Write the output to the appropriate location
-            for your shell
+            Outputs completions for the current shell.
+            Write the output to the appropriate location for your shell
 
     -h, --help
             Print help information
