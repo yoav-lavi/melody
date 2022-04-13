@@ -71,6 +71,50 @@ fn cli_stdin_stdout_test() -> anyhow::Result<()> {
 
 #[test]
 #[cfg_attr(miri, ignore)]
+fn cli_stdin_test_test() -> anyhow::Result<()> {
+    let mut command = Command::cargo_bin("melody")?;
+
+    let source = r#"
+    some of "a";
+    some of "b";
+    "#;
+
+    let expected_output = "'aabb' matched\n";
+
+    command
+        .arg("-t")
+        .arg("aabb")
+        .write_stdin(source)
+        .assert()
+        .stdout(expected_output);
+
+    Ok(())
+}
+
+#[test]
+#[cfg_attr(miri, ignore)]
+fn cli_stdin_unmatching_test_test() -> anyhow::Result<()> {
+    let mut command = Command::cargo_bin("melody")?;
+
+    let source = r#"
+    some of "a";
+    some of "b";
+    "#;
+
+    let expected_output = "'zzz' did not match\n";
+
+    command
+        .arg("-t")
+        .arg("zzz")
+        .write_stdin(source)
+        .assert()
+        .stdout(expected_output);
+
+    Ok(())
+}
+
+#[test]
+#[cfg_attr(miri, ignore)]
 fn cli_stdin_stdout_no_hyphen_test() -> anyhow::Result<()> {
     let mut command = Command::cargo_bin("melody")?;
 

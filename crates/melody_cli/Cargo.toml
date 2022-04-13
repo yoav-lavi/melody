@@ -20,6 +20,7 @@ melody_compiler = { version = "0.15.0", path = "../melody_compiler" }
 atty = "0.2"
 exitcode = "1.1.2"
 clap_generate = "3.0.3"
+regress = "0.4"
 
 [dev-dependencies]
 assert_cmd = "2.0.4"

@@ -18,8 +18,10 @@ pub enum CliError {
     ReadStdinError,
     #[error("repl argument supplied with piped input or output")]
     ReplWithPipe,
-    #[error("No input file supplied and no input piped.\nTry adding a path argument: 'melody ./file.mdy'")]
+    #[error("No input file supplied and no input piped\nTry adding a path argument: 'melody ./file.mdy'")]
     StdinWithoutPipe,
+    #[error("could not compile regex\nCause: {0}\nRegex: {1}")]
+    CompileRegex(String, String),
 }
 
 #[derive(Debug)]
@@ -60,6 +62,7 @@ impl CliError {
             CliError::ParseError(_) => exitcode::DATAERR,
             CliError::ReplWithPipe => exitcode::USAGE,
             CliError::StdinWithoutPipe => exitcode::NOINPUT,
+            CliError::CompileRegex(_, _) => exitcode::DATAERR,
         }
     }
 }

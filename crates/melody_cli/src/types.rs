@@ -27,9 +27,17 @@ pub struct Args {
     pub start_repl: bool,
     #[clap(
         long = "generate-completions",
-        help = "Outputs completions for the selected shell\nTo use, write the output to the appropriate location for your shell"
+        help = "Outputs completions for the selected shell\nTo use, write the output to the appropriate location for your shell",
+        conflicts_with_all = &["output-file-path", "input-file-path", "start-repl"]
     )]
     pub completions: Option<String>,
+    #[clap(
+        long = "test",
+        short = 't',
+        help = "Test the compiled regex against a string",
+        conflicts_with_all = &["completions", "start-repl", "output-file-path"]
+    )]
+    pub test: Option<String>,
 }
 
 pub enum NextLoop {

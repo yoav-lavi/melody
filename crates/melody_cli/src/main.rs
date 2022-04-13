@@ -9,6 +9,7 @@ mod errors;
 mod macros;
 mod output;
 mod repl;
+mod test;
 mod types;
 mod utils;
 
@@ -18,10 +19,12 @@ use compile::compile_file;
 use completions::generate_completions;
 use consts::STDIN_MARKER;
 use errors::{handle_error, CliError};
-use output::{report_error, report_info};
+use output::{print_output, report_error, report_info};
 use repl::repl;
 use std::process;
+use test::test_input;
 use types::{Args, Streams};
+use utils::write_output_to_file;
 
 fn main() {
     ShouldColorize::from_env();
@@ -39,6 +42,7 @@ fn try_main() -> anyhow::Result<()> {
         output_file_path,
         no_color_output,
         completions,
+        test,
     } = Args::parse();
 
     if no_color_output {
@@ -58,7 +62,17 @@ fn try_main() -> anyhow::Result<()> {
         return repl();
     }
 
-    compile_file(&input_file_path, output_file_path)?;
+    let output =
+        compile_file(&input_file_path).map_err(|error| CliError::ParseError(error.to_string()))?;
+
+    if let Some(test) = test {
+        test_input(&output, &test)?;
+    } else {
+        match output_file_path {
+            Some(output_file_path) => write_output_to_file(&output_file_path, &output)?,
+            None => print_output(&output),
+        };
+    }
 
     Ok(())
 }

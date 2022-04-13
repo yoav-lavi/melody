@@ -130,3 +130,21 @@ pub fn report_unsupported_shell(shell: &str) {
             .bright_blue()
     );
 }
+
+const MAX_TEST_INPUT_PREVIEW: usize = 10;
+
+pub fn report_test_result(matched: bool, input: &str) {
+    let shortened = if input.chars().count() > MAX_TEST_INPUT_PREVIEW {
+        format!("{}...", input.chars().take(10).collect::<String>())
+    } else {
+        input.to_owned()
+    };
+
+    let result = if matched {
+        "matched".bright_green()
+    } else {
+        "did not match".bright_red()
+    };
+
+    println!("'{}' {}", shortened, result);
+}
