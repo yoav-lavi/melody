@@ -243,6 +243,9 @@ OPTIONS:
     -r, --repl
             Start the Melody REPL
 
+    -t, --test <TEST>
+            Test the compiled regex against a string
+
     -V, --version
             Print version information
 ```
