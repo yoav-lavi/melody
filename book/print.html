@@ -280,17 +280,35 @@ makepkg -si
 </li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="cli"><a class="header" href="#cli">CLI</a></h1>
-<pre><code class="language-sh">melody [OPTIONS] [INPUT_FILE_PATH]
+<pre><code class="language-sh">USAGE:
+    melody [OPTIONS] [INPUT_FILE_PATH]
 
 ARGS:
-    &lt;INPUT_FILE_PATH&gt;    Read from a file. Read from a file. Use '-' and or pipe input to read from stdin
+    &lt;INPUT_FILE_PATH&gt;    Read from a file
+                         Use '-' and or pipe input to read from stdin
 
 OPTIONS:
-    -h, --help                         Print help information
-    -n, --no-color                     Print output with no color
-    -o, --output &lt;OUTPUT_FILE_PATH&gt;    Write to a file
-    -r, --repl                         Start the Melody REPL
-    -V, --version                      Print version information
+        --generate-completions &lt;COMPLETIONS&gt;
+            Outputs completions for the selected shell
+            To use, write the output to the appropriate location for your shell
+
+    -h, --help
+            Print help information
+
+    -n, --no-color
+            Print output with no color
+
+    -o, --output &lt;OUTPUT_FILE_PATH&gt;
+            Write to a file
+
+    -r, --repl
+            Start the Melody REPL
+
+    -t, --test &lt;TEST&gt;
+            Test the compiled regex against a string
+
+    -V, --version
+            Print version information
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="syntax"><a class="header" href="#syntax">Syntax</a></h1>
 <h2 id="quantifiers"><a class="header" href="#quantifiers">Quantifiers</a></h2>
