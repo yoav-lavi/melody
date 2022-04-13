@@ -1,5 +1,49 @@
 # Changelog
 
+## [v0.16.0] - 2022-04-11
+
+### Features
+
+- Add support for testing matches in CLI
+
+## [v0.15.0] - 2022-04-11
+
+### Features
+
+- Add shell completions for CLI
+- Add Deno support
+
+## [v0.14.0] - 2022-04-11
+
+### Features
+
+- Support stdin in CLI
+- Emit proper exit codes on specific errors
+
+## [v0.13.10] - 2022-03-11
+
+### Fixes
+
+- Fixes unnecessary grouping in quantifiers
+
+## [v0.13.9] - 2022-03-11
+
+### Misc.
+
+- Version bump for documentation update
+
+## [v0.13.8] - 2022-03-11
+
+### Misc.
+
+- Version bump for documentation update
+
+## [v0.13.7] - 2022-03-11
+
+### Misc.
+
+- Version bump for documentation update
+
 ## [v0.13.6] - 2022-03-11
 
 ### Fixes
