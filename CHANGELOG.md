@@ -1,5 +1,12 @@
 # Changelog
 
+## [v0.15.0] - 2022-04-11
+
+### Features
+
+- Add shell completions for CLI
+- Add Deno support
+
 ## [v0.14.0] - 2022-04-11
 
 ### Features
