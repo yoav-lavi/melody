@@ -1,7 +1,7 @@
 <p align="center">
   <img alt="Melody Logo" height="250px" src="https://user-images.githubusercontent.com/14347895/159069215-7da8f087-65d5-4982-9592-639c1d81e7f1.svg#gh-dark-mode-only">
     <img alt="Melody Logo" height="250px" src="https://user-images.githubusercontent.com/14347895/159069181-53bce5b3-a831-43f1-8c14-af6c6ed7b92b.svg#gh-light-mode-only">
-</p> 
+</p>
 
 <p align="center">
   <a href="https://github.com/yoav-lavi/melody/actions/workflows/rust.yml">
