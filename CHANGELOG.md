@@ -1,5 +1,11 @@
 # Changelog
 
+## [v0.16.0] - 2022-04-11
+
+### Features
+
+- Add support for testing matches in CLI
+
 ## [v0.15.0] - 2022-04-11
 
 ### Features
