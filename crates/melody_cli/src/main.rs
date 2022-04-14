@@ -22,7 +22,7 @@ use errors::{handle_error, CliError};
 use output::{print_output, report_error, report_info};
 use repl::repl;
 use std::process;
-use test::test_input;
+use test::{test_input, test_input_file};
 use types::{Args, Streams};
 use utils::write_output_to_file;
 
@@ -43,6 +43,7 @@ fn try_main() -> anyhow::Result<()> {
         no_color_output,
         completions,
         test,
+        test_file,
     } = Args::parse();
 
     if no_color_output {
@@ -67,6 +68,8 @@ fn try_main() -> anyhow::Result<()> {
 
     if let Some(test) = test {
         test_input(&output, &test)?;
+    } else if let Some(test_file) = test_file {
+        test_input_file(&output, &test_file)?;
     } else {
         match output_file_path {
             Some(output_file_path) => write_output_to_file(&output_file_path, &output)?,

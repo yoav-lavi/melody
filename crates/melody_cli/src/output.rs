@@ -148,3 +148,13 @@ pub fn report_test_result(matched: bool, input: &str) {
 
     println!("'{}' {}", shortened, result);
 }
+
+pub fn report_test_result_file(matched: bool, file_path: &str) {
+    let result = if matched {
+        "matched".bright_green()
+    } else {
+        "did not match".bright_red()
+    };
+
+    println!("{} {}", file_path, result);
+}

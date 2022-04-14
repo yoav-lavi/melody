@@ -38,6 +38,13 @@ pub struct Args {
         conflicts_with_all = &["completions", "start-repl", "output-file-path"]
     )]
     pub test: Option<String>,
+    #[clap(
+        long = "test-file",
+        short = 'f',
+        help = "Test the compiled regex against the contents of a file",
+        conflicts_with_all = &["completions", "start-repl", "output-file-path", "test"]
+    )]
+    pub test_file: Option<String>,
 }
 
 pub enum NextLoop {
