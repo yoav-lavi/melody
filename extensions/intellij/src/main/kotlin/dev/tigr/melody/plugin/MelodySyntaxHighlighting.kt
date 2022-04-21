@@ -93,7 +93,7 @@ class MelodyColorSettingsPage: ColorSettingsPage {
     override fun getHighlighter(): SyntaxHighlighter = MelodySyntaxHighlighter()
     override fun getAdditionalHighlightingTagToDescriptorMap(): Map<String, TextAttributesKey>? = null
     override fun getAttributeDescriptors(): Array<AttributesDescriptor> = DESCRIPTORS
-    override fun getColorDescriptors(): Array<ColorDescriptor>? = ColorDescriptor.EMPTY_ARRAY
+    override fun getColorDescriptors(): Array<out ColorDescriptor> = ColorDescriptor.EMPTY_ARRAY
     override fun getDemoText(): String = """// you are reading a melody regex file that matches ipv4 addresses
         |<start>;
         |3 of match {
