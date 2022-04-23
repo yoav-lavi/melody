@@ -6,7 +6,7 @@
 <p align="center">
   <a href="https://github.com/yoav-lavi/melody/actions/workflows/rust.yml">
     <img alt="Rust CI" src="https://github.com/yoav-lavi/melody/actions/workflows/rust.yml/badge.svg">
-  </a> 
+  </a>
   <a href="https://crates.io/crates/melody_compiler">
     <img alt="Crates.io" src="https://img.shields.io/crates/v/melody_compiler?label=compiler">
   </a>
