@@ -177,6 +177,19 @@ fn symbol_unicode_category_test() {
         <category::titlecase_letter>;
         <category::unassigned>;
         <category::uppercase_letter>;
+        5 of <category::cased_letter>;
+      "#,
+    );
+    assert_eq!(
+        output.unwrap(),
+        r"\p{L&}\p{Pe}\p{Pc}\p{Cc}\p{Sc}\p{Pd}\p{Nd}\p{Me}\p{Pf}\p{Cf}\p{Pi}\p{Nl}\p{L}\p{Zl}\p{Ll}\p{M}\p{Sm}\p{Lm}\p{Sk}\p{Mn}\p{N}\p{Ps}\p{Lo}\p{No}\p{Po}\p{So}\p{C}\p{Zp}\p{Co}\p{P}\p{Z}\p{Zs}\p{Mc}\p{Cs}\p{S}\p{Lt}\p{Cn}\p{Lu}\p{L&}{5}"
+    );
+}
+
+#[test]
+fn symbol_unicode_category_negative_test() {
+    let output = compiler(
+        r#"
         not <category::cased_letter>;
         not <category::close_punctuation>;
         not <category::connector_punctuation>;
@@ -215,12 +228,12 @@ fn symbol_unicode_category_test() {
         not <category::titlecase_letter>;
         not <category::unassigned>;
         not <category::uppercase_letter>;
-        5 of <category::cased_letter>;
+        5 of not <category::cased_letter>;
       "#,
     );
     assert_eq!(
         output.unwrap(),
-        r"\p{L&}\p{Pe}\p{Pc}\p{Cc}\p{Sc}\p{Pd}\p{Nd}\p{Me}\p{Pf}\p{Cf}\p{Pi}\p{Nl}\p{L}\p{Zl}\p{Ll}\p{M}\p{Sm}\p{Lm}\p{Sk}\p{Mn}\p{N}\p{Ps}\p{Lo}\p{No}\p{Po}\p{So}\p{C}\p{Zp}\p{Co}\p{P}\p{Z}\p{Zs}\p{Mc}\p{Cs}\p{S}\p{Lt}\p{Cn}\p{Lu}\P{L&}\P{Pe}\P{Pc}\P{Cc}\P{Sc}\P{Pd}\P{Nd}\P{Me}\P{Pf}\P{Cf}\P{Pi}\P{Nl}\P{L}\P{Zl}\P{Ll}\P{M}\P{Sm}\P{Lm}\P{Sk}\P{Mn}\P{N}\P{Ps}\P{Lo}\P{No}\P{Po}\P{So}\P{C}\P{Zp}\P{Co}\P{P}\P{Z}\P{Zs}\P{Mc}\P{Cs}\P{S}\P{Lt}\P{Cn}\P{Lu}\p{L&}{5}"
+        r"\P{L&}\P{Pe}\P{Pc}\P{Cc}\P{Sc}\P{Pd}\P{Nd}\P{Me}\P{Pf}\P{Cf}\P{Pi}\P{Nl}\P{L}\P{Zl}\P{Ll}\P{M}\P{Sm}\P{Lm}\P{Sk}\P{Mn}\P{N}\P{Ps}\P{Lo}\P{No}\P{Po}\P{So}\P{C}\P{Zp}\P{Co}\P{P}\P{Z}\P{Zs}\P{Mc}\P{Cs}\P{S}\P{Lt}\P{Cn}\P{Lu}\P{L&}{5}"
     );
 }
 

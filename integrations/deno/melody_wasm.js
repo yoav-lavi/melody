@@ -1,6 +1,6 @@
 let wasm;
 
-let cachedTextDecoder = new TextDecoder("utf-8", {
+const cachedTextDecoder = new TextDecoder("utf-8", {
   ignoreBOM: true,
   fatal: true,
 });
@@ -39,7 +39,7 @@ function addHeapObject(obj) {
 
 let WASM_VECTOR_LEN = 0;
 
-let cachedTextEncoder = new TextEncoder("utf-8");
+const cachedTextEncoder = new TextEncoder("utf-8");
 
 const encodeString =
   typeof cachedTextEncoder.encodeInto === "function"
@@ -172,12 +172,12 @@ function takeObject(idx) {
 export function compiler(source) {
   try {
     const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
-    var ptr0 = passStringToWasm0(
+    const ptr0 = passStringToWasm0(
       source,
       wasm.__wbindgen_malloc,
       wasm.__wbindgen_realloc
     );
-    var len0 = WASM_VECTOR_LEN;
+    const len0 = WASM_VECTOR_LEN;
     wasm.compiler(retptr, ptr0, len0);
     var r0 = getInt32Memory0()[retptr / 4 + 0];
     var r1 = getInt32Memory0()[retptr / 4 + 1];
@@ -234,7 +234,7 @@ async function init(input) {
   const imports = {};
   imports.wbg = {};
   imports.wbg.__wbindgen_error_new = function (arg0, arg1) {
-    var ret = new Error(getStringFromWasm0(arg0, arg1));
+    const ret = new Error(getStringFromWasm0(arg0, arg1));
     return addHeapObject(ret);
   };
 
