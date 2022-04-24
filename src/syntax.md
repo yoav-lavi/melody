@@ -79,6 +79,8 @@ Note: these are not supported when testing in the CLI (`-t` or `-f`) as the rege
   - `<category::surrogate>` - one half of a surrogate pair in UTF-16 encoding
   - `<category::unassigned>` - any code point to which no character has been assigned
 
+These descriptions are from https://www.regular-expressions.info/unicode.html
+
 ## Character Ranges
 
 - `... to ...` - used with digits or alphabetic characters to express a character range. equivalent to regex `[5-9]` (assuming `5 to 9`) or `[a-z]` (assuming `a to z`)
