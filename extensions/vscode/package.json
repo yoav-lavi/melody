@@ -2,7 +2,7 @@
   "name": "melody",
   "displayName": "Melody",
   "description": "Melody syntax highlighting and snippets",
-  "version": "0.13.16",
+  "version": "0.18.0",
   "publisher": "yoavlavi",
   "icon": "melody-dark.png",
   "repository": {
