@@ -296,7 +296,7 @@ All symbols can be preceeded with `not` to match any character other than the sy
 
 ### Unicode Categories
 
-Note: these are not supported when testing in the CLI (`-t` or `-f`) as the regex engine used does not support unicode categories
+Note: these are not supported when testing in the CLI (`-t` or `-f`) as the regex engine used does not support unicode categories. These require using the `u` flag.
 
 - `<category::letter>` - any kind of letter from any language
   - `<category::lowercase_letter>` - a lowercase letter that has an uppercase variant
