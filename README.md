@@ -461,6 +461,8 @@ To reproduce, run `cargo bench` or `cargo xtask benchmark`
 | ----------------------------------- | --------------------- | ----------- |
 | `not "A";`                          | `[^A]`                | 🐣          |
 | variables / macros                  |                       | 🐣          |
+| `<...::...>`                        | `\p{...}`             | 🐣          |
+| `not <...::...>`                    | `\P{...}`             | 🐣          |
 | file watcher                        |                       | ❌          |
 | multiline groups in REPL            |                       | ❌          |
 | `flags: global, multiline, ...`     | `/.../gm...`          | ❔          |
