@@ -348,6 +348,69 @@ OPTIONS:
 <li><code>&lt;start&gt;</code> - matches the start of the string. equivalent to regex <code>^</code></li>
 <li><code>&lt;end&gt;</code> - matches the end of the string. equivalent to regex <code>$</code></li>
 </ul>
+<h2 id="unicode-categories"><a class="header" href="#unicode-categories">Unicode Categories</a></h2>
+<p>Note: these are not supported when testing in the CLI (<code>-t</code> or <code>-f</code>) as the regex engine used does not support unicode categories. These require using the <code>u</code> flag.</p>
+<ul>
+<li><code>&lt;category::letter&gt;</code> - any kind of letter from any language
+<ul>
+<li><code>&lt;category::lowercase_letter&gt;</code> - a lowercase letter that has an uppercase variant</li>
+<li><code>&lt;category::uppercase_letter&gt;</code> - an uppercase letter that has a lowercase variant.</li>
+<li><code>&lt;category::titlecase_letter&gt;</code> - a letter that appears at the start of a word when only the first letter of the word is capitalized</li>
+<li><code>&lt;category::cased_letter&gt;</code> - a letter that exists in lowercase and uppercase variants</li>
+<li><code>&lt;category::modifier_letter&gt;</code> - a special character that is used like a letter</li>
+<li><code>&lt;category::other_letter&gt;</code> - a letter or ideograph that does not have lowercase and uppercase variants</li>
+</ul>
+</li>
+<li><code>&lt;category::mark&gt;</code> - a character intended to be combined with another character (e.g. accents, umlauts, enclosing boxes, etc.)
+<ul>
+<li><code>&lt;category::non_spacing_mark&gt;</code> - a character intended to be combined with another character without taking up extra space (e.g. accents, umlauts, etc.)</li>
+<li><code>&lt;category::spacing_combining_mark&gt;</code> - a character intended to be combined with another character that takes up extra space (vowel signs in many Eastern languages)</li>
+<li><code>&lt;category::enclosing_mark&gt;</code> - a character that encloses the character it is combined with (circle, square, keycap, etc.)</li>
+</ul>
+</li>
+<li><code>&lt;category::separator&gt;</code> - any kind of whitespace or invisible separator
+<ul>
+<li><code>&lt;category::space_separator&gt;</code> - a whitespace character that is invisible, but does take up space</li>
+<li><code>&lt;category::line_separator&gt;</code> - line separator character U+2028</li>
+<li><code>&lt;category::paragraph_separator&gt;</code> - paragraph separator character U+2029</li>
+</ul>
+</li>
+<li><code>&lt;category::symbol&gt;</code> - math symbols, currency signs, dingbats, box-drawing characters, etc
+<ul>
+<li><code>&lt;category::math_symbol&gt;</code> - any mathematical symbol</li>
+<li><code>&lt;category::currency_symbol&gt;</code> - any currency sign</li>
+<li><code>&lt;category::modifier_symbol&gt;</code> - a combining character (mark) as a full character on its own</li>
+<li><code>&lt;category::other_symbol&gt;</code> - various symbols that are not math symbols, currency signs, or combining characters</li>
+</ul>
+</li>
+<li><code>&lt;category::number&gt;</code> - any kind of numeric character in any script
+<ul>
+<li><code>&lt;category::decimal_digit_number&gt;</code> - a digit zero through nine in any script except ideographic scripts</li>
+<li><code>&lt;category::letter_number&gt;</code> - a number that looks like a letter, such as a Roman numeral</li>
+<li><code>&lt;category::other_number&gt;</code> - a superscript or subscript digit, or a number that is not a digit 0–9 (excluding numbers from ideographic scripts)</li>
+</ul>
+</li>
+<li><code>&lt;category::punctuation&gt;</code> - any kind of punctuation character
+<ul>
+<li><code>&lt;category::dash_punctuation&gt;</code> - any kind of hyphen or dash</li>
+<li><code>&lt;category::open_punctuation&gt;</code> - any kind of opening bracket</li>
+<li><code>&lt;category::close_punctuation&gt;</code> -  any kind of closing bracket</li>
+<li><code>&lt;category::initial_punctuation&gt;</code> - any kind of opening quote</li>
+<li><code>&lt;category::final_punctuation&gt;</code> - any kind of closing quote</li>
+<li><code>&lt;category::connector_punctuation&gt;</code> - a punctuation character such as an underscore that connects words</li>
+<li><code>&lt;category::other_punctuation&gt;</code> - any kind of punctuation character that is not a dash, bracket, quote or connectors</li>
+</ul>
+</li>
+<li><code>&lt;category::other&gt;</code> - invisible control characters and unused code points
+<ul>
+<li><code>&lt;category::control&gt;</code> - an ASCII or Latin-1 control character: 0x00–0x1F and 0x7F–0x9F</li>
+<li><code>&lt;category::format&gt;</code> - invisible formatting indicator</li>
+<li><code>&lt;category::private_use&gt;</code> - any code point reserved for private use</li>
+<li><code>&lt;category::surrogate&gt;</code> - one half of a surrogate pair in UTF-16 encoding</li>
+<li><code>&lt;category::unassigned&gt;</code> - any code point to which no character has been assigned</li>
+</ul>
+</li>
+</ul>
 <h2 id="character-ranges"><a class="header" href="#character-ranges">Character Ranges</a></h2>
 <ul>
 <li><code>... to ...</code> - used with digits or alphabetic characters to express a character range. equivalent to regex <code>[5-9]</code> (assuming <code>5 to 9</code>) or <code>[a-z]</code> (assuming <code>a to z</code>)</li>
@@ -726,22 +789,6 @@ median [3.8144 us 3.8397 us] med. abs. dev. [2.5630 ns 40.223 ns]
 
         </div>
 
-        <!-- Livereload script (if served using the cli tool) -->
-        <script type="text/javascript">
-            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
-            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
-            const socket = new WebSocket(wsAddress);
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload();
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
 
 
 
