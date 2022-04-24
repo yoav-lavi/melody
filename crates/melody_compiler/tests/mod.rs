@@ -136,6 +136,95 @@ fn symbol_test() {
 }
 
 #[test]
+fn symbol_unicode_category_test() {
+    let output = compiler(
+        r#"
+        <category::cased_letter>;
+        <category::close_punctuation>;
+        <category::connector_punctuation>;
+        <category::control>;
+        <category::currency_symbol>;
+        <category::dash_punctuation>;
+        <category::decimal_digit_number>;
+        <category::enclosing_mark>;
+        <category::final_punctuation>;
+        <category::format>;
+        <category::initial_punctuation>;
+        <category::letter_number>;
+        <category::letter>;
+        <category::line_separator>;
+        <category::lowercase_letter>;
+        <category::mark>;
+        <category::math_symbol>;
+        <category::modifier_letter>;
+        <category::modifier_symbol>;
+        <category::non_spacing_mark>;
+        <category::number>;
+        <category::open_punctuation>;
+        <category::other_letter>;
+        <category::other_number>;
+        <category::other_punctuation>;
+        <category::other_symbol>;
+        <category::other>;
+        <category::paragraph_separator>;
+        <category::private_use>;
+        <category::punctuation>;
+        <category::separator>;
+        <category::space_separator>;
+        <category::spacing_combining_mark>;
+        <category::surrogate>;
+        <category::symbol>;
+        <category::titlecase_letter>;
+        <category::unassigned>;
+        <category::uppercase_letter>;
+        not <category::cased_letter>;
+        not <category::close_punctuation>;
+        not <category::connector_punctuation>;
+        not <category::control>;
+        not <category::currency_symbol>;
+        not <category::dash_punctuation>;
+        not <category::decimal_digit_number>;
+        not <category::enclosing_mark>;
+        not <category::final_punctuation>;
+        not <category::format>;
+        not <category::initial_punctuation>;
+        not <category::letter_number>;
+        not <category::letter>;
+        not <category::line_separator>;
+        not <category::lowercase_letter>;
+        not <category::mark>;
+        not <category::math_symbol>;
+        not <category::modifier_letter>;
+        not <category::modifier_symbol>;
+        not <category::non_spacing_mark>;
+        not <category::number>;
+        not <category::open_punctuation>;
+        not <category::other_letter>;
+        not <category::other_number>;
+        not <category::other_punctuation>;
+        not <category::other_symbol>;
+        not <category::other>;
+        not <category::paragraph_separator>;
+        not <category::private_use>;
+        not <category::punctuation>;
+        not <category::separator>;
+        not <category::space_separator>;
+        not <category::spacing_combining_mark>;
+        not <category::surrogate>;
+        not <category::symbol>;
+        not <category::titlecase_letter>;
+        not <category::unassigned>;
+        not <category::uppercase_letter>;
+        5 of <category::cased_letter>;
+      "#,
+    );
+    assert_eq!(
+        output.unwrap(),
+        r"\p{L&}\p{Pe}\p{Pc}\p{Cc}\p{Sc}\p{Pd}\p{Nd}\p{Me}\p{Pf}\p{Cf}\p{Pi}\p{Nl}\p{L}\p{Zl}\p{Ll}\p{M}\p{Sm}\p{Lm}\p{Sk}\p{Mn}\p{N}\p{Ps}\p{Lo}\p{No}\p{Po}\p{So}\p{C}\p{Zp}\p{Co}\p{P}\p{Z}\p{Zs}\p{Mc}\p{Cs}\p{S}\p{Lt}\p{Cn}\p{Lu}\P{L&}\P{Pe}\P{Pc}\P{Cc}\P{Sc}\P{Pd}\P{Nd}\P{Me}\P{Pf}\P{Cf}\P{Pi}\P{Nl}\P{L}\P{Zl}\P{Ll}\P{M}\P{Sm}\P{Lm}\P{Sk}\P{Mn}\P{N}\P{Ps}\P{Lo}\P{No}\P{Po}\P{So}\P{C}\P{Zp}\P{Co}\P{P}\P{Z}\P{Zs}\P{Mc}\P{Cs}\P{S}\P{Lt}\P{Cn}\P{Lu}\p{L&}{5}"
+    );
+}
+
+#[test]
 fn match_test() {
     let output = compiler(
         r#"

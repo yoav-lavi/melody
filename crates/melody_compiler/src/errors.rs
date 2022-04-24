@@ -57,4 +57,10 @@ pub enum CompilerError {
     /// returned if any parsed symbol is not recognized
     #[error("usage of an unrecognized symbol")]
     UnrecognizedSymbol,
+    /// returned if any parsed symbol namespace is not recognized
+    #[error("usage of an unrecognized symbol namespace")]
+    UnrecognizedSymbolNamespace,
+    /// returned if any parsed unicode category
+    #[error("usage of an unrecognized unicode category")]
+    UnrecognizedUnicodeCategory,
 }

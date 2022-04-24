@@ -1,7 +1,8 @@
 use super::utils::{mark_lazy, wrap_quantified};
 use crate::ast::types::ast::{
     Assertion, AssertionKind, Expression, Group, GroupKind, MelodyAst, MelodyAstNode, Quantifier,
-    QuantifierKind, Range, SpecialSymbol, Symbol, SymbolKind, VariableInvocation,
+    QuantifierKind, Range, SpecialSymbolKind, Symbol, SymbolKind, UnicodeCategory,
+    UnicodeCategoryKind, VariableInvocation,
 };
 
 pub fn ast_to_regex(ast: &MelodyAst) -> String {
@@ -19,6 +20,7 @@ pub fn node_to_regex(node: &MelodyAstNode) -> String {
         MelodyAstNode::Group(group) => transform_group(group),
         MelodyAstNode::Atom(atom) => atom.clone(),
         MelodyAstNode::Symbol(symbol) => transform_symbol(symbol),
+        MelodyAstNode::UnicodeCategory(category) => transform_unicode_category(category),
         MelodyAstNode::Range(range) => transform_range(range),
         MelodyAstNode::NegativeCharClass(negative_char_class) => {
             transform_negative_char_class(negative_char_class)
@@ -36,16 +38,17 @@ fn expression_to_regex(expression: &Expression) -> String {
         Expression::Atom(atom) => atom.clone(),
         Expression::Range(range) => transform_range(range),
         Expression::Symbol(symbol) => transform_symbol(symbol),
+        Expression::UnicodeCategory(category) => transform_unicode_category(category),
         Expression::NegativeCharClass(negative_char_class) => {
             transform_negative_char_class(negative_char_class)
         }
     }
 }
 
-fn transform_special_symbol(special_symbol: &SpecialSymbol) -> String {
+fn transform_special_symbol(special_symbol: &SpecialSymbolKind) -> String {
     let transformed_special_symbol = match special_symbol {
-        SpecialSymbol::Start => '^',
-        SpecialSymbol::End => '$',
+        SpecialSymbolKind::Start => '^',
+        SpecialSymbolKind::End => '$',
     };
 
     String::from(transformed_special_symbol)
@@ -181,4 +184,51 @@ fn transform_symbol(symbol: &Symbol) -> String {
     };
 
     String::from(transformed_symbol)
+}
+
+fn transform_unicode_category(category: &UnicodeCategory) -> String {
+    let prefix = if category.negative { "\\P" } else { "\\p" };
+
+    let transformed_category = match category.kind {
+        UnicodeCategoryKind::CasedLetter => "L&",
+        UnicodeCategoryKind::ClosePunctuation => "Pe",
+        UnicodeCategoryKind::ConnectorPunctuation => "Pc",
+        UnicodeCategoryKind::Control => "Cc",
+        UnicodeCategoryKind::CurrencySymbol => "Sc",
+        UnicodeCategoryKind::DashPunctuation => "Pd",
+        UnicodeCategoryKind::DecimalDigitNumber => "Nd",
+        UnicodeCategoryKind::EnclosingMark => "Me",
+        UnicodeCategoryKind::FinalPunctuation => "Pf",
+        UnicodeCategoryKind::Format => "Cf",
+        UnicodeCategoryKind::InitialPunctuation => "Pi",
+        UnicodeCategoryKind::LetterNumber => "Nl",
+        UnicodeCategoryKind::Letter => "L",
+        UnicodeCategoryKind::LineSeparator => "Zl",
+        UnicodeCategoryKind::LowercaseLetter => "Ll",
+        UnicodeCategoryKind::Mark => "M",
+        UnicodeCategoryKind::MathSymbol => "Sm",
+        UnicodeCategoryKind::ModifierLetter => "Lm",
+        UnicodeCategoryKind::ModifierSymbol => "Sk",
+        UnicodeCategoryKind::NonSpacingMark => "Mn",
+        UnicodeCategoryKind::Number => "N",
+        UnicodeCategoryKind::OpenPunctuation => "Ps",
+        UnicodeCategoryKind::OtherLetter => "Lo",
+        UnicodeCategoryKind::OtherNumber => "No",
+        UnicodeCategoryKind::OtherPunctuation => "Po",
+        UnicodeCategoryKind::OtherSymbol => "So",
+        UnicodeCategoryKind::Other => "C",
+        UnicodeCategoryKind::ParagraphSeparator => "Zp",
+        UnicodeCategoryKind::PrivateUse => "Co",
+        UnicodeCategoryKind::Punctuation => "P",
+        UnicodeCategoryKind::Separator => "Z",
+        UnicodeCategoryKind::SpaceSeparator => "Zs",
+        UnicodeCategoryKind::SpacingCombiningMark => "Mc",
+        UnicodeCategoryKind::Surrogate => "Cs",
+        UnicodeCategoryKind::Symbol => "S",
+        UnicodeCategoryKind::TitlecaseLetter => "Lt",
+        UnicodeCategoryKind::Unassigned => "Cn",
+        UnicodeCategoryKind::UppercaseLetter => "Lu",
+    };
+
+    format!("{prefix}{{{transformed_category}}}")
 }

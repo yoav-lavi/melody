@@ -36,7 +36,7 @@ raw = ${ "`" ~ raw_content ~ "`"  }
 not = { "not" }
 
 symbol = {
-  (not)? ~  "<" ~ identifier ~ ">"
+  (not)? ~  "<" ~ symbol_identifier ~ ">"
 }
 
 semicolon = _{ ";" }
@@ -90,6 +90,8 @@ quantifier = {
 block = { "{" ~ (statement)+ ~ "}" }
 
 identifier = { ('a'..'z' | 'A'..'Z' | "_")+ }
+
+symbol_identifier = { ('a'..'z' | 'A'..'Z' | "_" | ":")+ }
 
 capture_group = { "capture" }
 

@@ -1,9 +1,9 @@
 use super::consts::{LAZY, NOT};
+use super::symbols::symbol;
 use super::types::{
     ast::{
         AsciiRange, Assertion, AssertionKind, Expression, Group, GroupKind, MelodyAst,
-        MelodyAstNode, NumericRange, Quantifier, QuantifierKind, Range, SpecialSymbol, Symbol,
-        SymbolKind, VariableInvocation,
+        MelodyAstNode, NumericRange, Quantifier, QuantifierKind, Range, VariableInvocation,
     },
     pest::{IdentParser, Rule},
 };
@@ -68,90 +68,6 @@ fn create_ast_node(
     Ok(node)
 }
 
-fn symbol(pair: Pair<Rule>) -> Result<MelodyAstNode> {
-    let (negative, ident) = first_last_inner_str(pair)?;
-
-    let negative = negative == NOT;
-
-    if negative {
-        match ident {
-            "start" => return Err(CompilerError::NegativeStartNotAllowed),
-            "end" => return Err(CompilerError::NegativeEndNotAllowed),
-            _ => {}
-        }
-    }
-
-    let symbol_node = match ident {
-        "space" => MelodyAstNode::Symbol(Symbol {
-            kind: SymbolKind::Space,
-            negative,
-        }),
-        "newline" => MelodyAstNode::Symbol(Symbol {
-            kind: SymbolKind::Newline,
-            negative,
-        }),
-        "vertical" => MelodyAstNode::Symbol(Symbol {
-            kind: SymbolKind::Vertical,
-            negative,
-        }),
-        "word" => MelodyAstNode::Symbol(Symbol {
-            kind: SymbolKind::Word,
-            negative,
-        }),
-        "digit" => MelodyAstNode::Symbol(Symbol {
-            kind: SymbolKind::Digit,
-            negative,
-        }),
-        "whitespace" => MelodyAstNode::Symbol(Symbol {
-            kind: SymbolKind::Whitespace,
-            negative,
-        }),
-        "boundary" => MelodyAstNode::Symbol(Symbol {
-            kind: SymbolKind::Boundary,
-            negative,
-        }),
-        "alphabetic" => MelodyAstNode::Symbol(Symbol {
-            kind: SymbolKind::Alphabetic,
-            negative,
-        }),
-        "alphanumeric" => MelodyAstNode::Symbol(Symbol {
-            kind: SymbolKind::Alphanumeric,
-            negative,
-        }),
-        "return" => MelodyAstNode::Symbol(Symbol {
-            kind: SymbolKind::Return,
-            negative,
-        }),
-        "tab" => MelodyAstNode::Symbol(Symbol {
-            kind: SymbolKind::Tab,
-            negative,
-        }),
-        "null" => MelodyAstNode::Symbol(Symbol {
-            kind: SymbolKind::Null,
-            negative,
-        }),
-        "feed" => MelodyAstNode::Symbol(Symbol {
-            kind: SymbolKind::Feed,
-            negative,
-        }),
-        "char" => MelodyAstNode::Symbol(Symbol {
-            kind: SymbolKind::Char,
-            negative,
-        }),
-        "backspace" => MelodyAstNode::Symbol(Symbol {
-            kind: SymbolKind::Backspace,
-            negative,
-        }),
-
-        "start" => MelodyAstNode::SpecialSymbol(SpecialSymbol::Start),
-        "end" => MelodyAstNode::SpecialSymbol(SpecialSymbol::End),
-
-        _ => return Err(CompilerError::UnrecognizedSymbol),
-    };
-
-    Ok(symbol_node)
-}
-
 fn range(pair: Pair<Rule>) -> Result<MelodyAstNode> {
     let (first, end) = first_last_inner_str(pair.clone())?;
     let negative = first == NOT;
@@ -193,6 +109,7 @@ fn quantifier(
         MelodyAstNode::Range(range) => Expression::Range(range),
         MelodyAstNode::Symbol(symbol) => Expression::Symbol(symbol),
         MelodyAstNode::NegativeCharClass(class) => Expression::NegativeCharClass(class),
+        MelodyAstNode::UnicodeCategory(category) => Expression::UnicodeCategory(category),
 
         // unexpected nodes
         MelodyAstNode::SpecialSymbol(_) => {

@@ -1,5 +1,15 @@
 # Changelog
 
+## [v0.18.0] - 2022-04-24
+
+### Features
+
+- Adds support for unicode categories
+
+### Misc.
+
+- Update dependencies
+
 ## [v0.17.0] - 2022-04-23
 
 ### Features

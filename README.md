@@ -294,6 +294,52 @@ All symbols can be preceeded with `not` to match any character other than the sy
 - `<start>` - matches the start of the string. equivalent to regex `^`
 - `<end>` - matches the end of the string. equivalent to regex `$`
 
+### Unicode Categories
+
+Note: these are not supported when testing in the CLI (`-t` or `-f`) as the regex engine used does not support unicode categories
+
+- `<category::letter>` - any kind of letter from any language
+  - `<category::lowercase_letter>` - a lowercase letter that has an uppercase variant
+  - `<category::uppercase_letter>` - an uppercase letter that has a lowercase variant.
+  - `<category::titlecase_letter>` - a letter that appears at the start of a word when only the first letter of the word is capitalized
+  - `<category::cased_letter>` - a letter that exists in lowercase and uppercase variants
+  - `<category::modifier_letter>` - a special character that is used like a letter
+  - `<category::other_letter>` - a letter or ideograph that does not have lowercase and uppercase variants
+- `<category::mark>` - a character intended to be combined with another character (e.g. accents, umlauts, enclosing boxes, etc.)
+  - `<category::non_spacing_mark>` - a character intended to be combined with another character without taking up extra space (e.g. accents, umlauts, etc.)
+  - `<category::spacing_combining_mark>` - a character intended to be combined with another character that takes up extra space (vowel signs in many Eastern languages)
+  - `<category::enclosing_mark>` - a character that encloses the character it is combined with (circle, square, keycap, etc.)
+- `<category::separator>` - any kind of whitespace or invisible separator
+  - `<category::space_separator>` - a whitespace character that is invisible, but does take up space
+  - `<category::line_separator>` - line separator character U+2028
+  - `<category::paragraph_separator>` - paragraph separator character U+2029
+- `<category::symbol>` - math symbols, currency signs, dingbats, box-drawing characters, etc
+  - `<category::math_symbol>` - any mathematical symbol
+  - `<category::currency_symbol>` - any currency sign
+  - `<category::modifier_symbol>` - a combining character (mark) as a full character on its own
+  - `<category::other_symbol>` - various symbols that are not math symbols, currency signs, or combining characters
+- `<category::number>` - any kind of numeric character in any script
+  - `<category::decimal_digit_number>` - a digit zero through nine in any script except ideographic scripts
+  - `<category::letter_number>` - a number that looks like a letter, such as a Roman numeral
+  - `<category::other_number>` - a superscript or subscript digit, or a number that is not a digit 0–9 (excluding numbers from ideographic scripts)
+- `<category::punctuation>` - any kind of punctuation character
+  - `<category::dash_punctuation>` - any kind of hyphen or dash
+  - `<category::open_punctuation>` - any kind of opening bracket
+  - `<category::close_punctuation>` -  any kind of closing bracket
+  - `<category::initial_punctuation>` - any kind of opening quote
+  - `<category::final_punctuation>` - any kind of closing quote
+  - `<category::connector_punctuation>` - a punctuation character such as an underscore that connects words
+  - `<category::other_punctuation>` - any kind of punctuation character that is not a dash, bracket, quote or connectors
+- `<category::other>` - invisible control characters and unused code points
+  - `<category::control>` - an ASCII or Latin-1 control character: 0x00–0x1F and 0x7F–0x9F
+  - `<category::format>` - invisible formatting indicator
+  - `<category::private_use>` - any code point reserved for private use
+  - `<category::surrogate>` - one half of a surrogate pair in UTF-16 encoding
+  - `<category::unassigned>` - any code point to which no character has been assigned
+
+
+These descriptions are from https://www.regular-expressions.info/unicode.html
+
 ### Character Ranges
 
 - `... to ...` - used with digits or alphabetic characters to express a character range. equivalent to regex `[5-9]` (assuming `5 to 9`) or `[a-z]` (assuming `a to z`)

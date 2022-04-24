@@ -33,6 +33,9 @@ fn criterion_benchmark(criterion: &mut Criterion) {
 
     // #melody
 
+    <category::space_separator>;
+    <category::other>;
+
     some of <word>;
     <space>;
     "1";
@@ -63,6 +66,9 @@ fn criterion_benchmark(criterion: &mut Criterion) {
     
     ".";
     
+    <category::letter>;
+    <category::currency_symbol>;
+
     capture patch {
       some of <digit>;
     }

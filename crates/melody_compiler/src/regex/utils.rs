@@ -10,8 +10,6 @@ fn directly_quantifiable(value: &str) -> bool {
     let value_char_count = value.chars().count();
 
     // missing (and currently unsupported):
-    // - \p{...}
-    // - \P{...}
     // - \xYY
     // - \ddd
     // - \uYYYY
@@ -24,6 +22,12 @@ fn directly_quantifiable(value: &str) -> bool {
         _ => match value.chars().next() {
             Some('(') => value.ends_with(')'),
             Some('[') => value.ends_with(']'),
+            Some('\\') => {
+                let has_unicode_group_prefix =
+                    value.starts_with("\\p{") || value.starts_with("\\P{");
+                let has_unicode_group_suffix = value.ends_with('}');
+                has_unicode_group_prefix && has_unicode_group_suffix
+            }
             _ => false,
         },
     }

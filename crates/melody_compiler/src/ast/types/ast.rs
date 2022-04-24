@@ -39,6 +39,7 @@ pub enum Expression {
     Atom(String),
     Group(Group),
     Symbol(Symbol),
+    UnicodeCategory(UnicodeCategory),
     Range(Range),
     NegativeCharClass(String),
 }
@@ -77,6 +78,13 @@ pub struct Symbol {
 
 #[derive(Debug, Clone)]
 #[cfg_attr(feature = "fuzzer", derive(arbitrary::Arbitrary))]
+pub struct UnicodeCategory {
+    pub kind: UnicodeCategoryKind,
+    pub negative: bool,
+}
+
+#[derive(Debug, Clone)]
+#[cfg_attr(feature = "fuzzer", derive(arbitrary::Arbitrary))]
 pub enum SymbolKind {
     Space,
     Newline,
@@ -97,7 +105,50 @@ pub enum SymbolKind {
 
 #[derive(Debug, Clone)]
 #[cfg_attr(feature = "fuzzer", derive(arbitrary::Arbitrary))]
-pub enum SpecialSymbol {
+pub enum UnicodeCategoryKind {
+    CasedLetter,
+    ClosePunctuation,
+    ConnectorPunctuation,
+    Control,
+    CurrencySymbol,
+    DashPunctuation,
+    DecimalDigitNumber,
+    EnclosingMark,
+    FinalPunctuation,
+    Format,
+    InitialPunctuation,
+    LetterNumber,
+    Letter,
+    LineSeparator,
+    LowercaseLetter,
+    Mark,
+    MathSymbol,
+    ModifierLetter,
+    ModifierSymbol,
+    NonSpacingMark,
+    Number,
+    OpenPunctuation,
+    OtherLetter,
+    OtherNumber,
+    OtherPunctuation,
+    OtherSymbol,
+    Other,
+    ParagraphSeparator,
+    PrivateUse,
+    Punctuation,
+    Separator,
+    SpaceSeparator,
+    SpacingCombiningMark,
+    Surrogate,
+    Symbol,
+    TitlecaseLetter,
+    Unassigned,
+    UppercaseLetter,
+}
+
+#[derive(Debug, Clone)]
+#[cfg_attr(feature = "fuzzer", derive(arbitrary::Arbitrary))]
+pub enum SpecialSymbolKind {
     Start,
     End,
 }
@@ -136,7 +187,8 @@ pub enum MelodyAstNode {
     Atom(String),
     Range(Range),
     Symbol(Symbol),
-    SpecialSymbol(SpecialSymbol),
+    SpecialSymbol(SpecialSymbolKind),
+    UnicodeCategory(UnicodeCategory),
     NegativeCharClass(String),
     VariableInvocation(VariableInvocation),
     Skip,
