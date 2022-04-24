@@ -466,8 +466,6 @@ To reproduce, run `cargo bench` or `cargo xtask benchmark`
 | `flags: global, multiline, ...`     | `/.../gm...`          | ❔          |
 | (?)                                 | `\#`                  | ❔          |
 | (?)                                 | `\k<name>`            | ❔          |
-| (?)                                 | `\p{...}`             | ❔          |
-| (?)                                 | `\P{...}`             | ❔          |
 | (?)                                 | `\uYYYY`              | ❔          |
 | (?)                                 | `\xYY`                | ❔          |
 | (?)                                 | `\ddd`                | ❔          |
