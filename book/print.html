@@ -465,6 +465,8 @@ OPTIONS:
 <table><thead><tr><th>Melody</th><th>Regex</th><th>Status</th></tr></thead><tbody>
 <tr><td><code>not &quot;A&quot;;</code></td><td><code>[^A]</code></td><td>🐣</td></tr>
 <tr><td>variables / macros</td><td></td><td>🐣</td></tr>
+<tr><td><code>&lt;...::...&gt;</code></td><td><code>\p{...}</code></td><td>🐣</td></tr>
+<tr><td><code>not &lt;...::...&gt;</code></td><td><code>\P{...}</code></td><td>🐣</td></tr>
 <tr><td>file watcher</td><td></td><td>❌</td></tr>
 <tr><td>multiline groups in REPL</td><td></td><td>❌</td></tr>
 <tr><td><code>flags: global, multiline, ...</code></td><td><code>/.../gm...</code></td><td>❔</td></tr>
@@ -533,19 +535,37 @@ median [3.8144 us 3.8397 us] med. abs. dev. [2.5630 ns 40.223 ns]
 <li><a href="https://www.npmjs.com/package/babel-plugin-melody">Babel Plugin</a></li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="changelog"><a class="header" href="#changelog">Changelog</a></h1>
-<h2 id="v0160---2022-04-13"><a class="header" href="#v0160---2022-04-13">[v0.16.0] - 2022-04-13</a></h2>
+<h2 id="v0180---2022-04-24"><a class="header" href="#v0180---2022-04-24">[v0.18.0] - 2022-04-24</a></h2>
 <h3 id="features"><a class="header" href="#features">Features</a></h3>
+<ul>
+<li>Adds support for unicode categories</li>
+</ul>
+<h3 id="misc"><a class="header" href="#misc">Misc.</a></h3>
+<ul>
+<li>Update dependencies</li>
+</ul>
+<h2 id="v0170---2022-04-23"><a class="header" href="#v0170---2022-04-23">[v0.17.0] - 2022-04-23</a></h2>
+<h3 id="features-1"><a class="header" href="#features-1">Features</a></h3>
+<ul>
+<li>Add support for testing matches in a file in the CLI</li>
+</ul>
+<h3 id="refactoring"><a class="header" href="#refactoring">Refactoring</a></h3>
+<ul>
+<li>Remove <code>anyhow</code> in compiler in favor of emitting specific error variants</li>
+</ul>
+<h2 id="v0160---2022-04-13"><a class="header" href="#v0160---2022-04-13">[v0.16.0] - 2022-04-13</a></h2>
+<h3 id="features-2"><a class="header" href="#features-2">Features</a></h3>
 <ul>
 <li>Add support for testing matches in CLI</li>
 </ul>
 <h2 id="v0150---2022-04-13"><a class="header" href="#v0150---2022-04-13">[v0.15.0] - 2022-04-13</a></h2>
-<h3 id="features-1"><a class="header" href="#features-1">Features</a></h3>
+<h3 id="features-3"><a class="header" href="#features-3">Features</a></h3>
 <ul>
 <li>Add shell completions for CLI</li>
 <li>Add Deno support</li>
 </ul>
 <h2 id="v0140---2022-04-11"><a class="header" href="#v0140---2022-04-11">[v0.14.0] - 2022-04-11</a></h2>
-<h3 id="features-2"><a class="header" href="#features-2">Features</a></h3>
+<h3 id="features-4"><a class="header" href="#features-4">Features</a></h3>
 <ul>
 <li>Support stdin in CLI</li>
 <li>Emit proper exit codes on specific errors</li>
@@ -556,17 +576,17 @@ median [3.8144 us 3.8397 us] med. abs. dev. [2.5630 ns 40.223 ns]
 <li>Fixes unnecessary grouping in quantifiers</li>
 </ul>
 <h2 id="v0139---2022-03-11"><a class="header" href="#v0139---2022-03-11">[v0.13.9] - 2022-03-11</a></h2>
-<h3 id="misc"><a class="header" href="#misc">Misc.</a></h3>
-<ul>
-<li>Version bump for documentation update</li>
-</ul>
-<h2 id="v0138---2022-03-11"><a class="header" href="#v0138---2022-03-11">[v0.13.8] - 2022-03-11</a></h2>
 <h3 id="misc-1"><a class="header" href="#misc-1">Misc.</a></h3>
 <ul>
 <li>Version bump for documentation update</li>
 </ul>
-<h2 id="v0137---2022-03-11"><a class="header" href="#v0137---2022-03-11">[v0.13.7] - 2022-03-11</a></h2>
+<h2 id="v0138---2022-03-11"><a class="header" href="#v0138---2022-03-11">[v0.13.8] - 2022-03-11</a></h2>
 <h3 id="misc-2"><a class="header" href="#misc-2">Misc.</a></h3>
+<ul>
+<li>Version bump for documentation update</li>
+</ul>
+<h2 id="v0137---2022-03-11"><a class="header" href="#v0137---2022-03-11">[v0.13.7] - 2022-03-11</a></h2>
+<h3 id="misc-3"><a class="header" href="#misc-3">Misc.</a></h3>
 <ul>
 <li>Version bump for documentation update</li>
 </ul>
@@ -576,7 +596,7 @@ median [3.8144 us 3.8397 us] med. abs. dev. [2.5630 ns 40.223 ns]
 <li>Handles a few possible panics</li>
 </ul>
 <h2 id="v0135---2022-03-11"><a class="header" href="#v0135---2022-03-11">[v0.13.5] - 2022-03-11</a></h2>
-<h3 id="misc-3"><a class="header" href="#misc-3">Misc.</a></h3>
+<h3 id="misc-4"><a class="header" href="#misc-4">Misc.</a></h3>
 <ul>
 <li>Version bump</li>
 </ul>
@@ -590,7 +610,7 @@ median [3.8144 us 3.8397 us] med. abs. dev. [2.5630 ns 40.223 ns]
 <li>Updates dependencies</li>
 </ul>
 <h2 id="v0133---2022-03-09"><a class="header" href="#v0133---2022-03-09">[v0.13.3] - 2022-03-09</a></h2>
-<h3 id="refactoring"><a class="header" href="#refactoring">Refactoring</a></h3>
+<h3 id="refactoring-1"><a class="header" href="#refactoring-1">Refactoring</a></h3>
 <ul>
 <li>Replaces <code>lazy_static</code> with <code>once_cell</code></li>
 </ul>
@@ -599,7 +619,7 @@ median [3.8144 us 3.8397 us] med. abs. dev. [2.5630 ns 40.223 ns]
 <ul>
 <li>Improves literal parse performance</li>
 </ul>
-<h3 id="refactoring-1"><a class="header" href="#refactoring-1">Refactoring</a></h3>
+<h3 id="refactoring-2"><a class="header" href="#refactoring-2">Refactoring</a></h3>
 <ul>
 <li>Reports a few possible panics with a ParseError</li>
 </ul>
@@ -614,7 +634,7 @@ median [3.8144 us 3.8397 us] med. abs. dev. [2.5630 ns 40.223 ns]
 <ul>
 <li><code>&lt;alphabet&gt;</code> is now <code>&lt;alphabetic&gt;</code></li>
 </ul>
-<h3 id="features-3"><a class="header" href="#features-3">Features</a></h3>
+<h3 id="features-5"><a class="header" href="#features-5">Features</a></h3>
 <ul>
 <li>Support for lazy quantifiers</li>
 <li>All symbols now have negative counterparts</li>
@@ -622,7 +642,7 @@ median [3.8144 us 3.8397 us] med. abs. dev. [2.5630 ns 40.223 ns]
 <li>Adds an experimental implementation of variables</li>
 </ul>
 <h2 id="v0124---2022-03-06"><a class="header" href="#v0124---2022-03-06">[v0.12.4] - 2022-03-06</a></h2>
-<h3 id="misc-4"><a class="header" href="#misc-4">Misc.</a></h3>
+<h3 id="misc-5"><a class="header" href="#misc-5">Misc.</a></h3>
 <ul>
 <li>Version bump</li>
 </ul>
@@ -632,16 +652,16 @@ median [3.8144 us 3.8397 us] med. abs. dev. [2.5630 ns 40.223 ns]
 <li>Fixes an issue with identifying negative char ranges</li>
 </ul>
 <h2 id="v0122---2022-03-05"><a class="header" href="#v0122---2022-03-05">[v0.12.2] - 2022-03-05</a></h2>
-<h3 id="refactoring-2"><a class="header" href="#refactoring-2">Refactoring</a></h3>
+<h3 id="refactoring-3"><a class="header" href="#refactoring-3">Refactoring</a></h3>
 <ul>
 <li>Performance improvements</li>
 </ul>
-<h3 id="misc-5"><a class="header" href="#misc-5">Misc.</a></h3>
+<h3 id="misc-6"><a class="header" href="#misc-6">Misc.</a></h3>
 <ul>
 <li>Adds keywords and categories to cargo.toml files</li>
 </ul>
 <h2 id="v0121---2022-03-04"><a class="header" href="#v0121---2022-03-04">[v0.12.1] - 2022-03-04</a></h2>
-<h3 id="misc-6"><a class="header" href="#misc-6">Misc.</a></h3>
+<h3 id="misc-7"><a class="header" href="#misc-7">Misc.</a></h3>
 <ul>
 <li>CLI documentation update</li>
 </ul>
@@ -650,7 +670,7 @@ median [3.8144 us 3.8397 us] med. abs. dev. [2.5630 ns 40.223 ns]
 <ul>
 <li>Produces clean output (no <code>//</code> and new newline after output)</li>
 </ul>
-<h3 id="features-4"><a class="header" href="#features-4">Features</a></h3>
+<h3 id="features-6"><a class="header" href="#features-6">Features</a></h3>
 <ul>
 <li>Adds favicons for documentation and playground</li>
 <li>The Melody playground now supports add to homescreen</li>
@@ -670,7 +690,7 @@ median [3.8144 us 3.8397 us] med. abs. dev. [2.5630 ns 40.223 ns]
 <li>Adds tests</li>
 <li>Adds tests for CLI</li>
 </ul>
-<h3 id="refactoring-3"><a class="header" href="#refactoring-3">Refactoring</a></h3>
+<h3 id="refactoring-4"><a class="header" href="#refactoring-4">Refactoring</a></h3>
 <ul>
 <li>Removes duplicated code</li>
 </ul>
@@ -682,7 +702,7 @@ median [3.8144 us 3.8397 us] med. abs. dev. [2.5630 ns 40.223 ns]
 <li>The REPL currently accepts blocks on a single line but not multiple lines</li>
 <li>Semicolons are no longer optional</li>
 </ul>
-<h3 id="features-5"><a class="header" href="#features-5">Features</a></h3>
+<h3 id="features-7"><a class="header" href="#features-7">Features</a></h3>
 <ul>
 <li>Uses a Pest grammar and an AST to parse Melody</li>
 <li>Adds support for nested groups</li>
@@ -715,17 +735,17 @@ median [3.8144 us 3.8397 us] med. abs. dev. [2.5630 ns 40.223 ns]
 <ul>
 <li>Changes the <code>-f, --file</code> CLI argument to <code>-o, --output</code></li>
 </ul>
-<h3 id="features-6"><a class="header" href="#features-6">Features</a></h3>
+<h3 id="features-8"><a class="header" href="#features-8">Features</a></h3>
 <ul>
 <li>Adds descriptions to CLI commands</li>
 </ul>
 <h2 id="v090---2022-02-26"><a class="header" href="#v090---2022-02-26">[v0.9.0] - 2022-02-26</a></h2>
-<h3 id="features-7"><a class="header" href="#features-7">Features</a></h3>
+<h3 id="features-9"><a class="header" href="#features-9">Features</a></h3>
 <ul>
 <li>Adds <code>ahead</code>, <code>not ahead</code>, <code>behind</code> and <code>not behind</code> assertions</li>
 </ul>
 <h2 id="v080---2022-02-26"><a class="header" href="#v080---2022-02-26">[v0.8.0] - 2022-02-26</a></h2>
-<h3 id="features-8"><a class="header" href="#features-8">Features</a></h3>
+<h3 id="features-10"><a class="header" href="#features-10">Features</a></h3>
 <ul>
 <li>Changes <code>&lt;space&gt;</code> to <code>&lt;whitespace&gt;</code> (thanks @amirali #34)</li>
 <li>Adds <code>&lt;space&gt;</code> and <code>&lt;alphabet&gt;</code> (thanks @amirali #34)</li>
@@ -738,18 +758,18 @@ median [3.8144 us 3.8397 us] med. abs. dev. [2.5630 ns 40.223 ns]
 <ul>
 <li>Fixes some undo / redo issues in the REPL</li>
 </ul>
-<h3 id="refactoring-4"><a class="header" href="#refactoring-4">Refactoring</a></h3>
+<h3 id="refactoring-5"><a class="header" href="#refactoring-5">Refactoring</a></h3>
 <ul>
 <li>Better error handling in the CLI</li>
 </ul>
 <h2 id="v070---2022-02-24"><a class="header" href="#v070---2022-02-24">[v0.7.0] - 2022-02-24</a></h2>
-<h3 id="features-9"><a class="header" href="#features-9">Features</a></h3>
+<h3 id="features-11"><a class="header" href="#features-11">Features</a></h3>
 <ul>
 <li>Adds a REPL for <code>melody_cli</code></li>
 <li>Adds better error messages for the playground</li>
 </ul>
 <h2 id="v060---2022-02-23"><a class="header" href="#v060---2022-02-23">[v0.6.0] - 2022-02-23</a></h2>
-<h3 id="features-10"><a class="header" href="#features-10">Features</a></h3>
+<h3 id="features-12"><a class="header" href="#features-12">Features</a></h3>
 <ul>
 <li>Adds support for raw sequences (<code>`...`</code>)</li>
 <li>Allows any word character in <code>capture</code> names</li>
@@ -761,7 +781,7 @@ median [3.8144 us 3.8397 us] med. abs. dev. [2.5630 ns 40.223 ns]
 <li>Changes <code>start</code>, <code>end</code>, and <code>char</code> to symbols (<code>&lt;start&gt;</code>, <code>&lt;end&gt;</code>, <code>&lt;char&gt;</code>)</li>
 <li><code>either</code> creates a non capturing group</li>
 </ul>
-<h3 id="refactoring-5"><a class="header" href="#refactoring-5">Refactoring</a></h3>
+<h3 id="refactoring-6"><a class="header" href="#refactoring-6">Refactoring</a></h3>
 <ul>
 <li><code>cargo clippy</code> fixes in <code>melody_wasm</code></li>
 </ul>

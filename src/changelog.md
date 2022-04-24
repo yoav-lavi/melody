@@ -1,5 +1,25 @@
 # Changelog
 
+## [v0.18.0] - 2022-04-24
+
+### Features
+
+- Adds support for unicode categories
+
+### Misc.
+
+- Update dependencies
+
+## [v0.17.0] - 2022-04-23
+
+### Features
+
+- Add support for testing matches in a file in the CLI
+
+### Refactoring
+
+- Remove `anyhow` in compiler in favor of emitting specific error variants
+
 ## [v0.16.0] - 2022-04-13
 
 ### Features
