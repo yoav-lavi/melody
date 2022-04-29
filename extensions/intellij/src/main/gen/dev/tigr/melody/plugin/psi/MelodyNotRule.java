@@ -16,4 +16,7 @@ public interface MelodyNotRule extends PsiElement {
   @Nullable
   MelodySymbolsRule getSymbolsRule();
 
+  @Nullable
+  MelodyToRule getToRule();
+
 }

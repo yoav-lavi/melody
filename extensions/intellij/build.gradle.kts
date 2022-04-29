@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "dev.tigr"
-version = "0.2.1"
+version = "0.3"
 
 sourceSets["main"].java.srcDirs("src/main/gen")
 
@@ -24,7 +24,8 @@ tasks {
     patchPluginXml {
         changeNotes.set("""
             <ul>
-                <li>Updated to support 221.* editors</li>
+                <li>Added a built-in compiler, which shows its output at the bottom of every melody file editor window.</li>
+                <li>Added support for unicode categories.</li>
             </ul>
         """.trimIndent())
         version.set(project.version.toString())

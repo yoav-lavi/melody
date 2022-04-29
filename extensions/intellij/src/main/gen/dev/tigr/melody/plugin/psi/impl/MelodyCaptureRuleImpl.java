@@ -47,6 +47,12 @@ public class MelodyCaptureRuleImpl extends ASTWrapperPsiElement implements Melod
 
   @Override
   @Nullable
+  public PsiElement getCharacter() {
+    return findChildByType(CHARACTER);
+  }
+
+  @Override
+  @Nullable
   public PsiElement getIdentifier() {
     return findChildByType(IDENTIFIER);
   }

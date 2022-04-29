@@ -45,4 +45,10 @@ public class MelodyNotRuleImpl extends ASTWrapperPsiElement implements MelodyNot
     return findChildByClass(MelodySymbolsRule.class);
   }
 
+  @Override
+  @Nullable
+  public MelodyToRule getToRule() {
+    return findChildByClass(MelodyToRule.class);
+  }
+
 }

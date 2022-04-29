@@ -4,7 +4,7 @@
     <vendor email="tigermouthbear@tigr.dev" url="https://tigr.dev/">Tigermouthbear</vendor>
 
     <description><![CDATA[
-        Provides syntax highlighting for the <a href="https://github.com/yoav-lavi/melody">melody regex language</a>
+        Provides automatic compilation and syntax highlighting for the <a href="https://github.com/yoav-lavi/melody">melody regex language</a>
     ]]></description>
 
     <!-- please see https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html
@@ -25,7 +25,16 @@
                                        implementationClass="dev.tigr.melody.plugin.MelodySyntaxHighlighterFactory"/>
 
         <colorSettingsPage implementation="dev.tigr.melody.plugin.MelodyColorSettingsPage"/>
+
+        <postStartupActivity implementation="dev.tigr.melody.plugin.MelodyStartup"/>
     </extensions>
+
+    <projectListeners>
+        <listener class="dev.tigr.melody.plugin.MelodyFileListener"
+                  topic="com.intellij.openapi.fileEditor.FileEditorManagerListener"/>
+        <listener class="dev.tigr.melody.plugin.MelodyFileListener"
+                  topic="com.intellij.openapi.fileEditor.FileEditorManagerListener$Before"/>
+    </projectListeners>
 
     <actions>
         <!-- Add your actions here -->
