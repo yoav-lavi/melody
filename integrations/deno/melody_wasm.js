@@ -18,9 +18,8 @@ function getUint8Memory0() {
   return cachegetUint8Memory0;
 }
 
-function getStringFromWasm0(ptr, len) {
-  return cachedTextDecoder.decode(getUint8Memory0().subarray(ptr, ptr + len));
-}
+const getStringFromWasm0 = (ptr, len) =>
+  cachedTextDecoder.decode(getUint8Memory0().subarray(ptr, ptr + len));
 
 const heap = new Array(32).fill(undefined);
 
@@ -41,19 +40,18 @@ let WASM_VECTOR_LEN = 0;
 
 const cachedTextEncoder = new TextEncoder("utf-8");
 
-const encodeString =
-  typeof cachedTextEncoder.encodeInto === "function"
-    ? function (arg, view) {
-        return cachedTextEncoder.encodeInto(arg, view);
-      }
-    : function (arg, view) {
-        const buf = cachedTextEncoder.encode(arg);
-        view.set(buf);
-        return {
-          read: arg.length,
-          written: buf.length,
-        };
-      };
+const encodeString = typeof cachedTextEncoder.encodeInto === "function"
+  ? (arg, view) => {
+    return cachedTextEncoder.encodeInto(arg, view);
+  }
+  : (arg, view) => {
+    const buf = cachedTextEncoder.encode(arg);
+    view.set(buf);
+    return {
+      read: arg.length,
+      written: buf.length,
+    };
+  };
 
 function passStringToWasm0(arg, malloc, realloc) {
   if (realloc === undefined) {
@@ -83,7 +81,7 @@ function passStringToWasm0(arg, malloc, realloc) {
     if (offset !== 0) {
       arg = arg.slice(offset);
     }
-    ptr = realloc(ptr, len, (len = offset + arg.length * 3));
+    ptr = realloc(ptr, len, len = offset + arg.length * 3);
     const view = getUint8Memory0().subarray(ptr + offset, ptr + len);
     const ret = encodeString(arg, view);
 
@@ -105,9 +103,7 @@ function getInt32Memory0() {
   return cachegetInt32Memory0;
 }
 
-function getObject(idx) {
-  return heap[idx];
-}
+const getObject = (idx) => heap[idx];
 
 function dropObject(idx) {
   if (idx < 36) return;
@@ -121,21 +117,20 @@ function takeObject(idx) {
   return ret;
 }
 /**
+ * Compiles Melody source code to a regular expression
  *
- *Compiles Melody source code to a regular expression
+ * # Errors
  *
- *# Errors
+ * Throws an error if a compilation error is encountered
  *
- *Throws an error if a compilation error is encountered
+ * # Example
  *
- *# Example
+ * ```js
+ * import init, { compiler } from "https://deno.land/x/melody/melody_wasm.js";
  *
- *```js
- *import init, { compiler } from "https://deno.land/x/melody/melody_wasm.js";
+ * await init();
  *
- *await init();
- *
- *const source = `
+ * const source = `
  *  <start>;
  *
  *  option of "v";
@@ -157,15 +152,15 @@ function takeObject(idx) {
  *  }
  *
  *  <end>;
- *`;
+ * `;
  *
- *try {
+ * try {
  *  const output = compiler(source);
  *  new RegExp(output).test("v1.1.1"); // true
- *} catch (error) {
+ * } catch (error) {
  *  // handle compilation error
- *}
- *```
+ * }
+ * ```
  * @param {string} source
  * @returns {string}
  */
@@ -175,16 +170,16 @@ export function compiler(source) {
     const ptr0 = passStringToWasm0(
       source,
       wasm.__wbindgen_malloc,
-      wasm.__wbindgen_realloc
+      wasm.__wbindgen_realloc,
     );
     const len0 = WASM_VECTOR_LEN;
     wasm.compiler(retptr, ptr0, len0);
-    var r0 = getInt32Memory0()[retptr / 4 + 0];
-    var r1 = getInt32Memory0()[retptr / 4 + 1];
-    var r2 = getInt32Memory0()[retptr / 4 + 2];
-    var r3 = getInt32Memory0()[retptr / 4 + 3];
-    var ptr1 = r0;
-    var len1 = r1;
+    const r0 = getInt32Memory0()[retptr / 4 + 0];
+    const r1 = getInt32Memory0()[retptr / 4 + 1];
+    const r2 = getInt32Memory0()[retptr / 4 + 2];
+    const r3 = getInt32Memory0()[retptr / 4 + 3];
+    let ptr1 = r0;
+    let len1 = r1;
     if (r3) {
       ptr1 = 0;
       len1 = 0;
@@ -206,7 +201,7 @@ async function load(module, imports) {
         if (module.headers.get("Content-Type") != "application/wasm") {
           console.warn(
             "`WebAssembly.instantiateStreaming` failed because your server does not serve wasm with `application/wasm` MIME type. Falling back to `WebAssembly.instantiate` which is slower. Original error:\n",
-            e
+            e,
           );
         } else {
           throw e;
@@ -216,15 +211,11 @@ async function load(module, imports) {
 
     const bytes = await module.arrayBuffer();
     return await WebAssembly.instantiate(bytes, imports);
-  } else {
-    const instance = await WebAssembly.instantiate(module, imports);
-
-    if (instance instanceof WebAssembly.Instance) {
-      return { instance, module };
-    } else {
-      return instance;
-    }
   }
+  const instance = await WebAssembly.instantiate(module, imports);
+  return instance instanceof WebAssembly.Instance
+    ? { instance, module }
+    : instance;
 }
 
 async function init(input) {
