@@ -23,6 +23,7 @@ thiserror = "1.0.30"
 
 [dev-dependencies]
 criterion = "0.3.5"
+indoc = "1.0.6"
 
 [[bench]]
 name = "benchmark"

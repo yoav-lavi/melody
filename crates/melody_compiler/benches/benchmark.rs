@@ -1,4 +1,5 @@
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
+use indoc::indoc;
 use melody_compiler::compiler;
 
 fn criterion_benchmark(criterion: &mut Criterion) {
@@ -6,89 +7,95 @@ fn criterion_benchmark(criterion: &mut Criterion) {
 
     benchmark_group.sample_size(10);
 
-    let source = r#"16 of "na";
+    let source = indoc! {
+        r#"
+        16 of "na";
 
-    2 of match {
-      <space>;
-      "batman";
-    }
+        2 of match {
+          <space>;
+          "batman";
+        }
 
-    /* 🦇🦸‍♂️ */"#;
+        /* 🦇🦸‍♂️ */
+        "#
+    };
 
     benchmark_group.bench_function("normal (8 lines)", |bencher| {
         bencher.iter(|| compiler(black_box(source)))
     });
 
-    let medium_source = r##"16 of "na";
+    let medium_source = indoc! {
+        r##"
+        16 of "na";
 
-    2 of match {
-      <space>;
-      "batman";
-    }
+        2 of match {
+          <space>;
+          "batman";
+        }
 
-    /* 🦇🦸‍♂️ */
-    
-    "#";
-    some of <word>;
+        /* 🦇🦸‍♂️ */
+        
+        "#";
+        some of <word>;
 
-    // #melody
+        // #melody
 
-    <category::space_separator>;
-    <category::other>;
+        <category::space_separator>;
+        <category::other>;
 
-    some of <word>;
-    <space>;
-    "1";
-    2 of <digit>;
-    
-    // classname 1xx
+        some of <word>;
+        <space>;
+        "1";
+        2 of <digit>;
+        
+        // classname 1xx
 
-    some of match {
-      2 of <space>;
-    }
-    
-    some of <char>;
-    ";";
-    
-    // let value = 5;
+        some of match {
+          2 of <space>;
+        }
+        
+        some of <char>;
+        ";";
+        
+        // let value = 5;
 
-    option of "v";
-    
-    capture major {
-      some of <digit>;
-    }
-    
-    ".";
-    
-    capture minor {
-      some of <digit>;
-    }
-    
-    ".";
-    
-    <category::letter>;
-    <category::currency_symbol>;
+        option of "v";
+        
+        capture major {
+          some of <digit>;
+        }
+        
+        ".";
+        
+        capture minor {
+          some of <digit>;
+        }
+        
+        ".";
+        
+        <category::letter>;
+        <category::currency_symbol>;
 
-    capture patch {
-      some of <digit>;
-    }
-    
-    // v1.0.0
-    ".";"##;
+        capture patch {
+          some of <digit>;
+        }
+        
+        // v1.0.0
+        ".";
+        "## 
+    };
 
     let medium_source = format!("{}\n", medium_source);
 
     let long_source: String = medium_source.repeat(20000);
 
-    benchmark_group.bench_function("long input (1M lines)", |bencher| {
+    benchmark_group.bench_function("long input (>1M lines)", |bencher| {
         bencher.iter(|| compiler(black_box(&long_source)))
     });
 
-    let deeply_nested_source = r#"match {
-      "a";
-      "match {
-        "a";
-        "match {
+    let deeply_nested_source = indoc! {
+        r#"
+        match {
           "a";
           "match {
             "a";
@@ -108,6 +115,12 @@ fn criterion_benchmark(criterion: &mut Criterion) {
                           "a";
                           "match {
                             "a";
+                            "match {
+                              "a";
+                              "match {
+                                "a";
+                              }
+                            }
                           }
                         }
                       }
@@ -118,9 +131,8 @@ fn criterion_benchmark(criterion: &mut Criterion) {
             }
           }
         }
-      }
-    }
-    "#;
+        "#
+    };
 
     benchmark_group.bench_function("deeply nested", |bencher| {
         bencher.iter(|| compiler(black_box(deeply_nested_source)))
