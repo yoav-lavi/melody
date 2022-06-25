@@ -31,9 +31,9 @@ pub enum ErrorKind {
 }
 
 impl CliError {
-    pub fn kind(&self) -> ErrorKind {
+    pub const fn kind(&self) -> ErrorKind {
         match self {
-            CliError::StdinWithoutPipe => ErrorKind::Info,
+            Self::StdinWithoutPipe => ErrorKind::Info,
             _ => ErrorKind::Error,
         }
     }
@@ -53,15 +53,15 @@ impl CliError {
         };
     }
 
-    fn to_exit_code(&self) -> exitcode::ExitCode {
+    const fn to_exit_code(&self) -> exitcode::ExitCode {
         match self {
-            CliError::WriteFileError(_)
-            | CliError::ReadFileError(_)
-            | CliError::ReadInputError
-            | CliError::ReadStdinError => exitcode::IOERR,
-            CliError::CompileRegex(_, _) | CliError::ParseError(_) => exitcode::DATAERR,
-            CliError::ReplWithPipe => exitcode::USAGE,
-            CliError::StdinWithoutPipe => exitcode::NOINPUT,
+            Self::WriteFileError(_)
+            | Self::ReadFileError(_)
+            | Self::ReadInputError
+            | Self::ReadStdinError => exitcode::IOERR,
+            Self::CompileRegex(_, _) | Self::ParseError(_) => exitcode::DATAERR,
+            Self::ReplWithPipe => exitcode::USAGE,
+            Self::StdinWithoutPipe => exitcode::NOINPUT,
         }
     }
 }

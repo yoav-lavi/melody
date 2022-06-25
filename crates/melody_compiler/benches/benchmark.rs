@@ -21,7 +21,7 @@ fn criterion_benchmark(criterion: &mut Criterion) {
     };
 
     benchmark_group.bench_function("normal (8 lines)", |bencher| {
-        bencher.iter(|| compiler(black_box(source)))
+        bencher.iter(|| compiler(black_box(source)));
     });
 
     let medium_source = indoc! {
@@ -90,7 +90,7 @@ fn criterion_benchmark(criterion: &mut Criterion) {
     let long_source: String = medium_source.repeat(20000);
 
     benchmark_group.bench_function("long input (>1M lines)", |bencher| {
-        bencher.iter(|| compiler(black_box(&long_source)))
+        bencher.iter(|| compiler(black_box(&long_source)));
     });
 
     let deeply_nested_source = indoc! {
@@ -135,7 +135,7 @@ fn criterion_benchmark(criterion: &mut Criterion) {
     };
 
     benchmark_group.bench_function("deeply nested", |bencher| {
-        bencher.iter(|| compiler(black_box(deeply_nested_source)))
+        bencher.iter(|| compiler(black_box(deeply_nested_source)));
     });
 }
 

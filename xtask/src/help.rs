@@ -35,11 +35,11 @@ impl Help {
     pub fn general() {
         println!("usage: cargo xtask <command>\n");
         println!("A CLI allowing to run various tasks in the Melody repository\n");
-        println!("{}\n", Help::Main);
-        println!("{}\n", Help::Fuzz);
-        println!("{}\n", Help::Publish);
-        println!("{}\n", Help::PublishExtension);
-        println!("{}", Help::Wasm);
+        println!("{}\n", Self::Main);
+        println!("{}\n", Self::Fuzz);
+        println!("{}\n", Self::Publish);
+        println!("{}\n", Self::PublishExtension);
+        println!("{}", Self::Wasm);
     }
 
     pub fn mistake(&self, command: Option<&str>) {
@@ -56,7 +56,7 @@ impl Help {
 
     fn unrecognized_command(&self, command: &str) {
         match self {
-            Help::Main => {
+            Self::Main => {
                 print_not_a_command(None, command);
                 match command {
                     "deploy" => print_suggestion(None, "publish"),
@@ -66,17 +66,16 @@ impl Help {
                     _ => {}
                 }
             }
-            Help::Publish => {
+            Self::Publish => {
                 print_not_a_command(Some("publish"), command);
                 match command {
                     "nodejs" => print_suggestion(Some("publish"), "node"),
-                    "vscode" => print_suggestion(Some("publish"), "extension vscode"),
-                    "vs-code" => print_suggestion(Some("publish"), "extension vscode"),
+                    "vs-code" | "vscode" => print_suggestion(Some("publish"), "extension vscode"),
                     "CLI" => print_suggestion(Some("publish"), "cli"),
                     _ => {}
                 }
             }
-            Help::Wasm => {
+            Self::Wasm => {
                 print_not_a_command(Some("wasm"), command);
                 #[allow(clippy::single_match)]
                 match command {
@@ -84,7 +83,7 @@ impl Help {
                     _ => {}
                 }
             }
-            Help::PublishExtension => {
+            Self::PublishExtension => {
                 print_not_a_command(Some("publish extension"), command);
                 #[allow(clippy::single_match)]
                 match command {
@@ -92,7 +91,7 @@ impl Help {
                     _ => {}
                 }
             }
-            Help::Fuzz => print_not_a_command(Some("fuzz"), command),
+            Self::Fuzz => print_not_a_command(Some("fuzz"), command),
         }
     }
 }
@@ -100,7 +99,7 @@ impl Help {
 impl Display for Help {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            Help::Main => formatter.write_str(
+            Self::Main => formatter.write_str(
                 r#"commands:
       run [arguments]          runs the melody_cli binary
       benchmark                runs benchmarks
@@ -109,12 +108,12 @@ impl Display for Help {
       wasm <target>            builds wasm dependencies for specific projects
       "#,
             ),
-            Help::Fuzz => formatter.write_str(
+            Self::Fuzz => formatter.write_str(
                 r#"fuzz subcommands:
       compiler                 runs fuzz testing on the compiler
       "#,
             ),
-            Help::Publish => formatter.write_str(
+            Self::Publish => formatter.write_str(
                 r#"publish subcommands:
       cli                      publishes the melody_cli crate to crates.io
       compiler                 publishes the melody_compiler crate to crates.io
@@ -123,12 +122,12 @@ impl Display for Help {
       extension <target>       publishes specific extensions
       "#,
             ),
-            Help::PublishExtension => formatter.write_str(
+            Self::PublishExtension => formatter.write_str(
                 r#"publish extension subcommands:
       vscode                   publishes the vscode extension to the market
       "#,
             ),
-            Help::Wasm => formatter.write_str(
+            Self::Wasm => formatter.write_str(
                 r#"wasm subcommands:
       playground               builds wasm dependencies for the playground
       node                     builds wasm dependencies for nodejs

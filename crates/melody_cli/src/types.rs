@@ -66,7 +66,7 @@ impl Streams {
             // stderr: !atty::is(Stream::Stderr),
         }
     }
-    pub fn any_pipe(&self) -> bool {
+    pub const fn any_pipe(&self) -> bool {
         self.stdin || self.stdout
     }
 }
