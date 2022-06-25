@@ -168,7 +168,7 @@ cargo install --path crates/melody_cli
 
 ### Binary
 
-- macOS binaries (aarch64 and x86_64) can be downloaded from the [release page](https://github.com/yoav-lavi/melody/releases)
+- macOS binaries (`aarch64` and `x86_64`) can be downloaded from the [release page](https://github.com/yoav-lavi/melody/releases)
 
 ### Community
 
