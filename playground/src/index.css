@@ -29,20 +29,35 @@ html,body {
   opacity: 1;
   height: 100%;
   width: 50%;
-  margin: 5px;
+  margin: 0 5px 5px 5px;
   overflow: hidden;
-  border: 1px solid #4C566A55;
+  border: 0px solid transparent;
   padding: 10px;
 }
 
+.editor-loader-line::before {
+  display:block;
+  content: "";
+  height: 4px;
+  width: 4px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+  background-color: #4C566A40;
+  margin-left: -35px;
+  position: absolute;
+  top: 4px;
+}
+
 .editor-loader-line {
-  border-radius: 3px;
+  position: relative;
+  display: block;
+  border-radius: 5px;
   animation: flicker 15s ease-in-out alternate infinite;
   margin-bottom: 10px;
-  height: 5px;
+  margin-left: 55px;
+  height: 8px;
   background-color: #4C566A;
-  background: linear-gradient(to right, #4C566AAA, #3B4252AA, #3B4252AA, #4C566AAA);
-  background-position-x: 0;
+  background: linear-gradient(to right, #4C566A40, #3B425240, #3B425240, #4C566A40);
 }
 
 @media (prefers-reduced-motion) {
@@ -52,23 +67,23 @@ html,body {
 }
 
 .editor-loader-line-1 {
-  width: 100%;
+  width: calc(100% - 55px);
 }
 
 .editor-loader-line-2 {
-  width: 75%
+  width: calc(75% - 55px);
 }
 
 .editor-loader-line-3 {
-  width: 75%
+  width: calc(75% - 55px);
 }
 
 .editor-loader-line-4 {
-  width: 50%
+  width: calc(50% - 55px);
 }
 
 .editor-loader-line-5 {
-  width: 25%
+  width: calc(25% - 55px);
 }
 
 .parent-container {
