@@ -58,6 +58,7 @@ html,body {
   height: 8px;
   background-color: #4C566A;
   background: linear-gradient(to right, #4C566A40, #3B425240, #3B425240, #4C566A40);
+  background-position-x: 0;
 }
 
 @media (prefers-reduced-motion) {
