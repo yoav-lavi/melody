@@ -2,16 +2,17 @@
 
 /* colors taken from the Nord palette (https://www.nordtheme.com and https://github.com/arcticicestudio/nord-visual-studio-code/) */
 
-* { 
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-html,body { 
-  margin:0; 
-  padding:0; 
-  height:100%; 
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
   background-color: #242933;
   font-family: 'Fira Code', monospace;
 }
@@ -36,13 +37,13 @@ html,body {
 }
 
 .editor-loader-line::before {
-  display:block;
-  content: "";
+  display: block;
+  content: '';
   height: 4px;
   width: 4px;
   border-radius: 50%;
   margin-bottom: 10px;
-  background-color: #4C566A40;
+  background-color: #4c566a40;
   margin-left: -35px;
   position: absolute;
   top: 4px;
@@ -56,8 +57,14 @@ html,body {
   margin-bottom: 10px;
   margin-left: 55px;
   height: 8px;
-  background-color: #4C566A;
-  background: linear-gradient(to right, #4C566A40, #3B425240, #3B425240, #4C566A40);
+  background-color: #4c566a;
+  background: linear-gradient(
+    to right,
+    #4c566a40,
+    #3b425240,
+    #3b425240,
+    #4c566a40
+  );
   background-position-x: 0;
 }
 
@@ -102,12 +109,12 @@ html,body {
 
 .header {
   font-size: 20px;
-  color: #ECEFF4
+  color: #eceff4;
 }
 
 .noscript {
   font-size: 15px;
-  color: #ECEFF4;
+  color: #eceff4;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -116,12 +123,12 @@ html,body {
 
 .version {
   font-size: 12px;
-  color: #4C566A;
+  color: #4c566a;
 }
 
 .link {
   font-size: 12px;
-  color: #81A1C1;
+  color: #81a1c1;
 }
 
 .editor {
@@ -141,15 +148,15 @@ html,body {
 
 #copy-button {
   margin: 26.5px 15px 0px 10px;
-  border: 1px solid #4C566A40;
-  color: #ECEFF4;
-  background: #2E3440;
+  border: 1px solid #4c566a40;
+  color: #eceff4;
+  background: #2e3440;
   font: inherit;
   font-size: 12px;
   cursor: pointer;
   width: 110px;
   overflow: hidden;
-  line-break:normal;
+  line-break: normal;
   transition: background 0.15s ease;
 
   /* reset */
@@ -159,7 +166,7 @@ html,body {
   -webkit-appearance: none;
 }
 
-@media only screen and (max-width: 600px){
+@media only screen and (max-width: 600px) {
   #copy-button {
     margin: 26.5px 10px 0px 10px;
   }
@@ -193,13 +200,12 @@ html,body {
   }
 
   .editor {
-    height: 50%; 
+    height: 50%;
     width: 100%;
   }
 
   .editor-loader {
-    height: 50%; 
+    height: 50%;
     width: 100%;
   }
 }
-
