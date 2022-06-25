@@ -4,6 +4,7 @@ enum CopyButtonTextState {
   Default = 'Copy Link to Source',
 }
 
+const COPY_BUTTON_ERROR = '#BF616A75';
 const COPY_BUTTON_HIGHLIGHT = '#3B4252CC';
 const COPY_BUTTON_COLOR = '#2E3440';
 
@@ -21,6 +22,7 @@ const onCopyButtonClick = async (copyButton: HTMLElement) => {
     copyButton.style.background = COPY_BUTTON_HIGHLIGHT;
   } catch (error) {
     copyButton.textContent = CopyButtonTextState.Error;
+    copyButton.style.background = COPY_BUTTON_ERROR;
   } finally {
     setTimeout(() => {
       copyButton.textContent = originalText;
