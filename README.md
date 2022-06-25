@@ -345,7 +345,7 @@ Note: these are not supported when testing in the CLI (`-t` or `-f`) as the rege
   - `<category::unassigned>` - any code point to which no character has been assigned
 
 
-These descriptions are from https://www.regular-expressions.info/unicode.html
+These descriptions are from [regular-expressions.info](https://www.regular-expressions.info/unicode.html)
 
 ### Character Ranges
 
