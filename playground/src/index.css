@@ -139,19 +139,18 @@ html,body {
 }
 
 #copy-button {
-  margin-right: 15px;
-  border-radius: 10px;
+  margin: 20px 15px 0px 10px;
   border: 1px solid #4C566A40;
   color: #ECEFF4;
   background: #2E3440;
   font: inherit;
   font-size: 12px;
   cursor: pointer;
-  padding: 5px;
-  width: 90px;
+  width: 110px;
   overflow: hidden;
   line-break:normal;
-
+  transition: background 0.15s ease;
+  
   /* reset */
   line-height: normal;
   -webkit-font-smoothing: inherit;
