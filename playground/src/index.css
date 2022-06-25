@@ -139,7 +139,7 @@ html,body {
 }
 
 #copy-button {
-  margin: 20px 15px 0px 10px;
+  margin: 26.5px 15px 0px 10px;
   border: 1px solid #4C566A40;
   color: #ECEFF4;
   background: #2E3440;
@@ -159,10 +159,6 @@ html,body {
 }
 
 @media only screen and (max-width: 600px){
-  #copy-button {
-    margin: 20px 10px 0px 10px;
-  }
-
   .editor-loader-line {
     margin-left: 60px;
   }
