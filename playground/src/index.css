@@ -150,7 +150,7 @@ html,body {
   overflow: hidden;
   line-break:normal;
   transition: background 0.15s ease;
-  
+
   /* reset */
   line-height: normal;
   -webkit-font-smoothing: inherit;
@@ -159,6 +159,34 @@ html,body {
 }
 
 @media only screen and (max-width: 600px){
+  #copy-button {
+    margin: 20px 10px 0px 10px;
+  }
+
+  .editor-loader-line {
+    margin-left: 60px;
+  }
+
+  .editor-loader-line-1 {
+    width: calc(100% - 60px);
+  }
+
+  .editor-loader-line-2 {
+    width: calc(75% - 60px);
+  }
+
+  .editor-loader-line-3 {
+    width: calc(75% - 60px);
+  }
+
+  .editor-loader-line-4 {
+    width: calc(50% - 60px);
+  }
+
+  .editor-loader-line-5 {
+    width: calc(25% - 60px);
+  }
+
   .parent-container {
     flex-direction: column;
   }
