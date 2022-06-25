@@ -39,7 +39,7 @@ Melody is a language that compiles to ECMAScript regular expressions, while aimi
 Note: these are for the currently supported syntax and may change
 
 ### Batman Theme &nbsp;<sub><sup><a href="https://melody-playground.vercel.app?content=MTYlMjBvZiUyMCUyMm5hJTIyJTNCJTBBJTBBMiUyMG9mJTIwbWF0Y2glMjAlN0IlMEElMjAlMjAlM0NzcGFjZSUzRSUzQiUwQSUyMCUyMCUyMmJhdG1hbiUyMiUzQiUwQSU3RCUwQSUwQSUyRiUyRiUyMCVGMCU5RiVBNiU4NyVGMCU5RiVBNiVCOCVFMiU4MCU4RCVFMiU5OSU4MiVFRiVCOCU4Rg==">try in playground</a></sup></sub>
- 
+
 ```rust
 16 of "na";
 
