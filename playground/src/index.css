@@ -115,7 +115,7 @@ html,body {
 
 .version {
   font-size: 12px;
-  color: #81A1C1;
+  color: #4C566A;
 }
 
 .link {
@@ -141,7 +141,7 @@ html,body {
 #copy-button {
   margin-right: 15px;
   border-radius: 10px;
-  border: 1px solid #ECEFF4;
+  border: 1px solid #4C566A40;
   color: #ECEFF4;
   background: #2E3440;
   font: inherit;
