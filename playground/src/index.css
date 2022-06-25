@@ -159,6 +159,10 @@ html,body {
 }
 
 @media only screen and (max-width: 600px){
+  #copy-button {
+    margin: 26.5px 10px 0px 10px;
+  }
+
   .editor-loader-line {
     margin-left: 60px;
   }
