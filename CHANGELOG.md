@@ -1,5 +1,19 @@
 # Changelog
 
+## [v0.18.1] - 2022-04-24
+
+### Fixes
+
+- Fixes playground link
+
+### Dependencies
+
+- Updates dependencies
+
+### Refactoring
+
+- Clippy fixes
+
 ## [v0.18.0] - 2022-04-24
 
 ### Features
