@@ -12,10 +12,10 @@ keywords = ["melody", "melodylang", "language", "cli"]
 categories = ["command-line-utilities"]
 
 [dependencies]
-clap = { version = "3.1.12", features = ["derive"] }
+clap = { version = "3.2.6", features = ["derive"] }
 colored = "2.0.0"
-thiserror = "1.0.30"
-anyhow = "1.0.57"
+thiserror = "1.0.31"
+anyhow = "1.0.58"
 melody_compiler = { version = "0.18.0", path = "../melody_compiler" }
 atty = "0.2.14"
 exitcode = "1.1.2"
@@ -25,7 +25,7 @@ regress = "0.4.1"
 [dev-dependencies]
 assert_cmd = "2.0.4"
 assert_fs = "1.0.7"
-unindent = "0.1.8"
+unindent = "0.1.9"
 tempfile = "3.3.0"
 
 [[bin]]

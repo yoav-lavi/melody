@@ -17,9 +17,9 @@ fuzzer = ["arbitrary"]
 [dependencies]
 pest = "2.1.3"
 pest_derive = "2.1.0"
-once_cell = "1.10.0"
-arbitrary = { version = "1.1.0", features = ["derive"], optional = true }
-thiserror = "1.0.30"
+once_cell = "1.12.0"
+arbitrary = { version = "1.1.3", features = ["derive"], optional = true }
+thiserror = "1.0.31"
 
 [dev-dependencies]
 criterion = "0.3.5"
