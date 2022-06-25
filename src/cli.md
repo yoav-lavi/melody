@@ -9,6 +9,9 @@ ARGS:
                          Use '-' and or pipe input to read from stdin
 
 OPTIONS:
+    -f, --test-file <TEST_FILE>
+            Test the compiled regex against the contents of a file
+
         --generate-completions <COMPLETIONS>
             Outputs completions for the selected shell
             To use, write the output to the appropriate location for your shell
