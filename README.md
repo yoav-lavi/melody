@@ -168,7 +168,7 @@ cargo install --path crates/melody_cli
 
 ### Binary
 
-- macOS binaries (aarch64 and x86_64) can be downloaded from the [release page](https://github.com/yoav-lavi/melody/releases)
+- macOS binaries (`aarch64` and `x86_64`) can be downloaded from the [release page](https://github.com/yoav-lavi/melody/releases)
 
 ### Community
 
@@ -345,7 +345,7 @@ Note: these are not supported when testing in the CLI (`-t` or `-f`) as the rege
   - `<category::unassigned>` - any code point to which no character has been assigned
 
 
-These descriptions are from https://www.regular-expressions.info/unicode.html
+These descriptions are from [regular-expressions.info](https://www.regular-expressions.info/unicode.html)
 
 ### Character Ranges
 
