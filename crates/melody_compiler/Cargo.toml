@@ -7,7 +7,7 @@ readme = "README.md"
 version = "0.18.1"
 edition = "2021"
 rust-version = "1.58.0"
-license = "MIT"
+license = "MIT/Apache-2.0"
 keywords = ["melody", "melodylang", "language", "compiler"]
 categories = ["compilers"]
 

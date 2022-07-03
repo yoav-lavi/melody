@@ -23,4 +23,4 @@ Report a bug by [opening a new issue](https://github.com/yoav-lavi/melody/issues
 
 ## License
 
-By contributing, you agree that your contributions will be licensed under its MIT License.
+By contributing, you agree that your contributions will be dual licensed under MIT and Apache 2.0 licenses

@@ -2,7 +2,7 @@
   "name": "babel-plugin-melody",
   "version": "0.18.1",
   "main": "src/index.js",
-  "license": "MIT",
+  "license": "(MIT OR Apache-2.0)",
   "dependencies": {
     "melodyc": "^0.18.1"
   },

@@ -3,6 +3,7 @@
   "displayName": "Melody",
   "description": "Melody syntax highlighting and snippets",
   "version": "0.18.1",
+  "license": "(MIT OR Apache-2.0)",
   "publisher": "yoavlavi",
   "icon": "melody-dark.png",
   "repository": {

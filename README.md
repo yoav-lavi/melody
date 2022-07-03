@@ -13,9 +13,6 @@
   <a href="https://crates.io/crates/melody_cli">
     <img alt="Crates.io" src="https://img.shields.io/crates/v/melody_cli?label=cli">
   </a>
-  <a href="https://github.com/yoav-lavi/melody/blob/main/LICENSE">
-    <img alt="Crates.io" src="https://img.shields.io/crates/l/melody_compiler">
-  </a>
   <a href="https://melody-playground.vercel.app">
     <img alt="melody playground" src="https://img.shields.io/badge/melody-playground-brightgreen">
   </a>
