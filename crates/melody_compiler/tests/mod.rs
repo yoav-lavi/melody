@@ -98,7 +98,6 @@ fn symbol_test() {
         r#"
         <start>;
         <char>;
-        not <char>;
         <whitespace>;
         not <whitespace>;
         <newline>;
@@ -132,7 +131,7 @@ fn symbol_test() {
     });
     assert_eq!(
         output.unwrap(),
-        r"^.[^.]\s\S\n[^\n]\t[^\t]\r[^\r]\f[^\f]\0[^\0]\d\D\w\W\v[^\v][a-zA-Z][^a-zA-Z][a-zA-Z0-9][^a-zA-Z0-9] [^ ]\b\B[\b][^\b]$"
+        r"^.\s\S\n[^\n]\t[^\t]\r[^\r]\f[^\f]\0[^\0]\d\D\w\W\v[^\v][a-zA-Z][^a-zA-Z][a-zA-Z0-9][^a-zA-Z0-9] [^ ]\b\B[\b][^\b]$"
     );
 }
 

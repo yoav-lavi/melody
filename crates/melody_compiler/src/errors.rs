@@ -15,6 +15,9 @@ pub enum CompilerError {
     /// returned if the root node does not exist
     #[error("missing root node")]
     MissingRootNode,
+    /// returned if `not <char>` is encountered
+    #[error("negative char not allowed")]
+    NegativeCharNotAllowed,
     /// returned if `not <end>` is encountered
     #[error("negative end not allowed")]
     NegativeEndNotAllowed,
