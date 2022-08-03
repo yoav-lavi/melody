@@ -22,10 +22,10 @@ syntax region melodyStringSingle start=/'/ skip=/\\./ end=/'/ contains=melodyEsc
 syntax region melodyStringRaw start=/`/ skip=/\\./ end=/`/ contains=melodyEscapes
 
 " symbols
-syntax region melodySymbols start=/</ skip=/\v\\./ end=/>/
+syntax region melodySymbols start=/</ end=/>/
 
 " number literals
-syntax region melodyNumber start=/\d/ skip=/\d/ end=/\s/
+syntax region melodyNumber start=/\d/ end=/\s/
 
 " comments
 syntax region melodyCommentSingle start=/\/\// end=/\n/
