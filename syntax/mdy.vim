@@ -24,6 +24,9 @@ syntax region melodySymbols start=/</ end=/>/
 " number literals
 syntax match melodyNumber "\<[0-9]\+\>"
 
+" variables
+syntax match melodyVariable "\.[A-Za-z_][A-Za-z0-9_]*"
+
 " comments
 syntax region melodyCommentSingle start=/\/\// end=/\n/
 syntax region melodyCommentMulti start=/\/\*/ end=/\*\//
