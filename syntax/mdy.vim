@@ -13,7 +13,7 @@ endif
 " keywords
 syntax keyword melodyKeywords of to over some any option not lazy capture match either let ahead behind
 
-" strings, with double quotes and with single quotes
+" strings
 syntax region melodyStringDouble start=/"/ end=/"/
 syntax region melodyStringSingle start=/'/ end=/'/
 syntax region melodyStringRaw start=/`/ end=/`/
@@ -21,24 +21,29 @@ syntax region melodyStringRaw start=/`/ end=/`/
 " symbols
 syntax region melodySymbols start=/</ end=/>/
 
-" number literals
+" numbers
 syntax match melodyNumber "\<[0-9]\+\>"
-
-" variables
-syntax match melodyVariable "\.[A-Za-z_][A-Za-z0-9_]*"
 
 " comments
 syntax region melodyCommentSingle start=/\/\// end=/\n/
 syntax region melodyCommentMulti start=/\/\*/ end=/\*\//
 
+" variables
+syntax match melodyVariable "\.[A-Za-z_][A-Za-z0-9_]*"
+
 highlight default link melodyKeywords Keyword
+
 highlight default link melodyStringDouble String
 highlight default link melodyStringSingle String
 highlight default link melodyStringRaw String
+
 highlight default link melodySymbols String
+
 highlight default link melodyNumber Number
+
 highlight default link melodyCommentSingle Comment
 highlight default link melodyCommentMulti Comment
+
 highlight default link melodyVariable Identifier
 
 let b:current_syntax = "melody"
