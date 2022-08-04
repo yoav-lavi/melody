@@ -19,13 +19,13 @@ syntax match melodyEscapes display contained "\\[tnvfr\"']"
 " strings, with double quotes and with single quotes
 syntax region melodyStringDouble start=/"/ skip=/\\./ end=/"/ contains=melodyEscapes
 syntax region melodyStringSingle start=/'/ skip=/\\./ end=/'/ contains=melodyEscapes
-syntax region melodyStringRaw start=/`/ skip=/\\./ end=/`/ contains=melodyEscapes
+syntax region melodyStringRaw start=/`/ end=/`/
 
 " symbols
 syntax region melodySymbols start=/</ end=/>/
 
 " number literals
-syntax region melodyNumber start=/\d/ end=/\s/
+syntax match melodyNumber "\<[0-9]\+\>"
 
 " comments
 syntax region melodyCommentSingle start=/\/\// end=/\n/
@@ -40,5 +40,6 @@ highlight default link melodyEscapes SpecialChar
 highlight default link melodyNumber Number
 highlight default link melodyCommentSingle Comment
 highlight default link melodyCommentMulti Comment
+highlight default link melodyVariable Identifier
 
 let b:current_syntax = "melody"
