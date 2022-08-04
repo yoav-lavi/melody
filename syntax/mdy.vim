@@ -13,12 +13,9 @@ endif
 " keywords
 syntax keyword melodyKeywords of to over some any option not lazy capture match either let ahead behind
 
-" escape characters
-syntax match melodyEscapes display contained "\\[tnvfr\"']"
-
 " strings, with double quotes and with single quotes
-syntax region melodyStringDouble start=/"/ skip=/\\./ end=/"/ contains=melodyEscapes
-syntax region melodyStringSingle start=/'/ skip=/\\./ end=/'/ contains=melodyEscapes
+syntax region melodyStringDouble start=/"/ end=/"/
+syntax region melodyStringSingle start=/'/ end=/'/
 syntax region melodyStringRaw start=/`/ end=/`/
 
 " symbols
@@ -36,7 +33,6 @@ highlight default link melodyStringDouble String
 highlight default link melodyStringSingle String
 highlight default link melodyStringRaw String
 highlight default link melodySymbols String
-highlight default link melodyEscapes SpecialChar
 highlight default link melodyNumber Number
 highlight default link melodyCommentSingle Comment
 highlight default link melodyCommentMulti Comment
