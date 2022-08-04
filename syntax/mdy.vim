@@ -29,7 +29,7 @@ syntax region melodyCommentSingle start=/\/\// end=/\n/
 syntax region melodyCommentMulti start=/\/\*/ end=/\*\//
 
 " variables
-syntax match melodyVariable "\.[A-Za-z0-9_]*"
+syntax match melodyVariable "\.[A-Za-z_]*"
 
 highlight default link melodyKeywords Keyword
 
