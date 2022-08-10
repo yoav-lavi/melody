@@ -15,6 +15,7 @@ All quantifiers can be preceded by `lazy` to match the least amount of character
 ## Symbols
 
 - `<char>` - matches any single character. equivalent to regex `.`
+- `<space>` - matches a space character. equivalent to regex ` `
 - `<whitespace>` - matches any kind of whitespace character. equivalent to regex `\s` or `[ \t\n\v\f\r]`
 - `<newline>` - matches a newline character. equivalent to regex `\n`
 - `<tab>` - matches a tab character. equivalent to regex `\t`
