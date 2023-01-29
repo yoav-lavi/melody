@@ -22,7 +22,7 @@ arbitrary = { version = "1.1.3", features = ["derive"], optional = true }
 thiserror = "1.0.31"
 
 [dev-dependencies]
-criterion = "0.3.5"
+criterion = "0.4.0"
 indoc = "1.0.6"
 
 [[bench]]

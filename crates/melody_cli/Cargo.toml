@@ -12,14 +12,14 @@ keywords = ["melody", "melodylang", "language", "cli"]
 categories = ["command-line-utilities"]
 
 [dependencies]
-clap = { version = "3.2.6", features = ["derive"] }
+clap = { version = "4.1.4", features = ["derive"] }
 colored = "2.0.0"
 thiserror = "1.0.31"
 anyhow = "1.0.58"
 melody_compiler = { version = "0.18.1", path = "../melody_compiler" }
 atty = "0.2.14"
 exitcode = "1.1.2"
-clap_generate = "3.0.3"
+clap_complete = "4.1.1"
 regress = "0.4.1"
 
 [dev-dependencies]
