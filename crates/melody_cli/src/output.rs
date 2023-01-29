@@ -99,15 +99,14 @@ pub fn report_source() {
 }
 
 pub fn report_error(error: &str) {
-    eprintln!("{}", format!("Error: {}", error).bright_red());
+    eprintln!("{}", format!("Error: {error}").bright_red());
 }
 
 pub fn report_unhandled_error(error: &str) {
     eprintln!(
         "{}",
         format!(
-            "An unhandled error occured.\nThis is a bug, please open an issue.\n\nCause: {}",
-            error
+            "An unhandled error occured.\nThis is a bug, please open an issue.\n\nCause: {error}"
         )
         .bright_red()
     );
@@ -118,13 +117,13 @@ pub fn report_info(error: &str) {
 }
 
 pub fn report_repl_error(error: &str) {
-    eprintln!("{}\n", format!("Error: {}", error).bright_red(),);
+    eprintln!("{}\n", format!("Error: {error}").bright_red(),);
 }
 
 pub fn report_unsupported_shell(shell: &str) {
     eprintln!(
         "{}\n{}\n",
-        format!("Unknown or unsupported shell: '{}'", shell).bright_red(),
+        format!("Unknown or unsupported shell: '{shell}'").bright_red(),
         "Try one of: 'bash', 'zsh', 'fish', 'elvish', 'powershell'"
             .to_owned()
             .bright_blue()
@@ -146,7 +145,7 @@ pub fn report_test_result(matched: bool, input: &str) {
         "did not match".bright_red()
     };
 
-    println!("'{}' {}", shortened, result);
+    println!("'{shortened}' {result}");
 }
 
 pub fn report_test_result_file(matched: bool, file_path: &str) {
@@ -156,5 +155,5 @@ pub fn report_test_result_file(matched: bool, file_path: &str) {
         "did not match".bright_red()
     };
 
-    println!("{} {}", file_path, result);
+    println!("{file_path} {result}");
 }

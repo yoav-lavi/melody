@@ -18,6 +18,11 @@ use pest::{iterators::Pair, Parser};
 use std::collections::HashMap;
 use std::hash::BuildHasher;
 
+/// Converts a source string to a Melody AST
+///
+/// # Errors
+///
+/// See [`CompilerError`]
 pub fn to_ast(source: &str) -> Result<MelodyAst> {
     if source.is_empty() {
         return Ok(MelodyAst::Empty);
@@ -33,7 +38,7 @@ pub fn to_ast(source: &str) -> Result<MelodyAst> {
     pairs_to_ast(root_statements.into_inner(), &mut variables)
 }
 
-pub fn pairs_to_ast<H: BuildHasher>(
+fn pairs_to_ast<H: BuildHasher>(
     pairs: Pairs<Rule>,
     variables: &mut HashMap<String, MelodyAst, H>,
 ) -> Result<MelodyAst> {

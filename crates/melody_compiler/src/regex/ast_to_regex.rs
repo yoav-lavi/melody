@@ -58,12 +58,12 @@ fn transform_special_symbol(special_symbol: &SpecialSymbolKind) -> String {
 fn transform_quantifier(quantifier: &Quantifier) -> String {
     let wrapped_expression = wrap_quantified(expression_to_regex(&quantifier.expression));
     let formatted_quantifier = match &quantifier.kind {
-        QuantifierKind::Range { start, end } => format!("{}{{{start},{end}}}", wrapped_expression),
-        QuantifierKind::Some => format!("{}+", wrapped_expression),
-        QuantifierKind::Any => format!("{}*", wrapped_expression),
-        QuantifierKind::Over(amount) => format!("{}{{{},}}", wrapped_expression, amount),
-        QuantifierKind::Option => format!("{}?", wrapped_expression),
-        QuantifierKind::Amount(amount) => format!("{}{{{amount}}}", wrapped_expression),
+        QuantifierKind::Range { start, end } => format!("{wrapped_expression}{{{start},{end}}}"),
+        QuantifierKind::Some => format!("{wrapped_expression}+"),
+        QuantifierKind::Any => format!("{wrapped_expression}*"),
+        QuantifierKind::Over(amount) => format!("{wrapped_expression}{{{amount},}}"),
+        QuantifierKind::Option => format!("{wrapped_expression}?"),
+        QuantifierKind::Amount(amount) => format!("{wrapped_expression}{{{amount}}}"),
     };
 
     mark_lazy(formatted_quantifier, quantifier.lazy)
@@ -91,7 +91,7 @@ fn transform_assertion(assertion: &Assertion) -> String {
 }
 
 fn transform_negative_char_class(class: &str) -> String {
-    format!("[^{}]", class)
+    format!("[^{class}]")
 }
 
 fn transform_variable_invocation(variable_invocation: &VariableInvocation) -> String {
@@ -106,9 +106,10 @@ fn transform_group(group: &Group) -> String {
         }
         GroupKind::Capture => {
             let body = ast_to_regex(&group.statements);
-            match group.ident.as_ref() {
-                Some(ident) => format!("(?<{}>{body})", ident),
-                None => format!("({body})"),
+            if let Some(ident) = group.ident.as_ref() {
+                format!("(?<{ident}>{body})")
+            } else {
+                format!("({body})")
             }
         }
         GroupKind::Either => {
