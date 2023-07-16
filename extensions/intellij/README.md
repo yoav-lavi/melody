@@ -1,6 +1,6 @@
 # Melody Intellij Plugin
 
-Provides syntax highlighting for `.mdy` and `.melody` files.
+Provides automatic compilation and syntax highlighting for `.mdy` and `.melody` files.
 
 ## Install from the JetBrains Marketplace
 
