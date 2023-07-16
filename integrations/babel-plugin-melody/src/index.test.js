@@ -8,7 +8,6 @@ globalThis.it = it;
 pluginTester({
   plugin: melodyPlugin,
   name: 'babel-plugin-melody',
-  describe: '',
   tests: [
     {
       code: `const regex = new RegExp(/*melody*/'2 to 3 of "na";')`,
