@@ -6,6 +6,10 @@ members = [
   "xtask",
 ]
 
-
 [profile.release]
-strip = "debuginfo"
+strip = true
+
+[profile.release.package.melody_wasm]
+opt-level = "z"
+strip = true
+codegen-units = 1
