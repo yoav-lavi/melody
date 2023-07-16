@@ -5,7 +5,7 @@ members = [
   "crates/melody_wasm",
   "xtask",
 ]
-edition = "2021"
+resolver = "2"
 
 [profile.release]
 lto = true
