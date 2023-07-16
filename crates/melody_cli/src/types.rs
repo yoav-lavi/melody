@@ -84,5 +84,5 @@ impl Streams {
 #[test]
 fn verify_cli() {
     use clap::CommandFactory;
-    Args::command().debug_assert()
+    Args::command().debug_assert();
 }
