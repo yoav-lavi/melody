@@ -2,7 +2,7 @@
 name = "melody_wasm"
 version = "0.19.0"
 edition = "2021"
-rust-version = "1.71.0"
+rust = "1.65.0"
 description = "WASM bindings for the Melody language compiler"
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/yoav-lavi/melody"
