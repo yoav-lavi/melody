@@ -54,3 +54,8 @@ pub fn compiler(source: &str) -> Result<String, JsError> {
     let output = melody_compiler::compiler(source);
     output.map_err(|error| JsError::new(&error.to_string()))
 }
+
+#[wasm_bindgen(start)]
+pub fn main() {
+    console_error_panic_hook::set_once();
+}

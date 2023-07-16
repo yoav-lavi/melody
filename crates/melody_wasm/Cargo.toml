@@ -9,10 +9,16 @@ repository = "https://github.com/yoav-lavi/melody"
 keywords = ["melody", "melodylang", "language", "wasm"]
 categories = ["webassembly"]
 
-
 [lib]
 crate-type = ["cdylib"]
 
+[profile.release]
+opt-level = "z"
+strip = true
+lto = true
+codegen-units = 1
+
 [dependencies]
 wasm-bindgen = "0.2.81"
+console_error_panic_hook = "0.1.7"
 melody_compiler = { version = "0.18.1", path = "../melody_compiler", default-features = false }
