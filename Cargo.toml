@@ -5,6 +5,7 @@ members = [
   "crates/melody_wasm",
   "xtask",
 ]
+edition = "2021"
 
 [profile.release]
 strip = true
