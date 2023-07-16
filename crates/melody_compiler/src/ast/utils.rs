@@ -57,11 +57,8 @@ pub fn unquote_escape_literal(pair: &Pair<'_, Rule>) -> String {
     }
 }
 
-static RESERVED_CHARS: Lazy<HashSet<char>> = Lazy::new(|| {
-    HashSet::from([
-        '[', ']', '(', ')', '{', '}', '*', '+', '?', '|', '^', '$', '.', '-', '\\',
-    ])
-});
+static RESERVED_CHARS: Lazy<HashSet<char>> =
+    Lazy::new(|| HashSet::from(['[', ']', '(', ')', '{', '}', '*', '+', '?', '|', '^', '$', '.', '\\']));
 
 fn escape_chars(source: &str) -> String {
     let mut escaped_source = String::new();

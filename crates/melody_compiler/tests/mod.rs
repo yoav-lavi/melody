@@ -126,12 +126,14 @@ fn symbol_test() {
         not <boundary>;
         <backspace>;
         not <backspace>;
+        <backslash>;
+        not <backslash>;
         <end>;
         "#,
     });
     assert_eq!(
         output.unwrap(),
-        r"^.\s\S\n[^\n]\t[^\t]\r[^\r]\f[^\f]\0[^\0]\d\D\w\W\v[^\v][a-zA-Z][^a-zA-Z][a-zA-Z0-9][^a-zA-Z0-9] [^ ]\b\B[\b][^\b]$"
+        r"^.\s\S\n[^\n]\t[^\t]\r[^\r]\f[^\f]\0[^\0]\d\D\w\W\v[^\v][a-zA-Z][^a-zA-Z][a-zA-Z0-9][^a-zA-Z0-9] [^ ]\b\B[\b][^\b]\[^\]$"
     );
 }
 
@@ -428,10 +430,10 @@ fn double_quote_test() {
 fn auto_escape_test() {
     let output = compiler(indoc! {
         r#"
-        "[](){}*+?|^$.-\\";
+        "[](){}*+?|^$.\\";
         "#,
     });
-    assert_eq!(output.unwrap(), r"\[\]\(\)\{\}\*\+\?\|\^\$\.\-\\\\");
+    assert_eq!(output.unwrap(), r"\[\]\(\)\{\}\*\+\?\|\^\$\.\\\\");
 }
 
 #[test]
@@ -465,4 +467,14 @@ fn variable_test() {
         "#,
     });
     assert_eq!(output.unwrap(), r"ABC");
+}
+
+#[test]
+fn literal_hyphen() {
+    let output = compiler(indoc! {
+        r#"
+        "-";
+        "#
+    });
+    assert_eq!(output.unwrap(), r"-");
 }

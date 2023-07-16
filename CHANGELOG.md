@@ -8,7 +8,12 @@
 
 ### Features
 
+- Adds the `<backslash>` symbol (produces `\`)
 - Adds error output for panics
+
+### Fixes
+
+- Does not escape hyphens in literals, they're only used in the context of classes and so do not need escaping
 
 ### Dependencies
 

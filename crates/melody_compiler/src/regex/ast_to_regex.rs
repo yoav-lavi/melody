@@ -153,6 +153,7 @@ fn transform_symbol(symbol: &Symbol) -> String {
             SymbolKind::Feed => "[^\\f]",
             SymbolKind::Backspace => "[^\\b]",
             SymbolKind::Boundary => "\\B",
+            SymbolKind::Backslash => "[^\\]",
         }
     } else {
         match symbol.kind {
@@ -171,6 +172,7 @@ fn transform_symbol(symbol: &Symbol) -> String {
             SymbolKind::Feed => "\\f",
             SymbolKind::Backspace => "[\\b]",
             SymbolKind::Boundary => "\\b",
+            SymbolKind::Backslash => "\\",
         }
     };
 

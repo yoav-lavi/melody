@@ -101,6 +101,7 @@ pub enum SymbolKind {
     Feed,
     Backspace,
     Boundary,
+    Backslash,
 }
 
 #[derive(Debug, Clone)]
