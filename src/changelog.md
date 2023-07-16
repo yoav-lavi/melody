@@ -13,7 +13,6 @@
 
 ### Fixes
 
-- Does not escape hyphens in literals, they're only used in the context of classes and so do not need escaping
 - Fixes a few edge cases with hyphens and slashes
 
 ### Dependencies
