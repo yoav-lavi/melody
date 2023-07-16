@@ -7,9 +7,7 @@ Deno bindings for the Melody language compiler
 ## Usage
 
 ```ts
-import init, { compiler } from 'https://deno.land/x/melody/melody_wasm.js';
-
-await init();
+import { compiler } from 'https://deno.land/x/melody/melody_wasm.js';
 
 const source = `
   <start>;
