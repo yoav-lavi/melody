@@ -41,7 +41,7 @@ pub fn alphabetic_first_char(value: &str) -> Result<bool> {
 
 pub fn unquote_escape_raw(pair: &Pair<'_, Rule>) -> String {
     let pair_str = pair.as_str();
-    pair_str[1..pair_str.len() - 1].replace("\\`", "`")
+    pair_str[1..pair_str.len() - 1].replace(r"\`", "`")
 }
 
 pub fn unquote_escape_literal(pair: &Pair<'_, Rule>) -> String {
@@ -51,14 +51,14 @@ pub fn unquote_escape_literal(pair: &Pair<'_, Rule>) -> String {
     let literal = pair_str[1..pair_str.len() - 1].to_owned();
 
     match quote_type {
-        '"' => literal.replace(r#"\\""#, r#"""#),
-        '\'' => literal.replace(r#"\\'"#, r#"'"#),
+        '"' => literal.replace(r#"\""#, r#"""#),
+        '\'' => literal.replace(r#"\'"#, r#"'"#),
         _ => unreachable!(),
     }
 }
 
 static RESERVED_CHARS: Lazy<HashSet<char>> =
-    Lazy::new(|| HashSet::from(['[', ']', '(', ')', '{', '}', '*', '+', '?', '|', '^', '$', '.', '\\']));
+    Lazy::new(|| HashSet::from(['[', ']', '(', ')', '{', '}', '*', '+', '?', '|', '^', '$', '.']));
 
 fn escape_chars(source: &str) -> String {
     let mut escaped_source = String::new();

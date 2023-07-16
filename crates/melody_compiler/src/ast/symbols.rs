@@ -89,10 +89,6 @@ pub fn symbol(pair: Pair<'_, Rule>) -> Result<MelodyAstNode> {
             kind: SymbolKind::Backspace,
             negative,
         }),
-        "backslash" => MelodyAstNode::Symbol(Symbol {
-            kind: SymbolKind::Backslash,
-            negative,
-        }),
 
         // special symbols
         "start" => MelodyAstNode::SpecialSymbol(SpecialSymbolKind::Start),
