@@ -9,6 +9,7 @@ edition = "2021"
 
 [profile.release]
 strip = true
+lto = true
 
 [profile.release.package.melody_wasm]
 opt-level = "z"
