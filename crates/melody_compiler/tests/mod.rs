@@ -428,10 +428,10 @@ fn double_quote_test() {
 fn auto_escape_test() {
     let output = compiler(indoc! {
         r#"
-        "[](){}*+?|^$.-\\";
+        "[](){}*+?|^$.";
         "#,
     });
-    assert_eq!(output.unwrap(), r"\[\]\(\)\{\}\*\+\?\|\^\$\.\-\\\\");
+    assert_eq!(output.unwrap(), r"\[\]\(\)\{\}\*\+\?\|\^\$\.");
 }
 
 #[test]
@@ -465,4 +465,14 @@ fn variable_test() {
         "#,
     });
     assert_eq!(output.unwrap(), r"ABC");
+}
+
+#[test]
+fn literal_hyphen() {
+    let output = compiler(indoc! {
+        r#"
+        "-";
+        "#
+    });
+    assert_eq!(output.unwrap(), r"-");
 }

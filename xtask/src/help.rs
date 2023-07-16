@@ -22,8 +22,8 @@ fn print_suggestion(current: Option<&str>, for_command: &str) {
 
 fn print_not_a_command(current: Option<&str>, command: &str) {
     match current {
-        Some(current) => eprintln!("'{} {}' is not a command.\n", current, command),
-        None => eprintln!("'{}' is not a command.\n", command),
+        Some(current) => eprintln!("'{current} {command}' is not a command.\n"),
+        None => eprintln!("'{command}' is not a command.\n"),
     }
 }
 
@@ -47,7 +47,7 @@ impl Help {
             self.unrecognized_command(command);
         }
 
-        eprintln!("{}", self);
+        eprintln!("{self}");
 
         if command.is_some() {
             print_for_more_information();

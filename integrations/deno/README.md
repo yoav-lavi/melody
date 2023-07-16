@@ -7,7 +7,7 @@ Deno bindings for the Melody language compiler
 ## Usage
 
 ```ts
-import init, { compiler } from "https://deno.land/x/melody/melody_wasm.js";
+import init, { compiler } from 'https://deno.land/x/melody/melody_wasm.js';
 
 await init();
 
@@ -37,7 +37,7 @@ const source = `
 
 try {
   const output = compiler(source);
-  new RegExp(output).test("v1.1.1"); // true
+  new RegExp(output).test('v1.1.1'); // true
 } catch (error) {
   // handle compilation error
 }

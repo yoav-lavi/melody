@@ -2,8 +2,8 @@ use crate::consts::COMMAND_MARKER;
 use crate::errors::CliError;
 use crate::output::{
     print_repl_output, print_repl_welcome, print_source_line, prompt, report_clear, report_exit,
-    report_no_lines_to_print, report_nothing_to_redo, report_nothing_to_undo, report_redo,
-    report_repl_error, report_source, report_undo, report_unrecognized_command,
+    report_no_lines_to_print, report_nothing_to_redo, report_nothing_to_undo, report_redo, report_repl_error,
+    report_source, report_undo, report_unrecognized_command,
 };
 use crate::types::NextLoop;
 use crate::utils::read_input;
@@ -23,10 +23,7 @@ pub fn repl() -> anyhow::Result<()> {
     }
 }
 
-fn repl_loop(
-    valid_lines: &mut Vec<String>,
-    redo_lines: &mut Vec<String>,
-) -> anyhow::Result<NextLoop> {
+fn repl_loop(valid_lines: &mut Vec<String>, redo_lines: &mut Vec<String>) -> anyhow::Result<NextLoop> {
     let input = prompt_and_read()?;
 
     if input.starts_with(COMMAND_MARKER) {
@@ -65,11 +62,7 @@ fn repl_loop(
     Ok(NextLoop::Continue)
 }
 
-fn repl_command(
-    input: &str,
-    valid_lines: &mut Vec<String>,
-    redo_lines: &mut Vec<String>,
-) -> NextLoop {
+fn repl_command(input: &str, valid_lines: &mut Vec<String>, redo_lines: &mut Vec<String>) -> NextLoop {
     match input {
         format_command!("u", "undo") => {
             if valid_lines.is_empty() {

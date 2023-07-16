@@ -1,0 +1,8 @@
+**/.git
+**/node_modules
+target/
+pkg/
+dist/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml

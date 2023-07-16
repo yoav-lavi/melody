@@ -1,8 +1,8 @@
 use crate::output::report_unsupported_shell;
 use crate::types::Args;
 use clap::CommandFactory;
-use clap_generate::generators::{generate, Bash, Elvish, Fish, PowerShell, Zsh};
-use clap_generate::Generator;
+use clap_complete::Shell::{Bash, Elvish, Fish, PowerShell, Zsh};
+use clap_complete::{generate, Generator};
 use std::io;
 
 pub fn generate_completions(shell: &str) {

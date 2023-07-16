@@ -1,9 +1,13 @@
-const { default: pluginTester } = require("babel-plugin-tester");
-const melodyPlugin = require("./index.js");
+const { describe, it } = require('node:test');
+const { default: pluginTester } = require('babel-plugin-tester');
+const melodyPlugin = require('./index.js');
+
+globalThis.describe = describe;
+globalThis.it = it;
 
 pluginTester({
   plugin: melodyPlugin,
-  name: "babel-plugin-melody",
+  name: 'babel-plugin-melody',
   tests: [
     {
       code: `const regex = new RegExp(/*melody*/'2 to 3 of "na";')`,

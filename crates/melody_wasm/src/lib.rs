@@ -1,9 +1,6 @@
 #![forbid(unsafe_code)]
-#![warn(clippy::pedantic)]
 #![allow(clippy::unused_unit)]
 #![allow(clippy::module_name_repetitions)]
-
-extern crate wasm_bindgen;
 
 use wasm_bindgen::prelude::*;
 
@@ -53,4 +50,9 @@ try {
 pub fn compiler(source: &str) -> Result<String, JsError> {
     let output = melody_compiler::compiler(source);
     output.map_err(|error| JsError::new(&error.to_string()))
+}
+
+#[wasm_bindgen(start)]
+pub fn main() {
+    console_error_panic_hook::set_once();
 }

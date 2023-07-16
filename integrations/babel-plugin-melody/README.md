@@ -27,7 +27,6 @@ yarn add -D babel-plugin-melody
 }
 ```
 
-
 ## Example
 
 ### Input
@@ -44,15 +43,14 @@ const rawRegex = /*melody*/ `
 `;
 
 const thirdRegex = new RegExp(rawRegex);
-
 ```
 
 ### Output
 
 ```js
-const regex = new RegExp("(?:na){2,3}");
-const otherRegex = new RegExp("(?:other){5,9}");
-const rawRegex = "^other$";
+const regex = new RegExp('(?:na){2,3}');
+const otherRegex = new RegExp('(?:other){5,9}');
+const rawRegex = '^other$';
 const thirdRegex = new RegExp(rawRegex);
 ```
 

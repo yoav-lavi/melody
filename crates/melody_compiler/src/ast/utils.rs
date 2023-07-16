@@ -5,30 +5,27 @@ use once_cell::sync::Lazy;
 use pest::iterators::Pair;
 use std::collections::HashSet;
 
-pub fn first_inner(pair: Pair<Rule>) -> Result<Pair<Rule>> {
+pub fn first_inner(pair: Pair<'_, Rule>) -> Result<Pair<'_, Rule>> {
     let last = pair.into_inner().next().ok_or(CompilerError::MissingNode)?;
 
     Ok(last)
 }
 
-pub fn last_inner(pair: Pair<Rule>) -> Result<Pair<Rule>> {
-    let last = pair
-        .into_inner()
-        .next_back()
-        .ok_or(CompilerError::MissingNode)?;
+pub fn last_inner(pair: Pair<'_, Rule>) -> Result<Pair<'_, Rule>> {
+    let last = pair.into_inner().next_back().ok_or(CompilerError::MissingNode)?;
 
     Ok(last)
 }
 
-pub fn first_last_inner_str(pair: Pair<Rule>) -> Result<(&str, &str)> {
-    let pairs: Vec<Pair<Rule>> = pair.into_inner().collect();
+pub fn first_last_inner_str(pair: Pair<'_, Rule>) -> Result<(&str, &str)> {
+    let pairs: Vec<Pair<'_, Rule>> = pair.into_inner().collect();
     Ok((
         pairs.first().ok_or(CompilerError::MissingNode)?.as_str(),
         pairs.last().ok_or(CompilerError::MissingNode)?.as_str(),
     ))
 }
 
-pub fn nth_inner(pair: Pair<Rule>, n: usize) -> Option<Pair<Rule>> {
+pub fn nth_inner(pair: Pair<'_, Rule>, n: usize) -> Option<Pair<'_, Rule>> {
     pair.into_inner().nth(n)
 }
 
@@ -42,29 +39,26 @@ pub fn alphabetic_first_char(value: &str) -> Result<bool> {
     Ok(to_char(value)?.is_alphabetic())
 }
 
-pub fn unquote_escape_raw(pair: &Pair<Rule>) -> String {
+pub fn unquote_escape_raw(pair: &Pair<'_, Rule>) -> String {
     let pair_str = pair.as_str();
-    pair_str[1..pair_str.len() - 1].replace("\\`", "`")
+    pair_str[1..pair_str.len() - 1].replace(r"\`", "`")
 }
 
-pub fn unquote_escape_literal(pair: &Pair<Rule>) -> String {
+pub fn unquote_escape_literal(pair: &Pair<'_, Rule>) -> String {
     let raw_literal = pair.as_str();
     let quote_type = raw_literal.chars().next().unwrap_or('"');
     let pair_str = escape_chars(raw_literal);
     let literal = pair_str[1..pair_str.len() - 1].to_owned();
 
     match quote_type {
-        '"' => literal.replace(r#"\\""#, r#"""#),
-        '\'' => literal.replace(r#"\\'"#, r#"'"#),
+        '"' => literal.replace(r#"\""#, r#"""#),
+        '\'' => literal.replace(r#"\'"#, r#"'"#),
         _ => unreachable!(),
     }
 }
 
-static RESERVED_CHARS: Lazy<HashSet<char>> = Lazy::new(|| {
-    HashSet::from([
-        '[', ']', '(', ')', '{', '}', '*', '+', '?', '|', '^', '$', '.', '-', '\\',
-    ])
-});
+static RESERVED_CHARS: Lazy<HashSet<char>> =
+    Lazy::new(|| HashSet::from(['[', ']', '(', ')', '{', '}', '*', '+', '?', '|', '^', '$', '.']));
 
 fn escape_chars(source: &str) -> String {
     let mut escaped_source = String::new();

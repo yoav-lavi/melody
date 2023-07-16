@@ -9,11 +9,7 @@ pub fn print_repl_output(output: &str) {
 }
 
 pub fn print_source_line(line_number: usize, line: &str) {
-    println!(
-        "{} {}",
-        line_number.to_string().dimmed(),
-        line.bright_blue()
-    );
+    println!("{} {}", line_number.to_string().dimmed(), line.bright_blue());
 }
 
 pub fn report_unrecognized_command(source: &str) {
@@ -50,11 +46,7 @@ pub fn print_repl_welcome() {
             ":s, :source".bright_blue(),
             "print all previously entered lines".bright_green()
         ),
-        format_args!(
-            "- {} - {}",
-            ":e, :exit".bright_blue(),
-            "exit the REPL".bright_green()
-        ),
+        format_args!("- {} - {}", ":e, :exit".bright_blue(), "exit the REPL".bright_green()),
     );
 }
 
@@ -71,11 +63,7 @@ pub fn prompt() {
 }
 
 pub fn report_undo(newline: bool) {
-    println!(
-        "{}{}",
-        "undo".bright_green(),
-        if newline { "\n" } else { "" }
-    );
+    println!("{}{}", "undo".bright_green(), if newline { "\n" } else { "" });
 }
 
 pub fn report_exit() {
@@ -99,17 +87,13 @@ pub fn report_source() {
 }
 
 pub fn report_error(error: &str) {
-    eprintln!("{}", format!("Error: {}", error).bright_red());
+    eprintln!("{}", format!("Error: {error}").bright_red());
 }
 
 pub fn report_unhandled_error(error: &str) {
     eprintln!(
         "{}",
-        format!(
-            "An unhandled error occured.\nThis is a bug, please open an issue.\n\nCause: {}",
-            error
-        )
-        .bright_red()
+        format!("An unhandled error occured.\nThis is a bug, please open an issue.\n\nCause: {error}").bright_red()
     );
 }
 
@@ -118,13 +102,13 @@ pub fn report_info(error: &str) {
 }
 
 pub fn report_repl_error(error: &str) {
-    eprintln!("{}\n", format!("Error: {}", error).bright_red(),);
+    eprintln!("{}\n", format!("Error: {error}").bright_red(),);
 }
 
 pub fn report_unsupported_shell(shell: &str) {
     eprintln!(
         "{}\n{}\n",
-        format!("Unknown or unsupported shell: '{}'", shell).bright_red(),
+        format!("Unknown or unsupported shell: '{shell}'").bright_red(),
         "Try one of: 'bash', 'zsh', 'fish', 'elvish', 'powershell'"
             .to_owned()
             .bright_blue()
@@ -146,7 +130,7 @@ pub fn report_test_result(matched: bool, input: &str) {
         "did not match".bright_red()
     };
 
-    println!("'{}' {}", shortened, result);
+    println!("'{shortened}' {result}");
 }
 
 pub fn report_test_result_file(matched: bool, file_path: &str) {
@@ -156,5 +140,5 @@ pub fn report_test_result_file(matched: bool, file_path: &str) {
         "did not match".bright_red()
     };
 
-    println!("{} {}", file_path, result);
+    println!("{file_path} {result}");
 }

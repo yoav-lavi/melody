@@ -5,7 +5,9 @@ members = [
   "crates/melody_wasm",
   "xtask",
 ]
-
+resolver = "2"
 
 [profile.release]
-strip = "debuginfo"
+lto = true
+strip = true
+codegen-units = 1

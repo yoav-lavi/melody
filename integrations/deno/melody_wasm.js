@@ -1,6 +1,6 @@
 let wasm;
 
-const cachedTextDecoder = new TextDecoder("utf-8", {
+const cachedTextDecoder = new TextDecoder('utf-8', {
   ignoreBOM: true,
   fatal: true,
 });
@@ -36,10 +36,10 @@ function addHeapObject(obj) {
 
 let WASM_VECTOR_LEN = 0;
 
-const cachedTextEncoder = new TextEncoder("utf-8");
+const cachedTextEncoder = new TextEncoder('utf-8');
 
 const encodeString =
-  typeof cachedTextEncoder.encodeInto === "function"
+  typeof cachedTextEncoder.encodeInto === 'function'
     ? function (arg, view) {
         return cachedTextEncoder.encodeInto(arg, view);
       }
@@ -162,11 +162,7 @@ function takeObject(idx) {
 export function compiler(source) {
   try {
     const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
-    const ptr0 = passStringToWasm0(
-      source,
-      wasm.__wbindgen_malloc,
-      wasm.__wbindgen_realloc
-    );
+    const ptr0 = passStringToWasm0(source, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
     const len0 = WASM_VECTOR_LEN;
     wasm.compiler(retptr, ptr0, len0);
     var r0 = getInt32Memory0()[retptr / 4 + 0];
@@ -188,15 +184,15 @@ export function compiler(source) {
 }
 
 async function load(module, imports) {
-  if (typeof Response === "function" && module instanceof Response) {
-    if (typeof WebAssembly.instantiateStreaming === "function") {
+  if (typeof Response === 'function' && module instanceof Response) {
+    if (typeof WebAssembly.instantiateStreaming === 'function') {
       try {
         return await WebAssembly.instantiateStreaming(module, imports);
       } catch (e) {
-        if (module.headers.get("Content-Type") != "application/wasm") {
+        if (module.headers.get('Content-Type') != 'application/wasm') {
           console.warn(
-            "`WebAssembly.instantiateStreaming` failed because your server does not serve wasm with `application/wasm` MIME type. Falling back to `WebAssembly.instantiate` which is slower. Original error:\n",
-            e
+            '`WebAssembly.instantiateStreaming` failed because your server does not serve wasm with `application/wasm` MIME type. Falling back to `WebAssembly.instantiate` which is slower. Original error:\n',
+            e,
           );
         } else {
           throw e;
@@ -251,15 +247,15 @@ function initSync(bytes) {
 }
 
 async function init(input) {
-  if (typeof input === "undefined") {
-    input = new URL("melody_wasm_bg.wasm", import.meta.url);
+  if (typeof input === 'undefined') {
+    input = new URL('melody_wasm_bg.wasm', import.meta.url);
   }
   const imports = getImports();
 
   if (
-    typeof input === "string" ||
-    (typeof Request === "function" && input instanceof Request) ||
-    (typeof URL === "function" && input instanceof URL)
+    typeof input === 'string' ||
+    (typeof Request === 'function' && input instanceof Request) ||
+    (typeof URL === 'function' && input instanceof URL)
   ) {
     input = fetch(input);
   }

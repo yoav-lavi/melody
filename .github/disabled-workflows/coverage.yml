@@ -12,6 +12,10 @@ jobs:
       - name: checkout repository
         uses: actions/checkout@v2
 
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown,x86_64-unknown-linux-gnu
+
       - name: generate code coverage
         run: |
           cargo +nightly tarpaulin --verbose --all-features --workspace --timeout 120 --out Xml --exclude xtask

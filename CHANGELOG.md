@@ -1,5 +1,28 @@
 # Changelog
 
+## [v0.19.0] - 2023-07-16
+
+### Breaking
+
+- Sets the MSRV to Rust 1.65.0
+
+### Features
+
+- Adds error output for panics
+
+### Fixes
+
+- Does not escape hyphens in literals, they're only used in the context of classes and so do not need escaping
+- Fixes a few edge cases with hyphens and slashes
+
+### Dependencies
+
+- Updates dependencies
+
+### Refactoring
+
+- Clippy fixes
+
 ## [v0.18.1] - 2022-06-25
 
 ### Fixes
@@ -221,7 +244,6 @@
 ### Fixes
 
 - Removes quantifiers after newlines
-
 
 ## [v0.10.2] - 2022-02-26
 

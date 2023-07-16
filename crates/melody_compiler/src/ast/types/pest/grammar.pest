@@ -29,6 +29,7 @@ raw_content = @{ raw_char* }
 raw_char = _{
     !("`" | "\\") ~ ANY
     | "\\" ~ ("`")
+    | "\\" ~ "\\"
 }
 
 raw = ${ "`" ~ raw_content ~ "`"  }

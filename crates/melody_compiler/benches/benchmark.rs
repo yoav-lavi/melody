@@ -85,7 +85,7 @@ fn criterion_benchmark(criterion: &mut Criterion) {
         "## 
     };
 
-    let medium_source = format!("{}\n", medium_source);
+    let medium_source = format!("{medium_source}\n");
 
     let long_source: String = medium_source.repeat(20000);
 

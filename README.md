@@ -29,9 +29,7 @@ Melody is a language that compiles to ECMAScript regular expressions, while aimi
   <img width="400" alt="code example" src="https://user-images.githubusercontent.com/14347895/154124756-ddbd3c84-f8b2-45bd-b624-2c510482c4e2.png">
 </p>
 
-
 ## Examples
-
 
 Note: these are for the currently supported syntax and may change
 
@@ -171,11 +169,11 @@ cargo install --path crates/melody_cli
 
 - [Brew](https://formulae.brew.sh/formula/melody) (macOS and Linux)
   <details><summary>Installation instructions</summary>
-  
-   ```sh
-   brew install melody
-   ```
-  
+
+  ```sh
+  brew install melody
+  ```
+
   </details>
 
 - [Arch Linux](https://aur.archlinux.org/packages/melody) (maintained by [@ilai-deutel](https://github.com/ilai-deutel))
@@ -218,7 +216,6 @@ cargo install --path crates/melody_cli
      ```
 
   </details>
-
 
 ## CLI Usage
 
@@ -281,7 +278,7 @@ All quantifiers can be preceded by `lazy` to match the least amount of character
 - `<whitespace>` - matches any kind of whitespace character. equivalent to regex `\s` or `[ \t\n\v\f\r]`
 - `<newline>` - matches a newline character. equivalent to regex `\n`
 - `<tab>` - matches a tab character. equivalent to regex `\t`
-- `<return>` -  matches a carriage return character. equivalent to regex `\r`
+- `<return>` - matches a carriage return character. equivalent to regex `\r`
 - `<feed>` - matches a form feed character. equivalent to regex `\f`
 - `<null>` - matches a null characther. equivalent to regex `\0`
 - `<digit>` - matches any single digit. equivalent to regex `\d` or `[0-9]`
@@ -330,7 +327,7 @@ Note: these are not supported when testing in the CLI (`-t` or `-f`) as the rege
 - `<category::punctuation>` - any kind of punctuation character
   - `<category::dash_punctuation>` - any kind of hyphen or dash
   - `<category::open_punctuation>` - any kind of opening bracket
-  - `<category::close_punctuation>` -  any kind of closing bracket
+  - `<category::close_punctuation>` - any kind of closing bracket
   - `<category::initial_punctuation>` - any kind of opening quote
   - `<category::final_punctuation>` - any kind of closing quote
   - `<category::connector_punctuation>` - a punctuation character such as an underscore that connects words
@@ -341,7 +338,6 @@ Note: these are not supported when testing in the CLI (`-t` or `-f`) as the rege
   - `<category::private_use>` - any code point reserved for private use
   - `<category::surrogate>` - one half of a surrogate pair in UTF-16 encoding
   - `<category::unassigned>` - any code point to which no character has been assigned
-
 
 These descriptions are from [regular-expressions.info](https://www.regular-expressions.info/unicode.html)
 
@@ -386,6 +382,7 @@ Assertions can be preceeded by `not` to create a negative assertion (equivalent 
   "c";
 
   // abc
+  ```
 
 ### Extras
 
@@ -417,37 +414,37 @@ The Melody file extensions are `.mdy` and `.melody`
 
 ## Performance
 
-Last measured on v0.13.10
+Last measured on v0.19.0
 
 Measured on an 8 core 2021 MacBook Pro 14-inch, Apple M1 Pro using [criterion](https://github.com/bheisler/criterion.rs):
 
 - 8 lines:
 
   ```
-  compiler/normal (8 lines)                        
-                          time:   [3.6734 us 3.6775 us 3.6809 us]
-  slope  [3.6734 us 3.6809 us] R^2            [0.9999393 0.9999460]
-  mean   [3.6726 us 3.6854 us] std. dev.      [3.8234 ns 15.619 ns]
-  median [3.6703 us 3.6833 us] med. abs. dev. [1.3873 ns 14.729 ns]
+  compiler/normal (8 lines)
+                            time:   [4.0579 µs 4.0665 µs 4.0788 µs]
+  slope  [4.0579 µs 4.0788 µs] R^2            [0.9996538 0.9995633]
+  mean   [4.0555 µs 4.0806 µs] std. dev.      [11.018 ns 26.342 ns]
+  median [4.0500 µs 4.0852 µs] med. abs. dev. [5.6889 ns 35.806 ns]
   ```
 
 - 1M lines:
 
   ```
-  compiler/long input (1M lines)                        
-                          time:   [344.68 ms 346.83 ms 349.29 ms]
-  mean   [344.68 ms 349.29 ms] std. dev.      [1.4962 ms 4.9835 ms]
-  median [344.16 ms 350.06 ms] med. abs. dev. [407.85 us 6.3428 ms]
+  compiler/long input (1M lines)
+                            time:   [400.97 ms 402.31 ms 403.53 ms]
+  mean   [400.97 ms 403.53 ms] std. dev.      [773.42 µs 2.9886 ms]
+  median [401.22 ms 403.39 ms] med. abs. dev. [59.042 µs 3.5129 ms]
   ```
 
 - Deeply nested:
 
   ```
-  compiler/deeply nested  
-                          time:   [3.8017 us 3.8150 us 3.8342 us]
-  slope  [3.8017 us 3.8342 us] R^2            [0.9992078 0.9989523]
-  mean   [3.8158 us 3.8656 us] std. dev.      [8.8095 ns 65.691 ns]
-  median [3.8144 us 3.8397 us] med. abs. dev. [2.5630 ns 40.223 ns]
+  compiler/deeply nested
+                            time:   [5.8085 µs 5.8291 µs 5.8514 µs]
+  slope  [5.8085 µs 5.8514 µs] R^2            [0.9992861 0.9992461]
+  mean   [5.8064 µs 5.8519 µs] std. dev.      [21.027 ns 49.152 ns]
+  median [5.7949 µs 5.8583 µs] med. abs. dev. [3.3348 ns 64.628 ns]
   ```
 
 To reproduce, run `cargo bench` or `cargo xtask benchmark`
@@ -462,30 +459,30 @@ To reproduce, run `cargo bench` or `cargo xtask benchmark`
 
 ❓ - Unclear whether this will be implemented
 
-| Melody                              | Regex                 | Status      |
-| ----------------------------------- | --------------------- | ----------- |
-| `not "A";`                          | `[^A]`                | 🐣          |
-| variables / macros                  |                       | 🐣          |
-| `<...::...>`                        | `\p{...}`             | 🐣          |
-| `not <...::...>`                    | `\P{...}`             | 🐣          |
-| file watcher                        |                       | ❌          |
-| multiline groups in REPL            |                       | ❌          |
-| `flags: global, multiline, ...`     | `/.../gm...`          | ❔          |
-| (?)                                 | `\#`                  | ❔          |
-| (?)                                 | `\k<name>`            | ❔          |
-| (?)                                 | `\uYYYY`              | ❔          |
-| (?)                                 | `\xYY`                | ❔          |
-| (?)                                 | `\ddd`                | ❔          |
-| (?)                                 | `\cY`                 | ❔          |
-| (?)                                 | `$1`                  | ❔          |
-| (?)                                 | <code>$\`</code>      | ❔          |
-| (?)                                 | `$&`                  | ❔          |
-| (?)                                 | `x20`                 | ❔          |
-| (?)                                 | `x{06fa}`             | ❔          |
-| `any of "a", "b", "c"` \*           | `[abc]`               | ❓          |
-| multiple ranges \*                  | `[a-zA-Z0-9]`         | ❓          |
-| regex optimization                  |                       | ❓          |
-| standard library / patterns         |                       | ❓          |
-| reverse compiler                    |                       | ❓          |
+| Melody                          | Regex            | Status |
+| ------------------------------- | ---------------- | ------ |
+| `not "A";`                      | `[^A]`           | 🐣     |
+| variables / macros              |                  | 🐣     |
+| `<...::...>`                    | `\p{...}`        | 🐣     |
+| `not <...::...>`                | `\P{...}`        | 🐣     |
+| file watcher                    |                  | ❌     |
+| multiline groups in REPL        |                  | ❌     |
+| `flags: global, multiline, ...` | `/.../gm...`     | ❔     |
+| (?)                             | `\#`             | ❔     |
+| (?)                             | `\k<name>`       | ❔     |
+| (?)                             | `\uYYYY`         | ❔     |
+| (?)                             | `\xYY`           | ❔     |
+| (?)                             | `\ddd`           | ❔     |
+| (?)                             | `\cY`            | ❔     |
+| (?)                             | `$1`             | ❔     |
+| (?)                             | <code>$\`</code> | ❔     |
+| (?)                             | `$&`             | ❔     |
+| (?)                             | `x20`            | ❔     |
+| (?)                             | `x{06fa}`        | ❔     |
+| `any of "a", "b", "c"` \*       | `[abc]`          | ❓     |
+| multiple ranges \*              | `[a-zA-Z0-9]`    | ❓     |
+| regex optimization              |                  | ❓     |
+| standard library / patterns     |                  | ❓     |
+| reverse compiler                |                  | ❓     |
 
 \* these are expressable in the current syntax using other methods

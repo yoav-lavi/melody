@@ -40,10 +40,7 @@ fn cli_file_stdout_test() -> anyhow::Result<()> {
 
     melody_file.write_str(&unindent(source))?;
 
-    command
-        .arg(melody_file.path())
-        .assert()
-        .stdout(expected_output);
+    command.arg(melody_file.path()).assert().stdout(expected_output);
 
     Ok(())
 }
@@ -60,11 +57,7 @@ fn cli_stdin_stdout_test() -> anyhow::Result<()> {
 
     let expected_output = "a+b+\n";
 
-    command
-        .write_stdin(source)
-        .arg("-")
-        .assert()
-        .stdout(expected_output);
+    command.write_stdin(source).arg("-").assert().stdout(expected_output);
 
     Ok(())
 }

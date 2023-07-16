@@ -190,11 +190,7 @@ fn wasm_node() -> anyhow::Result<()> {
 
     cmd!(shell, "rm ./pkg/README.md").run()?;
 
-    cmd!(
-        shell,
-        "cp ../../xtask/assets/node-readme.md ./pkg/README.md"
-    )
-    .run()?;
+    cmd!(shell, "cp ../../xtask/assets/node-readme.md ./pkg/README.md").run()?;
 
     Ok(())
 }

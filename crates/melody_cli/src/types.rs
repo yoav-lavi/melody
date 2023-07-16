@@ -5,44 +5,44 @@ use clap::Parser;
 #[clap(about, version, author)]
 pub struct Args {
     #[clap(
+        id = "input",
         value_name = "INPUT_FILE_PATH",
         help = "Read from a file\nUse '-' and or pipe input to read from stdin"
     )]
     pub input_file_path: Option<String>,
     #[clap(
+        id = "output",
         short = 'o',
         long = "output",
         value_name = "OUTPUT_FILE_PATH",
         help = "Write to a file"
     )]
     pub output_file_path: Option<String>,
-    #[clap(short = 'n', long = "no-color", help = "Print output with no color")]
+    #[clap(id = "no-color", short = 'n', long = "no-color", help = "Print output with no color")]
     pub no_color_output: bool,
-    #[clap(
-        short = 'c',
-        long = "clean",
-        help = "Print output without opening and closing slashes, flags or newlines. Does not affect the REPL"
-    )]
-    #[clap(short = 'r', long = "repl", help = "Start the Melody REPL")]
+    #[clap(id = "repl", short = 'r', long = "repl", help = "Start the Melody REPL")]
     pub start_repl: bool,
     #[clap(
+        id = "completions",
         long = "generate-completions",
         help = "Outputs completions for the selected shell\nTo use, write the output to the appropriate location for your shell",
-        conflicts_with_all = &["output-file-path", "input-file-path", "start-repl"]
+        conflicts_with_all = &["output", "input", "repl"]
     )]
     pub completions: Option<String>,
     #[clap(
+        id = "test",
         long = "test",
         short = 't',
         help = "Test the compiled regex against a string",
-        conflicts_with_all = &["completions", "start-repl", "output-file-path"]
+        conflicts_with_all = &["completions", "repl", "output"]
     )]
     pub test: Option<String>,
     #[clap(
+        id = "test-file",
         long = "test-file",
         short = 'f',
         help = "Test the compiled regex against the contents of a file",
-        conflicts_with_all = &["completions", "start-repl", "output-file-path", "test"]
+        conflicts_with_all = &["completions", "repl", "output", "test"]
     )]
     pub test_file: Option<String>,
 }
@@ -69,4 +69,10 @@ impl Streams {
     pub const fn any_pipe(&self) -> bool {
         self.stdin || self.stdout
     }
+}
+
+#[test]
+fn verify_cli() {
+    use clap::CommandFactory;
+    Args::command().debug_assert();
 }
