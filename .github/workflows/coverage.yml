@@ -12,6 +12,12 @@ jobs:
       - name: checkout repository
         uses: actions/checkout@v2
 
+      - name: Install latest stable
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          components: rustfmt, clippy
+
       - name: generate code coverage
         run: |
           cargo +nightly tarpaulin --verbose --all-features --workspace --timeout 120 --out Xml --exclude xtask
