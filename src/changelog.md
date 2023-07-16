@@ -8,7 +8,7 @@
 
 ### Features
 
-- Adds error output for panics
+- Adds `console.error` output for panics on the Wasm version
 - Deno no longer requires an init function
 
 ### Fixes
