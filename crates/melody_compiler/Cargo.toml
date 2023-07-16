@@ -22,8 +22,8 @@ arbitrary = { version = "1.1.3", features = ["derive"], optional = true }
 thiserror = "1.0.31"
 
 [dev-dependencies]
-criterion = "0.4.0"
-indoc = "1.0.6"
+criterion = "0.5.1"
+indoc = "2.0.3"
 
 [[bench]]
 name = "benchmark"

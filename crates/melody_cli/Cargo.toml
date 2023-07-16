@@ -20,12 +20,12 @@ melody_compiler = { version = "0.18.1", path = "../melody_compiler" }
 atty = "0.2.14"
 exitcode = "1.1.2"
 clap_complete = "4.1.1"
-regress = "0.4.1"
+regress = "0.6.0"
 
 [dev-dependencies]
 assert_cmd = "2.0.4"
 assert_fs = "1.0.7"
-unindent = "0.1.9"
+unindent = "0.2.2"
 tempfile = "3.3.0"
 
 [[bin]]
