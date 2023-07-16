@@ -2,6 +2,10 @@
 
 ## [v0.19.0] - 2023-07-16
 
+### Breaking
+
+- Sets the MSRV to Rust 1.65.0
+
 ### Features
 
 - Adds error output for panics
