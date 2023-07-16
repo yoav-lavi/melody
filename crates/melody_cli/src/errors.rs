@@ -68,9 +68,7 @@ impl CliError {
 pub fn handle_error(error: &anyhow::Error) -> ! {
     let cli_error = error.downcast_ref::<CliError>();
 
-    let cli_error = if let Some(cli_error) = cli_error {
-        cli_error
-    } else {
+    let Some(cli_error) = cli_error else {
         report_unhandled_error(&error.to_string());
         process::exit(exitcode::SOFTWARE);
     };

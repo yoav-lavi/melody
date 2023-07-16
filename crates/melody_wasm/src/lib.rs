@@ -1,5 +1,4 @@
 #![forbid(unsafe_code)]
-#![warn(clippy::pedantic)]
 #![allow(clippy::unused_unit)]
 #![allow(clippy::module_name_repetitions)]
 
