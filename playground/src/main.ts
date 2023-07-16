@@ -1,8 +1,9 @@
+import { Environment } from 'monaco-editor';
 import { initCopyButton } from './copy-button';
 
 declare global {
   interface Window {
-    MonacoEnvironment: { getWorker: () => Worker };
+    MonacoEnvironment?: Environment;
     currentEditorContent: string;
   }
 }
