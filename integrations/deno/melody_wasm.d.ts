@@ -51,12 +51,7 @@
  */
 export function compiler(source: string): string;
 
-export type InitInput =
-  | RequestInfo
-  | URL
-  | Response
-  | BufferSource
-  | WebAssembly.Module;
+export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembly.Module;
 
 export interface InitOutput {
   readonly memory: WebAssembly.Memory;
@@ -84,6 +79,4 @@ export function initSync(bytes: BufferSource): InitOutput;
  *
  * @returns {Promise<InitOutput>}
  */
-export default function init(
-  module_or_path?: InitInput | Promise<InitInput>
-): Promise<InitOutput>;
+export default function init(module_or_path?: InitInput | Promise<InitInput>): Promise<InitOutput>;

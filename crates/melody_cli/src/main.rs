@@ -63,8 +63,7 @@ fn try_main() -> anyhow::Result<()> {
         return repl();
     }
 
-    let output =
-        compile_file(&input_file_path).map_err(|error| CliError::ParseError(error.to_string()))?;
+    let output = compile_file(&input_file_path).map_err(|error| CliError::ParseError(error.to_string()))?;
 
     if let Some(test) = test {
         test_input(&output, &test)?;

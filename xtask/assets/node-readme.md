@@ -11,6 +11,7 @@ NodeJS bindings for the Melody language compiler
 ```sh
 npm install melodyc
 ```
+
 or
 
 ```sh
@@ -20,7 +21,7 @@ yarn add melodyc
 ## Usage
 
 ```js
-const { compiler } = require("melodyc");
+const { compiler } = require('melodyc');
 
 const source = `
   <start>;
@@ -48,7 +49,7 @@ const source = `
 
 try {
   const output = compiler(source);
-  new RegExp(output).test("v1.1.1"); // true
+  new RegExp(output).test('v1.1.1'); // true
 } catch (error) {
   // handle compilation error
 }

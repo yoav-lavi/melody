@@ -1,0 +1,13 @@
+[alias]
+xtask = "run -q --release --package xtask --"
+
+[target.'cfg(all())']
+rustflags = [
+    "-Dclippy::all",
+    "-Dclippy::pedantic",
+    "-Dclippy::panic",
+    "-Dnonstandard-style",
+    "-Drust-2018-idioms",
+    "-Aclippy::missing-errors-doc",
+    "-Aclippy::module-name-repetitions",
+]

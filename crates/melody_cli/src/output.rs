@@ -9,11 +9,7 @@ pub fn print_repl_output(output: &str) {
 }
 
 pub fn print_source_line(line_number: usize, line: &str) {
-    println!(
-        "{} {}",
-        line_number.to_string().dimmed(),
-        line.bright_blue()
-    );
+    println!("{} {}", line_number.to_string().dimmed(), line.bright_blue());
 }
 
 pub fn report_unrecognized_command(source: &str) {
@@ -50,11 +46,7 @@ pub fn print_repl_welcome() {
             ":s, :source".bright_blue(),
             "print all previously entered lines".bright_green()
         ),
-        format_args!(
-            "- {} - {}",
-            ":e, :exit".bright_blue(),
-            "exit the REPL".bright_green()
-        ),
+        format_args!("- {} - {}", ":e, :exit".bright_blue(), "exit the REPL".bright_green()),
     );
 }
 
@@ -71,11 +63,7 @@ pub fn prompt() {
 }
 
 pub fn report_undo(newline: bool) {
-    println!(
-        "{}{}",
-        "undo".bright_green(),
-        if newline { "\n" } else { "" }
-    );
+    println!("{}{}", "undo".bright_green(), if newline { "\n" } else { "" });
 }
 
 pub fn report_exit() {
@@ -105,10 +93,7 @@ pub fn report_error(error: &str) {
 pub fn report_unhandled_error(error: &str) {
     eprintln!(
         "{}",
-        format!(
-            "An unhandled error occured.\nThis is a bug, please open an issue.\n\nCause: {error}"
-        )
-        .bright_red()
+        format!("An unhandled error occured.\nThis is a bug, please open an issue.\n\nCause: {error}").bright_red()
     );
 }
 

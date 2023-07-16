@@ -55,10 +55,9 @@ impl CliError {
 
     const fn to_exit_code(&self) -> exitcode::ExitCode {
         match self {
-            Self::WriteFileError(_)
-            | Self::ReadFileError(_)
-            | Self::ReadInputError
-            | Self::ReadStdinError => exitcode::IOERR,
+            Self::WriteFileError(_) | Self::ReadFileError(_) | Self::ReadInputError | Self::ReadStdinError => {
+                exitcode::IOERR
+            }
             Self::CompileRegex(_, _) | Self::ParseError(_) => exitcode::DATAERR,
             Self::ReplWithPipe => exitcode::USAGE,
             Self::StdinWithoutPipe => exitcode::NOINPUT,

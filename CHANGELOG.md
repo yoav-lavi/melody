@@ -1,5 +1,19 @@
 # Changelog
 
+## [v0.19.0] - 2023-07-16
+
+### Features
+
+- Adds error output for panics
+
+### Dependencies
+
+- Updates dependencies
+
+### Refactoring
+
+- Clippy fixes
+
 ## [v0.18.1] - 2022-06-25
 
 ### Fixes
@@ -221,7 +235,6 @@
 ### Fixes
 
 - Removes quantifiers after newlines
-
 
 ## [v0.10.2] - 2022-02-26
 

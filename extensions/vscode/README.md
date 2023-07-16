@@ -4,7 +4,7 @@
     <img alt="Melody Logo" height="250px" src="https://user-images.githubusercontent.com/14347895/159065887-51a2d948-ae6f-48c4-9dd2-1ee69e76b19f.png">
 </p>
 
-Provides syntax highlighting and snipptets for Melody. 
+Provides syntax highlighting and snipptets for Melody.
 Supports `.mdy` and `.melody` files.
 
 ## Links

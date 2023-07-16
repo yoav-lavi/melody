@@ -3,8 +3,6 @@
 #![allow(clippy::unused_unit)]
 #![allow(clippy::module_name_repetitions)]
 
-extern crate wasm_bindgen;
-
 use wasm_bindgen::prelude::*;
 
 /**

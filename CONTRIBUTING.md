@@ -7,7 +7,7 @@ but if you want to contribute you absolutely should!
 
 ## Pull Requests
 
-To create a new pull request: 
+To create a new pull request:
 
 - Fork this repository and creating a new branch from `main`
 - Add your code changes

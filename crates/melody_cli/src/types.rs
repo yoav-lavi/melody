@@ -18,19 +18,9 @@ pub struct Args {
         help = "Write to a file"
     )]
     pub output_file_path: Option<String>,
-    #[clap(
-        id = "no-color",
-        short = 'n',
-        long = "no-color",
-        help = "Print output with no color"
-    )]
+    #[clap(id = "no-color", short = 'n', long = "no-color", help = "Print output with no color")]
     pub no_color_output: bool,
-    #[clap(
-        id = "repl",
-        short = 'r',
-        long = "repl",
-        help = "Start the Melody REPL"
-    )]
+    #[clap(id = "repl", short = 'r', long = "repl", help = "Start the Melody REPL")]
     pub start_repl: bool,
     #[clap(
         id = "completions",

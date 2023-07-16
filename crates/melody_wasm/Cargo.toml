@@ -1,6 +1,6 @@
 [package]
 name = "melody_wasm"
-version = "0.18.1"
+version = "0.19.0"
 edition = "2021"
 rust-version = "1.58.0"
 description = "WASM bindings for the Melody language compiler"
@@ -21,4 +21,4 @@ codegen-units = 1
 [dependencies]
 wasm-bindgen = "0.2.81"
 console_error_panic_hook = "0.1.7"
-melody_compiler = { version = "0.18.1", path = "../melody_compiler", default-features = false }
+melody_compiler = { version = "0.19.0", path = "../melody_compiler", default-features = false }

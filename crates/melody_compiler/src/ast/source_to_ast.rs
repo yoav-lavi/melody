@@ -2,14 +2,14 @@ use super::consts::{LAZY, NOT};
 use super::symbols::symbol;
 use super::types::{
     ast::{
-        AsciiRange, Assertion, AssertionKind, Expression, Group, GroupKind, MelodyAst,
-        MelodyAstNode, NumericRange, Quantifier, QuantifierKind, Range, VariableInvocation,
+        AsciiRange, Assertion, AssertionKind, Expression, Group, GroupKind, MelodyAst, MelodyAstNode, NumericRange,
+        Quantifier, QuantifierKind, Range, VariableInvocation,
     },
     pest::{IdentParser, Rule},
 };
 use super::utils::{
-    alphabetic_first_char, first_inner, first_last_inner_str, last_inner, nth_inner, to_char,
-    unquote_escape_literal, unquote_escape_raw,
+    alphabetic_first_char, first_inner, first_last_inner_str, last_inner, nth_inner, to_char, unquote_escape_literal,
+    unquote_escape_raw,
 };
 use crate::errors::CompilerError;
 use crate::types::Result;
@@ -28,8 +28,8 @@ pub fn to_ast(source: &str) -> Result<MelodyAst> {
         return Ok(MelodyAst::Empty);
     }
 
-    let mut pairs = IdentParser::parse(Rule::root, source)
-        .map_err(|error| CompilerError::ParseError(error.to_string()))?;
+    let mut pairs =
+        IdentParser::parse(Rule::root, source).map_err(|error| CompilerError::ParseError(error.to_string()))?;
 
     let root_statements = pairs.next().ok_or(CompilerError::MissingRootNode)?;
 
@@ -38,9 +38,9 @@ pub fn to_ast(source: &str) -> Result<MelodyAst> {
     pairs_to_ast(root_statements.into_inner(), &mut variables)
 }
 
-fn pairs_to_ast<H: BuildHasher>(
-    pairs: Pairs<Rule>,
-    variables: &mut HashMap<String, MelodyAst, H>,
+fn pairs_to_ast<T: BuildHasher>(
+    pairs: Pairs<'_, Rule>,
+    variables: &mut HashMap<String, MelodyAst, T>,
 ) -> Result<MelodyAst> {
     let mut nodes = Vec::new();
 
@@ -52,9 +52,9 @@ fn pairs_to_ast<H: BuildHasher>(
     Ok(MelodyAst::Root(nodes))
 }
 
-fn create_ast_node<H: BuildHasher>(
-    pair: Pair<Rule>,
-    variables: &mut HashMap<String, MelodyAst, H>,
+fn create_ast_node<T: BuildHasher>(
+    pair: Pair<'_, Rule>,
+    variables: &mut HashMap<String, MelodyAst, T>,
 ) -> Result<MelodyAstNode> {
     let node = match pair.as_rule() {
         Rule::raw => MelodyAstNode::Atom(unquote_escape_raw(&pair)),
@@ -74,13 +74,11 @@ fn create_ast_node<H: BuildHasher>(
     Ok(node)
 }
 
-fn range(pair: Pair<Rule>) -> Result<MelodyAstNode> {
+fn range(pair: Pair<'_, Rule>) -> Result<MelodyAstNode> {
     let (first, end) = first_last_inner_str(pair.clone())?;
     let negative = first == NOT;
     let start = if negative {
-        nth_inner(pair, 1)
-            .ok_or(CompilerError::MissingNode)?
-            .as_str()
+        nth_inner(pair, 1).ok_or(CompilerError::MissingNode)?.as_str()
     } else {
         first
     };
@@ -101,9 +99,9 @@ fn range(pair: Pair<Rule>) -> Result<MelodyAstNode> {
     Ok(range_node)
 }
 
-fn quantifier<H: BuildHasher>(
-    pair: Pair<Rule>,
-    variables: &mut HashMap<String, MelodyAst, H>,
+fn quantifier<T: BuildHasher>(
+    pair: Pair<'_, Rule>,
+    variables: &mut HashMap<String, MelodyAst, T>,
 ) -> Result<MelodyAstNode> {
     let quantity = first_inner(pair.clone())?;
     let kind = first_inner(quantity.clone())?;
@@ -118,16 +116,10 @@ fn quantifier<H: BuildHasher>(
         MelodyAstNode::UnicodeCategory(category) => Expression::UnicodeCategory(category),
 
         // unexpected nodes
-        MelodyAstNode::SpecialSymbol(_) => {
-            return Err(CompilerError::UnexpectedSpecialSymbolInQuantifier)
-        }
-        MelodyAstNode::Quantifier(_) => {
-            return Err(CompilerError::UnexpectedQuantifierInQuantifier)
-        }
+        MelodyAstNode::SpecialSymbol(_) => return Err(CompilerError::UnexpectedSpecialSymbolInQuantifier),
+        MelodyAstNode::Quantifier(_) => return Err(CompilerError::UnexpectedQuantifierInQuantifier),
         MelodyAstNode::Assertion(_) => return Err(CompilerError::UnexpectedAssertionInQuantifier),
-        MelodyAstNode::VariableInvocation(_) => {
-            return Err(CompilerError::UnexpectedVariableInvocationInQuantifier)
-        }
+        MelodyAstNode::VariableInvocation(_) => return Err(CompilerError::UnexpectedVariableInvocationInQuantifier),
         MelodyAstNode::Skip => return Err(CompilerError::UnexpectedSkippedNodeInQuantifier),
     };
 
@@ -198,10 +190,7 @@ fn quantifier<H: BuildHasher>(
     Ok(quantifier_node)
 }
 
-fn group<H: BuildHasher>(
-    pair: Pair<Rule>,
-    variables: &mut HashMap<String, MelodyAst, H>,
-) -> Result<MelodyAstNode> {
+fn group<T: BuildHasher>(pair: Pair<'_, Rule>, variables: &mut HashMap<String, MelodyAst, T>) -> Result<MelodyAstNode> {
     let declaration = first_inner(pair.clone())?;
 
     let kind = first_inner(declaration.clone())?.as_str();
@@ -231,9 +220,9 @@ fn group<H: BuildHasher>(
     Ok(group_node)
 }
 
-fn assertion<H: BuildHasher>(
-    pair: Pair<Rule>,
-    variables: &mut HashMap<String, MelodyAst, H>,
+fn assertion<T: BuildHasher>(
+    pair: Pair<'_, Rule>,
+    variables: &mut HashMap<String, MelodyAst, T>,
 ) -> Result<MelodyAstNode> {
     let assertion_declaration = first_inner(pair.clone())?;
 
@@ -258,15 +247,15 @@ fn assertion<H: BuildHasher>(
     Ok(assertion_node)
 }
 
-fn negative_char_class(pair: &Pair<Rule>) -> Result<MelodyAstNode> {
+fn negative_char_class(pair: &Pair<'_, Rule>) -> Result<MelodyAstNode> {
     let class = last_inner(pair.clone())?;
     let negative_char_class_node = MelodyAstNode::NegativeCharClass(class.as_str().to_owned());
     Ok(negative_char_class_node)
 }
 
-fn variable_invocation<H: BuildHasher>(
-    pair: &Pair<Rule>,
-    variables: &mut HashMap<String, MelodyAst, H>,
+fn variable_invocation<T: BuildHasher>(
+    pair: &Pair<'_, Rule>,
+    variables: &mut HashMap<String, MelodyAst, T>,
 ) -> Result<MelodyAstNode> {
     let identifier = last_inner(pair.clone())?;
     let statements = match variables.get(identifier.as_str()) {
@@ -279,9 +268,9 @@ fn variable_invocation<H: BuildHasher>(
     Ok(variable_invocation_node)
 }
 
-fn variable_declaration<H: BuildHasher>(
-    pair: Pair<Rule>,
-    variables: &mut HashMap<String, MelodyAst, H>,
+fn variable_declaration<T: BuildHasher>(
+    pair: Pair<'_, Rule>,
+    variables: &mut HashMap<String, MelodyAst, T>,
 ) -> Result<MelodyAstNode> {
     let identifier = first_inner(pair.clone())?;
     let statements = last_inner(pair)?;

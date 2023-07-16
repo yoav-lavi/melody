@@ -2,7 +2,7 @@ on: push
 name: miri
 jobs:
   miri:
-    name: "miri"
+    name: 'miri'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
