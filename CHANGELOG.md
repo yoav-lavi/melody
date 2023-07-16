@@ -9,6 +9,7 @@
 ### Features
 
 - Adds error output for panics
+- Deno no longer requires an init function
 
 ### Fixes
 
