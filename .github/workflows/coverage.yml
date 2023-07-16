@@ -12,11 +12,7 @@ jobs:
       - name: checkout repository
         uses: actions/checkout@v2
 
-      - name: Install latest stable
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
-          components: rustfmt, clippy
+      - uses: dtolnay/rust-toolchain@stable
 
       - name: generate code coverage
         run: |
