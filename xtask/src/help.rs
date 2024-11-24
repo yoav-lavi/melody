@@ -100,38 +100,38 @@ impl Display for Help {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
             Self::Main => formatter.write_str(
-                r#"commands:
+                r"commands:
       run [arguments]          runs the melody_cli binary
       benchmark                runs benchmarks
       fuzz <crate>             runs fuzz testing on specific crates
       publish <target>         publishes specific crates or projects
       wasm <target>            builds wasm dependencies for specific projects
-      "#,
+      ",
             ),
             Self::Fuzz => formatter.write_str(
-                r#"fuzz subcommands:
+                r"fuzz subcommands:
       compiler                 runs fuzz testing on the compiler
-      "#,
+      ",
             ),
             Self::Publish => formatter.write_str(
-                r#"publish subcommands:
+                r"publish subcommands:
       cli                      publishes the melody_cli crate to crates.io
       compiler                 publishes the melody_compiler crate to crates.io
       playground               publishes the playground to vercel
       node                     publishes the melodyc npm package
       extension <target>       publishes specific extensions
-      "#,
+      ",
             ),
             Self::PublishExtension => formatter.write_str(
-                r#"publish extension subcommands:
+                r"publish extension subcommands:
       vscode                   publishes the vscode extension to the market
-      "#,
+      ",
             ),
             Self::Wasm => formatter.write_str(
-                r#"wasm subcommands:
+                r"wasm subcommands:
       playground               builds wasm dependencies for the playground
       node                     builds wasm dependencies for nodejs
-      "#,
+      ",
             ),
         }
     }

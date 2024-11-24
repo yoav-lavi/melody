@@ -4,6 +4,6 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-xshell = "0.2.2"
-anyhow = "1.0.58"
-colored = "2.0.0"
+xshell = "0.2"
+anyhow = "1"
+colored = "2"

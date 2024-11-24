@@ -6,7 +6,6 @@ repository = "https://github.com/yoav-lavi/melody"
 readme = "README.md"
 version = "0.19.0"
 edition = "2021"
-rust = "1.65.0"
 license = "MIT OR Apache-2.0"
 keywords = ["melody", "melodylang", "language", "compiler"]
 categories = ["compilers"]
@@ -15,15 +14,15 @@ categories = ["compilers"]
 fuzzer = ["arbitrary"]
 
 [dependencies]
-pest = "2.1.3"
-pest_derive = "2.1.0"
-once_cell = "1.12.0"
-arbitrary = { version = "1.1.3", features = ["derive"], optional = true }
-thiserror = "1.0.31"
+pest = "2"
+pest_derive = "2"
+once_cell = "1"
+arbitrary = { version = "1", features = ["derive"], optional = true }
+thiserror = "2"
 
 [dev-dependencies]
-criterion = "0.5.1"
-indoc = "2.0.3"
+criterion = "0.5"
+indoc = "2"
 
 [[bench]]
 name = "benchmark"

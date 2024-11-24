@@ -7,7 +7,7 @@ fn quantifier_test() {
     let output = compiler(indoc! {
         r#"
         5 of "A";
-        "# 
+        "#
     });
     assert_eq!(output.unwrap(), "A{5}");
 }
@@ -20,7 +20,7 @@ fn capture_test() {
           5 of "A";
           0 to 9;
         }
-        "# 
+        "#
     });
     assert_eq!(output.unwrap(), "(A{5}[0-9])");
 }
@@ -51,10 +51,10 @@ fn number_quantifier_range_test() {
 #[test]
 fn uppercase_range_test() {
     let output = compiler(indoc! {
-        r#"
+        r"
         A to Z;
         7 of A to Z;
-        "#,
+        ",
     });
     assert_eq!(output.unwrap(), "[A-Z][A-Z]{7}");
 }
@@ -62,10 +62,10 @@ fn uppercase_range_test() {
 #[test]
 fn lowercase_range_test() {
     let output = compiler(indoc! {
-        r#"
+        r"
         a to z;
         8 of a to z;
-        "#,
+        ",
     });
     assert_eq!(output.unwrap(), "[a-z][a-z]{8}");
 }
@@ -95,7 +95,7 @@ fn start_end_test() {
 #[test]
 fn symbol_test() {
     let output = compiler(indoc! {
-        r#"
+        r"
         <start>;
         <char>;
         <whitespace>;
@@ -127,7 +127,7 @@ fn symbol_test() {
         <backspace>;
         not <backspace>;
         <end>;
-        "#,
+        ",
     });
     assert_eq!(
         output.unwrap(),
@@ -138,7 +138,7 @@ fn symbol_test() {
 #[test]
 fn symbol_unicode_category_test() {
     let output = compiler(indoc! {
-        r#"
+        r"
         <category::cased_letter>;
         <category::close_punctuation>;
         <category::connector_punctuation>;
@@ -178,7 +178,7 @@ fn symbol_unicode_category_test() {
         <category::unassigned>;
         <category::uppercase_letter>;
         5 of <category::cased_letter>;
-        "#,
+        ",
     });
     assert_eq!(
         output.unwrap(),
@@ -189,7 +189,7 @@ fn symbol_unicode_category_test() {
 #[test]
 fn symbol_unicode_category_negative_test() {
     let output = compiler(indoc! {
-        r#"
+        r"
         not <category::cased_letter>;
         not <category::close_punctuation>;
         not <category::connector_punctuation>;
@@ -229,7 +229,7 @@ fn symbol_unicode_category_negative_test() {
         not <category::unassigned>;
         not <category::uppercase_letter>;
         5 of not <category::cased_letter>;
-        "#,
+        ",
     });
     assert_eq!(
         output.unwrap(),
@@ -254,12 +254,12 @@ fn match_test() {
 fn comment_test() {
     let output = compiler(indoc! {
         r#"
-        /* a single digit in the range of 0 to 5 */ 
+        /* a single digit in the range of 0 to 5 */
         // other comment
-        0 to 5; 
-        match { 
+        0 to 5;
+        match {
           "x";
-        } 
+        }
         "#,
     });
     assert_eq!(output.unwrap(), "[0-5](?:x)");
@@ -268,9 +268,9 @@ fn comment_test() {
 #[test]
 fn char_test() {
     let output = compiler(indoc! {
-        r#"
+        r"
         3 of <char>;
-        "#,
+        ",
     });
     assert_eq!(output.unwrap(), ".{3}");
 }
@@ -278,10 +278,10 @@ fn char_test() {
 #[test]
 fn negative_range_test() {
     let output = compiler(indoc! {
-        r#"
+        r"
         not 3 to 5;
         not a to z;
-        "#,
+        ",
     });
     assert_eq!(output.unwrap(), "[^3-5][^a-z]");
 }
@@ -289,9 +289,9 @@ fn negative_range_test() {
 #[test]
 fn some_test() {
     let single_output = compiler(indoc! {
-        r#"
+        r"
         some of <char>;
-        "#,
+        ",
     });
     assert_eq!(single_output.unwrap(), ".+");
     let multiple_output = compiler(indoc! {
@@ -305,9 +305,9 @@ fn some_test() {
 #[test]
 fn option_test() {
     let single_output = compiler(indoc! {
-        r#"
+        r"
         option of <char>;
-        "#,
+        ",
     });
     assert_eq!(single_output.unwrap(), ".?");
     let multiple_output = compiler(indoc! {
@@ -339,9 +339,9 @@ fn either_test() {
 #[test]
 fn any_test() {
     let single_output = compiler(indoc! {
-        r#"
+        r"
         any of <char>;
-        "#,
+        ",
     });
     assert_eq!(single_output.unwrap(), ".*");
     let multiple_output = compiler(indoc! {
@@ -355,9 +355,9 @@ fn any_test() {
 #[test]
 fn directly_quantifiable() {
     let single_output = compiler(indoc! {
-        r#"
+        r"
         5 of <word>;
-        "#,
+        ",
     });
     assert_eq!(single_output.unwrap(), r"\w{5}");
 }
@@ -365,9 +365,9 @@ fn directly_quantifiable() {
 #[test]
 fn raw_test() {
     let output = compiler(indoc! {
-        r#"
+        r"
         5 of `.*\``;
-        "#,
+        ",
     });
     assert_eq!(output.unwrap(), "(?:.*`){5}");
 }
@@ -396,10 +396,10 @@ fn assertion_test() {
 #[test]
 fn negative_char_class_test() {
     let output = compiler(indoc! {
-        r#"
+        r"
         not abcd;
         5 of not abcd;
-        "#,
+        ",
     });
     assert_eq!(output.unwrap(), "[^abcd][^abcd]{5}");
 }
@@ -407,9 +407,9 @@ fn negative_char_class_test() {
 #[test]
 fn single_quote_test() {
     let output = compiler(indoc! {
-        r#"
+        r"
         'hello \'quoted\'';
-        "#,
+        ",
     });
     assert_eq!(output.unwrap(), "hello 'quoted'");
 }

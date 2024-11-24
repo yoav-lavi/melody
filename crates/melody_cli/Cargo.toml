@@ -6,27 +6,25 @@ repository = "https://github.com/yoav-lavi/melody"
 readme = "README.md"
 version = "0.19.0"
 edition = "2021"
-rust = "1.65.0"
 license = "MIT OR Apache-2.0"
 keywords = ["melody", "melodylang", "language", "cli"]
 categories = ["command-line-utilities"]
 
 [dependencies]
-clap = { version = "4.1.4", features = ["derive"] }
-colored = "2.0.0"
-thiserror = "1.0.31"
-anyhow = "1.0.58"
+clap = { version = "4", features = ["derive"] }
+colored = "2"
+thiserror = "2"
+anyhow = "1"
 melody_compiler = { version = "0.19.0", path = "../melody_compiler" }
-atty = "0.2.14"
-exitcode = "1.1.2"
-clap_complete = "4.1.1"
-regress = "0.6.0"
+exitcode = "1"
+clap_complete = "4"
+regress = "0.10"
 
 [dev-dependencies]
-assert_cmd = "2.0.4"
-assert_fs = "1.0.7"
-unindent = "0.2.2"
-tempfile = "3.3.0"
+assert_cmd = "2"
+assert_fs = "1"
+unindent = "0.2"
+tempfile = "3"
 
 [[bin]]
 name = "melody"
