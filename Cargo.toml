@@ -1,9 +1,9 @@
 [workspace]
 members = [
-  "crates/melody_cli",
-  "crates/melody_compiler",
-  "crates/melody_wasm",
-  "xtask",
+    "crates/melody_cli",
+    "crates/melody_compiler",
+    "crates/melody_wasm",
+    "xtask",
 ]
 resolver = "2"
 
