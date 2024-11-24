@@ -8,7 +8,7 @@
 
 ### Fixes
 
-- Removes use of `atty` as it is unmaintained and has a low CSRV
+- Removes use of `atty` as it is unmaintained and has a low CVE
 
 ### Dependencies
 

@@ -26,7 +26,11 @@
             nodejs
             nodePackages.prettier
             cargo-msrv
+            cargo-criterion
+            wasm-pack
             rustup
+            nodePackages.vercel
+            vsce
           ]
           ++ optional (system == systems.aarch64-darwin) [
             darwin.apple_sdk.frameworks.Security
