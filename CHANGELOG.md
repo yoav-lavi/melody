@@ -1,5 +1,23 @@
 # Changelog
 
+## [v0.20.0] - 2024-11-24
+
+### Breaking
+
+- Sets the MSRV to Rust 1.74.0
+
+### Fixes
+
+- Removes use of `atty` as it is unmaintained and has a low CVE
+
+### Dependencies
+
+- Updates dependencies
+
+### Refactoring
+
+- Clippy fixes
+
 ## [v0.19.0] - 2023-07-16
 
 ### Breaking

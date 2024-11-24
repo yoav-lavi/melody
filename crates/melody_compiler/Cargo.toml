@@ -4,11 +4,14 @@ description = "The Melody language compiler"
 homepage = "https://github.com/yoav-lavi/melody"
 repository = "https://github.com/yoav-lavi/melody"
 readme = "README.md"
-version = "0.19.0"
+version = "0.20.0"
 edition = "2021"
 license = "MIT OR Apache-2.0"
 keywords = ["melody", "melodylang", "language", "compiler"]
 categories = ["compilers"]
+
+[package.metadata]
+msrv = "1.74.0"
 
 [features]
 fuzzer = ["arbitrary"]
