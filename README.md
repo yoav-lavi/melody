@@ -195,7 +195,7 @@ cargo install --path crates/melody_cli
 
   </details>
 
-- [NixOS](https://github.com/NixOS/nixpkgs/blob/master/pkgs/tools/misc/melody/default.nix) (maintained by [@jyooru](https://github.com/jyooru))
+- [NixOS](https://github.com/NixOS/nixpkgs/blob/master/pkgs/by-name/me/melody/package.nix) (maintained by [@jyooru](https://github.com/jyooru))
   <details><summary>Installation instructions</summary>
 
   1. Declarative installation using `/etc/nixos/configuration.nix`:
