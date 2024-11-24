@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js light">
+<html lang="en" class="light sidebar-visible" dir="ltr">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
@@ -7,10 +7,10 @@
 
 
         <!-- Custom HTML head -->
-        
+
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="theme-color" content="#ffffff" />
+        <meta name="theme-color" content="#ffffff">
 
         <link rel="icon" href="favicon.svg">
         <link rel="shortcut icon" href="favicon.png">
@@ -30,15 +30,17 @@
 
         <!-- Custom theme stylesheets -->
 
-    </head>
-    <body>
-    <div id="body-container">
+
         <!-- Provide site root to javascript -->
         <script>
             var path_to_root = "";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
-
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
         <script>
             try {
@@ -60,65 +62,49 @@
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
-            var html = document.querySelector('html');
-            html.classList.remove('no-js')
+            const html = document.documentElement;
             html.classList.remove('light')
             html.classList.add(theme);
-            html.classList.add('js');
+            html.classList.add("js");
         </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
 
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
-            var html = document.querySelector('html');
             var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
             } else {
                 sidebar = 'hidden';
             }
+            sidebar_toggle.checked = sidebar === 'visible';
             html.classList.remove('sidebar-visible');
             html.classList.add("sidebar-" + sidebar);
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="welcome.html"><strong aria-hidden="true">1.</strong> Welcome</a></li><li class="chapter-item expanded "><a href="examples.html"><strong aria-hidden="true">2.</strong> Examples</a></li><li class="chapter-item expanded "><a href="playground.html"><strong aria-hidden="true">3.</strong> Playground</a></li><li class="chapter-item expanded "><a href="install.html"><strong aria-hidden="true">4.</strong> Install</a></li><li class="chapter-item expanded "><a href="cli.html"><strong aria-hidden="true">5.</strong> CLI</a></li><li class="chapter-item expanded "><a href="crates.html"><strong aria-hidden="true">6.</strong> Crates</a></li><li class="chapter-item expanded "><a href="syntax.html"><strong aria-hidden="true">7.</strong> Syntax</a></li><li class="chapter-item expanded "><a href="status.html"><strong aria-hidden="true">8.</strong> Future Feature Status</a></li><li class="chapter-item expanded "><a href="performance.html" class="active"><strong aria-hidden="true">9.</strong> Performance</a></li><li class="chapter-item expanded "><a href="extensions.html"><strong aria-hidden="true">10.</strong> Extensions</a></li><li class="chapter-item expanded "><a href="packages.html"><strong aria-hidden="true">11.</strong> Packages</a></li><li class="chapter-item expanded "><a href="integrations.html"><strong aria-hidden="true">12.</strong> Integrations</a></li><li class="chapter-item expanded "><a href="changelog.html"><strong aria-hidden="true">13.</strong> Changelog</a></li></ol>
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
             </div>
-            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
-
-        <!-- Track and set sidebar scroll position -->
-        <script>
-            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
-            sidebarScrollbox.addEventListener('click', function(e) {
-                if (e.target.tagName === 'A') {
-                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
-                }
-            }, { passive: true });
-            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
-            sessionStorage.removeItem('sidebar-scroll');
-            if (sidebarScrollTop) {
-                // preserve sidebar scroll position when navigating via links within sidebar
-                sidebarScrollbox.scrollTop = sidebarScrollTop;
-            } else {
-                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
-                var activeSection = document.querySelector('#sidebar .active');
-                if (activeSection) {
-                    activeSection.scrollIntoView({ block: 'center' });
-                }
-            }
-        </script>
 
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
-                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
                             <i class="fa fa-bars"></i>
-                        </button>
+                        </label>
                         <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
                             <i class="fa fa-paint-brush"></i>
                         </button>
@@ -170,33 +156,33 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="performance"><a class="header" href="#performance">Performance</a></h1>
-<p>Last measured on v0.19.0</p>
+<p>Last measured on v0.20.0</p>
 <p>Measured on an 8 core 2021 MacBook Pro 14-inch, Apple M1 Pro using <a href="https://github.com/bheisler/criterion.rs">criterion</a>:</p>
 <ul>
 <li>
 <p>8 lines:</p>
 <pre><code>compiler/normal (8 lines)
-                          time:   [4.0579 µs 4.0665 µs 4.0788 µs]
-slope  [4.0579 µs 4.0788 µs] R^2            [0.9996538 0.9995633]
-mean   [4.0555 µs 4.0806 µs] std. dev.      [11.018 ns 26.342 ns]
-median [4.0500 µs 4.0852 µs] med. abs. dev. [5.6889 ns 35.806 ns]
+                          time:   [4.3556 µs 4.3674 µs 4.3751 µs]
+slope  [4.3556 µs 4.3751 µs] R^2            [0.9996144 0.9996931]
+mean   [4.3377 µs 4.3678 µs] std. dev.      [16.019 ns 30.154 ns]
+median [4.3270 µs 4.3777 µs] med. abs. dev. [3.1402 ns 41.334 ns]
 </code></pre>
 </li>
 <li>
 <p>1M lines:</p>
 <pre><code>compiler/long input (1M lines)
-                          time:   [400.97 ms 402.31 ms 403.53 ms]
-mean   [400.97 ms 403.53 ms] std. dev.      [773.42 µs 2.9886 ms]
-median [401.22 ms 403.39 ms] med. abs. dev. [59.042 µs 3.5129 ms]
+                          time:   [470.04 ms 472.35 ms 474.78 ms]
+mean   [470.04 ms 474.78 ms] std. dev.      [2.0458 ms 5.3453 ms]
+median [469.54 ms 475.24 ms] med. abs. dev. [734.10 µs 6.8144 ms]
 </code></pre>
 </li>
 <li>
 <p>Deeply nested:</p>
 <pre><code>compiler/deeply nested
-                          time:   [5.8085 µs 5.8291 µs 5.8514 µs]
-slope  [5.8085 µs 5.8514 µs] R^2            [0.9992861 0.9992461]
-mean   [5.8064 µs 5.8519 µs] std. dev.      [21.027 ns 49.152 ns]
-median [5.7949 µs 5.8583 µs] med. abs. dev. [3.3348 ns 64.628 ns]
+                          time:   [4.2357 µs 4.2561 µs 4.2782 µs]
+slope  [4.2357 µs 4.2782 µs] R^2            [0.9988854 0.9988087]
+mean   [4.2474 µs 4.2752 µs] std. dev.      [13.698 ns 29.574 ns]
+median [4.2426 µs 4.2819 µs] med. abs. dev. [2.7127 ns 43.193 ns]
 </code></pre>
 </li>
 </ul>
@@ -210,7 +196,7 @@ median [5.7949 µs 5.8583 µs] med. abs. dev. [3.3348 ns 64.628 ns]
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next" href="extensions.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="extensions.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -224,7 +210,7 @@ median [5.7949 µs 5.8583 µs] med. abs. dev. [3.3348 ns 64.628 ns]
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next" href="extensions.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="extensions.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

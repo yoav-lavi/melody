@@ -1,6 +1,6 @@
 # Performance
 
-Last measured on v0.19.0
+Last measured on v0.20.0
 
 Measured on an 8 core 2021 MacBook Pro 14-inch, Apple M1 Pro using [criterion](https://github.com/bheisler/criterion.rs):
 
@@ -8,29 +8,29 @@ Measured on an 8 core 2021 MacBook Pro 14-inch, Apple M1 Pro using [criterion](h
 
   ```
   compiler/normal (8 lines)
-                            time:   [4.0579 µs 4.0665 µs 4.0788 µs]
-  slope  [4.0579 µs 4.0788 µs] R^2            [0.9996538 0.9995633]
-  mean   [4.0555 µs 4.0806 µs] std. dev.      [11.018 ns 26.342 ns]
-  median [4.0500 µs 4.0852 µs] med. abs. dev. [5.6889 ns 35.806 ns]
+                            time:   [4.3556 µs 4.3674 µs 4.3751 µs]
+  slope  [4.3556 µs 4.3751 µs] R^2            [0.9996144 0.9996931]
+  mean   [4.3377 µs 4.3678 µs] std. dev.      [16.019 ns 30.154 ns]
+  median [4.3270 µs 4.3777 µs] med. abs. dev. [3.1402 ns 41.334 ns]
   ```
 
 - 1M lines:
 
   ```
   compiler/long input (1M lines)
-                            time:   [400.97 ms 402.31 ms 403.53 ms]
-  mean   [400.97 ms 403.53 ms] std. dev.      [773.42 µs 2.9886 ms]
-  median [401.22 ms 403.39 ms] med. abs. dev. [59.042 µs 3.5129 ms]
+                            time:   [470.04 ms 472.35 ms 474.78 ms]
+  mean   [470.04 ms 474.78 ms] std. dev.      [2.0458 ms 5.3453 ms]
+  median [469.54 ms 475.24 ms] med. abs. dev. [734.10 µs 6.8144 ms]
   ```
 
 - Deeply nested:
 
   ```
   compiler/deeply nested
-                            time:   [5.8085 µs 5.8291 µs 5.8514 µs]
-  slope  [5.8085 µs 5.8514 µs] R^2            [0.9992861 0.9992461]
-  mean   [5.8064 µs 5.8519 µs] std. dev.      [21.027 ns 49.152 ns]
-  median [5.7949 µs 5.8583 µs] med. abs. dev. [3.3348 ns 64.628 ns]
+                            time:   [4.2357 µs 4.2561 µs 4.2782 µs]
+  slope  [4.2357 µs 4.2782 µs] R^2            [0.9988854 0.9988087]
+  mean   [4.2474 µs 4.2752 µs] std. dev.      [13.698 ns 29.574 ns]
+  median [4.2426 µs 4.2819 µs] med. abs. dev. [2.7127 ns 43.193 ns]
   ```
 
 To reproduce, run `cargo bench` or `cargo xtask benchmark`

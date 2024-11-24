@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js light">
+<html lang="en" class="light sidebar-visible" dir="ltr">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
@@ -7,10 +7,10 @@
 
 
         <!-- Custom HTML head -->
-        
+
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="theme-color" content="#ffffff" />
+        <meta name="theme-color" content="#ffffff">
 
         <link rel="icon" href="favicon.svg">
         <link rel="shortcut icon" href="favicon.png">
@@ -30,15 +30,17 @@
 
         <!-- Custom theme stylesheets -->
 
-    </head>
-    <body>
-    <div id="body-container">
+
         <!-- Provide site root to javascript -->
         <script>
             var path_to_root = "";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
-
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
         <script>
             try {
@@ -60,65 +62,49 @@
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
-            var html = document.querySelector('html');
-            html.classList.remove('no-js')
+            const html = document.documentElement;
             html.classList.remove('light')
             html.classList.add(theme);
-            html.classList.add('js');
+            html.classList.add("js");
         </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
 
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
-            var html = document.querySelector('html');
             var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
             } else {
                 sidebar = 'hidden';
             }
+            sidebar_toggle.checked = sidebar === 'visible';
             html.classList.remove('sidebar-visible');
             html.classList.add("sidebar-" + sidebar);
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="welcome.html"><strong aria-hidden="true">1.</strong> Welcome</a></li><li class="chapter-item expanded "><a href="examples.html"><strong aria-hidden="true">2.</strong> Examples</a></li><li class="chapter-item expanded "><a href="playground.html"><strong aria-hidden="true">3.</strong> Playground</a></li><li class="chapter-item expanded "><a href="install.html"><strong aria-hidden="true">4.</strong> Install</a></li><li class="chapter-item expanded "><a href="cli.html"><strong aria-hidden="true">5.</strong> CLI</a></li><li class="chapter-item expanded "><a href="crates.html"><strong aria-hidden="true">6.</strong> Crates</a></li><li class="chapter-item expanded "><a href="syntax.html"><strong aria-hidden="true">7.</strong> Syntax</a></li><li class="chapter-item expanded "><a href="status.html"><strong aria-hidden="true">8.</strong> Future Feature Status</a></li><li class="chapter-item expanded "><a href="performance.html"><strong aria-hidden="true">9.</strong> Performance</a></li><li class="chapter-item expanded "><a href="extensions.html"><strong aria-hidden="true">10.</strong> Extensions</a></li><li class="chapter-item expanded "><a href="packages.html"><strong aria-hidden="true">11.</strong> Packages</a></li><li class="chapter-item expanded "><a href="integrations.html"><strong aria-hidden="true">12.</strong> Integrations</a></li><li class="chapter-item expanded "><a href="changelog.html" class="active"><strong aria-hidden="true">13.</strong> Changelog</a></li></ol>
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
             </div>
-            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
-
-        <!-- Track and set sidebar scroll position -->
-        <script>
-            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
-            sidebarScrollbox.addEventListener('click', function(e) {
-                if (e.target.tagName === 'A') {
-                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
-                }
-            }, { passive: true });
-            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
-            sessionStorage.removeItem('sidebar-scroll');
-            if (sidebarScrollTop) {
-                // preserve sidebar scroll position when navigating via links within sidebar
-                sidebarScrollbox.scrollTop = sidebarScrollTop;
-            } else {
-                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
-                var activeSection = document.querySelector('#sidebar .active');
-                if (activeSection) {
-                    activeSection.scrollIntoView({ block: 'center' });
-                }
-            }
-        </script>
 
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
-                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
                             <i class="fa fa-bars"></i>
-                        </button>
+                        </label>
                         <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
                             <i class="fa fa-paint-brush"></i>
                         </button>
@@ -170,19 +156,14 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="changelog"><a class="header" href="#changelog">Changelog</a></h1>
-<h2 id="v0190---2023-07-16"><a class="header" href="#v0190---2023-07-16">[v0.19.0] - 2023-07-16</a></h2>
+<h2 id="v0200---2024-11-24"><a class="header" href="#v0200---2024-11-24">[v0.20.0] - 2024-11-24</a></h2>
 <h3 id="breaking"><a class="header" href="#breaking">Breaking</a></h3>
 <ul>
-<li>Sets the MSRV to Rust 1.65.0</li>
-</ul>
-<h3 id="features"><a class="header" href="#features">Features</a></h3>
-<ul>
-<li>Adds <code>console.error</code> output for panics on the Wasm version</li>
-<li>Deno no longer requires an init function</li>
+<li>Sets the MSRV to Rust 1.70.0</li>
 </ul>
 <h3 id="fixes"><a class="header" href="#fixes">Fixes</a></h3>
 <ul>
-<li>Fixes a few edge cases with hyphens and slashes</li>
+<li>Removes use of <code>atty</code> as it is unmaintained and has a low CVE</li>
 </ul>
 <h3 id="dependencies"><a class="header" href="#dependencies">Dependencies</a></h3>
 <ul>
@@ -192,16 +173,38 @@
 <ul>
 <li>Clippy fixes</li>
 </ul>
-<h2 id="v0181---2022-06-25"><a class="header" href="#v0181---2022-06-25">[v0.18.1] - 2022-06-25</a></h2>
+<h2 id="v0190---2023-07-16"><a class="header" href="#v0190---2023-07-16">[v0.19.0] - 2023-07-16</a></h2>
+<h3 id="breaking-1"><a class="header" href="#breaking-1">Breaking</a></h3>
+<ul>
+<li>Sets the MSRV to Rust 1.65.0</li>
+</ul>
+<h3 id="features"><a class="header" href="#features">Features</a></h3>
+<ul>
+<li>Adds <code>console.error</code> output for panics on the Wasm version</li>
+<li>Deno no longer requires an init function</li>
+</ul>
 <h3 id="fixes-1"><a class="header" href="#fixes-1">Fixes</a></h3>
 <ul>
-<li>Fixes playground link</li>
+<li>Fixes a few edge cases with hyphens and slashes</li>
 </ul>
 <h3 id="dependencies-1"><a class="header" href="#dependencies-1">Dependencies</a></h3>
 <ul>
 <li>Updates dependencies</li>
 </ul>
 <h3 id="refactoring-1"><a class="header" href="#refactoring-1">Refactoring</a></h3>
+<ul>
+<li>Clippy fixes</li>
+</ul>
+<h2 id="v0181---2022-06-25"><a class="header" href="#v0181---2022-06-25">[v0.18.1] - 2022-06-25</a></h2>
+<h3 id="fixes-2"><a class="header" href="#fixes-2">Fixes</a></h3>
+<ul>
+<li>Fixes playground link</li>
+</ul>
+<h3 id="dependencies-2"><a class="header" href="#dependencies-2">Dependencies</a></h3>
+<ul>
+<li>Updates dependencies</li>
+</ul>
+<h3 id="refactoring-2"><a class="header" href="#refactoring-2">Refactoring</a></h3>
 <ul>
 <li>Clippy fixes</li>
 </ul>
@@ -219,7 +222,7 @@
 <ul>
 <li>Add support for testing matches in a file in the CLI</li>
 </ul>
-<h3 id="refactoring-2"><a class="header" href="#refactoring-2">Refactoring</a></h3>
+<h3 id="refactoring-3"><a class="header" href="#refactoring-3">Refactoring</a></h3>
 <ul>
 <li>Remove <code>anyhow</code> in compiler in favor of emitting specific error variants</li>
 </ul>
@@ -241,7 +244,7 @@
 <li>Emit proper exit codes on specific errors</li>
 </ul>
 <h2 id="v01310---2022-03-11"><a class="header" href="#v01310---2022-03-11">[v0.13.10] - 2022-03-11</a></h2>
-<h3 id="fixes-2"><a class="header" href="#fixes-2">Fixes</a></h3>
+<h3 id="fixes-3"><a class="header" href="#fixes-3">Fixes</a></h3>
 <ul>
 <li>Fixes unnecessary grouping in quantifiers</li>
 </ul>
@@ -261,7 +264,7 @@
 <li>Version bump for documentation update</li>
 </ul>
 <h2 id="v0136---2022-03-11"><a class="header" href="#v0136---2022-03-11">[v0.13.6] - 2022-03-11</a></h2>
-<h3 id="fixes-3"><a class="header" href="#fixes-3">Fixes</a></h3>
+<h3 id="fixes-4"><a class="header" href="#fixes-4">Fixes</a></h3>
 <ul>
 <li>Handles a few possible panics</li>
 </ul>
@@ -275,12 +278,12 @@
 <ul>
 <li>Strips binaries</li>
 </ul>
-<h3 id="dependencies-2"><a class="header" href="#dependencies-2">Dependencies</a></h3>
+<h3 id="dependencies-3"><a class="header" href="#dependencies-3">Dependencies</a></h3>
 <ul>
 <li>Updates dependencies</li>
 </ul>
 <h2 id="v0133---2022-03-09"><a class="header" href="#v0133---2022-03-09">[v0.13.3] - 2022-03-09</a></h2>
-<h3 id="refactoring-3"><a class="header" href="#refactoring-3">Refactoring</a></h3>
+<h3 id="refactoring-4"><a class="header" href="#refactoring-4">Refactoring</a></h3>
 <ul>
 <li>Replaces <code>lazy_static</code> with <code>once_cell</code></li>
 </ul>
@@ -289,18 +292,18 @@
 <ul>
 <li>Improves literal parse performance</li>
 </ul>
-<h3 id="refactoring-4"><a class="header" href="#refactoring-4">Refactoring</a></h3>
+<h3 id="refactoring-5"><a class="header" href="#refactoring-5">Refactoring</a></h3>
 <ul>
 <li>Reports a few possible panics with a ParseError</li>
 </ul>
 <h2 id="v0131---2022-03-08"><a class="header" href="#v0131---2022-03-08">[v0.13.1] - 2022-03-08</a></h2>
-<h3 id="fixes-4"><a class="header" href="#fixes-4">Fixes</a></h3>
+<h3 id="fixes-5"><a class="header" href="#fixes-5">Fixes</a></h3>
 <ul>
 <li>Fixes an issue with single letter variable identifiers matching a following space</li>
 <li>Fixes a clash between REPL commands and variables</li>
 </ul>
 <h2 id="v0130---2022-03-08"><a class="header" href="#v0130---2022-03-08">[v0.13.0] - 2022-03-08</a></h2>
-<h3 id="breaking-1"><a class="header" href="#breaking-1">Breaking</a></h3>
+<h3 id="breaking-2"><a class="header" href="#breaking-2">Breaking</a></h3>
 <ul>
 <li><code>&lt;alphabet&gt;</code> is now <code>&lt;alphabetic&gt;</code></li>
 </ul>
@@ -317,12 +320,12 @@
 <li>Version bump</li>
 </ul>
 <h2 id="v0123---2022-03-06"><a class="header" href="#v0123---2022-03-06">[v0.12.3] - 2022-03-06</a></h2>
-<h3 id="fixes-5"><a class="header" href="#fixes-5">Fixes</a></h3>
+<h3 id="fixes-6"><a class="header" href="#fixes-6">Fixes</a></h3>
 <ul>
 <li>Fixes an issue with identifying negative char ranges</li>
 </ul>
 <h2 id="v0122---2022-03-05"><a class="header" href="#v0122---2022-03-05">[v0.12.2] - 2022-03-05</a></h2>
-<h3 id="refactoring-5"><a class="header" href="#refactoring-5">Refactoring</a></h3>
+<h3 id="refactoring-6"><a class="header" href="#refactoring-6">Refactoring</a></h3>
 <ul>
 <li>Performance improvements</li>
 </ul>
@@ -336,7 +339,7 @@
 <li>CLI documentation update</li>
 </ul>
 <h2 id="v0120---2022-03-04"><a class="header" href="#v0120---2022-03-04">[v0.12.0] - 2022-03-04</a></h2>
-<h3 id="breaking-2"><a class="header" href="#breaking-2">Breaking</a></h3>
+<h3 id="breaking-3"><a class="header" href="#breaking-3">Breaking</a></h3>
 <ul>
 <li>Produces clean output (no <code>//</code> and new newline after output)</li>
 </ul>
@@ -351,7 +354,7 @@
 <li>Adds benchmarks</li>
 </ul>
 <h2 id="v0111---2022-03-03"><a class="header" href="#v0111---2022-03-03">[v0.11.1] - 2022-03-03</a></h2>
-<h3 id="fixes-6"><a class="header" href="#fixes-6">Fixes</a></h3>
+<h3 id="fixes-7"><a class="header" href="#fixes-7">Fixes</a></h3>
 <ul>
 <li>Fixes possible panics</li>
 </ul>
@@ -360,12 +363,12 @@
 <li>Adds tests</li>
 <li>Adds tests for CLI</li>
 </ul>
-<h3 id="refactoring-6"><a class="header" href="#refactoring-6">Refactoring</a></h3>
+<h3 id="refactoring-7"><a class="header" href="#refactoring-7">Refactoring</a></h3>
 <ul>
 <li>Removes duplicated code</li>
 </ul>
 <h2 id="v0110---2022-03-02"><a class="header" href="#v0110---2022-03-02">[v0.11.0] - 2022-03-02</a></h2>
-<h3 id="breaking-3"><a class="header" href="#breaking-3">Breaking</a></h3>
+<h3 id="breaking-4"><a class="header" href="#breaking-4">Breaking</a></h3>
 <ul>
 <li><code>ParseError</code> now contains only one <code>message</code> field, may be changed in the future</li>
 <li>Line comments (<code>//</code>) may only be used in a separate line</li>
@@ -385,23 +388,23 @@
 <li><code>-n</code> removes color from REPL as well</li>
 </ul>
 <h2 id="v0103---2022-02-26"><a class="header" href="#v0103---2022-02-26">[v0.10.3] - 2022-02-26</a></h2>
-<h3 id="fixes-7"><a class="header" href="#fixes-7">Fixes</a></h3>
+<h3 id="fixes-8"><a class="header" href="#fixes-8">Fixes</a></h3>
 <ul>
 <li>Removes quantifiers after newlines</li>
 </ul>
 <h2 id="v0102---2022-02-26"><a class="header" href="#v0102---2022-02-26">[v0.10.2] - 2022-02-26</a></h2>
-<h3 id="fixes-8"><a class="header" href="#fixes-8">Fixes</a></h3>
+<h3 id="fixes-9"><a class="header" href="#fixes-9">Fixes</a></h3>
 <ul>
 <li>Fixes the handling of some newline issues in the REPL</li>
 <li>Adds an error message for a read error in the REPL</li>
 </ul>
 <h2 id="v0101---2022-02-26"><a class="header" href="#v0101---2022-02-26">[v0.10.1] - 2022-02-26</a></h2>
-<h3 id="fixes-9"><a class="header" href="#fixes-9">Fixes</a></h3>
+<h3 id="fixes-10"><a class="header" href="#fixes-10">Fixes</a></h3>
 <ul>
 <li>Trims only the end off of REPL input</li>
 </ul>
 <h2 id="v0100---2022-02-26"><a class="header" href="#v0100---2022-02-26">[v0.10.0] - 2022-02-26</a></h2>
-<h3 id="breaking-4"><a class="header" href="#breaking-4">Breaking</a></h3>
+<h3 id="breaking-5"><a class="header" href="#breaking-5">Breaking</a></h3>
 <ul>
 <li>Changes the <code>-f, --file</code> CLI argument to <code>-o, --output</code></li>
 </ul>
@@ -424,11 +427,11 @@
 <li>Adds <code>.c, .clear</code> to clear REPL history</li>
 <li>Adds better error reporting to the playground</li>
 </ul>
-<h3 id="fixes-10"><a class="header" href="#fixes-10">Fixes</a></h3>
+<h3 id="fixes-11"><a class="header" href="#fixes-11">Fixes</a></h3>
 <ul>
 <li>Fixes some undo / redo issues in the REPL</li>
 </ul>
-<h3 id="refactoring-7"><a class="header" href="#refactoring-7">Refactoring</a></h3>
+<h3 id="refactoring-8"><a class="header" href="#refactoring-8">Refactoring</a></h3>
 <ul>
 <li>Better error handling in the CLI</li>
 </ul>
@@ -451,11 +454,11 @@
 <li>Changes <code>start</code>, <code>end</code>, and <code>char</code> to symbols (<code>&lt;start&gt;</code>, <code>&lt;end&gt;</code>, <code>&lt;char&gt;</code>)</li>
 <li><code>either</code> creates a non capturing group</li>
 </ul>
-<h3 id="refactoring-8"><a class="header" href="#refactoring-8">Refactoring</a></h3>
+<h3 id="refactoring-9"><a class="header" href="#refactoring-9">Refactoring</a></h3>
 <ul>
 <li><code>cargo clippy</code> fixes in <code>melody_wasm</code></li>
 </ul>
-<h3 id="fixes-11"><a class="header" href="#fixes-11">Fixes</a></h3>
+<h3 id="fixes-12"><a class="header" href="#fixes-12">Fixes</a></h3>
 <ul>
 <li>Uses the correct <code>url</code> in the documentation site config</li>
 </ul>
