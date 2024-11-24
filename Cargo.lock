@@ -584,7 +584,7 @@ checksum = "a7a70ba024b9dc04c27ea2f0c0548feb474ec5c54bba33a7f72f873a39d07b24"
 
 [[package]]
 name = "melody_cli"
-version = "0.19.0"
+version = "0.20.0"
 dependencies = [
  "anyhow",
  "assert_cmd",
@@ -602,7 +602,7 @@ dependencies = [
 
 [[package]]
 name = "melody_compiler"
-version = "0.19.0"
+version = "0.20.0"
 dependencies = [
  "arbitrary",
  "criterion",
@@ -615,7 +615,7 @@ dependencies = [
 
 [[package]]
 name = "melody_wasm"
-version = "0.19.0"
+version = "0.20.0"
 dependencies = [
  "console_error_panic_hook",
  "melody_compiler",

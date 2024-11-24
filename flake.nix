@@ -25,6 +25,7 @@
           [
             nodejs
             nodePackages.prettier
+            cargo-msrv
             rustup
           ]
           ++ optional (system == systems.aarch64-darwin) [
