@@ -8,5 +8,5 @@ jobs:
       - uses: dtolnay/rust-toolchain@stable
         with:
           targets: wasm32-unknown-unknown,x86_64-unknown-linux-gnu
-      - name: Clippy
+      - name: clippy
         run: cargo clippy --all-targets --all-features
