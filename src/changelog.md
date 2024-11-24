@@ -4,7 +4,7 @@
 
 ### Breaking
 
-- Sets the MSRV to Rust 1.70.0
+- Sets the MSRV to Rust 1.74.0
 
 ### Fixes
 
