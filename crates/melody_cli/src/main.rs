@@ -29,7 +29,7 @@ fn main() {
     ShouldColorize::from_env();
 
     match try_main() {
-        Ok(_) => process::exit(exitcode::OK),
+        Ok(()) => process::exit(exitcode::OK),
         Err(error) => handle_error(&error),
     };
 }

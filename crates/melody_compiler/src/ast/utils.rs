@@ -52,7 +52,7 @@ pub fn unquote_escape_literal(pair: &Pair<'_, Rule>) -> String {
 
     match quote_type {
         '"' => literal.replace(r#"\""#, r#"""#),
-        '\'' => literal.replace(r#"\'"#, r#"'"#),
+        '\'' => literal.replace(r"\'", r"'"),
         _ => unreachable!(),
     }
 }

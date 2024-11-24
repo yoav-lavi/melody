@@ -1,5 +1,5 @@
-use atty::Stream;
 use clap::Parser;
+use std::io::IsTerminal;
 
 #[derive(Parser, Debug)]
 #[clap(about, version, author)]
@@ -61,9 +61,9 @@ pub struct Streams {
 impl Streams {
     pub fn new() -> Self {
         Self {
-            stdin: !atty::is(Stream::Stdin),
-            stdout: !atty::is(Stream::Stdout),
-            // stderr: !atty::is(Stream::Stderr),
+            stdin: !std::io::stdin().is_terminal(),
+            stdout: !std::io::stdout().is_terminal(),
+            // stderr: !std::io::stderr().is_terminal(),
         }
     }
     pub const fn any_pipe(&self) -> bool {
