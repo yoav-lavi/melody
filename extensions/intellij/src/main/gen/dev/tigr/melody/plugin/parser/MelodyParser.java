@@ -94,7 +94,7 @@ public class MelodyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // capture identifier block_rule | capture block_rule
+  // capture (identifier | character) block_rule | capture block_rule
   public static boolean capture_rule(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "capture_rule")) return false;
     if (!nextTokenIs(b, CAPTURE)) return false;
@@ -106,14 +106,24 @@ public class MelodyParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // capture identifier block_rule
+  // capture (identifier | character) block_rule
   private static boolean capture_rule_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "capture_rule_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, CAPTURE, IDENTIFIER);
+    r = consumeToken(b, CAPTURE);
+    r = r && capture_rule_0_1(b, l + 1);
     r = r && block_rule(b, l + 1);
     exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // identifier | character
+  private static boolean capture_rule_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "capture_rule_0_1")) return false;
+    boolean r;
+    r = consumeToken(b, IDENTIFIER);
+    if (!r) r = consumeToken(b, CHARACTER);
     return r;
   }
 
@@ -142,7 +152,8 @@ public class MelodyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // string_rule | not_rule | symbols_rule | match_rule | capture_rule | either_rule | ahead_rule | behind_rule | variable_rule | to_rule
+  // string_rule | not_rule | symbols_rule | match_rule | capture_rule
+  // | either_rule | ahead_rule | behind_rule | variable_rule | to_rule
   public static boolean expression(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "expression")) return false;
     boolean r;
@@ -188,7 +199,7 @@ public class MelodyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // not (ahead_rule | behind_rule | symbols_rule)
+  // not (ahead_rule | behind_rule | symbols_rule | to_rule)
   public static boolean not_rule(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "not_rule")) return false;
     if (!nextTokenIs(b, NOT)) return false;
@@ -200,13 +211,14 @@ public class MelodyParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // ahead_rule | behind_rule | symbols_rule
+  // ahead_rule | behind_rule | symbols_rule | to_rule
   private static boolean not_rule_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "not_rule_1")) return false;
     boolean r;
     r = ahead_rule(b, l + 1);
     if (!r) r = behind_rule(b, l + 1);
     if (!r) r = symbols_rule(b, l + 1);
+    if (!r) r = to_rule(b, l + 1);
     return r;
   }
 
@@ -320,7 +332,16 @@ public class MelodyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // start | end | char | whitespaceliteral | space | newline | tab | return | feed | null | digit | vertical | word | alphabet | alphanumeric | boundary | backspace
+  // start | end | char | whitespaceliteral | space | newline | tab
+  // | return | feed | null | digit | vertical | word | alphabet | alphanumeric | boundary
+  // | backspace | letter_category | lowercase_letter_category | uppercase_letter_category | titlecase_letter_category | cased_letter_category
+  // | modifier_letter_category | other_letter_category | mark_category | non_spacing_mark_category | spacing_combining_mark_category
+  // | enclosing_mark_category | separator_category | space_separator_category | line_separator_category | paragraph_separator_category
+  // | symbol_category | math_symbol_category | currency_symbol_category | modifier_symbol_category | other_symbol_category | number_category
+  // | decimal_digit_number_category | letter_number_category | other_number_category | punctuation_category | dash_punctuation_category
+  // | open_punctuation_category | close_punctuation_category | initial_punctuation_category | final_punctuation_category
+  // | connector_punctuation_category | other_punctuation_category | other_category | control_category | format_category | private_use_category
+  // | surrogate_category | unassigned_category
   static boolean symbols_(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "symbols_")) return false;
     boolean r;
@@ -341,6 +362,44 @@ public class MelodyParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, ALPHANUMERIC);
     if (!r) r = consumeToken(b, BOUNDARY);
     if (!r) r = consumeToken(b, BACKSPACE);
+    if (!r) r = consumeToken(b, LETTER_CATEGORY);
+    if (!r) r = consumeToken(b, LOWERCASE_LETTER_CATEGORY);
+    if (!r) r = consumeToken(b, UPPERCASE_LETTER_CATEGORY);
+    if (!r) r = consumeToken(b, TITLECASE_LETTER_CATEGORY);
+    if (!r) r = consumeToken(b, CASED_LETTER_CATEGORY);
+    if (!r) r = consumeToken(b, MODIFIER_LETTER_CATEGORY);
+    if (!r) r = consumeToken(b, OTHER_LETTER_CATEGORY);
+    if (!r) r = consumeToken(b, MARK_CATEGORY);
+    if (!r) r = consumeToken(b, NON_SPACING_MARK_CATEGORY);
+    if (!r) r = consumeToken(b, SPACING_COMBINING_MARK_CATEGORY);
+    if (!r) r = consumeToken(b, ENCLOSING_MARK_CATEGORY);
+    if (!r) r = consumeToken(b, SEPARATOR_CATEGORY);
+    if (!r) r = consumeToken(b, SPACE_SEPARATOR_CATEGORY);
+    if (!r) r = consumeToken(b, LINE_SEPARATOR_CATEGORY);
+    if (!r) r = consumeToken(b, PARAGRAPH_SEPARATOR_CATEGORY);
+    if (!r) r = consumeToken(b, SYMBOL_CATEGORY);
+    if (!r) r = consumeToken(b, MATH_SYMBOL_CATEGORY);
+    if (!r) r = consumeToken(b, CURRENCY_SYMBOL_CATEGORY);
+    if (!r) r = consumeToken(b, MODIFIER_SYMBOL_CATEGORY);
+    if (!r) r = consumeToken(b, OTHER_SYMBOL_CATEGORY);
+    if (!r) r = consumeToken(b, NUMBER_CATEGORY);
+    if (!r) r = consumeToken(b, DECIMAL_DIGIT_NUMBER_CATEGORY);
+    if (!r) r = consumeToken(b, LETTER_NUMBER_CATEGORY);
+    if (!r) r = consumeToken(b, OTHER_NUMBER_CATEGORY);
+    if (!r) r = consumeToken(b, PUNCTUATION_CATEGORY);
+    if (!r) r = consumeToken(b, DASH_PUNCTUATION_CATEGORY);
+    if (!r) r = consumeToken(b, OPEN_PUNCTUATION_CATEGORY);
+    if (!r) r = consumeToken(b, CLOSE_PUNCTUATION_CATEGORY);
+    if (!r) r = consumeToken(b, INITIAL_PUNCTUATION_CATEGORY);
+    if (!r) r = consumeToken(b, FINAL_PUNCTUATION_CATEGORY);
+    if (!r) r = consumeToken(b, CONNECTOR_PUNCTUATION_CATEGORY);
+    if (!r) r = consumeToken(b, OTHER_PUNCTUATION_CATEGORY);
+    if (!r) r = consumeToken(b, OTHER_CATEGORY);
+    if (!r) r = consumeToken(b, CONTROL_CATEGORY);
+    if (!r) r = consumeToken(b, FORMAT_CATEGORY);
+    if (!r) r = consumeToken(b, PRIVATE_USE_CATEGORY);
+    if (!r) r = consumeToken(b, SURROGATE_CATEGORY);
+    if (!r) r = consumeToken(b, UNASSIGNED_CATEGORY);
     return r;
   }
 

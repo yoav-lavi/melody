@@ -17,6 +17,9 @@ public interface MelodyCaptureRule extends PsiElement {
   List<MelodyOfRule> getOfRuleList();
 
   @Nullable
+  PsiElement getCharacter();
+
+  @Nullable
   PsiElement getIdentifier();
 
 }

@@ -48,6 +48,46 @@
     boundary="<boundary>"
     backspace="<backspace>"
 
+    // unicode categories
+    letter_category="<category::letter>"
+    lowercase_letter_category="<category::lowercase_letter>"
+    uppercase_letter_category="<category::uppercase_letter>"
+    titlecase_letter_category="<category::titlecase_letter>"
+    cased_letter_category="<category::cased_letter>"
+    modifier_letter_category="<category::modifier_letter>"
+    other_letter_category="<category::other_letter>"
+    mark_category="<category::mark>"
+    non_spacing_mark_category="<category::non_spacing_mark>"
+    spacing_combining_mark_category="<category::spacing_combining_mark>"
+    enclosing_mark_category="<category::enclosing_mark>"
+    separator_category="<category::separator>"
+    space_separator_category="<category::space_separator>"
+    line_separator_category="<category::line_separator>"
+    paragraph_separator_category="<category::paragraph_separator>"
+    symbol_category="<category::symbol>"
+    math_symbol_category="<category::math_symbol>"
+    currency_symbol_category="<category::currency_symbol>"
+    modifier_symbol_category="<category::modifier_symbol>"
+    other_symbol_category="<category::other_symbol>"
+    number_category="<category::number>"
+    decimal_digit_number_category="<category::decimal_digit_number>"
+    letter_number_category="<category::letter_number>"
+    other_number_category="<category::other_number>"
+    punctuation_category="<category::punctuation>"
+    dash_punctuation_category="<category::dash_punctuation>"
+    open_punctuation_category="<category::open_punctuation>"
+    close_punctuation_category="<category::close_punctuation>"
+    initial_punctuation_category="<category::initial_punctuation>"
+    final_punctuation_category="<category::final_punctuation>"
+    connector_punctuation_category="<category::connector_punctuation>"
+    other_punctuation_category="<category::other_punctuation>"
+    other_category="<category::other>"
+    control_category="<category::control>"
+    format_category="<category::format>"
+    private_use_category="<category::private_use>"
+    surrogate_category="<category::surrogate>"
+    unassigned_category="<category::unassigned>"
+
     // numbers
     number="regexp:[0-9]+"
 
@@ -73,11 +113,21 @@
 
 root ::= [rules*]
 private rules ::= comment | expression | of_rule | let_rule
-expression ::= string_rule | not_rule | symbols_rule | match_rule | capture_rule | either_rule | ahead_rule | behind_rule | variable_rule | to_rule
+expression ::= string_rule | not_rule | symbols_rule | match_rule | capture_rule
+| either_rule | ahead_rule | behind_rule | variable_rule | to_rule
 
 string_rule ::= string semicolon
 
-private symbols_ ::= start | end | char | whitespaceliteral | space | newline | tab | return | feed | null | digit | vertical | word | alphabet | alphanumeric | boundary | backspace
+private symbols_ ::= start | end | char | whitespaceliteral | space | newline | tab
+| return | feed | null | digit | vertical | word | alphabet | alphanumeric | boundary
+| backspace | letter_category | lowercase_letter_category | uppercase_letter_category | titlecase_letter_category | cased_letter_category
+| modifier_letter_category | other_letter_category | mark_category | non_spacing_mark_category | spacing_combining_mark_category
+| enclosing_mark_category | separator_category | space_separator_category | line_separator_category | paragraph_separator_category
+| symbol_category | math_symbol_category | currency_symbol_category | modifier_symbol_category | other_symbol_category | number_category
+| decimal_digit_number_category | letter_number_category | other_number_category | punctuation_category | dash_punctuation_category
+| open_punctuation_category | close_punctuation_category | initial_punctuation_category | final_punctuation_category
+| connector_punctuation_category | other_punctuation_category | other_category | control_category | format_category | private_use_category
+| surrogate_category | unassigned_category
 symbols_rule ::= symbols_ semicolon
 
 to_rule ::= (character | number) to (character | number) semicolon
@@ -89,13 +139,13 @@ range_rule ::= number to number
 over_rule ::= over number
 
 private block_rule ::= openbrace [rules*] closebrace
-capture_rule ::= capture identifier block_rule | capture block_rule
+capture_rule ::= capture (identifier | character) block_rule | capture block_rule
 match_rule ::= match block_rule
 either_rule ::= either block_rule
 ahead_rule ::= ahead block_rule
 behind_rule ::= behind block_rule
 
-not_rule ::= not (ahead_rule | behind_rule | symbols_rule)
+not_rule ::= not (ahead_rule | behind_rule | symbols_rule | to_rule)
 
 let_rule ::= let variable equals block_rule
 variable_rule ::= variable semicolon
