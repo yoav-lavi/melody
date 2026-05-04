@@ -92,7 +92,7 @@ block = { "{" ~ (statement)+ ~ "}" }
 
 identifier = { ('a'..'z' | 'A'..'Z' | "_")+ }
 
-symbol_identifier = { ('a'..'z' | 'A'..'Z' | "_" | ":")+ }
+symbol_identifier = { ('a'..'z' | 'A'..'Z' | '0'..'9' | "_" | ":")+ }
 
 capture_group = { "capture" }
 

@@ -4,6 +4,15 @@ use crate::ast::types::ast::{
     Range, SpecialSymbolKind, Symbol, SymbolKind, UnicodeCategory, UnicodeCategoryKind, VariableInvocation,
 };
 
+const DATE_PATTERN: &str = r"(?:(?:\d{4}-(?:01|03|05|07|08|10|12)-(?:0[1-9]|[12]\d|3[01]))|(?:\d{4}-(?:04|06|09|11)-(?:0[1-9]|[12]\d|30))|(?:\d{4}-02-(?:0[1-9]|1\d|2[0-8]))|(?:(?:\d\d(?:0[48]|[2468][048]|[13579][26])|(?:0[48]|[2468][048]|[13579][26])00)-02-29))";
+const TIME_PATTERN: &str = r"(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d{1,3})?)?";
+const TIMEZONE_PATTERN: &str = r"(?:Z|[+-](?:[01]\d|2[0-3]):?[0-5]\d)";
+const FLOAT_PATTERN: &str = r"(?:[-+]?(?:\d+\.\d*|\.\d+|\d+)(?:[eE][-+]?\d+)?)";
+const UNIXTIME_PATTERN: &str = r"(?:0|[-+]?[1-9]\d{0,12})";
+const IPV4_PATTERN: &str = r"(?:(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d))";
+const IPV6_PATTERN: &str = r"(?:(?:[A-Fa-f0-9]{1,4}:){7}[A-Fa-f0-9]{1,4}|(?:[A-Fa-f0-9]{1,4}:){1,7}:|(?:[A-Fa-f0-9]{1,4}:){1,6}:[A-Fa-f0-9]{1,4}|(?:[A-Fa-f0-9]{1,4}:){1,5}(?::[A-Fa-f0-9]{1,4}){1,2}|(?:[A-Fa-f0-9]{1,4}:){1,4}(?::[A-Fa-f0-9]{1,4}){1,3}|(?:[A-Fa-f0-9]{1,4}:){1,3}(?::[A-Fa-f0-9]{1,4}){1,4}|(?:[A-Fa-f0-9]{1,4}:){1,2}(?::[A-Fa-f0-9]{1,4}){1,5}|[A-Fa-f0-9]{1,4}:(?::[A-Fa-f0-9]{1,4}){1,6}|:(?::[A-Fa-f0-9]{1,4}){1,7}|::)";
+const URL_PATTERN: &str = r"(?:https?:\/\/(?:localhost|(?:[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?\.)+[A-Za-z]{2,}|(?:(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)))(?::\d{2,5})?(?:\/[^\s?#]*)?(?:\?[^\s#]*)?(?:#[^\s]*)?)";
+
 #[must_use]
 pub fn ast_to_regex(ast: &MelodyAst) -> String {
     match ast {
@@ -153,6 +162,14 @@ fn transform_symbol(symbol: &Symbol) -> String {
             SymbolKind::Feed => "[^\\f]",
             SymbolKind::Backspace => "[^\\b]",
             SymbolKind::Boundary => "\\B",
+            SymbolKind::Date
+            | SymbolKind::DateTime
+            | SymbolKind::Float
+            | SymbolKind::UnixTime
+            | SymbolKind::Url
+            | SymbolKind::Ipv4
+            | SymbolKind::Ipv6
+            | SymbolKind::Ip => unreachable!("negative predefined patterns are rejected during parsing"),
         }
     } else {
         match symbol.kind {
@@ -171,6 +188,16 @@ fn transform_symbol(symbol: &Symbol) -> String {
             SymbolKind::Feed => "\\f",
             SymbolKind::Backspace => "[\\b]",
             SymbolKind::Boundary => "\\b",
+            SymbolKind::Date => DATE_PATTERN,
+            SymbolKind::DateTime => {
+                return format!("(?:{DATE_PATTERN}[T ]{TIME_PATTERN}(?:{TIMEZONE_PATTERN})?)");
+            }
+            SymbolKind::Float => FLOAT_PATTERN,
+            SymbolKind::UnixTime => UNIXTIME_PATTERN,
+            SymbolKind::Url => URL_PATTERN,
+            SymbolKind::Ipv4 => IPV4_PATTERN,
+            SymbolKind::Ipv6 => IPV6_PATTERN,
+            SymbolKind::Ip => return format!("(?:{IPV4_PATTERN}|{IPV6_PATTERN})"),
         }
     };
 
