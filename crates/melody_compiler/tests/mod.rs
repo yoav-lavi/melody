@@ -2,6 +2,15 @@
 use indoc::indoc;
 use melody_compiler::compiler;
 
+const DATE_PATTERN: &str = r"(?:(?:\d{4}-(?:01|03|05|07|08|10|12)-(?:0[1-9]|[12]\d|3[01]))|(?:\d{4}-(?:04|06|09|11)-(?:0[1-9]|[12]\d|30))|(?:\d{4}-02-(?:0[1-9]|1\d|2[0-8]))|(?:(?:\d\d(?:0[48]|[2468][048]|[13579][26])|(?:0[48]|[2468][048]|[13579][26])00)-02-29))";
+const DATETIME_PATTERN: &str = r"(?:(?:(?:\d{4}-(?:01|03|05|07|08|10|12)-(?:0[1-9]|[12]\d|3[01]))|(?:\d{4}-(?:04|06|09|11)-(?:0[1-9]|[12]\d|30))|(?:\d{4}-02-(?:0[1-9]|1\d|2[0-8]))|(?:(?:\d\d(?:0[48]|[2468][048]|[13579][26])|(?:0[48]|[2468][048]|[13579][26])00)-02-29))[T ](?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d{1,3})?)?(?:(?:Z|[+-](?:[01]\d|2[0-3]):?[0-5]\d))?)";
+const FLOAT_PATTERN: &str = r"(?:[-+]?(?:\d+\.\d*|\.\d+|\d+)(?:[eE][-+]?\d+)?)";
+const UNIXTIME_PATTERN: &str = r"(?:0|[-+]?[1-9]\d{0,12})";
+const URL_PATTERN: &str = r"(?:https?:\/\/(?:localhost|(?:[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?\.)+[A-Za-z]{2,}|(?:(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)))(?::\d{2,5})?(?:\/[^\s?#]*)?(?:\?[^\s#]*)?(?:#[^\s]*)?)";
+const IPV4_PATTERN: &str = r"(?:(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d))";
+const IPV6_PATTERN: &str = r"(?:(?:[A-Fa-f0-9]{1,4}:){7}[A-Fa-f0-9]{1,4}|(?:[A-Fa-f0-9]{1,4}:){1,7}:|(?:[A-Fa-f0-9]{1,4}:){1,6}:[A-Fa-f0-9]{1,4}|(?:[A-Fa-f0-9]{1,4}:){1,5}(?::[A-Fa-f0-9]{1,4}){1,2}|(?:[A-Fa-f0-9]{1,4}:){1,4}(?::[A-Fa-f0-9]{1,4}){1,3}|(?:[A-Fa-f0-9]{1,4}:){1,3}(?::[A-Fa-f0-9]{1,4}){1,4}|(?:[A-Fa-f0-9]{1,4}:){1,2}(?::[A-Fa-f0-9]{1,4}){1,5}|[A-Fa-f0-9]{1,4}:(?::[A-Fa-f0-9]{1,4}){1,6}|:(?::[A-Fa-f0-9]{1,4}){1,7}|::)";
+const IP_PATTERN: &str = r"(?:(?:(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d))|(?:(?:[A-Fa-f0-9]{1,4}:){7}[A-Fa-f0-9]{1,4}|(?:[A-Fa-f0-9]{1,4}:){1,7}:|(?:[A-Fa-f0-9]{1,4}:){1,6}:[A-Fa-f0-9]{1,4}|(?:[A-Fa-f0-9]{1,4}:){1,5}(?::[A-Fa-f0-9]{1,4}){1,2}|(?:[A-Fa-f0-9]{1,4}:){1,4}(?::[A-Fa-f0-9]{1,4}){1,3}|(?:[A-Fa-f0-9]{1,4}:){1,3}(?::[A-Fa-f0-9]{1,4}){1,4}|(?:[A-Fa-f0-9]{1,4}:){1,2}(?::[A-Fa-f0-9]{1,4}){1,5}|[A-Fa-f0-9]{1,4}:(?::[A-Fa-f0-9]{1,4}){1,6}|:(?::[A-Fa-f0-9]{1,4}){1,7}|::))";
+
 #[test]
 fn quantifier_test() {
     let output = compiler(indoc! {
@@ -234,6 +243,33 @@ fn symbol_unicode_category_negative_test() {
     assert_eq!(
         output.unwrap(),
         r"\P{L&}\P{Pe}\P{Pc}\P{Cc}\P{Sc}\P{Pd}\P{Nd}\P{Me}\P{Pf}\P{Cf}\P{Pi}\P{Nl}\P{L}\P{Zl}\P{Ll}\P{M}\P{Sm}\P{Lm}\P{Sk}\P{Mn}\P{N}\P{Ps}\P{Lo}\P{No}\P{Po}\P{So}\P{C}\P{Zp}\P{Co}\P{P}\P{Z}\P{Zs}\P{Mc}\P{Cs}\P{S}\P{Lt}\P{Cn}\P{Lu}\P{L&}{5}"
+    );
+}
+
+#[test]
+fn predefined_pattern_symbol_test() {
+    assert_eq!(compiler("<date>;").unwrap(), DATE_PATTERN);
+    assert_eq!(compiler("<datetime>;").unwrap(), DATETIME_PATTERN);
+    assert_eq!(compiler("<float>;").unwrap(), FLOAT_PATTERN);
+    assert_eq!(compiler("<unixtime>;").unwrap(), UNIXTIME_PATTERN);
+    assert_eq!(compiler("<url>;").unwrap(), URL_PATTERN);
+    assert_eq!(compiler("<ipv4>;").unwrap(), IPV4_PATTERN);
+    assert_eq!(compiler("<ipv6>;").unwrap(), IPV6_PATTERN);
+    assert_eq!(compiler("<ip>;").unwrap(), IP_PATTERN);
+}
+
+#[test]
+fn negative_predefined_pattern_symbol_test() {
+    let output = compiler(indoc! {
+        r#"
+        not <date>;
+        "#
+    });
+
+    assert!(output.is_err());
+    assert_eq!(
+        output.unwrap_err().to_string(),
+        "negative predefined pattern not allowed"
     );
 }
 
