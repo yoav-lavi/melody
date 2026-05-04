@@ -24,6 +24,9 @@ pub enum CompilerError {
     /// returned if `not <start>` is encountered
     #[error("negative start not allowed")]
     NegativeStartNotAllowed,
+    /// returned if `not` is applied to a predefined multi-token pattern
+    #[error("negative predefined pattern not allowed")]
+    NegativePredefinedPatternNotAllowed,
     /// returned if the given input cannot be parsed
     #[error("{0}")]
     ParseError(String),
