@@ -101,6 +101,14 @@ pub enum SymbolKind {
     Feed,
     Backspace,
     Boundary,
+    Date,
+    DateTime,
+    Float,
+    UnixTime,
+    Url,
+    Ipv4,
+    Ipv6,
+    Ip,
 }
 
 #[derive(Debug, Clone)]

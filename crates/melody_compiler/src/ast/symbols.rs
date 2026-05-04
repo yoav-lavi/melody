@@ -16,6 +16,9 @@ pub fn symbol(pair: Pair<'_, Rule>) -> Result<MelodyAstNode> {
             "start" => return Err(CompilerError::NegativeStartNotAllowed),
             "end" => return Err(CompilerError::NegativeEndNotAllowed),
             "char" => return Err(CompilerError::NegativeCharNotAllowed),
+            "date" | "datetime" | "float" | "unixtime" | "url" | "ipv4" | "ipv6" | "ip" => {
+                return Err(CompilerError::NegativePredefinedPatternNotAllowed);
+            }
             _ => {}
         }
     }
@@ -87,6 +90,38 @@ pub fn symbol(pair: Pair<'_, Rule>) -> Result<MelodyAstNode> {
         }),
         "backspace" => MelodyAstNode::Symbol(Symbol {
             kind: SymbolKind::Backspace,
+            negative,
+        }),
+        "date" => MelodyAstNode::Symbol(Symbol {
+            kind: SymbolKind::Date,
+            negative,
+        }),
+        "datetime" => MelodyAstNode::Symbol(Symbol {
+            kind: SymbolKind::DateTime,
+            negative,
+        }),
+        "float" => MelodyAstNode::Symbol(Symbol {
+            kind: SymbolKind::Float,
+            negative,
+        }),
+        "unixtime" => MelodyAstNode::Symbol(Symbol {
+            kind: SymbolKind::UnixTime,
+            negative,
+        }),
+        "url" => MelodyAstNode::Symbol(Symbol {
+            kind: SymbolKind::Url,
+            negative,
+        }),
+        "ipv4" => MelodyAstNode::Symbol(Symbol {
+            kind: SymbolKind::Ipv4,
+            negative,
+        }),
+        "ipv6" => MelodyAstNode::Symbol(Symbol {
+            kind: SymbolKind::Ipv6,
+            negative,
+        }),
+        "ip" => MelodyAstNode::Symbol(Symbol {
+            kind: SymbolKind::Ip,
             negative,
         }),
 
