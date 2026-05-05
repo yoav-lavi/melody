@@ -9,7 +9,7 @@ A CLI wrapping the Melody language compiler
 ## Install
 
 ```sh
-cargo install melody_cli
+cargo install melody_cli --locked
 ```
 
 ## Usage

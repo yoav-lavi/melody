@@ -150,7 +150,7 @@ Read the book [here](https://yoav-lavi.github.io/melody/book/)
 ### Cargo
 
 ```sh
-cargo install melody_cli
+cargo install melody_cli --locked
 ```
 
 ### From Source
@@ -158,7 +158,7 @@ cargo install melody_cli
 ```sh
 git clone https://github.com/yoav-lavi/melody.git
 cd melody
-cargo install --path crates/melody_cli
+cargo install --path crates/melody_cli --locked
 ```
 
 ### Binary
@@ -288,8 +288,17 @@ All quantifiers can be preceded by `lazy` to match the least amount of character
 - `<alphanumeric>` - matches any single latin letter or any single digit. equivalent to regex `[a-zA-Z0-9]`
 - `<boundary>` - Matches a character between a character matched by `<word>` and a character not matched by `<word>` without consuming the character. equivalent to regex `\b`
 - `<backspace>` - matches a backspace control character. equivalent to regex `[\b]`
+- `<date>` - matches a valid ISO-style date in `YYYY-MM-DD` format
+- `<datetime>` - matches a valid ISO-style date and time in `YYYY-MM-DDTHH:MM[:SS[.sss]]` or `YYYY-MM-DD HH:MM[:SS[.sss]]` format, with an optional timezone
+- `<float>` - matches a signed or unsigned floating-point number, including scientific notation
+- `<unixtime>` - matches an opinionated UNIX timestamp representation with up to 13 digits, plus optional sign
+- `<url>` - matches an opinionated HTTP or HTTPS URL
+- `<ipv4>` - matches a valid IPv4 address
+- `<ipv6>` - matches an opinionated IPv6 address
+- `<ip>` - matches either `<ipv4>` or `<ipv6>`
 
-All symbols can be preceeded with `not` to match any character other than the symbol
+Character-like symbols can be preceeded with `not` to match any character other than the symbol.
+The multi-token predefined patterns above are expanded as grouped regex fragments, so `not <date>` and similar forms are not supported.
 
 ### Special Symbols
 
